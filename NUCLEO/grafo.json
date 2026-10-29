@@ -1,0 +1,882 @@
+{
+ "generado": "2026-10-13T15:41:15",
+ "nodos": {
+  "proyecto:ASIGNACION_SUBOBRAS": {
+   "tipo": "proyecto"
+  },
+  "proyecto:CONTROL_PAGOS_OC": {
+   "tipo": "proyecto"
+  },
+  "proyecto:CREACION_USUARIOS": {
+   "tipo": "proyecto"
+  },
+  "proyecto:DASHBOARD_NUCLEO": {
+   "tipo": "proyecto"
+  },
+  "proyecto:DEPURACION_PERMISOS": {
+   "tipo": "proyecto"
+  },
+  "proyecto:INSUMOS_JSON": {
+   "tipo": "proyecto"
+  },
+  "proyecto:REVISION_REQUISICIONES": {
+   "tipo": "proyecto"
+  },
+  "archivo:ASIGNACION_SUBOBRAS/agregar_obras.py": {
+   "tipo": "archivo",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "dato:ASIGNACION_SUBOBRAS/obras.json": {
+   "tipo": "dato",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py": {
+   "tipo": "archivo",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "portal:(raiz)": {
+   "tipo": "portal"
+  },
+  "ui:password": {
+   "tipo": "ui"
+  },
+  "ui:username": {
+   "tipo": "ui"
+  },
+  "ui:btnSubmit": {
+   "tipo": "ui"
+  },
+  "ui:btn-saveObraFilter": {
+   "tipo": "ui"
+  },
+  "archivo:ASIGNACION_SUBOBRAS/main.py": {
+   "tipo": "archivo",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "dato:ASIGNACION_SUBOBRAS/errores.txt": {
+   "tipo": "dato",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "dato:ASIGNACION_SUBOBRAS/obras_pendientes.json": {
+   "tipo": "dato",
+   "proyecto": "ASIGNACION_SUBOBRAS"
+  },
+  "archivo:CONTROL_PAGOS_OC/app.py": {
+   "tipo": "archivo",
+   "proyecto": "CONTROL_PAGOS_OC"
+  },
+  "archivo:CONTROL_PAGOS_OC/indexador.py": {
+   "tipo": "archivo",
+   "proyecto": "CONTROL_PAGOS_OC"
+  },
+  "dato:CONTROL_PAGOS_OC/pagos.csv": {
+   "tipo": "dato",
+   "proyecto": "CONTROL_PAGOS_OC"
+  },
+  "dato:CONTROL_PAGOS_OC/insumos.csv": {
+   "tipo": "dato",
+   "proyecto": "CONTROL_PAGOS_OC"
+  },
+  "dato:CONTROL_PAGOS_OC/proveedores.csv": {
+   "tipo": "dato",
+   "proyecto": "CONTROL_PAGOS_OC"
+  },
+  "archivo:CREACION_USUARIOS/asignador_clasificadores.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "portal:kontrol/usuarios": {
+   "tipo": "portal"
+  },
+  "archivo:CREACION_USUARIOS/capturador_csv.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "dato:CREACION_USUARIOS/datos.csv": {
+   "tipo": "dato",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "referencia_rota:DATOS_CONFIGURACION_PUESTOS": {
+   "tipo": "referencia_rota"
+  },
+  "dato:CREACION_USUARIOS/puestos.json": {
+   "tipo": "dato",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "archivo:CREACION_USUARIOS/convertidor.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "dato:CREACION_USUARIOS/datos.txt": {
+   "tipo": "dato",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "archivo:CREACION_USUARIOS/ejecutor_creacion.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "archivo:CREACION_USUARIOS/funciones_rh.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "ui:formControl_usuarios_Estatus": {
+   "tipo": "ui"
+  },
+  "archivo:CREACION_USUARIOS/main.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "archivo:CREACION_USUARIOS/selectores.py": {
+   "tipo": "archivo",
+   "proyecto": "CREACION_USUARIOS"
+  },
+  "ui:formControl_VigenciaFin": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_Compania-container": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_Grupo-container": {
+   "tipo": "ui"
+  },
+  "ui:formControl_Apellidos": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_TipoClasificador-container": {
+   "tipo": "ui"
+  },
+  "ui:formControl_Email": {
+   "tipo": "ui"
+  },
+  "ui:formControl_Clave": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_AreaOrganizacion-container": {
+   "tipo": "ui"
+  },
+  "ui:formControl_Telefono": {
+   "tipo": "ui"
+  },
+  "ui:formControl_Nombre": {
+   "tipo": "ui"
+  },
+  "ui:formControl_VigenciaInicio": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_Nivel-container": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_Idioma-container": {
+   "tipo": "ui"
+  },
+  "ui:Niveles_saveButtonKey": {
+   "tipo": "ui"
+  },
+  "ui:Clasificadores_saveButtonKey": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_Posicion-container": {
+   "tipo": "ui"
+  },
+  "ui:select2-formControl_TimeZone-container": {
+   "tipo": "ui"
+  },
+  "ui:Grupos_saveButtonKey": {
+   "tipo": "ui"
+  },
+  "archivo:DASHBOARD_NUCLEO/app.py": {
+   "tipo": "archivo",
+   "proyecto": "DASHBOARD_NUCLEO"
+  },
+  "dato:DASHBOARD_NUCLEO/datos.txt": {
+   "tipo": "dato",
+   "proyecto": "DASHBOARD_NUCLEO"
+  },
+  "dato:DASHBOARD_NUCLEO/proyectos.json": {
+   "tipo": "dato",
+   "proyecto": "DASHBOARD_NUCLEO"
+  },
+  "dato:DASHBOARD_NUCLEO/puestos.json": {
+   "tipo": "dato",
+   "proyecto": "DASHBOARD_NUCLEO"
+  },
+  "archivo:DEPURACION_PERMISOS/funciones_permisos.py": {
+   "tipo": "archivo",
+   "proyecto": "DEPURACION_PERMISOS"
+  },
+  "archivo:DEPURACION_PERMISOS/main.py": {
+   "tipo": "archivo",
+   "proyecto": "DEPURACION_PERMISOS"
+  },
+  "archivo:DEPURACION_PERMISOS/selectores.py": {
+   "tipo": "archivo",
+   "proyecto": "DEPURACION_PERMISOS"
+  },
+  "ui:formControl_BuscarUsuario": {
+   "tipo": "ui"
+  },
+  "ui:btnBuscarUsuario": {
+   "tipo": "ui"
+  },
+  "ui:tablaUsuarios": {
+   "tipo": "ui"
+  },
+  "archivo:INSUMOS_JSON/__init__.py": {
+   "tipo": "archivo",
+   "proyecto": "INSUMOS_JSON"
+  },
+  "archivo:INSUMOS_JSON/motor_busqueda.py": {
+   "tipo": "archivo",
+   "proyecto": "INSUMOS_JSON"
+  },
+  "dato:INSUMOS_JSON/catalogo.json": {
+   "tipo": "dato",
+   "proyecto": "INSUMOS_JSON"
+  },
+  "archivo:REVISION_REQUISICIONES/creador_codigos.py": {
+   "tipo": "archivo",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "dato:REVISION_REQUISICIONES/codigos.json": {
+   "tipo": "dato",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py": {
+   "tipo": "archivo",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "archivo:REVISION_REQUISICIONES/main.py": {
+   "tipo": "archivo",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "dato:REVISION_REQUISICIONES/datos.csv": {
+   "tipo": "dato",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "dato:REVISION_REQUISICIONES/tarjeta.csv": {
+   "tipo": "dato",
+   "proyecto": "REVISION_REQUISICIONES"
+  },
+  "archivo:REVISION_REQUISICIONES/selectores.py": {
+   "tipo": "archivo",
+   "proyecto": "REVISION_REQUISICIONES"
+  }
+ },
+ "aristas": [
+  {
+   "de": "proyecto:ASIGNACION_SUBOBRAS",
+   "a": "archivo:ASIGNACION_SUBOBRAS/agregar_obras.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:ASIGNACION_SUBOBRAS",
+   "a": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:ASIGNACION_SUBOBRAS",
+   "a": "archivo:ASIGNACION_SUBOBRAS/main.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CONTROL_PAGOS_OC",
+   "a": "archivo:CONTROL_PAGOS_OC/app.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CONTROL_PAGOS_OC",
+   "a": "archivo:CONTROL_PAGOS_OC/indexador.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/asignador_clasificadores.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/capturador_csv.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/convertidor.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/ejecutor_creacion.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/main.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:CREACION_USUARIOS",
+   "a": "archivo:CREACION_USUARIOS/selectores.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:DASHBOARD_NUCLEO",
+   "a": "archivo:DASHBOARD_NUCLEO/app.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:DEPURACION_PERMISOS",
+   "a": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:DEPURACION_PERMISOS",
+   "a": "archivo:DEPURACION_PERMISOS/main.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:DEPURACION_PERMISOS",
+   "a": "archivo:DEPURACION_PERMISOS/selectores.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:INSUMOS_JSON",
+   "a": "archivo:INSUMOS_JSON/__init__.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:INSUMOS_JSON",
+   "a": "archivo:INSUMOS_JSON/motor_busqueda.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:REVISION_REQUISICIONES",
+   "a": "archivo:REVISION_REQUISICIONES/creador_codigos.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:REVISION_REQUISICIONES",
+   "a": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:REVISION_REQUISICIONES",
+   "a": "archivo:REVISION_REQUISICIONES/main.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "proyecto:REVISION_REQUISICIONES",
+   "a": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "rel": "contiene"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/main.py",
+   "a": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CONTROL_PAGOS_OC/app.py",
+   "a": "archivo:CONTROL_PAGOS_OC/indexador.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/asignador_clasificadores.py",
+   "a": "archivo:CREACION_USUARIOS/selectores.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/ejecutor_creacion.py",
+   "a": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "archivo:CREACION_USUARIOS/selectores.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/main.py",
+   "a": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/main.py",
+   "a": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/main.py",
+   "a": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "rel": "importa"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/capturador_csv.py",
+   "a": "referencia_rota:DATOS_CONFIGURACION_PUESTOS",
+   "rel": "referencia"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "referencia_rota:DATOS_CONFIGURACION_PUESTOS",
+   "rel": "referencia"
+  },
+  {
+   "de": "archivo:DASHBOARD_NUCLEO/app.py",
+   "a": "proyecto:CREACION_USUARIOS",
+   "rel": "referencia"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/agregar_obras.py",
+   "a": "dato:ASIGNACION_SUBOBRAS/obras.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/main.py",
+   "a": "dato:ASIGNACION_SUBOBRAS/errores.txt",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/main.py",
+   "a": "dato:ASIGNACION_SUBOBRAS/obras.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/main.py",
+   "a": "dato:ASIGNACION_SUBOBRAS/obras_pendientes.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CONTROL_PAGOS_OC/indexador.py",
+   "a": "dato:CONTROL_PAGOS_OC/insumos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CONTROL_PAGOS_OC/indexador.py",
+   "a": "dato:CONTROL_PAGOS_OC/pagos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CONTROL_PAGOS_OC/indexador.py",
+   "a": "dato:CONTROL_PAGOS_OC/proveedores.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/capturador_csv.py",
+   "a": "dato:CREACION_USUARIOS/datos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/capturador_csv.py",
+   "a": "dato:CREACION_USUARIOS/puestos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/convertidor.py",
+   "a": "dato:CREACION_USUARIOS/datos.txt",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/convertidor.py",
+   "a": "dato:CREACION_USUARIOS/puestos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/ejecutor_creacion.py",
+   "a": "dato:CREACION_USUARIOS/datos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "dato:CREACION_USUARIOS/puestos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/main.py",
+   "a": "dato:CREACION_USUARIOS/datos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:DASHBOARD_NUCLEO/app.py",
+   "a": "dato:DASHBOARD_NUCLEO/datos.txt",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:DASHBOARD_NUCLEO/app.py",
+   "a": "dato:DASHBOARD_NUCLEO/proyectos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:DASHBOARD_NUCLEO/app.py",
+   "a": "dato:DASHBOARD_NUCLEO/puestos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:INSUMOS_JSON/motor_busqueda.py",
+   "a": "dato:INSUMOS_JSON/catalogo.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/creador_codigos.py",
+   "a": "dato:REVISION_REQUISICIONES/codigos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "dato:REVISION_REQUISICIONES/codigos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/main.py",
+   "a": "dato:REVISION_REQUISICIONES/codigos.json",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/main.py",
+   "a": "dato:REVISION_REQUISICIONES/datos.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/main.py",
+   "a": "dato:REVISION_REQUISICIONES/tarjeta.csv",
+   "rel": "usa_dato"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "a": "ui:btn-saveObraFilter",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "a": "ui:btnSubmit",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "a": "ui:password",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "a": "ui:username",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "ui:btnSubmit",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "ui:formControl_usuarios_Estatus",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "ui:password",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "ui:username",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:Clasificadores_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:Grupos_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:Niveles_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_Apellidos",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_Clave",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_Email",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_Nombre",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_Telefono",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_VigenciaFin",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:formControl_VigenciaInicio",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_AreaOrganizacion-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_Compania-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_Grupo-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_Idioma-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_Nivel-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_Posicion-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_TimeZone-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/selectores.py",
+   "a": "ui:select2-formControl_TipoClasificador-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "a": "ui:btnSubmit",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "a": "ui:formControl_VigenciaFin",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "a": "ui:password",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "a": "ui:username",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/selectores.py",
+   "a": "ui:btnBuscarUsuario",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/selectores.py",
+   "a": "ui:formControl_BuscarUsuario",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/selectores.py",
+   "a": "ui:formControl_VigenciaFin",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/selectores.py",
+   "a": "ui:tablaUsuarios",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "ui:btnSubmit",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "ui:password",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "ui:username",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:Clasificadores_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:Grupos_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:Niveles_saveButtonKey",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_Apellidos",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_Clave",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_Email",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_Nombre",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_Telefono",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_VigenciaFin",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:formControl_VigenciaInicio",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_AreaOrganizacion-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_Compania-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_Grupo-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_Idioma-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_Nivel-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_Posicion-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_TimeZone-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/selectores.py",
+   "a": "ui:select2-formControl_TipoClasificador-container",
+   "rel": "usa_selector"
+  },
+  {
+   "de": "archivo:ASIGNACION_SUBOBRAS/funciones_subobras.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/asignador_clasificadores.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/asignador_clasificadores.py",
+   "a": "portal:kontrol/usuarios",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/ejecutor_creacion.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/ejecutor_creacion.py",
+   "a": "portal:kontrol/usuarios",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/funciones_rh.py",
+   "a": "portal:kontrol/usuarios",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/main.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:CREACION_USUARIOS/main.py",
+   "a": "portal:kontrol/usuarios",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/funciones_permisos.py",
+   "a": "portal:kontrol/usuarios",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:DEPURACION_PERMISOS/main.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  },
+  {
+   "de": "archivo:REVISION_REQUISICIONES/funciones_requisiciones.py",
+   "a": "portal:(raiz)",
+   "rel": "visita"
+  }
+ ]
+}

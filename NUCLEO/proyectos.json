@@ -1,0 +1,39 @@
+{
+  "_comentario": "Catálogo de proyectos activos del Dashboard v2. 'requiere_archivos' alimenta las verificaciones previas (pre-flight). 'usa_portal' verifica que Aryve responda antes de lanzar el bot.",
+  "proyectos": {
+    "USUARIOS": {
+      "descripcion": "Gestión y alta de usuarios en Aryve a partir de datos.csv + puestos.json",
+      "script": "automation/usuario_bot.py",
+      "requiere_archivos": [
+        "data/Usuarios.json",
+        "data/puestos.json"
+      ],
+      "usa_portal": true
+    },
+    "PROYECTOS": {
+      "descripcion": "Gestión y depuración de permisos de usuarios por obra",
+      "script": "main.py",
+      "requiere_archivos": [
+        "obras_permisos.json",
+        "ENKONTROL.TXT"
+      ],
+      "usa_portal": true
+    },
+    "PROVEEDORES": {
+      "descripcion": "Gestión, creación y registro de proveedores en Aryve",
+      "script": "ejecutor_proveedores.py",
+      "requiere_archivos": [
+        "datos.csv"
+      ],
+      "usa_portal": true
+    },
+    "CONTRATISTAS": {
+      "descripcion": "Gestión, generación de gafetes y carga de fotos de perfil para contratistas en Aryve (EK10)",
+      "script": "main.py",
+      "requiere_archivos": [
+        "contratista_mapeado.json"
+      ],
+      "usa_portal": true
+    }
+  }
+}

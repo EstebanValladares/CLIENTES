@@ -1,0 +1,9 @@
+config.json
+reportes/
+capturas/
+alertas.log
+ULTIMA_ALERTA.md
+ULTIMO_DIAGNOSTICO.md
+estado_fallos.json
+__pycache__/
+

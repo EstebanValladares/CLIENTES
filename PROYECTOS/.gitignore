@@ -1,0 +1,7 @@
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+
+# Logs de depuración local
+log_depuracion.txt
+

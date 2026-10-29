@@ -1,0 +1,51 @@
+flowchart LR
+  proyecto_ASIGNACION_SUBOBRAS["ASIGNACION_SUBOBRAS"]
+  proyecto_CONTROL_PAGOS_OC["CONTROL_PAGOS_OC"]
+  proyecto_CREACION_USUARIOS["CREACION_USUARIOS"]
+  proyecto_DASHBOARD_NUCLEO["DASHBOARD_NUCLEO"]
+  proyecto_DEPURACION_PERMISOS["DEPURACION_PERMISOS"]
+  proyecto_INSUMOS_JSON["INSUMOS_JSON"]
+  proyecto_REVISION_REQUISICIONES["REVISION_REQUISICIONES"]
+  referencia_rota_DATOS_CONFIGURACION_PUESTOS{{"⚠ DATOS_CONFIGURACION_PUESTOS"}}
+  proyecto_CREACION_USUARIOS -.->|referencia| referencia_rota_DATOS_CONFIGURACION_PUESTOS
+  proyecto_DASHBOARD_NUCLEO -.->|referencia| proyecto_CREACION_USUARIOS
+  dato_ASIGNACION_SUBOBRAS_obras_json[("ASIGNACION_SUBOBRAS/obras.json")]
+  proyecto_ASIGNACION_SUBOBRAS -->|usa_dato| dato_ASIGNACION_SUBOBRAS_obras_json
+  dato_ASIGNACION_SUBOBRAS_errores_txt[("ASIGNACION_SUBOBRAS/errores.txt")]
+  proyecto_ASIGNACION_SUBOBRAS -->|usa_dato| dato_ASIGNACION_SUBOBRAS_errores_txt
+  dato_ASIGNACION_SUBOBRAS_obras_pendientes_json[("ASIGNACION_SUBOBRAS/obras_pendientes.json")]
+  proyecto_ASIGNACION_SUBOBRAS -->|usa_dato| dato_ASIGNACION_SUBOBRAS_obras_pendientes_json
+  dato_CONTROL_PAGOS_OC_insumos_csv[("CONTROL_PAGOS_OC/insumos.csv")]
+  proyecto_CONTROL_PAGOS_OC -->|usa_dato| dato_CONTROL_PAGOS_OC_insumos_csv
+  dato_CONTROL_PAGOS_OC_pagos_csv[("CONTROL_PAGOS_OC/pagos.csv")]
+  proyecto_CONTROL_PAGOS_OC -->|usa_dato| dato_CONTROL_PAGOS_OC_pagos_csv
+  dato_CONTROL_PAGOS_OC_proveedores_csv[("CONTROL_PAGOS_OC/proveedores.csv")]
+  proyecto_CONTROL_PAGOS_OC -->|usa_dato| dato_CONTROL_PAGOS_OC_proveedores_csv
+  dato_CREACION_USUARIOS_datos_csv[("CREACION_USUARIOS/datos.csv")]
+  proyecto_CREACION_USUARIOS -->|usa_dato| dato_CREACION_USUARIOS_datos_csv
+  dato_CREACION_USUARIOS_puestos_json[("CREACION_USUARIOS/puestos.json")]
+  proyecto_CREACION_USUARIOS -->|usa_dato| dato_CREACION_USUARIOS_puestos_json
+  dato_CREACION_USUARIOS_datos_txt[("CREACION_USUARIOS/datos.txt")]
+  proyecto_CREACION_USUARIOS -->|usa_dato| dato_CREACION_USUARIOS_datos_txt
+  dato_DASHBOARD_NUCLEO_datos_txt[("DASHBOARD_NUCLEO/datos.txt")]
+  proyecto_DASHBOARD_NUCLEO -->|usa_dato| dato_DASHBOARD_NUCLEO_datos_txt
+  dato_DASHBOARD_NUCLEO_proyectos_json[("DASHBOARD_NUCLEO/proyectos.json")]
+  proyecto_DASHBOARD_NUCLEO -->|usa_dato| dato_DASHBOARD_NUCLEO_proyectos_json
+  dato_DASHBOARD_NUCLEO_puestos_json[("DASHBOARD_NUCLEO/puestos.json")]
+  proyecto_DASHBOARD_NUCLEO -->|usa_dato| dato_DASHBOARD_NUCLEO_puestos_json
+  dato_INSUMOS_JSON_catalogo_json[("INSUMOS_JSON/catalogo.json")]
+  proyecto_INSUMOS_JSON -->|usa_dato| dato_INSUMOS_JSON_catalogo_json
+  dato_REVISION_REQUISICIONES_codigos_json[("REVISION_REQUISICIONES/codigos.json")]
+  proyecto_REVISION_REQUISICIONES -->|usa_dato| dato_REVISION_REQUISICIONES_codigos_json
+  dato_REVISION_REQUISICIONES_datos_csv[("REVISION_REQUISICIONES/datos.csv")]
+  proyecto_REVISION_REQUISICIONES -->|usa_dato| dato_REVISION_REQUISICIONES_datos_csv
+  dato_REVISION_REQUISICIONES_tarjeta_csv[("REVISION_REQUISICIONES/tarjeta.csv")]
+  proyecto_REVISION_REQUISICIONES -->|usa_dato| dato_REVISION_REQUISICIONES_tarjeta_csv
+  portal__raiz_(("(raiz)"))
+  proyecto_ASIGNACION_SUBOBRAS -->|visita| portal__raiz_
+  proyecto_CREACION_USUARIOS -->|visita| portal__raiz_
+  portal_kontrol_usuarios(("kontrol/usuarios"))
+  proyecto_CREACION_USUARIOS -->|visita| portal_kontrol_usuarios
+  proyecto_DEPURACION_PERMISOS -->|visita| portal_kontrol_usuarios
+  proyecto_DEPURACION_PERMISOS -->|visita| portal__raiz_
+  proyecto_REVISION_REQUISICIONES -->|visita| portal__raiz_
