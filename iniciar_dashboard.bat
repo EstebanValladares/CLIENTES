@@ -7,22 +7,31 @@ echo           CENTRO DE INTELIGENCIA OPERATIVA - GRUPO VELAS
 echo ======================================================================
 echo.
 
-:: 1. Verificacion de Python
+:: 1. Deteccion inteligente de Python en el sistema
+set "PY_CMD=python"
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    color 0C
-    echo [ERROR]: Python no esta instalado o no se encuentra en el PATH del sistema.
-    echo.
-    echo Por favor instala Python 3.10 o superior descargandolo de python.org
-    echo y asegurate de marcar la casilla "Add python.exe to PATH".
-    echo.
-    pause
-    exit /b 1
+    py --version >nul 2>&1
+    if %errorlevel% equ 0 (
+        set "PY_CMD=py"
+    ) else (
+        color 0C
+        echo [ERROR]: Python no esta instalado o no se encuentra en el PATH del sistema.
+        echo.
+        echo Por favor instala Python 3.10 o superior descargandolo de:
+        echo https://www.python.org/downloads/
+        echo.
+        echo REQUISITO INDISPENSABLE:
+        echo En el instalador marca la casilla "Add python.exe to PATH".
+        echo.
+        pause
+        exit /b 1
+    )
 )
 
-:: 2. Sincronizacion opcional con Git
+:: 2. Sincronizacion con Git (si esta enlazado al repositorio remoto)
 if exist ".git" (
-    echo [1/3] Verificando actualizaciones del sistema en GitHub...
+    echo [1/3] Verificando actualizaciones en GitHub...
     git pull origin main --quiet 2>nul
     echo [OK] Sistema al dia con la nube.
 ) else (
@@ -30,40 +39,40 @@ if exist ".git" (
 )
 echo.
 
-:: 3. Verificacion y auto-instalacion de librerias necesarias
-echo [2/3] Verificando librerias del sistema (FastAPI, Uvicorn, Firebase)...
-python -c "import fastapi, uvicorn, firebase_admin, pydantic, requests" >nul 2>&1
+:: 3. Verificacion y auto-instalacion de dependencias
+echo [2/3] Verificando dependencias necesarias (FastAPI, Uvicorn, Firebase)...
+%PY_CMD% -c "import fastapi, uvicorn, firebase_admin, pydantic, requests" >nul 2>&1
 if %errorlevel% neq 0 (
     echo.
-    echo [INFO] Detectamos que faltan componentes para ejecutar la aplicacion.
-    echo [INFO] Instalando dependencias automaticamente... (espera un momento)
+    echo [INFO] Detectamos componentes pendientes por instalar.
+    echo [INFO] Instalando dependencias de Python automaticamente...
     echo.
-    python -m pip install --upgrade pip --quiet 2>nul
-    python -m pip install -r requirements.txt
+    %PY_CMD% -m pip install --upgrade pip --quiet 2>nul
+    %PY_CMD% -m pip install -r requirements.txt
     if %errorlevel% neq 0 (
         color 0C
         echo.
-        echo [ERROR]: No se pudieron instalar las librerias con pip.
-        echo Revisa tu conexion a Internet y vuelve a ejecutar este archivo.
+        echo [ERROR]: No se pudieron instalar las dependencias con pip.
+        echo Verifica tu conexion a Internet y vuelve a ejecutar este archivo.
         echo.
         pause
         exit /b 1
     )
     echo [OK] Todas las dependencias se instalaron correctamente.
 ) else (
-    echo [OK] Dependencias listas.
+    echo [OK] Todas las librerias estan listas.
 )
 echo.
 
 :: 4. Lanzamiento del servidor y apertura automatica del navegador
 echo [3/3] Iniciando servidor del Dashboard en http://127.0.0.1:8000 ...
-echo [INFO] Presiona CTRL + C en esta ventana cuando desees apagar el servidor.
+echo [INFO] Para cerrar el sistema, simplemente cierra esta ventana o presiona CTRL+C.
 echo.
 start "" "http://127.0.0.1:8000"
-python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+%PY_CMD% -m uvicorn api.main:app --host 127.0.0.1 --port 8000
 if %errorlevel% neq 0 (
     color 0C
     echo.
-    echo [AVISO]: El servidor se detuvo o el puerto 8000 ya esta en uso.
+    echo [AVISO]: El servidor se detuvo o el puerto 8000 ya esta en uso por otra app.
 )
 pause
