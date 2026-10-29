@@ -64,11 +64,7 @@ class BotRunnerService:
 
     @classmethod
     def obtener_python_bin(cls) -> str:
-        candidatos = [
-            r"C:\Users\esteb\AppData\Local\Programs\Python\Python312\python.exe",
-            r"C:\Users\esteb\AppData\Local\Programs\Python\Python314\python.exe",
-            sys.executable
-        ]
+        candidatos = [sys.executable, "python", "py"]
         for py in candidatos:
             if os.path.exists(py):
                 return py

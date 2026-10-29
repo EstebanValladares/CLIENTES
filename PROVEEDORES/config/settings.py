@@ -72,7 +72,7 @@ def obtener_credenciales() -> Tuple[str, str]:
     except Exception:
         load_dotenv(dotenv_path=ECOSYSTEM_DIR / ".env")
         load_dotenv(dotenv_path=BASE_DIR / ".env")
-        user = os.getenv("EK9_USER", "yeudiel.richard@grupovelas.com").strip()
-        password = os.getenv("EK9_PASS", "NzU0NjQ=").strip()
+        user = os.getenv("EK9_USER", "").strip()
+        password = os.getenv("EK9_PASS", "").strip()
         return user, password
 

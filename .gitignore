@@ -8,8 +8,10 @@ __pycache__/
 .env.*
 *.env
 
-# Logs
+# Logs y capturas
 *.log
+capturas/
+reportes/
 
 # Entornos virtuales
 venv/

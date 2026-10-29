@@ -38,8 +38,8 @@ try:
     USER, PASSWORD = obtener_credenciales_aryve()
 except Exception:
     load_dotenv()
-    USER = os.getenv("EK9_USER", "yeudiel.richard@grupovelas.com")
-    PASSWORD = os.getenv("EK9_PASS", "NzU0NjQ=")
+    USER = os.getenv("EK9_USER", "")
+    PASSWORD = os.getenv("EK9_PASS", "")
 
 TARGET_URL = "#/scp/Proveedores/id?nuevo"
 RUTA_REGISTRO_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "registro_proveedores.json")

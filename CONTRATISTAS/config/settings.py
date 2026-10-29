@@ -83,8 +83,8 @@ def resolver_credenciales(user_arg: Optional[str] = None, pass_arg: Optional[str
                 except Exception:
                     pass
 
-    usuario = usuario or "yeudiel.richard@grupovelas.com"
-    password = password or "NzU0NjQ="
+    usuario = usuario or ""
+    password = password or ""
 
     return usuario, password
 

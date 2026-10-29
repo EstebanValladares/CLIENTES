@@ -119,7 +119,7 @@ def _sondear_telemetria_oc():
     }
 
     try:
-        req = urllib.request.Request(oc_url, headers={"User-Agent": "TorreControl-DASHBOARD_EK10"})
+        req = urllib.request.Request(oc_url, headers={"User-Agent": "TorreControl-CLIENTES"})
         with urllib.request.urlopen(req, timeout=5.0) as resp:
             if resp.status == 200:
                 data = json.loads(resp.read().decode("utf-8"))

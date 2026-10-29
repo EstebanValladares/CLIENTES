@@ -35,7 +35,7 @@ class UserService:
         usuarios: List[Dict[str, Any]] = []
         ids_vistos = set()
 
-        if os.path.exists(RUTA_USUARIOS_JSON):
+        if False and os.path.exists(RUTA_USUARIOS_JSON):
             try:
                 with open(RUTA_USUARIOS_JSON, "r", encoding="utf-8") as f:
                     datos = json.load(f)
