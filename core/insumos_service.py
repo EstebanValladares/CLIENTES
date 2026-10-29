@@ -18,7 +18,7 @@ INSUMOS_CACHE_DIR = os.path.join(BASE_DIR, "OBRAS", "INSUMOS_CACHE")
 os.makedirs(INSUMOS_CACHE_DIR, exist_ok=True)
 
 # Configuración Maestra (Solo presente y activa en el repositorio Master)
-API_BASE = "http:///API/suministro_nivel"
+API_BASE = ""
 API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php" if API_BASE else ""
 API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php" if API_BASE else ""
 API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php" if API_BASE else ""
