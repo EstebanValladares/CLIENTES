@@ -250,94 +250,163 @@
     <!-- ======================================================== -->
     <!-- TORRE DE CONTROL: SALUD DE PROYECTOS (FIJA EN TODAS LAS VISTAS) -->
     <!-- ======================================================== -->
-                <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
       <div v-for="proyecto in proyectosTorre" :key="proyecto.id"
-           class="bg-slate-800/90 border border-slate-700/80 p-5 rounded-2xl shadow-md hover:border-slate-600 transition flex flex-col justify-between">
+           class="bg-slate-800/90 border p-5 rounded-2xl shadow-md transition flex flex-col justify-between"
+           :class="proyecto.desactualizado ? 'border-amber-500/60 shadow-amber-500/10' : 'border-slate-700/80 hover:border-slate-600'">
         
         <!-- Header de la Tarjeta del Proyecto -->
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-inner"
-                 :class="proyecto.activo ? 'bg-indigo-600/20 border border-indigo-500/30 text-indigo-400' : 'bg-rose-500/10 border border-rose-500/20 text-rose-400'">
+                 :class="proyecto.desactualizado ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : (proyecto.activo ? 'bg-indigo-600/20 border border-indigo-500/30 text-indigo-400' : 'bg-rose-500/10 border border-rose-500/20 text-rose-400')">
               <i :class="proyecto.icono"></i>
             </div>
             <div>
               <div class="flex items-center gap-2">
                 <p class="text-xs font-bold uppercase text-white tracking-wider">{{ proyecto.nombre }}</p>
-                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-900 border border-slate-700 text-slate-400" :title="'Tiempo activo del servicio: ' + proyecto.uptime">{{ proyecto.uptime || '0s' }}</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-900 border border-slate-700 text-slate-400" :title="'Tiempo activo / Sinc: ' + (proyecto.uptime || '0s')">{{ proyecto.uptime || '0s' }}</span>
               </div>
               <p class="text-[11px] text-slate-400 mt-0.5">{{ proyecto.descripcion }}</p>
             </div>
           </div>
           <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold"
-                :class="proyecto.activo ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'">
-            <span class="w-1.5 h-1.5 rounded-full" :class="proyecto.activo ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'"></span>
+                :class="proyecto.desactualizado ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' : (proyecto.activo ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20')">
+            <span class="w-1.5 h-1.5 rounded-full" :class="proyecto.desactualizado ? 'bg-amber-400 animate-ping' : (proyecto.activo ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400')"></span>
             {{ proyecto.estado }}
           </span>
         </div>
 
-        <!-- Métrica Principal: HOY SEPARADO POR ARYVE Y VELAS -->
-        <div class="grid grid-cols-3 gap-2 my-3 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-center">
-          <!-- ARYVE HOY -->
-          <div class="border-r border-slate-800/80 pr-1">
-            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Aryve Hoy</span>
-            <span class="text-base font-extrabold text-emerald-400 font-mono">{{ proyecto.ocs_hoy_aryve ?? 0 }}</span>
-            <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_aryve ? (proyecto.total_aryve).toLocaleString() : 0 }} tot</span>
-          </div>
+        <!-- CONTENIDO PROYECTO 1: OC (ENKONTROL / ARYVE) -->
+        <template v-if="proyecto.id === 'OC'">
+          <!-- Métrica Principal: HOY SEPARADO POR ARYVE Y VELAS -->
+          <div class="grid grid-cols-3 gap-2 my-3 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-center">
+            <!-- ARYVE HOY -->
+            <div class="border-r border-slate-800/80 pr-1">
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Aryve Hoy</span>
+              <span class="text-base font-extrabold text-emerald-400 font-mono">{{ proyecto.ocs_hoy_aryve ?? 0 }}</span>
+              <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_aryve ? (proyecto.total_aryve).toLocaleString() : 0 }} tot</span>
+            </div>
 
-          <!-- VELAS HOY -->
-          <div class="border-r border-slate-800/80 pr-1">
-            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Velas Hoy</span>
-            <span class="text-base font-extrabold text-teal-400 font-mono">{{ proyecto.ocs_hoy_velas ?? 0 }}</span>
-            <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_velas ? (proyecto.total_velas).toLocaleString() : 0 }} tot</span>
-          </div>
+            <!-- VELAS HOY -->
+            <div class="border-r border-slate-800/80 pr-1">
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Velas Hoy</span>
+              <span class="text-base font-extrabold text-teal-400 font-mono">{{ proyecto.ocs_hoy_velas ?? 0 }}</span>
+              <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_velas ? (proyecto.total_velas).toLocaleString() : 0 }} tot</span>
+            </div>
 
-          <!-- TOTAL HOY COMBINADO -->
-          <div>
-            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">{{ proyecto.dia_actual || 'Total Hoy' }}</span>
-            <span class="text-base font-extrabold text-white font-mono">{{ (proyecto.ocs_hoy_total ?? 0) }}</span>
-            <span class="text-[9px] text-indigo-300 block font-mono">{{ proyecto.total_global ? (proyecto.total_global).toLocaleString() : 0 }} global</span>
-          </div>
-        </div>
-
-        <!-- Desglose Mini de los Últimos Días (Aryve / Velas por día) -->
-        <div v-if="proyecto.historial_dias && proyecto.historial_dias.length > 0" class="mb-3 pt-2 border-t border-slate-800/80">
-          <div class="flex items-center justify-between text-[10px] text-slate-400 font-semibold mb-1.5 px-1">
-            <span>OCs por día (Aryve / Velas):</span>
-            <span class="text-slate-500 font-mono text-[9px]">Enkontrol EK9</span>
-          </div>
-          <div class="grid grid-cols-5 gap-1 text-center font-mono">
-            <div v-for="d in proyecto.historial_dias" :key="d.fecha" 
-                 class="bg-slate-900/90 border border-slate-800 rounded-lg py-1 px-1 flex flex-col justify-between" 
-                 :title="d.dia + ' (' + d.fecha + '): ' + d.aryve + ' Aryve + ' + d.velas + ' Velas = ' + d.total + ' OCs'">
-              <span class="text-[9px] text-indigo-300 block font-sans truncate font-bold">{{ d.dia.slice(0, 3) }}</span>
-              <div class="text-[11px] leading-tight my-0.5">
-                <span class="text-emerald-400 font-bold">{{ d.aryve }}</span>
-                <span class="text-slate-600 text-[9px] mx-0.5">/</span>
-                <span class="text-teal-400 font-bold">{{ d.velas }}</span>
-              </div>
-              <span class="text-[9px] text-slate-500">{{ d.total }}</span>
+            <!-- TOTAL HOY COMBINADO -->
+            <div>
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">{{ proyecto.dia_actual || 'Total Hoy' }}</span>
+              <span class="text-base font-extrabold text-white font-mono">{{ (proyecto.ocs_hoy_total ?? 0) }}</span>
+              <span class="text-[9px] text-indigo-300 block font-mono">{{ proyecto.total_global ? (proyecto.total_global).toLocaleString() : 0 }} global</span>
             </div>
           </div>
-        </div>
 
-        <!-- Métrica de Salud Inferior y Conexión -->
-        <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-xs">
-          <div class="flex items-center gap-1.5">
-            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Salud:</span>
-            <span class="font-extrabold font-mono" :class="proyecto.activo ? 'text-emerald-400' : 'text-rose-400'">{{ proyecto.salud }}</span>
+          <!-- Desglose Mini de los Últimos Días (Aryve / Velas por día) -->
+          <div v-if="proyecto.historial_dias && proyecto.historial_dias.length > 0" class="mb-3 pt-2 border-t border-slate-800/80">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 font-semibold mb-1.5 px-1">
+              <span>OCs por día (Aryve / Velas):</span>
+              <span class="text-slate-500 font-mono text-[9px]">Enkontrol EK9</span>
+            </div>
+            <div class="grid grid-cols-5 gap-1 text-center font-mono">
+              <div v-for="d in proyecto.historial_dias" :key="d.fecha" 
+                   class="bg-slate-900/90 border border-slate-800 rounded-lg py-1 px-1 flex flex-col justify-between" 
+                   :title="d.dia + ' (' + d.fecha + '): ' + d.aryve + ' Aryve + ' + d.velas + ' Velas = ' + d.total + ' OCs'">
+                <span class="text-[9px] text-indigo-300 block font-sans truncate font-bold">{{ d.dia.slice(0, 3) }}</span>
+                <div class="text-[11px] leading-tight my-0.5">
+                  <span class="text-emerald-400 font-bold">{{ d.aryve }}</span>
+                  <span class="text-slate-600 text-[9px] mx-0.5">/</span>
+                  <span class="text-teal-400 font-bold">{{ d.velas }}</span>
+                </div>
+                <span class="text-[9px] text-slate-500">{{ d.total }}</span>
+              </div>
+            </div>
           </div>
-          <div class="text-right flex items-center gap-1.5 font-mono text-[11px]">
-            <button @click="sincronizarOCAhora" :disabled="sincronizandoOC" 
-                    class="p-1 px-1.5 rounded bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-300 hover:text-emerald-300 transition text-[10px] font-sans flex items-center gap-1 cursor-pointer" 
-                    title="Sincronizar ahora con Enkontrol">
-              <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoOC}"></i>
-              <span>{{ sincronizandoOC ? 'Sync...' : 'Sync' }}</span>
-            </button>
-            <span class="text-[10px] text-slate-400 font-sans">Latencia:</span>
-            <span class="font-semibold text-indigo-400">{{ proyecto.latencia_ms ? proyecto.latencia_ms + 'ms' : 'N/A' }}</span>
+
+          <!-- Métrica de Salud Inferior y Conexión -->
+          <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Salud:</span>
+              <span class="font-extrabold font-mono" :class="proyecto.activo ? 'text-emerald-400' : 'text-rose-400'">{{ proyecto.salud }}</span>
+            </div>
+            <div class="text-right flex items-center gap-1.5 font-mono text-[11px]">
+              <button @click="sincronizarOCAhora" :disabled="sincronizandoOC" 
+                      class="p-1 px-1.5 rounded bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-300 hover:text-emerald-300 transition text-[10px] font-sans flex items-center gap-1 cursor-pointer" 
+                      title="Sincronizar ahora con Enkontrol">
+                <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoOC}"></i>
+                <span>{{ sincronizandoOC ? 'Sync...' : 'Sync' }}</span>
+              </button>
+              <span class="text-[10px] text-slate-400 font-sans">Latencia:</span>
+              <span class="font-semibold text-indigo-400">{{ proyecto.latencia_ms ? proyecto.latencia_ms + 'ms' : 'N/A' }}</span>
+            </div>
           </div>
-        </div>
+        </template>
+
+        <!-- CONTENIDO PROYECTO 2: CLIENTES (VERSIÓN EQUIPO SEGURO) -->
+        <template v-else-if="proyecto.id === 'CLIENTES'">
+          <!-- Métrica Principal de Versión Cliente -->
+          <div class="grid grid-cols-3 gap-2 my-3 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-center">
+            <!-- REPO DESTINO -->
+            <div class="border-r border-slate-800/80 pr-1">
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Destino</span>
+              <span class="text-xs font-bold text-white font-mono truncate block" title="DASHBOARD_EK10_APP">EK10_APP</span>
+              <span class="text-[9px] text-indigo-400 block truncate font-mono">Equipo</span>
+            </div>
+
+            <!-- SEGURIDAD -->
+            <div class="border-r border-slate-800/80 pr-1">
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Seguridad</span>
+              <span class="text-xs font-extrabold text-emerald-400 flex items-center justify-center gap-1">
+                <i class="fa-solid fa-shield-halved"></i> 100%
+              </span>
+              <span class="text-[9px] text-slate-500 block truncate">Blindado</span>
+            </div>
+
+            <!-- TIEMPO / GIT -->
+            <div>
+              <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Publicación</span>
+              <span class="text-[11px] font-bold font-mono block truncate" :class="proyecto.desactualizado ? 'text-amber-400' : 'text-emerald-400'">
+                {{ proyecto.tiempo_transcurrido || '-' }}
+              </span>
+              <span class="text-[9px] text-slate-500 block font-mono truncate" :title="proyecto.ultima_publicacion">{{ proyecto.commit ? 'Git ' + proyecto.commit : 'Firebase' }}</span>
+            </div>
+          </div>
+
+          <!-- Mensaje / Alerta de Estado Visual -->
+          <div class="mb-3">
+            <div v-if="proyecto.desactualizado" 
+                 class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-300 text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-400 shrink-0"></i>
+              <span class="truncate">Hay cambios en Master pendientes de enviar al equipo.</span>
+            </div>
+            <div v-else 
+                 class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 shrink-0"></i>
+              <span class="truncate">Versión del equipo sincronizada y blindada al día.</span>
+            </div>
+          </div>
+
+          <!-- Pie y Botón de Acción Directo -->
+          <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Modo:</span>
+              <span class="font-extrabold font-mono text-indigo-400">{{ proyecto.es_master ? 'MASTER' : 'CLIENTE' }}</span>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button @click="publicarVersionCliente" :disabled="publicandoCliente" 
+                      class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow"
+                      :class="proyecto.desactualizado 
+                        ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold border border-amber-400 shadow-amber-500/20' 
+                        : 'bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-200 hover:text-emerald-300'"
+                      :title="proyecto.desactualizado ? 'Publicar cambios y blindar versión equipo' : 'Forzar sincronización con versión equipo'">
+                <i class="fa-solid" :class="publicandoCliente ? 'fa-arrows-rotate fa-spin text-white' : (proyecto.desactualizado ? 'fa-cloud-arrow-up' : 'fa-arrows-rotate')"></i>
+                <span>{{ publicandoCliente ? 'Publicando...' : (proyecto.desactualizado ? 'ACTUALIZAR EQUIPO' : 'RE-PUBLICAR') }}</span>
+              </button>
+            </div>
+          </div>
+        </template>
 
       </div>
     </section>

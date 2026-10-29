@@ -191,6 +191,26 @@ createApp({
       }
     };
 
+    const publicandoCliente = ref(false);
+    const publicarVersionCliente = async () => {
+      if (publicandoCliente.value) return;
+      publicandoCliente.value = true;
+      try {
+        const res = await fetch('/api/torre/publicar-cliente', { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          alert('Error al publicar versión: ' + (data.mensaje || 'Error desconocido'));
+        } else {
+          await cargarProyectosTorre();
+        }
+      } catch (e) {
+        console.error('Error publicando versión cliente:', e);
+        alert('Fallo de conexión al publicar: ' + e.message);
+      } finally {
+        publicandoCliente.value = false;
+      }
+    };
+
     const proyectosTorre = ref([
       {
         id: 'OC',
@@ -201,6 +221,17 @@ createApp({
         estado: 'OFFLINE',
         activo: false,
         servicios: 'Desconectado'
+      },
+      {
+        id: 'CLIENTES',
+        nombre: 'CLIENTES',
+        descripcion: 'Versión Limpia / Equipo (Firebase)',
+        icono: 'fa-solid fa-users-gear',
+        salud: '100%',
+        estado: 'ACTUALIZADO',
+        activo: true,
+        desactualizado: false,
+        servicios: 'Google Firebase Firestore'
       }
     ]);
 
@@ -1425,6 +1456,8 @@ createApp({
       proyectosTorre,
       sincronizandoOC,
       sincronizarOCAhora,
+      publicandoCliente,
+      publicarVersionCliente,
       cargarProyectosTorre,
       // Navegación
       vistaActiva,

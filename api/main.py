@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import threading
 import urllib.request
 import urllib.error
@@ -71,7 +72,7 @@ def metricas_globales():
     }
 
 # ==============================================================================
-# TORRE DE CONTROL: TELEMETRÍA EN VIVO DE CONTROL_PAGOS_OC (NO BLOQUEANTE)
+# TORRE DE CONTROL: TELEMETRÍA EN VIVO (OC & CLIENTES)
 # ==============================================================================
 _estado_torre_cache = {
     "id": "OC",
@@ -156,6 +157,91 @@ def _sondear_telemetria_oc():
     with _lock_torre:
         _estado_torre_cache = estado_oc
 
+def _obtener_estado_cliente() -> dict:
+    """Verifica si la versión pública/equipo (DASHBOARD_EK10_APP) está sincronizada con Master"""
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    publisher_script = os.path.join(base_dir, "publicar_version_equipo.py")
+    meta_path = os.path.join(base_dir, ".ultima_publicacion.json")
+    client_dir = os.path.join(os.path.dirname(base_dir), "DASHBOARD_EK10_APP")
+    
+    es_master = os.path.exists(publisher_script)
+    
+    desactualizado = False
+    ultima_fecha = "Pendiente"
+    tiempo_str = "Sin publicar"
+    commit_hash = "-"
+    
+    if os.path.exists(meta_path):
+        try:
+            with open(meta_path, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            last_pub_ts = meta.get("timestamp", 0)
+            ultima_fecha = meta.get("fecha_hora", "-")
+            commit_hash = meta.get("commit", "-")
+            
+            # Calcular tiempo transcurrido
+            delta = time.time() - last_pub_ts
+            if delta < 60:
+                tiempo_str = "Hace unos segundos"
+            elif delta < 3600:
+                tiempo_str = f"Hace {int(delta // 60)} min"
+            elif delta < 86400:
+                tiempo_str = f"Hace {int(delta // 3600)} h"
+            else:
+                tiempo_str = f"Hace {int(delta // 86400)} d"
+                
+            # Verificar si algún archivo del master fue modificado después de la última publicación
+            if es_master:
+                rutas_a_monitorear = [
+                    os.path.join(base_dir, "api", "main.py"),
+                    os.path.join(base_dir, "vue", "index.html"),
+                    os.path.join(base_dir, "vue", "static", "js", "app.js"),
+                    os.path.join(base_dir, "vue", "static", "css", "styles.css"),
+                    os.path.join(base_dir, "USUARIOS", "puestos.json"),
+                    os.path.join(base_dir, "OBRAS", "catalogo_obras.json"),
+                ]
+                
+                for carpeta in ["api", "core"]:
+                    c_path = os.path.join(base_dir, carpeta)
+                    if os.path.exists(c_path):
+                        for f in os.listdir(c_path):
+                            if f.endswith(".py"):
+                                rutas_a_monitorear.append(os.path.join(c_path, f))
+                                
+                for ruta in rutas_a_monitorear:
+                    if os.path.exists(ruta):
+                        mtime = os.path.getmtime(ruta)
+                        if mtime > (last_pub_ts + 2.0):
+                            desactualizado = True
+                            break
+        except Exception:
+            desactualizado = True
+    else:
+        desactualizado = True if es_master else False
+        
+    if not os.path.exists(client_dir) and es_master:
+        desactualizado = True
+        
+    estado = "DESACTUALIZADO" if desactualizado else "ACTUALIZADO"
+    
+    return {
+        "id": "CLIENTES",
+        "nombre": "CLIENTES",
+        "descripcion": "Versión Limpia / Equipo (Firebase)",
+        "icono": "fa-solid fa-users-gear",
+        "salud": "100%" if not desactualizado else "85%",
+        "estado": estado,
+        "activo": True,
+        "desactualizado": desactualizado,
+        "es_master": es_master,
+        "servicios": "Google Firebase Firestore",
+        "ultima_publicacion": ultima_fecha,
+        "tiempo_transcurrido": tiempo_str,
+        "commit": commit_hash,
+        "latencia_ms": 1,
+        "uptime": tiempo_str
+    }
+
 @app.on_event("startup")
 def startup_event():
     # Inicia el demonio que mantiene las OCs de Enkontrol sincronizadas en tiempo real cada 2 minutos
@@ -163,7 +249,6 @@ def startup_event():
     
     # Hilo de sondeo continuo de telemetría de CONTROL_PAGOS_OC (cada 4s)
     def _bucle_torre():
-        import time
         while True:
             _sondear_telemetria_oc()
             time.sleep(4)
@@ -176,14 +261,28 @@ def sync_oc_manual():
     _sondear_telemetria_oc()
     return res
 
+@app.post("/api/torre/publicar-cliente")
+def publicar_version_cliente_api():
+    """Ejecuta la sincronización y blindaje de la versión del equipo/cliente."""
+    try:
+        from publicar_version_equipo import publicar_version
+        res = publicar_version()
+        return res
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "mensaje": str(e)})
+
 @app.get("/api/torre/proyectos")
 def obtener_proyectos_torre():
     """
     Torre de Control: Devuelve al instante (<0.1ms) el estado de la telemetría
-    sin bloquear a los usuarios ni congelar la pantalla.
+    de todos los proyectos y versiones integradas:
+    - OC (Enkontrol / Aryve)
+    - CLIENTES (Versión Pública / Equipo)
     """
     with _lock_torre:
-        return [dict(_estado_torre_cache)]
+        oc = dict(_estado_torre_cache)
+    cliente = _obtener_estado_cliente()
+    return [oc, cliente]
 
 # Servir Frontend (Vue)
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "..", "vue")
