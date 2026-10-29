@@ -131,10 +131,12 @@ def seleccionar_opcion_menu(
 
         # Localizar resultado
         texto_norm = normalizar_alnum(texto_a_elegir)
+        texto_limpio = texto_a_elegir.replace('-', ' ')
         xpath_opciones = [
             f"//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and normalize-space()='{texto_a_elegir}']",
             f"//li[contains(@class, 'select2-results__option') and contains(., '{texto_a_elegir}')]",
-            "//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading'))][1]",
+            f"//li[contains(@class, 'select2-results__option') and contains(translate(., '-', ' '), '{texto_limpio}')]",
+            "//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and not(contains(@class, 'select2-results__message'))][1]",
         ]
 
         opcion = None
