@@ -87,6 +87,7 @@ createApp({
     const reporteInsumos = ref(null);
     const cargandoReporteInsumos = ref(false);
     const suministrandoObra = ref(false);
+    const esMaster = ref(false);
     const sincronizandoFirestoreObra = ref(false);
     const modalMovimientosVisible = ref(false);
     const cargandoMovimientos = ref(false);
@@ -196,6 +197,18 @@ createApp({
         const res = await fetch('/api/torre/sync-oc', { method: 'POST' });
         if (res.ok) {
           await cargarProyectosTorre();
+          const cargarEntorno = async () => {
+      try {
+        const res = await fetch('/api/entorno');
+        if (res.ok) {
+          const data = await res.json();
+          esMaster.value = !!data.es_master;
+        }
+      } catch (e) {
+        esMaster.value = false;
+      }
+    };
+    cargarEntorno();
         }
       } catch (e) {
         console.error('Error forzando sync OC:', e);
@@ -1590,6 +1603,7 @@ createApp({
       cerrarModalMovimientos,
       suministrarInsumosObra,
       sincronizarFirestoreObraActual,
+      esMaster,
 
       // Torre de Control (Proyectos)
       proyectosTorre,

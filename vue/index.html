@@ -1724,7 +1724,7 @@
 
                 <!-- Botones Especiales: Suministrar y Sincronizar Firestore -->
                 <div class="flex items-center gap-2 shrink-0">
-                  <button @click="suministrarInsumosObra" 
+                  <button v-if="esMaster" @click="suministrarInsumosObra" 
                           :disabled="suministrandoObra"
                           class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                           title="Suministrar masivamente insumos con Token de Autorización">
@@ -1732,7 +1732,7 @@
                     <span>{{ suministrandoObra ? 'Suministrando...' : 'Suministrar' }}</span>
                   </button>
 
-                  <button @click="sincronizarFirestoreObraActual" 
+                  <button v-if="esMaster" @click="sincronizarFirestoreObraActual" 
                           :disabled="sincronizandoFirestoreObra"
                           class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 transition flex items-center gap-1 cursor-pointer"
                           title="Subir a Firestore para que CLIENTES lo tenga en la nube">

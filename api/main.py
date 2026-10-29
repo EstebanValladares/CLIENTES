@@ -276,6 +276,11 @@ def publicar_version_cliente_api():
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "mensaje": str(e)})
 
+@app.get("/api/entorno")
+def obtener_entorno():
+    """Indica si el Dashboard se ejecuta en Modo Master o en Modo Cliente (Equipo)."""
+    return {"es_master": _es_modo_master()}
+
 @app.get("/api/torre/proyectos")
 def obtener_proyectos_torre():
     """

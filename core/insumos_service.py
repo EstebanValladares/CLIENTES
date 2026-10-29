@@ -1,10 +1,9 @@
 """
 Core Domain: Insumos & Órdenes de Compra Engine.
 Conexión en vivo con microservicios Aryve / Suministros:
-- reporte_insumo.php: Árbol WBS por partida con presupuestos, requisitado y comprado.
-- movimientos_insumo.php: Requisiciones y Órdenes de Compra en firme.
-- actualizar_suministro.php: Marcado de suministros masivo con Token de Autorización.
-- Sincronización transparente con Firestore y archivos locales.
+- Modo MASTER: Conecta en vivo a la API y sincroniza hacia Firestore.
+- Modo CLIENTE: Lee de forma 100% segura y aislada desde Firebase Firestore.
+  CERO exposición de IPs internas, tokens o endpoints de actualización.
 """
 
 import os
@@ -18,16 +17,21 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INSUMOS_CACHE_DIR = os.path.join(BASE_DIR, "OBRAS", "INSUMOS_CACHE")
 os.makedirs(INSUMOS_CACHE_DIR, exist_ok=True)
 
-API_BASE = "http://34.51.46.13/API/suministro_nivel"
-API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php"
-API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php"
-API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php"
-API_TOKEN = "b86fa23c3531a976c3d4cdb6c6feef66"
+# Configuración Maestra (Solo presente y activa en el repositorio Master)
+API_BASE = "http:///API/suministro_nivel"
+API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php" if API_BASE else ""
+API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php" if API_BASE else ""
+API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php" if API_BASE else ""
+API_TOKEN = ""
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*"
 }
+
+def _es_modo_master() -> bool:
+    publisher_script = os.path.join(BASE_DIR, "publicar_version_equipo.py")
+    return os.path.exists(publisher_script) and bool(API_BASE)
 
 class InsumosService:
 
@@ -41,11 +45,18 @@ class InsumosService:
     ) -> Dict[str, Any]:
         """
         Consulta el reporte completo de insumos por partida y resumen general de la obra.
+        En Master: Consulta API directa en vivo y guarda en caché / Firestore.
+        En Cliente: Consulta directamente desde Firebase Firestore (sin acceso a red interna).
         """
         obra_clean = str(obra).strip().upper()
         if not obra_clean:
             raise ValueError("Debe proporcionar la clave de la obra (ej. AT1, AT4).")
 
+        # Modo CLIENTE (Seguro / Firestore)
+        if not _es_modo_master():
+            return cls._consultar_desde_firestore_o_cache(obra_clean, insumo, nombre)
+
+        # Modo MASTER (API Directa)
         params = {"obra": obra_clean}
         insumo_clean = (insumo or "").strip()
         nombre_clean = (nombre or "").strip()
@@ -55,7 +66,6 @@ class InsumosService:
         if nombre_clean:
             params["nombre"] = nombre_clean
 
-        # Si el usuario no especificó ni insumo ni nombre, usamos 'a' para traer catálogo amplio
         if not insumo_clean and not nombre_clean:
             params["nombre"] = "a"
 
@@ -133,13 +143,103 @@ class InsumosService:
             raise RuntimeError(f"Fallo al conectar con servicio de insumos: {str(e)}")
 
     @classmethod
+    def _consultar_desde_firestore_o_cache(cls, obra: str, insumo: Optional[str], nombre: Optional[str]) -> Dict[str, Any]:
+        """Consulta segura de solo lectura desde Firebase Firestore para la versión de CLIENTES."""
+        data = None
+        cache_file = os.path.join(INSUMOS_CACHE_DIR, f"{obra}_reporte.json")
+
+        try:
+            from core.firebase_client import FirebaseClient
+            db = FirebaseClient.get_db()
+            if db:
+                doc = db.collection("OBRAS").document(obra).get()
+                if doc.exists:
+                    doc_data = doc.to_dict() or {}
+                    sub_frentes = []
+                    for f_doc in db.collection("OBRAS").document(obra).collection("frentes").stream():
+                        sub_frentes.append(f_doc.to_dict())
+
+                    data = {
+                        "ok": True,
+                        "obra": {"clave": obra, "nombre": doc_data.get("nombre", obra)},
+                        "metricas": doc_data.get("metricas", {}),
+                        "resumen": doc_data.get("resumen", []),
+                        "frentes": sub_frentes,
+                        "filtros_aplicados": {"obra": obra}
+                    }
+        except Exception as e:
+            print(f"[InsumosService] Aviso lectura Firestore: {e}")
+
+        # Fallback a caché local
+        if not data and os.path.exists(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except Exception:
+                pass
+
+        if not data:
+            return {
+                "ok": False,
+                "mensaje": f"La obra '{obra}' no ha sido sincronizada a la nube por el Administrador.",
+                "frentes": [],
+                "resumen": [],
+                "metricas": {}
+            }
+
+        # Filtrar localmente si el usuario introdujo clave o nombre
+        ins_q = (insumo or "").strip().upper()
+        nom_q = (nombre or "").strip().upper()
+
+        if ins_q or nom_q:
+            frentes_filtrados = []
+            for fr in data.get("frentes", []):
+                partidas_f = []
+                for p in fr.get("partidas", []):
+                    insumos_p = []
+                    for i in p.get("insumos", []):
+                        match_ins = not ins_q or ins_q in str(i.get("clave", "")).upper()
+                        match_nom = not nom_q or nom_q in str(i.get("nombre", "")).upper()
+                        if match_ins and match_nom:
+                            insumos_p.append(i)
+                    if insumos_p:
+                        p_copy = dict(p)
+                        p_copy["insumos"] = insumos_p
+                        partidas_f.append(p_copy)
+                if partidas_f:
+                    fr_copy = dict(fr)
+                    fr_copy["partidas"] = partidas_f
+                    frentes_filtrados.append(fr_copy)
+
+            resumen_f = []
+            for i in data.get("resumen", []):
+                match_ins = not ins_q or ins_q in str(i.get("clave", "")).upper()
+                match_nom = not nom_q or nom_q in str(i.get("nombre", "")).upper()
+                if match_ins and match_nom:
+                    resumen_f.append(i)
+
+            data["frentes"] = frentes_filtrados
+            data["resumen"] = resumen_f
+
+        return data
+
+    @classmethod
     def consultar_movimientos(cls, obra: str, partida: str, insumo: str) -> Dict[str, Any]:
-        """
-        Consulta el detalle de Requisiciones y Órdenes de Compra (OCs) para un insumo en una partida.
-        """
+        """Consulta el detalle de Requisiciones y Órdenes de Compra (OCs)."""
         obra_clean = str(obra).strip().upper()
         partida_clean = str(partida).strip()
         insumo_clean = str(insumo).strip()
+
+        # En modo cliente seguro, si no hay API_BASE, devuelve lista limpia
+        if not _es_modo_master():
+            return {
+                "ok": True,
+                "obra": obra_clean,
+                "partida": partida_clean,
+                "insumo": insumo_clean,
+                "requisiciones": [],
+                "ordenes_compra": []
+            }
 
         params = {
             "obra": obra_clean,
@@ -167,9 +267,13 @@ class InsumosService:
 
     @classmethod
     def actualizar_suministro_obra(cls, obra: str) -> Dict[str, Any]:
-        """
-        Ejecuta la marcación de suministros masivos en toda la obra mediante el token autorizado.
-        """
+        """Ejecuta la marcación de suministros masivos. SOLO MODO MASTER."""
+        if not _es_modo_master():
+            return {
+                "ok": False,
+                "mensaje": "Acción protegida: Solo el Administrador (Master) puede suministrar insumos."
+            }
+
         obra_clean = str(obra).strip().upper()
         data_payload = urllib.parse.urlencode({
             "obra": obra_clean,
@@ -199,10 +303,7 @@ class InsumosService:
 
     @classmethod
     def sincronizar_firestore(cls, obra: str, datos_reporte: Dict[str, Any]) -> bool:
-        """
-        Sincroniza el árbol de insumos y resumen financiero en Firebase Firestore
-        para que la app de CLIENTES pueda consumirlo desde la nube.
-        """
+        """Sincroniza el reporte en Firestore para lectura segura en CLIENTES."""
         try:
             from core.firebase_client import FirebaseClient
             db = FirebaseClient.get_db()
