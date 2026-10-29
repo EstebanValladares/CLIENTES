@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo de Gestión Operativa - Grupo Velas</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    [v-cloak] { display: none; }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(51, 65, 85, 0.8);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(71, 85, 105, 1);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white">
+
+  <div id="app" v-cloak class="p-6 max-w-[1700px] mx-auto min-h-screen flex flex-col">
+
+    <!-- HEADER EJECUTIVO -->
+    <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center pb-6 border-b border-slate-700 gap-4">
+      <div>
+        <div class="flex items-center gap-3.5">
+          <div class="bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/20 text-white">
+            <i class="fa-solid fa-layer-group text-2xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <h1 class="text-2xl font-bold tracking-tight text-white">Centro de Inteligencia Operativa</h1>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                In-Memory Cache O(1)
+              </span>
+            </div>
+            <p class="text-sm text-slate-400 mt-0.5">Grupo Velas • Aryve & Enkontrol Solutions</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN EXCLUSIVOS DE LA VISTA USUARIOS -->
+      <div v-if="vistaActiva === 'USUARIOS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <button @click="abrirModalUsuario" 
+                class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Crear Nuevo Usuario</span>
+        </button>
+
+        <button @click="abrirModalPosicion" 
+                class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer">
+          <i class="fa-solid fa-briefcase text-indigo-400"></i>
+          <span>Nueva Posición</span>
+        </button>
+
+        <button @click="sincronizarUsuariosAryve" 
+                :disabled="sincronizandoAryve"
+                class="bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50" 
+                title="Sincronizar usuarios en tiempo real directamente desde la nube de Aryve">
+          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': sincronizandoAryve}"></i>
+          <span>{{ sincronizandoAryve ? 'Sincronizando...' : 'Sincronizar Aryve' }}</span>
+        </button>
+
+        <button @click="cargarUsuarios" 
+                class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
+                title="Actualizar Datos">
+          <i class="fa-solid fa-rotate" :class="{'fa-spin': cargando}"></i>
+        </button>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA PROYECTOS -->
+      <div v-else-if="vistaActiva === 'PROYECTOS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <button @click="iniciarDepuracionPermisos" 
+                :disabled="ejecutandoDepuracion"
+                class="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer">
+          <i v-if="ejecutandoDepuracion" class="fa-solid fa-circle-notch fa-spin"></i>
+          <i v-else class="fa-solid fa-play"></i>
+          <span>{{ ejecutandoDepuracion ? 'Depurando...' : 'Comenzar Depuración' }}</span>
+        </button>
+
+        <button @click="cargarPermisos" 
+                class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
+                title="Actualizar Permisos">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA PROVEEDORES -->
+      <div v-else-if="vistaActiva === 'PROVEEDORES'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <button @click="iniciarProcesamientoProveedores" 
+                :disabled="ejecutandoProveedores || colaProveedores.length === 0"
+                class="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer">
+          <i v-if="ejecutandoProveedores" class="fa-solid fa-circle-notch fa-spin"></i>
+          <i v-else class="fa-solid fa-play"></i>
+          <span>{{ ejecutandoProveedores ? 'Procesando en Aryve...' : 'Iniciar Llenado de Proveedores' }}</span>
+        </button>
+
+        <button @click="cargarProveedores" 
+                class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
+                title="Actualizar Proveedores">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA CONTRATISTAS -->
+      <div v-else-if="vistaActiva === 'CONTRATISTAS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <button @click="sincronizarContratistasDB" 
+                :disabled="cargandoContratistas"
+                class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50" 
+                title="Sincronizar con Base de Datos (DBA.SU_CONTRATISTAS)">
+          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': cargandoContratistas}"></i>
+          <span>{{ cargandoContratistas ? 'Sincronizando...' : 'Sincronizar DB' }}</span>
+        </button>
+        <button @click="iniciarProcesamientoContratistas" 
+                :disabled="ejecutandoContratistas || colaContratistas.length === 0"
+                class="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer">
+          <i v-if="ejecutandoContratistas" class="fa-solid fa-circle-notch fa-spin"></i>
+          <i v-else class="fa-solid fa-play"></i>
+          <span>{{ ejecutandoContratistas ? 'Procesando en Aryve...' : 'Iniciar Proceso (' + colaContratistas.length + ')' }}</span>
+        </button>
+
+        <button @click="detenerProcesamientoContratistas" 
+                :disabled="!ejecutandoContratistas"
+                class="bg-rose-600 hover:bg-rose-500 disabled:bg-slate-800 disabled:text-slate-600 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-rose-600/25 transition cursor-pointer">
+          <i class="fa-solid fa-stop"></i>
+          <span>Detener</span>
+        </button>
+
+        <button @click="cargarContratistas(true)" 
+                class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
+                title="Actualizar DBA (Enkontrol)">
+          <i class="fa-solid fa-rotate" :class="{'fa-spin': cargandoContratistas}"></i>
+        </button>
+      </div>
+    
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA OBRAS -->
+      <div v-else-if="vistaActiva === 'OBRAS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <div class="hidden md:flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 px-3 py-1.5 rounded-xl text-xs font-mono text-slate-300">
+          <span class="text-indigo-400 font-bold">{{ metricasObras.total_obras || obrasCatalogo.length }}</span> Obras
+          <span class="text-slate-600">•</span>
+          <span class="text-blue-400 font-bold">{{ (metricasObras.total_frentes || 0).toLocaleString() }}</span> Frentes
+          <span class="text-slate-600">•</span>
+          <span class="text-emerald-400 font-bold">{{ (metricasObras.total_partidas || 0).toLocaleString() }}</span> Partidas
+          <span class="text-slate-600">•</span>
+          <span class="text-cyan-400 font-bold">{{ (metricasObras.total_tarjetas || 0).toLocaleString() }}</span> Tarjetas
+        </div>
+
+        <button @click="sincronizarObrasAryve" 
+                :disabled="sincronizandoObras"
+                class="bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50" 
+                title="Sincronizar en vivo desde Aryve y actualizar Firebase Firestore">
+          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': sincronizandoObras}"></i>
+          <span>{{ sincronizandoObras ? 'Sincronizando...' : 'Sincronizar Aryve & Nube' }}</span>
+        </button>
+
+        <button @click="recargarObras" 
+                :disabled="cargandoObras"
+                class="bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50" 
+                title="Recargar Obras en memoria RAM">
+          <i class="fa-solid fa-rotate text-xs" :class="{'fa-spin': cargandoObras}"></i>
+          <span>{{ cargandoObras ? 'Recargando...' : 'Recargar Caché' }}</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- BARRA NAVEGADORA DE VISTAS ESTILO CONTROL_PAGOS_OC (USUARIOS / PROYECTOS / PROVEEDORES) -->
+    <nav class="flex items-center gap-3 my-5 border-b border-slate-700/80 pb-3 flex-wrap">
+      <button @click="cambiarVista('USUARIOS')" 
+              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
+              :class="vistaActiva === 'USUARIOS' 
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
+        <i class="fa-solid fa-users"></i>
+        <span>USUARIOS</span>
+        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
+          {{ metricas.total_usuarios }}
+        </span>
+      </button>
+
+      <button @click="cambiarVista('PROYECTOS')" 
+              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
+              :class="vistaActiva === 'PROYECTOS' 
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
+        <i class="fa-solid fa-diagram-project"></i>
+        <span>PERMISOS PROYECTOS</span>
+        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-400/20 text-indigo-300 border border-indigo-400/30">
+          {{ permisosObras.length }} obras
+        </span>
+      </button>
+
+      <button @click="cambiarVista('PROVEEDORES')" 
+              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
+              :class="vistaActiva === 'PROVEEDORES' 
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>PROVEEDORES</span>
+        <span v-if="colaProveedores.length > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+          {{ colaProveedores.length }} en cola
+        </span>
+        <span v-else class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
+          {{ proveedoresRegistrados.length }}
+        </span>
+      </button>
+
+      <button @click="cambiarVista('CONTRATISTAS')" 
+              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
+              :class="vistaActiva === 'CONTRATISTAS' 
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
+        <i class="fa-solid fa-id-badge"></i>
+        <span>CONTRATISTAS</span>
+        <span v-if="colaContratistas.length > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+          {{ colaContratistas.length }} en fila
+        </span>
+        <span v-else class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
+          {{ contratistasDB.length }} en DBA
+        </span>
+      </button>
+    
+      <button @click="cambiarVista('OBRAS')" 
+              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
+              :class="vistaActiva === 'OBRAS' 
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
+                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
+        <i class="fa-solid fa-helmet-safety"></i>
+        <span>OBRAS & WBS</span>
+        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
+          {{ metricasObras.total_obras || obrasCatalogo.length }}
+        </span>
+      </button>
+
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- TORRE DE CONTROL: SALUD DE PROYECTOS (FIJA EN TODAS LAS VISTAS) -->
+    <!-- ======================================================== -->
+                <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
+      <div v-for="proyecto in proyectosTorre" :key="proyecto.id"
+           class="bg-slate-800/90 border border-slate-700/80 p-5 rounded-2xl shadow-md hover:border-slate-600 transition flex flex-col justify-between">
+        
+        <!-- Header de la Tarjeta del Proyecto -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-inner"
+                 :class="proyecto.activo ? 'bg-indigo-600/20 border border-indigo-500/30 text-indigo-400' : 'bg-rose-500/10 border border-rose-500/20 text-rose-400'">
+              <i :class="proyecto.icono"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <p class="text-xs font-bold uppercase text-white tracking-wider">{{ proyecto.nombre }}</p>
+                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-900 border border-slate-700 text-slate-400" :title="'Tiempo activo del servicio: ' + proyecto.uptime">{{ proyecto.uptime || '0s' }}</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-0.5">{{ proyecto.descripcion }}</p>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold"
+                :class="proyecto.activo ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'">
+            <span class="w-1.5 h-1.5 rounded-full" :class="proyecto.activo ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'"></span>
+            {{ proyecto.estado }}
+          </span>
+        </div>
+
+        <!-- Métrica Principal: HOY SEPARADO POR ARYVE Y VELAS -->
+        <div class="grid grid-cols-3 gap-2 my-3 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-center">
+          <!-- ARYVE HOY -->
+          <div class="border-r border-slate-800/80 pr-1">
+            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Aryve Hoy</span>
+            <span class="text-base font-extrabold text-emerald-400 font-mono">{{ proyecto.ocs_hoy_aryve ?? 0 }}</span>
+            <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_aryve ? (proyecto.total_aryve).toLocaleString() : 0 }} tot</span>
+          </div>
+
+          <!-- VELAS HOY -->
+          <div class="border-r border-slate-800/80 pr-1">
+            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Velas Hoy</span>
+            <span class="text-base font-extrabold text-teal-400 font-mono">{{ proyecto.ocs_hoy_velas ?? 0 }}</span>
+            <span class="text-[9px] text-slate-500 block truncate font-mono">{{ proyecto.total_velas ? (proyecto.total_velas).toLocaleString() : 0 }} tot</span>
+          </div>
+
+          <!-- TOTAL HOY COMBINADO -->
+          <div>
+            <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">{{ proyecto.dia_actual || 'Total Hoy' }}</span>
+            <span class="text-base font-extrabold text-white font-mono">{{ (proyecto.ocs_hoy_total ?? 0) }}</span>
+            <span class="text-[9px] text-indigo-300 block font-mono">{{ proyecto.total_global ? (proyecto.total_global).toLocaleString() : 0 }} global</span>
+          </div>
+        </div>
+
+        <!-- Desglose Mini de los Últimos Días (Aryve / Velas por día) -->
+        <div v-if="proyecto.historial_dias && proyecto.historial_dias.length > 0" class="mb-3 pt-2 border-t border-slate-800/80">
+          <div class="flex items-center justify-between text-[10px] text-slate-400 font-semibold mb-1.5 px-1">
+            <span>OCs por día (Aryve / Velas):</span>
+            <span class="text-slate-500 font-mono text-[9px]">Enkontrol EK9</span>
+          </div>
+          <div class="grid grid-cols-5 gap-1 text-center font-mono">
+            <div v-for="d in proyecto.historial_dias" :key="d.fecha" 
+                 class="bg-slate-900/90 border border-slate-800 rounded-lg py-1 px-1 flex flex-col justify-between" 
+                 :title="d.dia + ' (' + d.fecha + '): ' + d.aryve + ' Aryve + ' + d.velas + ' Velas = ' + d.total + ' OCs'">
+              <span class="text-[9px] text-indigo-300 block font-sans truncate font-bold">{{ d.dia.slice(0, 3) }}</span>
+              <div class="text-[11px] leading-tight my-0.5">
+                <span class="text-emerald-400 font-bold">{{ d.aryve }}</span>
+                <span class="text-slate-600 text-[9px] mx-0.5">/</span>
+                <span class="text-teal-400 font-bold">{{ d.velas }}</span>
+              </div>
+              <span class="text-[9px] text-slate-500">{{ d.total }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Métrica de Salud Inferior y Conexión -->
+        <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Salud:</span>
+            <span class="font-extrabold font-mono" :class="proyecto.activo ? 'text-emerald-400' : 'text-rose-400'">{{ proyecto.salud }}</span>
+          </div>
+          <div class="text-right flex items-center gap-1.5 font-mono text-[11px]">
+            <button @click="sincronizarOCAhora" :disabled="sincronizandoOC" 
+                    class="p-1 px-1.5 rounded bg-slate-900 border border-slate-700 hover:border-emerald-500 text-slate-300 hover:text-emerald-300 transition text-[10px] font-sans flex items-center gap-1 cursor-pointer" 
+                    title="Sincronizar ahora con Enkontrol">
+              <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoOC}"></i>
+              <span>{{ sincronizandoOC ? 'Sync...' : 'Sync' }}</span>
+            </button>
+            <span class="text-[10px] text-slate-400 font-sans">Latencia:</span>
+            <span class="font-semibold text-indigo-400">{{ proyecto.latencia_ms ? proyecto.latencia_ms + 'ms' : 'N/A' }}</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 1: USUARIOS                                        -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'USUARIOS'" class="flex flex-col flex-1">
+      
+      <!-- WORKSPACE DE USUARIOS EN 2 COLUMNAS (7 / 5) -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start flex-1">
+        
+        <!-- COLUMNA IZQUIERDA: LISTADO -->
+        <div class="xl:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[700px]">
+          
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text" 
+                     v-model="filtroBusqueda" 
+                     @input="alBuscar"
+                     placeholder="Buscar por ID, nombre, correo, puesto o área..." 
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div class="w-full sm:w-48">
+              <select v-model="filtroVigencia" 
+                      @change="cargarUsuarios" 
+                      class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                <option value="TODOS">Todos los Estados</option>
+                <option value="ACTIVOS">Solo Activos</option>
+                <option value="ESTE_MES">Vencen este mes</option>
+                <option value="PROX_MES">Vencen próx. mes</option>
+                <option value="VENCIDOS">Vigencia vencida</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center px-1">
+            <span>Mostrando {{ usuarios.length }} usuarios</span>
+            <span v-if="cargando" class="text-indigo-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Actualizando
+            </span>
+          </div>
+
+          <!-- LISTA SCROLLABLE -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 space-y-2">
+            <div v-for="u in usuarios" 
+                 :key="u.id + (u.correo || '')" 
+                 @click="seleccionarUsuario(u)"
+                 :class="usuarioSeleccionado && usuarioSeleccionado.id === u.id 
+                   ? 'bg-slate-700/80 border-indigo-500 ring-1 ring-indigo-500/50 shadow-md' 
+                   : 'bg-slate-900/60 hover:bg-slate-800/80 border-slate-700/60'"
+                 class="p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3">
+              
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs shrink-0"
+                     :class="u.estatus === 'Activo' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'">
+                  #{{ u.id }}
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h4 class="text-xs sm:text-sm font-semibold text-white truncate">{{ u.nombre_completo }}</h4>
+                    <span v-if="u.estatus === 'Activo'" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span v-else class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 truncate mt-0.5">
+                    <i class="fa-solid fa-briefcase text-[10px] mr-1 text-slate-500"></i>
+                    <span>{{ u.puesto || 'No especificado' }}</span>
+                    <span class="mx-1 text-slate-600">•</span>
+                    <span class="text-slate-400">{{ u.area_organizacion || 'General' }}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-right shrink-0">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded border"
+                      :class="u.estatus === 'Activo' ? 'bg-emerald-950/40 text-emerald-300 border-emerald-700/50' : 'bg-rose-950/40 text-rose-300 border-rose-700/50'">
+                  {{ u.estatus }}
+                </span>
+                <p v-if="u.vigencia_fin" class="text-[10px] text-slate-500 font-mono mt-1">
+                  {{ u.vigencia_fin }}
+                </p>
+              </div>
+            </div>
+
+            <div v-if="usuarios.length === 0 && !cargando" class="text-center py-16 text-slate-500 text-xs">
+              <i class="fa-solid fa-user-slash text-3xl mb-2 text-slate-600"></i>
+              <p>No se encontraron registros que coincidan con la búsqueda.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- COLUMNA DERECHA: FICHA EJECUTIVA -->
+        <div class="xl:col-span-5 flex flex-col gap-6">
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
+            <div v-if="usuarioSeleccionado">
+              
+              <div class="flex items-start justify-between pb-4 border-b border-slate-700/70">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-lg font-bold">
+                    {{ (usuarioSeleccionado.nombre || 'U')[0] }}
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-white">{{ usuarioSeleccionado.nombre_completo }}</h3>
+                    <p class="text-xs text-slate-400 mt-0.5 font-mono">ID Aryve / Enkontrol: #{{ usuarioSeleccionado.id }}</p>
+                  </div>
+                </div>
+
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wider"
+                      :class="usuarioSeleccionado.estatus === 'Activo' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/10 text-rose-400 border-rose-500/30'">
+                  {{ usuarioSeleccionado.estatus }}
+                </span>
+              </div>
+
+              <!-- FICHA GRID -->
+              <div class="grid grid-cols-2 gap-3.5 my-4 text-xs">
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Posición / Puesto</span>
+                  <span class="font-medium text-slate-200 mt-1 block truncate" :title="usuarioSeleccionado.puesto">{{ usuarioSeleccionado.puesto || 'No especificado' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Área Organizacional</span>
+                  <span class="font-medium text-slate-200 mt-1 block truncate" :title="usuarioSeleccionado.area_organizacion">{{ usuarioSeleccionado.area_organizacion || 'No especificada' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Correo Electrónico</span>
+                  <span class="font-mono text-indigo-300 mt-1 block truncate" :title="usuarioSeleccionado.correo">{{ usuarioSeleccionado.correo || '-' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Clave de Usuario</span>
+                  <span class="font-mono text-slate-200 mt-1 block">{{ usuarioSeleccionado.clave || '-' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Vigencia Fin</span>
+                  <span class="font-mono text-amber-300 font-semibold mt-1 block">{{ usuarioSeleccionado.vigencia_fin || 'Indefinida' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Teléfono / Celular</span>
+                  <span class="text-slate-200 mt-1 block">{{ usuarioSeleccionado.telefono || 'No registrado' }}</span>
+                </div>
+              </div>
+
+              <!-- BOTÓN ABRIR EN ARYVE -->
+              <div class="pt-2">
+                <a v-if="usuarioSeleccionado.url_aryve" 
+                   :href="usuarioSeleccionado.url_aryve" 
+                   target="_blank" 
+                   class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-400 hover:text-indigo-300 py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                  <span>Abrir Perfil en Portal Aryve</span>
+                </a>
+              </div>
+
+            </div>
+            
+            <div v-else class="text-center py-12 text-slate-500 text-xs">
+              <i class="fa-regular fa-id-badge text-3xl mb-2 text-slate-600"></i>
+              <p>Selecciona un usuario del listado para ver su ficha completa.</p>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Permisos y Clasificadores</h4>
+              <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <i class="fa-solid fa-check text-[9px]"></i> Verificado
+              </span>
+            </div>
+
+            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-700/50">
+              <div class="flex items-center gap-2 text-xs font-medium text-slate-200 mb-1.5">
+                <i class="fa-solid fa-shield-halved text-indigo-400"></i>
+                <span>Estructura de Posición y Seguridad</span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-relaxed">
+                Todos los clasificadores, niveles de compañía y grupos asignados corresponden a la matriz oficial centralizada en <code class="text-emerald-400 font-mono">Firebase Firestore</code>.
+              </p>
+            </div>
+          </div>
+
+          <!-- RECUADRO 3: CLASIFICADORES -->
+          <div v-if="usuarioSeleccionado" class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm mt-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                  <i class="fa-solid fa-tags text-[11px]"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Clasificadores</h4>
+                </div>
+              </div>
+              <span v-if="infoClasificadorPuesto.total > 0" class="text-[10px] font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <i class="fa-solid fa-layer-group text-[9px]"></i>
+                {{ infoClasificadorPuesto.total }} asignados
+              </span>
+              <span v-else class="text-[10px] font-semibold text-slate-500 bg-slate-800/60 border border-slate-700 px-2.5 py-0.5 rounded-full">
+                Sin plantilla
+              </span>
+            </div>
+
+            <!-- FICHA DE PUESTO Y MATRIZ -->
+            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-700/50 mb-3">
+              <div class="flex items-center justify-between text-[10px] uppercase font-semibold text-slate-400 mb-1.5">
+                <span>Puesto para Clasificadores (Firebase)</span>
+                <span v-if="puestoClasificadorSeleccionado" class="text-emerald-400 font-mono flex items-center gap-1">
+                  <i class="fa-solid fa-check text-[9px]"></i> {{ infoClasificadorPuesto.area || 'Encontrado' }}
+                </span>
+                <span v-else class="text-amber-400 flex items-center gap-1">
+                  <i class="fa-solid fa-exclamation text-[9px]"></i> No asignado
+                </span>
+              </div>
+
+              <div class="text-xs font-bold text-slate-100 flex items-center justify-between gap-2">
+                <span class="truncate">{{ puestoClasificadorSeleccionado || 'Selecciona un puesto con "Actualizar"' }}</span>
+              </div>
+
+              <!-- Badges de Categorías extraídas de puestos.json -->
+              <div v-if="infoClasificadorPuesto.categorias && infoClasificadorPuesto.categorias.length" class="mt-3 pt-2.5 border-t border-slate-800 flex flex-wrap gap-1.5">
+                <span v-for="cat in infoClasificadorPuesto.categorias" :key="cat.nombre" 
+                      class="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700/70 px-2 py-0.5 rounded-md flex items-center gap-1">
+                  <span class="text-indigo-400 font-medium">{{ cat.nombre }}:</span>
+                  <span class="font-mono text-slate-400">{{ cat.total }}</span>
+                </span>
+              </div>
+              <p v-else class="mt-2 text-[11px] text-slate-500 leading-snug">
+                Usa el botón <strong>Actualizar</strong> para elegir un puesto y cargar su estructura de clasificadores oficial.
+              </p>
+            </div>
+
+            <!-- BOTONES: ACTUALIZAR, BORRAR, INICIAR -->
+            <div class="grid grid-cols-3 gap-2">
+              <!-- BOTÓN ACTUALIZAR -->
+              <button @click="abrirModalClasificador" 
+                      title="Seleccionar o cambiar el puesto para cargar su estructura de clasificadores"
+                      class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-400 hover:text-indigo-300 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                <span>Actualizar</span>
+              </button>
+
+              <!-- BOTÓN BORRAR -->
+              <button @click="borrarClasificadoresSeleccion" 
+                      title="Quitar la selección de clasificadores actual"
+                      class="bg-slate-900 hover:bg-rose-950/30 border border-slate-700 hover:border-rose-900/50 text-slate-400 hover:text-rose-300 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+                <span>Borrar</span>
+              </button>
+
+              <!-- BOTÓN INICIAR -->
+              <button @click="iniciarAsignacionClasificadores" 
+                      :disabled="!puestoClasificadorSeleccionado || estadoAsignacionClasificadores.ejecutando"
+                      title="Iniciar sesión en Aryve, abrir perfil del usuario y asignar los clasificadores"
+                      class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 border border-indigo-500/50 disabled:border-slate-700 text-white py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md shadow-indigo-600/20 disabled:shadow-none">
+                <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-xs"></i>
+                <i v-else class="fa-solid fa-play text-xs text-emerald-300"></i>
+                <span>{{ estadoAsignacionClasificadores.ejecutando ? 'Ejecutando...' : 'Iniciar' }}</span>
+              </button>
+            </div>
+
+            <!-- VISOR DE ESTADO / LOGS DE SELENIUM -->
+            <div v-if="estadoAsignacionClasificadores.ejecutando || estadoAsignacionClasificadores.mensaje" class="mt-3.5 p-3 rounded-xl border bg-slate-950/70 border-slate-800 text-[11px]">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5 font-semibold" 
+                     :class="estadoAsignacionClasificadores.ok === true ? 'text-emerald-400' : (estadoAsignacionClasificadores.ok === false ? 'text-rose-400' : 'text-indigo-300')">
+                  <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-[10px]"></i>
+                  <i v-else-if="estadoAsignacionClasificadores.ok === true" class="fa-solid fa-check text-[10px]"></i>
+                  <i v-else-if="estadoAsignacionClasificadores.ok === false" class="fa-solid fa-triangle-exclamation text-[10px]"></i>
+                  <i v-else class="fa-solid fa-info-circle text-[10px]"></i>
+                  <span>{{ estadoAsignacionClasificadores.mensaje }}</span>
+                </div>
+              </div>
+              <div v-if="estadoAsignacionClasificadores.logs && estadoAsignacionClasificadores.logs.length" 
+                   class="max-h-24 overflow-y-auto custom-scrollbar font-mono text-[10px] text-slate-400 mt-2 space-y-0.5 bg-black/40 p-2 rounded-lg border border-slate-800">
+                <div v-for="(log, idx) in estadoAsignacionClasificadores.logs" :key="idx" class="truncate">{{ log }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 2: PROYECTOS (PERMISOS POR PROYECTO / OBRAS)       -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'PROYECTOS'" class="flex flex-col flex-1">
+      
+      <!-- SUB-HEADER DE PROYECTOS -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-indigo-400"></i>
+            <span>Gestión y Depuración de Permisos por Proyecto</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Administra los usuarios protegidos y las obras antes de iniciar la depuración automática en Enkontrol.
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-medium text-slate-400">
+            <i class="fa-solid fa-file-code text-indigo-400 mr-1"></i> <code class="font-mono text-slate-300">ENKONTROL.TXT</code> + <code class="font-mono text-slate-300">obras_permisos.json</code>
+          </span>
+        </div>
+      </div>
+
+      <!-- WORKSPACE DE PROYECTOS (FORMULARIO Y LISTAS EN PARALELO) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
+        
+        <!-- PANEL DE CAPTURA (5 COLS) -->
+        <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-700/60">
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-plus-circle text-indigo-400"></i> Captura de Parámetros
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">SELENIUM CONFIG</span>
+          </div>
+
+          <!-- Form Usuario Protegido -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+              Usuario Protegido (No se le quitarán permisos):
+            </label>
+            <div class="flex gap-2">
+              <input type="text" 
+                     v-model="nuevoUsuarioProtegido" 
+                     @keyup.enter="agregarUsuarioProtegido"
+                     placeholder="Ej. JUAN PEREZ LOPEZ" 
+                     class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+              <button @click="agregarUsuarioProtegido" 
+                      class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+                Guardar
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Obra -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+              Código de Obra a Procesar:
+            </label>
+            <div class="flex gap-2">
+              <input type="text" 
+                     v-model="nuevaObra" 
+                     @keyup.enter="agregarObra"
+                     placeholder="Ej. BI3" 
+                     class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+              <button @click="agregarObra" 
+                      class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+                Guardar
+              </button>
+            </div>
+          </div>
+
+          <!-- Carga Masiva JSON -->
+          <div class="pt-3 border-t border-slate-700/60">
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+              Cargar Obras desde archivo JSON:
+            </label>
+            <input type="file" 
+                   accept=".json" 
+                   @change="cargarObrasDesdeJSON"
+                   class="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-indigo-400 hover:file:bg-slate-700 cursor-pointer">
+            <p class="text-[10px] text-slate-500 mt-1">Formato admitido: lista simple ej. ["BI3", "BI2"]</p>
+          </div>
+
+          <!-- Botón de Ejecución Directa en el Workspace -->
+          <div class="pt-2">
+            <button @click="iniciarDepuracionPermisos" 
+                    :disabled="ejecutandoDepuracion || permisosObras.length === 0"
+                    class="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition cursor-pointer">
+              <i v-if="ejecutandoDepuracion" class="fa-solid fa-circle-notch fa-spin"></i>
+              <i v-else class="fa-solid fa-play"></i>
+              <span>{{ ejecutandoDepuracion ? 'Depuración en Curso...' : 'Comenzar Depuración de Permisos' }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- LISTAS CONFIGURADAS (7 COLS) -->
+        <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            
+            <!-- Lista Usuarios Protegidos -->
+            <div class="flex flex-col h-[270px]">
+              <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
+                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-user-shield text-emerald-400"></i> Usuarios ({{ permisosUsuarios.length }})
+                </span>
+              </div>
+              <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
+                <div v-for="(u, idx) in permisosUsuarios" :key="'usr-prot-' + idx"
+                     class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex items-center justify-between text-xs">
+                  <span class="font-semibold text-slate-200 truncate">{{ u }}</span>
+                  <button @click="eliminarUsuarioProtegido(idx)" class="text-slate-500 hover:text-rose-400 transition p-1" title="Eliminar">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+                <div v-if="permisosUsuarios.length === 0" class="text-center py-12 text-slate-500 text-xs">
+                  Sin usuarios configurados.
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista Obras -->
+            <div class="flex flex-col h-[270px]">
+              <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
+                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <i class="fa-solid fa-city text-indigo-400"></i> Obras ({{ permisosObras.length }})
+                </span>
+              </div>
+              <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
+                <div v-for="(o, idx) in permisosObras" :key="'obra-' + idx"
+                     class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex items-center justify-between text-xs">
+                  <span class="font-mono font-bold text-indigo-300">{{ o }}</span>
+                  <button @click="eliminarObra(idx)" class="text-slate-500 hover:text-rose-400 transition p-1" title="Eliminar">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+                <div v-if="permisosObras.length === 0" class="text-center py-12 text-slate-500 text-xs">
+                  Sin obras configuradas.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DOBLE CONSOLA COMPACTA CON SCROLL INTERNO (NO EXTIENDE PANTALLA) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Consola en Tiempo Real -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Consola en Tiempo Real</span>
+            </h4>
+            <span class="text-[10px] font-mono text-slate-500">SELENIUM STREAM</span>
+          </div>
+          <pre id="terminal-live" class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-indigo-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ terminalLiveContenido }}</pre>
+        </div>
+
+        <!-- Historial Acumulado -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+              <span>Historial Acumulado (log_depuracion.txt)</span>
+            </h4>
+            <button @click="cargarPermisos" class="text-[10px] text-slate-400 hover:text-white transition">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Refrescar
+            </button>
+          </div>
+          <pre class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-slate-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ historialPermisosContenido || '(Historial vacío)' }}</pre>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- VISTA 3: PROVEEDORES (COLA Y EJECUCIÓN EN ARYVE)         -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'PROVEEDORES'" class="flex flex-col flex-1">
+      
+      <!-- SUB-HEADER DE PROVEEDORES -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-boxes-stacked text-indigo-400"></i>
+            <span>Gestión y Creación de Proveedores</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Captura los datos del proveedor para agregarlos a la cola y ejecútalos en Aryve en orden.
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-medium text-slate-400">
+            <i class="fa-solid fa-file-csv text-indigo-400 mr-1"></i> <code class="font-mono text-slate-300">datos.csv</code> + <code class="font-mono text-slate-300">registro_proveedores.json</code>
+          </span>
+        </div>
+      </div>
+
+      <!-- WORKSPACE DE PROVEEDORES (FORMULARIO Y LISTA EN COLA) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
+        
+        <!-- PANEL DE CAPTURA (5 COLS) -->
+        <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-700/60">
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-id-card text-indigo-400"></i> Datos del Proveedor
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">FORMULARIO</span>
+          </div>
+
+          <!-- Selector Segmentado: Tipo de Persona -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+              Tipo de Persona:
+            </label>
+            <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl border border-slate-700">
+              <button type="button"
+                      @click="cambiarTipoPersona('MORAL')"
+                      class="py-1.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer"
+                      :class="formProveedor.tipo_persona === 'MORAL' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'">
+                <i class="fa-solid fa-building"></i> MORAL
+              </button>
+              <button type="button"
+                      @click="cambiarTipoPersona('FÍSICA')"
+                      class="py-1.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer"
+                      :class="formProveedor.tipo_persona === 'FÍSICA' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'">
+                <i class="fa-solid fa-user"></i> FÍSICA
+              </button>
+            </div>
+          </div>
+
+          <!-- Nombre / Razón Social -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+              {{ formProveedor.tipo_persona === 'MORAL' ? 'Nombre completo / Razón Social:' : 'Nombre(s):' }}
+            </label>
+            <input type="text"
+                   v-model="formProveedor.nombre"
+                   @input="calcularClavesProveedor"
+                   :placeholder="formProveedor.tipo_persona === 'MORAL' ? 'Ej. EDIFICACIONES GOODWIN SA DE CV' : 'Ej. SALVADOR'"
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
+          </div>
+
+          <!-- Apellidos para Persona Física -->
+          <div v-if="formProveedor.tipo_persona === 'FÍSICA'" class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Apellido Paterno:</label>
+              <input type="text"
+                     v-model="formProveedor.paterno"
+                     @input="calcularClavesProveedor"
+                     placeholder="Ej. PEREZ"
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Apellido Materno:</label>
+              <input type="text"
+                     v-model="formProveedor.materno"
+                     placeholder="Ej. LOPEZ"
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
+            </div>
+          </div>
+
+          <!-- RFC y Domicilio -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">RFC:</label>
+            <input type="text"
+                   v-model="formProveedor.rfc"
+                   placeholder="Ej. EGO123456ABC"
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Calle / Domicilio:</label>
+            <input type="text"
+                   v-model="formProveedor.calle"
+                   placeholder="Ej. AV. HIDALGO"
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase">
+          </div>
+
+          <!-- Exterior y CP -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">No. Exterior:</label>
+              <input type="text"
+                     v-model="formProveedor.ext"
+                     placeholder="Ej. 102"
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Código Postal (CP):</label>
+              <input type="text"
+                     v-model="formProveedor.cp"
+                     placeholder="Ej. 89326"
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
+            </div>
+          </div>
+
+          <!-- Colonia -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Colonia / Asentamiento:</label>
+            <input type="text"
+                   v-model="formProveedor.colonia"
+                   placeholder="Ej. LAS FLORES"
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase">
+          </div>
+
+          <!-- Resumen de Claves Calculadas en Vivo -->
+          <div class="p-3 bg-slate-900/90 border border-slate-700 rounded-xl space-y-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-semibold">Clave Calculada:</span>
+              <code class="text-indigo-400 font-mono font-bold">{{ formProveedor.clave || 'EK-PROV-...' }}</code>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-semibold">Nombre Corto:</span>
+              <code class="text-slate-300 font-mono">{{ formProveedor.nombre_corto || '...' }}</code>
+            </div>
+          </div>
+
+          <!-- Botón Guardar en Lista -->
+          <button @click="guardarEnListaProveedor"
+                  class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Guardar en Lista</span>
+          </button>
+        </div>
+
+        <!-- LISTA DE PROVEEDORES EN COLA (7 COLS) -->
+        <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700">
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-list-ol text-indigo-400"></i>
+              <span>Lista de Proveedores en Cola</span>
+            </h3>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full"
+                  :class="colaProveedores.length > 0 ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30' : 'bg-slate-700 text-slate-400'">
+              {{ colaProveedores.length }} en espera
+            </span>
+          </div>
+
+          <!-- Mensaje cuando está vacía -->
+          <div v-if="colaProveedores.length === 0" 
+               class="bg-slate-900/60 border border-slate-700/60 rounded-xl p-8 text-center my-auto space-y-2">
+            <i class="fa-solid fa-inbox text-3xl text-slate-600"></i>
+            <p class="text-xs text-slate-400 font-medium">
+              No hay proveedores en la lista actualmente.
+            </p>
+            <p class="text-[11px] text-slate-500">
+              Llena el formulario de la izquierda y haz clic en <b class="text-indigo-400">'Guardar en Lista'</b>.
+            </p>
+          </div>
+
+          <!-- Lista de Tarjetas de Proveedores -->
+          <div v-else class="space-y-2.5 h-[340px] max-h-[340px] overflow-y-auto custom-scrollbar pr-1">
+            <div v-for="(p, idx) in colaProveedores" :key="'cola-prov-' + idx"
+                 class="bg-slate-900/90 border border-slate-700 rounded-xl p-3.5 shadow-sm space-y-2 hover:border-slate-600 transition">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="text-xs font-extrabold text-indigo-400 font-mono">#{{ idx + 1 }}</span>
+                  <span class="text-xs sm:text-sm font-bold text-slate-100 truncate">{{ p.NOMBRE }}</span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold"
+                        :class="p['TIPO PERSONA'] === 'MORAL' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'">
+                    {{ p['TIPO PERSONA'] }}
+                  </span>
+                  <button @click="eliminarDeColaProveedor(idx)" 
+                          class="text-slate-500 hover:text-rose-400 transition p-1" 
+                          title="Quitar de la cola">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1 border-t border-slate-800 text-slate-400">
+                <div><span class="text-slate-500">Clave:</span> <code class="font-mono text-slate-200">{{ p.CLAVE }}</code></div>
+                <div><span class="text-slate-500">RFC:</span> <span class="font-mono text-slate-200">{{ p.RFC }}</span></div>
+                <div><span class="text-slate-500">CP:</span> <span class="font-mono text-slate-200">{{ p.CP }}</span></div>
+              </div>
+
+              <div class="text-[11px] text-slate-400 truncate">
+                <i class="fa-solid fa-location-dot text-slate-600 mr-1"></i>
+                {{ p.CALLE }} Ext. {{ p.EXT }}, Col. {{ p.COLONIA }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Acciones de Cola -->
+          <div v-if="colaProveedores.length > 0" class="pt-4 border-t border-slate-700/80 mt-4 flex items-center justify-between gap-3">
+            <button @click="vaciarColaProveedor" 
+                    class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-rose-400 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>Vaciar Lista</span>
+            </button>
+
+            <button @click="iniciarProcesamientoProveedores"
+                    :disabled="ejecutandoProveedores"
+                    class="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition cursor-pointer">
+              <i v-if="ejecutandoProveedores" class="fa-solid fa-circle-notch fa-spin"></i>
+              <i v-else class="fa-solid fa-play"></i>
+              <span>{{ ejecutandoProveedores ? 'Procesando en Aryve...' : 'INICIAR LLENADO DE PROVEEDORES' }}</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEGUNDA FILA: CONSOLA EN TIEMPO REAL Y BASE DE DATOS REGISTRADA -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Consola Selenium Stream -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full" :class="ejecutandoProveedores ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'"></span>
+              <span>Consola en Tiempo Real</span>
+            </h4>
+            <span class="text-[10px] font-mono text-slate-500">SELENIUM STREAM</span>
+          </div>
+          <pre id="terminal-prov" class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-indigo-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ terminalProveedoresContenido || '[Esperando inicio de tareas Selenium...]' }}</pre>
+        </div>
+
+        <!-- Base de Datos de Proveedores (ID y Clave) -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700 flex-wrap gap-2">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-database text-slate-400"></i>
+              <span>Proveedores Registrados ({{ proveedoresRegistrados.length }})</span>
+            </h4>
+            <div class="flex items-center gap-2">
+              <button @click="exportarCSVProveedores" 
+                      :disabled="proveedoresRegistrados.length === 0"
+                      class="text-[10px] bg-slate-900 border border-slate-700 hover:border-slate-600 disabled:opacity-40 text-slate-300 px-2.5 py-1 rounded-lg transition flex items-center gap-1 cursor-pointer">
+                <i class="fa-solid fa-file-csv text-indigo-400"></i> Exportar CSV
+              </button>
+              <button @click="cargarProveedores" class="text-[10px] text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-rotate-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtro rápido de búsqueda -->
+          <div class="mb-2">
+            <input type="text"
+                   v-model="busquedaProveedores"
+                   placeholder="Buscar por ID o Clave..."
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono">
+          </div>
+
+          <!-- Tabla con Scroll Interno -->
+          <div class="h-36 max-h-36 overflow-y-auto custom-scrollbar bg-slate-950 border border-slate-800 rounded-xl">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold">
+                <tr>
+                  <th class="py-2 px-3">ID Enkontrol / Aryve</th>
+                  <th class="py-2 px-3">Clave Proveedor</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60 font-mono">
+                <tr v-for="pr in proveedoresFiltrados" :key="'prv-' + pr.clave" class="hover:bg-slate-900/50 transition">
+                  <td class="py-2 px-3 text-emerald-400 font-bold">#{{ pr.id }}</td>
+                  <td class="py-2 px-3 text-slate-200">{{ pr.clave }}</td>
+                </tr>
+                <tr v-if="proveedoresFiltrados.length === 0">
+                  <td colspan="2" class="py-6 text-center text-slate-500 text-xs font-sans">
+                    No se encontraron proveedores registrados.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+        <!-- ======================================================== -->
+    <!-- VISTA 4: CONTRATISTAS (DBA ENKONTROL VS EN FILA + RPA)   -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'CONTRATISTAS'" class="flex flex-col flex-1">
+      
+      <!-- SUB-HEADER DE CONTRATISTAS -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-id-badge text-indigo-400"></i>
+            <span>Módulo de Contratistas</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Selecciona los contratistas en fila para generar su imagen de perfil y automatizar su asignación en el sistema.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">
+            <i class="fa-solid fa-users text-xs"></i>
+            {{ contratistasDB.length }} Contratistas
+          </span>
+        </div>
+      </div>
+
+      <!-- GRID DE LAS 2 TABLAS (CONTRATISTAS VS EN FILA) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        
+        <!-- ==================================================== -->
+        <!-- TABLA IZQUIERDA: CONTRATISTAS (DBA ENKONTROL)        -->
+        <!-- ==================================================== -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          
+          <div>
+            <!-- Header de la Tarjeta Izquierda -->
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/80 flex-wrap gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                  <i class="fa-solid fa-hard-hat text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white tracking-wide uppercase">Contratistas</h3>
+                  <p class="text-[11px] text-slate-400">{{ contratistasFiltrados.length }} mostrados de {{ contratistasDB.length }}</p>
+                </div>
+              </div>
+
+              <!-- Acciones Rápidas -->
+              <div class="flex items-center gap-2">
+                <button @click="sincronizarContratistasDB"
+                        :disabled="cargandoContratistas"
+                        class="text-xs bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                        title="Sincronizar todo desde Enkontrol (DBA.SU_CONTRATISTAS)">
+                  <i class="fa-solid fa-cloud-arrow-down text-[11px]" :class="{'fa-bounce': cargandoContratistas}"></i>
+                  <span>{{ cargandoContratistas ? 'Sincronizando...' : 'Sincronizar DB' }}</span>
+                </button>
+
+                <button @click="seleccionarTodosSinFoto"
+                        class="text-xs bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer"
+                        title="Seleccionar todos los contratistas sin foto de perfil">
+                  <i class="fa-solid fa-check-double text-[11px]"></i>
+                  <span>Marcar Sin Foto</span>
+                </button>
+
+                <button @click="cargarContratistas(true)"
+                        class="p-2 bg-slate-900 hover:bg-slate-700 border border-slate-700 rounded-lg text-slate-300 hover:text-white transition cursor-pointer"
+                        title="Actualizar listado">
+                  <i class="fa-solid fa-rotate text-xs" :class="{'fa-spin': cargandoContratistas}"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filtros de Búsqueda y Estatus -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
+              <div class="sm:col-span-2 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+                <input type="text"
+                       v-model="busquedaContratistas"
+                       placeholder="Buscar por ID, Clave, Nombre, RFC..."
+                       class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-sans">
+              </div>
+
+              <div>
+                <select v-model="filtroEstatusContratistas"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                  <option value="TODOS">Todos ({{ contratistasDB.length }})</option>
+                  <option value="SIN_FOTO">Sin Foto</option>
+                  <option value="COMPLETO">Con Foto</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Contenedor con Scroll Doble (Horizontal y Vertical) -->
+            <div class="overflow-x-auto overflow-y-auto max-h-[460px] custom-scrollbar border border-slate-700/80 rounded-xl bg-slate-950">
+              <table class="w-full text-left text-xs text-slate-300 whitespace-nowrap">
+                <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold z-10">
+                  <tr>
+                    <th class="py-2.5 px-3 text-center w-10">
+                      <span title="Seleccionar">Sel</span>
+                    </th>
+                    <th class="py-2.5 px-3 text-center w-16">ID</th>
+                    <th class="py-2.5 px-3">Clave</th>
+                    <th class="py-2.5 px-3">Nombre / Razón Social</th>
+                    <th class="py-2.5 px-3">RFC</th>
+                    <th class="py-2.5 px-3 text-center">Foto</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 font-sans">
+                  <tr v-for="c in contratistasFiltrados" :key="'c-row-' + (c.id || c.clave || c.numpro)"
+                      class="hover:bg-slate-900/60 transition cursor-pointer"
+                      :class="{'bg-indigo-950/20': estaEnFila(c)}"
+                      @click="toggleContratistaFila(c)">
+                    
+                    <!-- Checkbox de Selección -->
+                    <td class="py-2.5 px-3 text-center" @click.stop>
+                      <input type="checkbox"
+                             :checked="estaEnFila(c)"
+                             @change="toggleContratistaFila(c)"
+                             class="w-4 h-4 rounded border-slate-600 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+                    </td>
+
+                    <!-- ID -->
+                    <td class="py-2.5 px-3 text-center font-mono font-extrabold text-emerald-400 text-xs">
+                      #{{ c.id || '-' }}
+                    </td>
+
+                    <!-- Clave (numpro / clave) -->
+                    <td class="py-2.5 px-3 font-mono font-bold text-slate-200">
+                      {{ c.clave || c.numpro }}
+                    </td>
+
+                    <!-- Nombre -->
+                    <td class="py-2.5 px-3 font-medium text-slate-100 max-w-xs truncate" :title="c.nombre">
+                      {{ c.nombre }}
+                    </td>
+
+                    <!-- RFC -->
+                    <td class="py-2.5 px-3 font-mono text-slate-400">
+                      {{ c.rfc || '-' }}
+                    </td>
+
+                    <!-- Estatus Foto -->
+                    <td class="py-2.5 px-3 text-center">
+                      <span v-if="!c.tiene_foto"
+                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        <i class="fa-solid fa-circle-exclamation text-[9px]"></i>
+                        Sin Foto
+                      </span>
+                      <span v-else
+                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <i class="fa-solid fa-check text-[9px]"></i>
+                        Con Foto
+                      </span>
+                    </td>
+
+                  </tr>
+
+                  <tr v-if="contratistasFiltrados.length === 0">
+                    <td colspan="6" class="py-8 text-center text-slate-500 text-xs">
+                      <i class="fa-solid fa-inbox text-xl block mb-2 opacity-50"></i>
+                      No se encontraron contratistas con los filtros especificados.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="pt-3 text-[11px] text-slate-500 flex justify-between items-center">
+            <span>Haz clic en cualquier fila o marca su casilla para agregarla a <strong>EN FILA</strong>.</span>
+            <span class="font-mono">{{ contratistasDB.length }} contratistas en total</span>
+          </div>
+
+        </div>
+
+
+        <!-- ==================================================== -->
+        <!-- TABLA DERECHA: EN FILA (SELECCIONADOS)               -->
+        <!-- ==================================================== -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+          
+          <div>
+            <!-- Header de la Tarjeta Derecha -->
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/80 flex-wrap gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <i class="fa-solid fa-list-check text-sm"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white tracking-wide uppercase">En Fila</h3>
+                  <p class="text-[11px] text-slate-400">Contratistas seleccionados listos para procesar</p>
+                </div>
+              </div>
+
+              <!-- Acciones de Cola -->
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">
+                  {{ colaContratistas.length }} en fila
+                </span>
+
+                <button v-if="colaContratistas.length > 0"
+                        @click="vaciarFila"
+                        class="text-xs bg-slate-900 hover:bg-rose-500/20 border border-slate-700 hover:border-rose-500/30 text-slate-400 hover:text-rose-400 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer">
+                  <i class="fa-solid fa-trash-can text-[11px]"></i>
+                  <span>Vaciar</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contenedor con Scroll de la Cola -->
+            <div class="overflow-x-auto overflow-y-auto max-h-[460px] custom-scrollbar border border-slate-700/80 rounded-xl bg-slate-950">
+              <table class="w-full text-left text-xs text-slate-300 whitespace-nowrap">
+                <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold z-10">
+                  <tr>
+                    <th class="py-2.5 px-3 w-8 text-center">#</th>
+                    <th class="py-2.5 px-3 text-center w-16">ID</th>
+                    <th class="py-2.5 px-3">Clave</th>
+                    <th class="py-2.5 px-3">Nombre</th>
+                    <th class="py-2.5 px-3 text-center w-12">Acción</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 font-sans">
+                  <tr v-for="(item, idx) in colaContratistas" :key="'fila-' + (item.id || item.clave || item.numpro)"
+                      class="hover:bg-slate-900/50 transition">
+                    
+                    <td class="py-2.5 px-3 text-center font-mono text-slate-500 text-[11px]">
+                      {{ idx + 1 }}
+                    </td>
+
+                    <td class="py-2.5 px-3 text-center font-mono font-extrabold text-emerald-400 text-xs">
+                      #{{ item.id || item.id_aryve || '-' }}
+                    </td>
+
+                    <td class="py-2.5 px-3 font-mono font-bold text-slate-200">
+                      {{ item.clave || item.numpro }}
+                    </td>
+
+                    <td class="py-2.5 px-3 font-medium text-slate-100 max-w-xs truncate" :title="item.nombre">
+                      {{ item.nombre }}
+                    </td>
+
+                    <td class="py-2.5 px-3 text-center">
+                      <button @click="quitarDeFila(item)"
+                              class="text-slate-500 hover:text-rose-400 transition p-1 cursor-pointer"
+                              title="Quitar de la fila">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                      </button>
+                    </td>
+
+                  </tr>
+
+                  <tr v-if="colaContratistas.length === 0">
+                    <td colspan="5" class="py-12 text-center text-slate-500 text-xs">
+                      <i class="fa-solid fa-arrow-left text-2xl block mb-2 opacity-40 animate-pulse"></i>
+                      <span>No hay contratistas en fila.</span>
+                      <p class="text-[11px] text-slate-600 mt-1">Marca las casillas en la tabla de la izquierda para encolar.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="pt-3 text-[11px] text-slate-500 flex justify-between items-center">
+            <span>Al iniciar, el bot generará las fotos y las asignará en el sistema automáticamente.</span>
+            <span class="font-mono text-emerald-400 font-bold">{{ colaContratistas.length }} seleccionados</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================== -->
+      <!-- BARRA DE ACCIÓN: BOTONES INICIAR Y DETENER          -->
+      <!-- ==================================================== -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-indigo-400 text-lg shadow-inner">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Centro de Control de Automatización</h4>
+            <p class="text-xs text-slate-400">Genera gafetes 762x686 px, los sube al perfil de Aryve y purga el disco.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <!-- BOTÓN DETENER -->
+          <button @click="detenerProcesamientoContratistas"
+                  :disabled="!ejecutandoContratistas"
+                  class="flex-1 sm:flex-initial bg-rose-600 hover:bg-rose-500 disabled:bg-slate-800 disabled:text-slate-600 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition cursor-pointer">
+            <i class="fa-solid fa-stop"></i>
+            <span>Detener</span>
+          </button>
+
+          <!-- BOTÓN INICIAR -->
+          <button @click="iniciarProcesamientoContratistas"
+                  :disabled="ejecutandoContratistas || colaContratistas.length === 0"
+                  class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-600/30 transition cursor-pointer">
+            <i v-if="ejecutandoContratistas" class="fa-solid fa-circle-notch fa-spin text-sm"></i>
+            <i v-else class="fa-solid fa-play text-sm"></i>
+            <span>{{ ejecutandoContratistas ? 'Procesando en Aryve...' : 'Iniciar Proceso' }}</span>
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- ==================================================== -->
+      <!-- CONSOLA / TERMINAL EN VIVO ABAJO                    -->
+      <!-- ==================================================== -->
+      <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-5 shadow-2xl flex flex-col">
+        
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <!-- Puntos luminosos tipo terminal -->
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+            </div>
+            <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full" :class="ejecutandoContratistas ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'"></span>
+              <span>Consola de Ejecución en Vivo • RPA Selenium & Gafetes</span>
+            </h4>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400">
+              {{ ejecutandoContratistas ? 'STATUS: EJECUTANDO' : 'STATUS: LISTO' }}
+            </span>
+            <button @click="limpiarTerminalContratistas"
+                    class="text-[11px] text-slate-400 hover:text-white transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-broom"></i>
+              <span>Limpiar</span>
+            </button>
+          </div>
+        </div>
+
+        <pre id="terminal-contratistas" 
+             class="h-56 max-h-56 bg-slate-950 border border-slate-800/90 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text shadow-inner">{{ terminalContratistasContenido }}</pre>
+
+      </div>
+
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- VISTA 5: OBRAS & WBS (ALTO RENDIMIENTO O(1))             -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'OBRAS'" class="flex flex-col flex-1">
+      
+      <!-- SUB-HEADER DE OBRAS -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-helmet-safety text-indigo-400"></i>
+            <span>Centro de Presupuestos & Estructura WBS</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Exploración ultrarrápida O(1) con desglose en tiempo real: Obra → Frente → Partida → Tarjetas.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">
+            <i class="fa-solid fa-layer-group text-xs"></i>
+            {{ obrasCatalogo.length }} Obras en Sistema
+          </span>
+        </div>
+      </div>
+
+      <!-- WORKSPACE EN 2 COLUMNAS (4 / 8) -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start flex-1 mb-6">
+        
+        <!-- ==================================================== -->
+        <!-- TABLA IZQUIERDA: LISTA Y BÚSQUEDA DE OBRAS          -->
+        <!-- ==================================================== -->
+        <div class="xl:col-span-4 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[750px] shadow-lg">
+          
+          <!-- Buscador Reactivo -->
+          <div class="relative w-full mb-3">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input type="text" 
+                   v-model="filtroBusquedaObra" 
+                   placeholder="Buscar obra por clave o nombre (ej. AT1, 117)..." 
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-8 py-2.5 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <button v-if="filtroBusquedaObra" @click="filtroBusquedaObra = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+              <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Contador y Estado -->
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center px-1">
+            <span>Mostrando {{ obrasFiltradas.length }} de {{ obrasCatalogo.length }}</span>
+            <span v-if="cargandoObras" class="text-indigo-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Cargando
+            </span>
+          </div>
+
+          <!-- Lista Scrollable de Obras -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 space-y-2">
+            <div v-for="o in obrasFiltradas" 
+                 :key="o.id_obra + o.clave"
+                 @click="seleccionarObra(o)"
+                 :class="obraSeleccionada && obraSeleccionada.clave === o.clave 
+                   ? 'bg-slate-700/90 border-indigo-500 ring-2 ring-indigo-500/50 shadow-md' 
+                   : 'bg-slate-900/60 hover:bg-slate-800/80 border-slate-700/60'"
+                 class="p-3.5 rounded-xl border transition cursor-pointer flex flex-col gap-2">
+              
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shrink-0">
+                    {{ o.clave }}
+                  </span>
+                  <span class="text-xs text-slate-400 font-mono">#{{ o.id_obra }}</span>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 shrink-0">
+                  {{ o.tipo_wbs || 'WBS' }}
+                </span>
+              </div>
+
+              <h4 class="text-xs font-semibold text-white leading-snug line-clamp-2" :title="o.nombre">
+                {{ o.nombre }}
+              </h4>
+
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+                <div class="flex items-center gap-2">
+                  <span title="Total Frentes"><i class="fa-solid fa-folder-tree text-blue-400 mr-1 text-[10px]"></i>{{ o.total_frentes }} F</span>
+                  <span title="Total Partidas"><i class="fa-solid fa-list-check text-emerald-400 mr-1 text-[10px]"></i>{{ o.total_partidas }} P</span>
+                  <span title="Total Tarjetas"><i class="fa-solid fa-id-card text-cyan-400 mr-1 text-[10px]"></i>{{ o.total_tarjetas }} T</span>
+                </div>
+                <span v-if="o.importe_total" class="font-mono text-emerald-400 font-semibold text-[10px]">
+                  ${{ Number(o.importe_total).toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
+                </span>
+              </div>
+            </div>
+
+            <div v-if="obrasFiltradas.length === 0 && !cargandoObras" class="text-center py-16 text-slate-500 text-xs">
+              <i class="fa-solid fa-building-circle-xmark text-3xl mb-2 text-slate-600"></i>
+              <p>No se encontraron obras con ese criterio.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================================================== -->
+        <!-- TABLA DERECHA: VISTA RÁPIDA DE OBRA, FRENTE Y PARTIDA-->
+        <!-- ==================================================== -->
+        <div class="xl:col-span-8 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[750px] shadow-lg">
+          
+          <div v-if="obraSeleccionada" class="flex flex-col h-full">
+            
+            <!-- Encabezado de la Obra Seleccionada -->
+            <div class="pb-4 border-b border-slate-700/70 mb-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2.5 flex-wrap">
+                    <span class="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-indigo-600 text-white shadow-sm">
+                      {{ obraSeleccionada.clave }}
+                    </span>
+                    <h3 class="text-sm sm:text-base font-bold text-white truncate" :title="obraSeleccionada.nombre">
+                      {{ obraSeleccionada.nombre }}
+                    </h3>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-2 font-mono flex-wrap">
+                    <span>ID: #{{ obraSeleccionada.id_obra }}</span>
+                    <span>•</span>
+                    <span>Presupuesto: {{ obraSeleccionada.clave_presupuesto || 'N/A' }}</span>
+                    <span>•</span>
+                    <span>WBS: {{ obraSeleccionada.tipo_wbs || 'BK' }}</span>
+                  </p>
+                </div>
+
+                <!-- Métricas Resumen -->
+                <div class="flex items-center gap-2 shrink-0">
+                  <div class="bg-slate-900/80 border border-slate-700/80 px-3 py-1.5 rounded-xl text-right">
+                    <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Presupuesto Total</span>
+                    <span class="text-sm font-extrabold text-emerald-400 font-mono">
+                      ${{ Number(obraSeleccionada.importe_total || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Barra de Herramientas del Árbol -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-4 pt-3 border-t border-slate-800">
+                <div class="relative flex-1">
+                  <i class="fa-solid fa-filter absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                  <input type="text" 
+                         v-model="filtroArbolObra" 
+                         placeholder="Filtrar frentes, partidas o tarjetas (ej. MUROS, 3030103)..." 
+                         class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-8 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                  <button @click="expandirTodoArbol" 
+                          class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
+                          title="Expandir todos los frentes y partidas">
+                    <i class="fa-solid fa-arrows-up-to-line text-indigo-400"></i>
+                    <span>Expandir Todo</span>
+                  </button>
+
+                  <button @click="colapsarTodoArbol" 
+                          class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
+                          title="Colapsar todos los frentes y partidas">
+                    <i class="fa-solid fa-arrows-down-to-line text-slate-400"></i>
+                    <span>Colapsar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cargando Arbol Spinner -->
+            <div v-if="cargandoArbolObra" class="flex-1 flex flex-col items-center justify-center py-20 text-indigo-400 gap-3">
+              <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
+              <span class="text-xs font-medium text-slate-400">Recuperando árbol jerárquico desde memoria RAM O(1)...</span>
+            </div>
+
+            <!-- CONTENEDOR DEL ÁRBOL JERÁRQUICO ESTILO ARYVE -->
+            <div v-else class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-2">
+              
+              <!-- NIVEL 0: NODO RAÍZ OBRA -->
+              <div class="p-3 bg-slate-900 border border-rose-500/30 rounded-xl flex items-center justify-between gap-3 shadow-sm">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <span class="text-xs font-bold text-slate-400 font-mono">1</span>
+                  <span class="px-2 py-0.5 rounded-md text-xs font-bold bg-rose-500 text-white shrink-0">
+                    O
+                  </span>
+                  <span class="text-xs sm:text-sm font-bold text-white truncate">
+                    {{ obraSeleccionada.nombre }}
+                  </span>
+                </div>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 shrink-0">
+                  OBRA
+                </span>
+              </div>
+
+              <!-- LISTADO DE FRENTES (NIVEL 1) -->
+              <div v-for="f in arbolFiltrado" :key="f.codigo" class="space-y-1.5">
+                
+                <!-- FILA DE FRENTE -->
+                <div @click="toggleFrente(f.codigo)" 
+                     class="p-2.5 bg-slate-900/90 hover:bg-slate-900 border border-slate-700/80 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition select-none group">
+                  
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <button class="w-5 h-5 flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                      <i class="fa-solid text-xs" :class="frentesExpandidos[f.codigo] ? 'fa-chevron-down text-indigo-400' : 'fa-chevron-right'"></i>
+                    </button>
+                    <span class="text-xs font-bold text-slate-300 font-mono shrink-0">{{ f.codigo }}</span>
+                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-600 text-white shrink-0">
+                      F
+                    </span>
+                    <span class="text-xs font-semibold text-white truncate">{{ f.nombre }}</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500 text-white shrink-0">
+                      {{ f.tipo_avance || 'VOLUMEN' }}
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3 shrink-0">
+                    <span class="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">
+                      {{ (f.partidas || []).length }} partidas
+                    </span>
+                    <span v-if="f.importe" class="text-xs font-mono font-semibold text-slate-300">
+                      ${{ Number(f.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- LISTADO DE PARTIDAS (NIVEL 2) CON SANGRÍA -->
+                <div v-if="frentesExpandidos[f.codigo]" class="pl-5 border-l-2 border-blue-500/40 ml-4 space-y-1.5 py-1">
+                  
+                  <div v-for="p in (f.partidas || [])" :key="p.codigo" class="space-y-1.5">
+                    
+                    <!-- FILA DE PARTIDA -->
+                    <div @click="togglePartida(p.codigo)" 
+                         class="p-2 bg-slate-900/70 hover:bg-slate-800/90 border border-slate-700/60 rounded-lg flex items-center justify-between gap-3 cursor-pointer transition select-none group">
+                      
+                      <div class="flex items-center gap-2 min-w-0">
+                        <button class="w-4 h-4 flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                          <i class="fa-solid text-[11px]" :class="partidasExpandidas[p.codigo] ? 'fa-chevron-down text-emerald-400' : 'fa-chevron-right'"></i>
+                        </button>
+                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span class="text-xs font-bold text-slate-300 font-mono shrink-0">{{ p.codigo }}</span>
+                        <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-blue-600 text-white shrink-0">
+                          P
+                        </span>
+                        <span class="text-xs font-medium text-slate-100 truncate">{{ p.nombre }}</span>
+                      </div>
+
+                      <div class="flex items-center gap-2.5 shrink-0">
+                        <span class="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+                          {{ (p.tarjetas || []).length }} tarjetas
+                        </span>
+                        <span v-if="p.importe" class="text-xs font-mono text-emerald-400">
+                          ${{ Number(p.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- LISTADO DE TARJETAS (NIVEL 3) CON SANGRÍA -->
+                    <div v-if="partidasExpandidas[p.codigo]" class="pl-5 border-l-2 border-emerald-500/40 ml-4 space-y-1 py-1">
+                      
+                      <div v-for="t in (p.tarjetas || [])" :key="t.codigo" 
+                           class="p-2 bg-slate-950/80 hover:bg-slate-950 border border-slate-800/80 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+                        
+                        <!-- Lado Izquierdo: Check, Código, Clave Tarjeta, Ojo y Nombre -->
+                        <div class="flex items-center gap-2 min-w-0">
+                          <span class="w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[9px] shrink-0">
+                            <i class="fa-solid fa-check"></i>
+                          </span>
+                          <span class="text-slate-400 font-mono text-[11px] shrink-0">{{ t.codigo }}</span>
+                          <i class="fa-solid fa-arrows-up-down text-slate-500 text-[10px] shrink-0"></i>
+                          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-cyan-500 text-white shrink-0 shadow-sm">
+                            {{ t.clave_tarjeta }}
+                          </span>
+                          <i class="fa-regular fa-eye text-slate-400 text-xs shrink-0 cursor-pointer hover:text-white" title="Ver detalle de tarjeta"></i>
+                          <span class="text-xs text-slate-200 font-medium truncate" :title="t.nombre">{{ t.nombre }}</span>
+                        </div>
+
+                        <!-- Lado Derecho: Cantidad, P.U. e Importe -->
+                        <div class="flex items-center gap-3 shrink-0 self-end sm:self-auto text-right font-mono text-[11px]">
+                          <span class="text-slate-400">
+                            {{ Number(t.cantidad).toLocaleString('es-MX', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) }} {{ t.unidad }}
+                          </span>
+                          <span class="text-slate-400">
+                            P.U. ${{ Number(t.precio_unitario).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                          </span>
+                          <span class="text-emerald-400 font-bold">
+                            ${{ Number(t.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div v-if="(p.tarjetas || []).length === 0" class="text-slate-500 text-[11px] py-1 pl-2 italic">
+                        Sin tarjetas registradas en esta partida.
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div v-if="(f.partidas || []).length === 0" class="text-slate-500 text-[11px] py-1 pl-2 italic">
+                    Sin partidas registradas en este frente.
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div v-if="arbolFiltrado.length === 0" class="text-center py-16 text-slate-500 text-xs">
+                <i class="fa-solid fa-filter-circle-xmark text-3xl mb-2 text-slate-600"></i>
+                <p>No se encontraron frentes o partidas que coincidan con "{{ filtroArbolObra }}".</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Estado Vacío si no hay obra seleccionada -->
+          <div v-else class="flex-1 flex flex-col items-center justify-center py-24 text-slate-500 text-xs">
+            <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-600 mb-3 text-2xl">
+              <i class="fa-solid fa-trowel-bricks"></i>
+            </div>
+            <p class="font-semibold text-slate-300">Selecciona una obra de la columna izquierda</p>
+            <p class="text-slate-500 text-[11px] mt-1">Podrás visualizar su árbol completo de Frentes, Partidas y Tarjetas.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- MODAL 1: ALTA DE USUARIO (CREDENCIAL DIGITAL EJECUTIVA)  -->
+    <!-- ======================================================== -->
+    <div v-if="modalUsuarioAbierto" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-lg font-bold text-white">Alta de Usuario</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Captura de información y ejecución mediante RPA Selenium</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+              <input type="checkbox" v-model="formUsuario.guardarEnProduccion" class="rounded text-indigo-600 focus:ring-indigo-500">
+              <span>Guardar en Producción</span>
+            </label>
+            <button @click="cerrarModalUsuario" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-6 items-stretch">
+          
+          <!-- INPUTS IZQUIERDA (7 COLS) -->
+          <div class="md:col-span-7 space-y-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nombre(s)</label>
+              <input type="text" 
+                     v-model="formUsuario.nombre" 
+                     placeholder="Ej. JUAN CARLOS" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Apellidos</label>
+              <input type="text" 
+                     v-model="formUsuario.apellidos" 
+                     placeholder="Ej. PEREZ LOPEZ" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Correo o Clave</label>
+              <input type="text" 
+                     v-model="formUsuario.correo" 
+                     placeholder="Ej. jperez@velas.com" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Posición Asignada</label>
+                <span v-if="formUsuario.puesto" class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i> Seleccionada
+                </span>
+                <span v-else class="text-[11px] text-slate-500 font-mono">
+                  {{ catalogoPuestos.length }} disponibles
+                </span>
+              </div>
+              
+              <!-- Buscador Autocomplete de Posición -->
+              <div class="relative">
+                <div class="relative">
+                  <input type="text" 
+                         v-model="busquedaPuestoNuevoUsuario" 
+                         @focus="mostrarDropdownPuestoNuevoUsuario = true" 
+                         @input="mostrarDropdownPuestoNuevoUsuario = true" 
+                         @blur="setTimeout(() => { mostrarDropdownPuestoNuevoUsuario = false }, 250)"
+                         placeholder="Buscar posición (ej. ASESOR, BROKER, RESIDENTE...)" 
+                         class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
+                  
+                  <button v-if="busquedaPuestoNuevoUsuario" 
+                          @click="limpiarPuestoNuevoUsuario" 
+                          type="button" 
+                          class="absolute right-3 top-2.5 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                          title="Limpiar búsqueda">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                  </button>
+                  <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
+                     :class="{'rotate-180': mostrarDropdownPuestoNuevoUsuario}"></i>
+                </div>
+
+                <!-- Dropdown Flotante con Resultados Filtrados -->
+                <div v-if="mostrarDropdownPuestoNuevoUsuario" 
+                     class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
+                  <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
+                    <span>Posiciones Oficiales ({{ puestosFiltradosNuevoUsuario.length }})</span>
+                    <span v-if="busquedaPuestoNuevoUsuario" class="text-indigo-400">Filtrado por: "{{ busquedaPuestoNuevoUsuario }}"</span>
+                  </div>
+                  <div v-if="puestosFiltradosNuevoUsuario.length === 0" class="p-3 text-center text-xs text-slate-400">
+                    <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
+                    No se encontró ninguna posición que coincida
+                  </div>
+                  <button v-for="p in puestosFiltradosNuevoUsuario" 
+                          :key="p" 
+                          type="button" 
+                          @mousedown.prevent 
+                          @click="seleccionarPuestoNuevoUsuario(p)" 
+                          class="w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer"
+                          :class="formUsuario.puesto === p ? 'bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'">
+                    <span class="truncate">{{ p }}</span>
+                    <i v-if="formUsuario.puesto === p" class="fa-solid fa-check text-indigo-400 text-xs ml-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CREDENCIAL DIGITAL (5 COLS - DISEÑO OSCURO ELEGANTE) -->
+          <div class="md:col-span-5 flex flex-col">
+            <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Credencial / Vista Previa</span>
+            
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden">
+              <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-700/70">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold text-base shadow-inner">
+                      {{ formUsuario.nombre ? formUsuario.nombre[0].toUpperCase() : 'U' }}
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-white tracking-tight">
+                        {{ formUsuario.nombre || formUsuario.apellidos ? (formUsuario.nombre + ' ' + formUsuario.apellidos).toUpperCase() : 'Sin Nombre' }}
+                      </h4>
+                      <p class="text-[11px] text-slate-400 font-mono mt-0.5">
+                        {{ formUsuario.correo ? formUsuario.correo : 'usuario@velas.com' }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border"
+                        :class="formUsuario.guardarEnProduccion ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30'">
+                    {{ formUsuario.guardarEnProduccion ? 'PROD' : 'TEST' }}
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-2.5 mt-4">
+                  <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 block">Posición Asignada</span>
+                    <span class="text-xs font-medium text-slate-200 mt-0.5 block truncate">
+                      {{ formUsuario.puesto || 'Pendiente de asignar' }}
+                    </span>
+                  </div>
+
+                  <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 block">Clave de Acceso</span>
+                    <span class="text-xs font-mono text-indigo-300 mt-0.5 block truncate">
+                      {{ formUsuario.correo || 'Pendiente de definir' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-700/60 text-[10px] text-slate-400 flex items-center justify-between mt-4">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full" :class="formUsuario.nombre && formUsuario.correo ? 'bg-emerald-400' : 'bg-slate-500'"></span>
+                  <span>{{ formUsuario.nombre && formUsuario.correo ? 'Datos completos' : 'Completando campos...' }}</span>
+                </span>
+                <span class="font-mono text-slate-500">GRUPO VELAS</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div v-if="estadoBot" 
+             class="p-3.5 rounded-xl text-xs font-semibold mb-5 flex items-center gap-2.5"
+             :class="estadoBot.ok ? 'bg-emerald-950/60 border border-emerald-500/50 text-emerald-300' : 'bg-amber-950/60 border border-amber-500/50 text-amber-300'">
+          <i :class="estadoBot.ok ? 'fa-solid fa-circle-check text-emerald-400' : 'fa-solid fa-circle-notch fa-spin text-amber-400'"></i>
+          <span>{{ estadoBot.msg }}</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-slate-700">
+          <button @click="guardarDatosEnFicha" 
+                  class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider cursor-pointer">
+            Guardar Datos
+          </button>
+          
+          <button @click="editarDatosEnFicha" 
+                  class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider cursor-pointer">
+            Editar
+          </button>
+
+          <button @click="limpiarFormularioUsuario" 
+                  :disabled="ejecutandoSelenium"
+                  title="Limpiar campos para un nuevo usuario"
+                  class="bg-slate-800 hover:bg-slate-700 disabled:opacity-50 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-broom text-slate-400"></i>
+            <span>Limpiar</span>
+          </button>
+
+          <button @click="reiniciarCreacionSelenium" 
+                  title="Detiene Selenium, cierra la ventana y vuelve a iniciar"
+                  class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+            <i class="fa-solid fa-rotate" :class="{'fa-spin': ejecutandoSelenium}"></i>
+            <span>Reiniciar</span>
+          </button>
+          
+          <button @click="iniciarCreacionSelenium" 
+                  :disabled="ejecutandoSelenium"
+                  class="col-span-2 sm:col-span-1 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer">
+            <i v-if="ejecutandoSelenium" class="fa-solid fa-circle-notch fa-spin"></i>
+            <span>{{ ejecutandoSelenium ? 'Ejecutando...' : 'Iniciar' }}</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 2: NUEVA POSICIÓN                                  -->
+    <!-- ======================================================== -->
+    <div v-if="modalPosicionAbierto" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-lg font-bold text-white">Alta y Configuración de Posición</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Sincroniza automáticamente en tiempo real con <code class="text-emerald-400 font-mono">Firebase Firestore</code></p>
+          </div>
+          <button @click="cerrarModalPosicion" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="space-y-5 my-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nombre de la Posición</label>
+              <input type="text" 
+                     v-model="formPosicion.nombre" 
+                     placeholder="Ej. ASESOR DE VENTA CANCUN" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Área Organizacional (Opcional)</label>
+              <input type="text" 
+                     v-model="formPosicion.area" 
+                     placeholder="Ej. VENTAS" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <!-- NIVELES ASIGNADOS -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-indigo-400"></i> Niveles Asignados
+              </span>
+              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.niveles.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Ingrese la compañía y el nivel correspondiente para esta posición.</p>
+
+            <div class="space-y-2.5">
+              <div v-for="(n, idx) in formPosicion.niveles" :key="'niv-' + idx" class="grid grid-cols-2 gap-3">
+                <input type="text" v-model="n.compania" :placeholder="'Compañía #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                <input type="text" v-model="n.nivel" :placeholder="'Nivel #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaNivel" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Nivel
+              </button>
+              <button v-if="formPosicion.niveles.length > 1" @click="quitarFilaNivel" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+          <!-- GRUPOS -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-users text-indigo-400"></i> Grupos
+              </span>
+              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.grupos.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Ingrese los grupos asignados en Aryve.</p>
+
+            <div class="space-y-2.5">
+              <div v-for="(g, idx) in formPosicion.grupos" :key="'grp-' + idx">
+                <input type="text" v-model="g.nombre" :placeholder="'Grupo #' + (idx + 1)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaGrupo" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Grupo
+              </button>
+              <button v-if="formPosicion.grupos.length > 1" @click="quitarFilaGrupo" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+          <!-- CLASIFICADORES -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-tags text-indigo-400"></i> Clasificadores (Opcional)
+              </span>
+              <span class="text-[11px] text-slate-400">Bloques: {{ formPosicion.clasifs.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Si este puesto lleva clasificadores, ingréselos aquí. Si no aplica, déjelos vacíos.</p>
+
+            <div class="space-y-3">
+              <div v-for="(c, idx) in formPosicion.clasifs" :key="'clasif-' + idx" class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 space-y-2.5">
+                <div class="grid grid-cols-2 gap-3">
+                  <input type="text" v-model="c.abuelo" placeholder="Abuelo (Opcional)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                  <input type="text" v-model="c.padre" placeholder="Padre (Tipo de Clasificador)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                </div>
+                <textarea v-model="c.codigos" placeholder="Códigos (pega aquí la lista o rangos ej. TAM-001 al TAM-050)" class="w-full h-16 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 resize-none"></textarea>
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaClasif" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Clasificador
+              </button>
+              <button v-if="formPosicion.clasifs.length > 1" @click="quitarFilaClasif" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+          <button @click="cerrarModalPosicion" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer">
+            Cancelar
+          </button>
+          <button @click="guardarNuevaPosicion" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition cursor-pointer">
+            Guardar Posición
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+<!-- ======================================================== -->
+    <!-- MODAL: ACTUALIZAR PUESTO Y ESTRUCTURA DE CLASIFICADORES  -->
+    <!-- ======================================================== -->
+    <div v-if="modalClasificadorAbierto" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl shadow-2xl p-6 relative">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i class="fa-solid fa-arrows-rotate text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Actualizar Estructura de Clasificadores</h3>
+              <p class="text-[11px] text-slate-400">Selecciona el puesto base para extraer los clasificadores de <code class="text-emerald-400 font-mono">Firebase (Nube)</code></p>
+            </div>
+          </div>
+          <button @click="cerrarModalClasificador" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="my-5 space-y-4 text-xs">
+          <!-- Info del usuario receptor -->
+          <div v-if="usuarioSeleccionado" class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Usuario Seleccionado</span>
+              <span class="font-bold text-slate-100 text-xs">{{ usuarioSeleccionado.nombre_completo }}</span>
+              <span class="text-indigo-400 font-mono text-[11px] ml-2">ID: #{{ usuarioSeleccionado.id }}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Puesto Actual</span>
+              <span class="text-slate-300 text-xs truncate max-w-[180px] block">{{ usuarioSeleccionado.puesto || 'No especificado' }}</span>
+            </div>
+          </div>
+
+          <!-- Selector de Puesto de puestos.json con Buscador -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+                Seleccionar Puesto de la Matriz Oficial
+              </label>
+              <span class="text-[11px] font-mono" :class="puestoClasificadorTemporal ? 'text-indigo-400 font-semibold' : 'text-slate-500'">
+                {{ puestosFiltradosClasificador.length }} de {{ catalogoPuestos.length }} puestos
+              </span>
+            </div>
+
+            <!-- Buscador Autocomplete de Clasificador -->
+            <div class="relative">
+              <div class="relative">
+                <input type="text" 
+                       v-model="busquedaPuestoClasificador" 
+                       @focus="mostrarDropdownPuestoClasificador = true" 
+                       @input="mostrarDropdownPuestoClasificador = true" 
+                       @blur="setTimeout(() => { mostrarDropdownPuestoClasificador = false }, 250)"
+                       placeholder="Buscar puesto o plaza (ej. REYNOSA, MATAMOROS, BROKER, RESIDENTE...)" 
+                       class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs pointer-events-none"></i>
+
+                <button v-if="busquedaPuestoClasificador" 
+                        @click="limpiarPuestoModalClasificador" 
+                        type="button" 
+                        class="absolute right-3 top-2 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                        title="Limpiar búsqueda">
+                  <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+                <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
+                   :class="{'rotate-180': mostrarDropdownPuestoClasificador}"></i>
+              </div>
+
+              <!-- Dropdown Flotante con Resultados Filtrados -->
+              <div v-if="mostrarDropdownPuestoClasificador" 
+                   class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
+                <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
+                  <span>Matriz Oficial ({{ puestosFiltradosClasificador.length }})</span>
+                  <span v-if="busquedaPuestoClasificador" class="text-indigo-400">Filtro: "{{ busquedaPuestoClasificador }}"</span>
+                </div>
+                <div v-if="puestosFiltradosClasificador.length === 0" class="p-3 text-center text-xs text-slate-400">
+                  <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
+                  No se encontró ningún puesto que coincida
+                </div>
+                <button v-for="p in puestosFiltradosClasificador" 
+                        :key="p" 
+                        type="button" 
+                        @mousedown.prevent 
+                        @click="seleccionarPuestoModalClasificador(p)" 
+                        class="w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer"
+                        :class="puestoClasificadorTemporal === p ? 'bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'">
+                  <span class="truncate">{{ p }}</span>
+                  <i v-if="puestoClasificadorTemporal === p" class="fa-solid fa-check text-indigo-400 text-xs ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen de Clasificadores que se cargarán -->
+          <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Desglose de Clasificadores</span>
+              <span class="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                {{ infoClasificadorTemporal.total }} clasificadores
+              </span>
+            </div>
+
+            <div v-if="infoClasificadorTemporal.categorias && infoClasificadorTemporal.categorias.length" 
+                 class="space-y-1.5 max-h-48 overflow-y-auto custom-scrollbar pr-1 mt-3">
+              <div v-for="cat in infoClasificadorTemporal.categorias" :key="cat.nombre" 
+                   class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-200 font-medium">{{ cat.nombre }}</span>
+                <span class="font-mono text-indigo-300 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-900/60 text-[10px]">
+                  {{ cat.total }} ítems
+                </span>
+              </div>
+            </div>
+            <div v-else class="text-center py-6 text-slate-500 text-[11px]">
+              <i class="fa-solid fa-list-check text-2xl mb-2 text-slate-600 block"></i>
+              Selecciona un puesto arriba para ver los clasificadores que se enviarán a Aryve.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+          <button @click="cerrarModalClasificador" 
+                  class="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-white transition cursor-pointer">
+            Cancelar
+          </button>
+          <div class="flex items-center gap-2">
+            <button @click="confirmarSeleccionPuestoClasificador" 
+                    :disabled="!puestoClasificadorTemporal"
+                    class="bg-slate-800 hover:bg-slate-700 disabled:opacity-50 border border-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+              <i class="fa-solid fa-check mr-1.5 text-indigo-400"></i> Aplicar Selección
+            </button>
+            <button @click="iniciarAsignacionClasificadores" 
+                    :disabled="!puestoClasificadorTemporal || estadoAsignacionClasificadores.ejecutando"
+                    class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 border border-indigo-500/50 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-lg shadow-indigo-600/20">
+              <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-xs"></i>
+              <i v-else class="fa-solid fa-play text-xs text-emerald-300"></i>
+              <span>Iniciar en Aryve</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

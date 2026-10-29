@@ -1,0 +1,2994 @@
+[
+  {
+    "id": 3,
+    "clave": "CR1",
+    "nombre": "CR1 - 20 PACK 2 REC 110-A MZA-11 FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "DAVID BARRAGN",
+    "estatus": "13"
+  },
+  {
+    "id": 20,
+    "clave": "AUO",
+    "nombre": "AUO - 30 VIV SEVILLA, CALLE VALLE ESMERALDA PONIENTE MANZANA 2 TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 21,
+    "clave": "ASI",
+    "nombre": "ASI 1 MOD 16 PACK 3R MOLDE 118-C VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 23,
+    "clave": "AUN",
+    "nombre": "AUN - MC BARDA ACCESO MZA 1 VALLE ESMERALDA TAM",
+    "centro_costo": "",
+    "responsable": "ARQ. OSCAR SAMUEL RAMIREZ",
+    "estatus": "13"
+  },
+  {
+    "id": 24,
+    "clave": "ASH",
+    "nombre": "ASH 1 MOD 16 PACK 3R MOLDE 118-B VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 25,
+    "clave": "AUP",
+    "nombre": "AUP - 18 BALI 3R V. ESMERALDA ORIENTE MZA 3 VALLE ESMERALDA TAM",
+    "centro_costo": "",
+    "responsable": "OSCAR SAMUEL RAMIREZ LOPEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 34,
+    "clave": "ARZ",
+    "nombre": "ARZ - EDIF 116 A, 12 PACK 3REC MZA 2, COND 9, VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 49,
+    "clave": "AP4",
+    "nombre": "AP4 - TORRE MILOS PILAS TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 74,
+    "clave": "BEU",
+    "nombre": "BEU - 11 PORTUGAL TRADICIONAL MZA 22  LOTE 1 AL 11 ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 86,
+    "clave": "ADS",
+    "nombre": "ADS - PRIV CAOBA BALI M22,24, 8V BALI 2R, 6V B ARECAS II TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 94,
+    "clave": "ASS",
+    "nombre": "ASS - LAG SUPERIOR, 3VBALI3R, 3VBALI,10V SEVIL VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 95,
+    "clave": "BI1",
+    "nombre": "BI1 - 16PACK MTM TRADICIONAL - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 97,
+    "clave": "AP5",
+    "nombre": "AP5 - ESTRUCTURA Y OBRA BLANCA TORRE MILOS TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 99,
+    "clave": "BI2",
+    "nombre": "BI2 - 16 PACK INFONAVIT EDIFICIO 2 60 M2 -  ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 100,
+    "clave": "BI3",
+    "nombre": "BI3 - 16 PACK EDIFICIO 3 INFONAVIT 60 M2 - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 101,
+    "clave": "BI4",
+    "nombre": "BI4 - C. OLMO EDIFICIO N 4 - 20 PACK 2 REC TRADICIONAL - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 102,
+    "clave": "BI5",
+    "nombre": "BI5 - 20 PACK INFONAVIT 60 M2 EDIFICIO 5 - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 103,
+    "clave": "BI6",
+    "nombre": "BI6 - 16 PACK INFONAVIT 203-A MZA 45 - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 104,
+    "clave": "BI7",
+    "nombre": "20 PACK EDIF.7  203-B  MZA. 45 INFONAVIT - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 105,
+    "clave": "BI8",
+    "nombre": "20 PACK EDIF.8 203-C MZA. 45 INFONAVIT - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 106,
+    "clave": "BI9",
+    "nombre": "20 PACK EDIF.9 203-D MZA. 45 INFONAVIT- ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 112,
+    "clave": "CR2",
+    "nombre": "CR2 - 20 PACK INFONAVIT 60 M2 MZA 11 110 B FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 113,
+    "clave": "CR3",
+    "nombre": "CR3 - 20 PACK INFONAVIT 60 M2  MZA 11 110 C FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 114,
+    "clave": "CR4",
+    "nombre": "CR4 -20 PACK INFONAVIT 60 M2 MZA 11 100 D FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 115,
+    "clave": "CR5",
+    "nombre": "CR5 - 20 PACK INFONAVIT 60 M2 110 E FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 116,
+    "clave": "CR6",
+    "nombre": "CR6 - 16PACK #110F REYNOSA TRADICIONAL FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 117,
+    "clave": "CR7",
+    "nombre": "CR7 - 20 PACK MZA 18 EDIFICIO 112 A FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 118,
+    "clave": "CR8",
+    "nombre": "CR8 - 20 PACK MZA 18 EDIFICIO 112 B FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 119,
+    "clave": "CR9",
+    "nombre": "CR9 - 20 PACK MZA 18 EDIFICIO 112 C FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 120,
+    "clave": "CSB",
+    "nombre": "CSB - 20 PACK MZA 22 LOTE 136-A FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 121,
+    "clave": "CSK",
+    "nombre": "CSK - 20 PACK BIENESTAR MZA 25 LOTE 134-D FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 122,
+    "clave": "BET",
+    "nombre": "BET - 2 CASAS SEVILLA MZA 2 Y 8 LOTE 11 Y 14 ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 128,
+    "clave": "BES",
+    "nombre": "BES - CANAL PALMA ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 131,
+    "clave": "ED9",
+    "nombre": "ED9",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 139,
+    "clave": "ED3",
+    "nombre": "ED3 - COTO12 4TA ET L22-L26, L32-L36 QR PDC",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 140,
+    "clave": "ED1",
+    "nombre": "ED1 - 32PACK EDIFICIO #3 COTO14 SELV - SELVANOVA PDC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 142,
+    "clave": "ED2",
+    "nombre": "ED2 - 24PACK EDIFICIO 4 COTO 14 SELV PDC",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 143,
+    "clave": "ED4",
+    "nombre": "ED4 - EDIFICIO#5 COTO14 SELVANOVA QR PDC",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 144,
+    "clave": "ED5",
+    "nombre": "ED5 - EDIF.#6 32 PACK COTO14 SELVANOVA PDC",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 145,
+    "clave": "ED6",
+    "nombre": "ED6 - 24PACK EDIF #7 1407 COTO14 SEL PDC",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 146,
+    "clave": "ED7",
+    "nombre": "ED7 - COTO 14 ED 1408 24PACK COCOTERO PDC",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 162,
+    "clave": "ED8",
+    "nombre": "ED8 - REAS COMUNES PDC",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 165,
+    "clave": "ICE",
+    "nombre": "ICE - 3 CASAS : MZA-3, LOTES 14,15 Y 16 CAB",
+    "centro_costo": "",
+    "responsable": "ARQ. PABLO ABRAHAM BARRERO HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 166,
+    "clave": "ICC",
+    "nombre": "ICC - EDIFICIO 1 (39 DEPTOS) VISTA VELA CAB",
+    "centro_costo": "",
+    "responsable": "ARQ. PABLO ABRAHAM BARRERO HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 168,
+    "clave": "HF1",
+    "nombre": "HF1 - CALLE 1,EDIFICIO I , 16PACK  CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 169,
+    "clave": "HF2",
+    "nombre": "HF2 - CALLE 1, EDIFICIO F, 20PACK CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 170,
+    "clave": "HF3",
+    "nombre": "HF3 - OFICINA VENTAS CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 172,
+    "clave": "HF4",
+    "nombre": "HF4 - CALLE 1, EDIFICIO E, 16 PACK CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 173,
+    "clave": "HF5",
+    "nombre": "HF5 - CALLE 1, EDIFICIO K, 16 PACK CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 174,
+    "clave": "HF6",
+    "nombre": "HF6 - EDIFICIO J, 20PACK CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 175,
+    "clave": "HF7",
+    "nombre": "HF7 - EDIFICIO H, EDIFIC 16PACK CIMA PEA FLOR QRO",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 204,
+    "clave": "EK1",
+    "nombre": "EK1 - CHAPULTEPEC, MAYAKOBA PDC",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 215,
+    "clave": "BJB",
+    "nombre": "16 PACK 60 M2 196-A INFONAVIT - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 216,
+    "clave": "BJC",
+    "nombre": "20 PACK INFONAVIT 196-B BLOCK - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 217,
+    "clave": "BJD",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 31 196-C - ARECAS BIENESTAR  MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 218,
+    "clave": "BJE",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 31 196-D  - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 219,
+    "clave": "BJF",
+    "nombre": "16 PACK 60 M2 INFONAVIT MZA 32 198-A - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 220,
+    "clave": "BJG",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 32 198-B - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 223,
+    "clave": "BJH",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 32 198-C - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 224,
+    "clave": "BJI",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 32 198-D  - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 225,
+    "clave": "BJJ",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 33 204-A - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 226,
+    "clave": "BJK",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 33 204-B - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 227,
+    "clave": "BJL",
+    "nombre": "20 PACK 60 M2 INFONAVIT MZA 33 204-C - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 228,
+    "clave": "BJM",
+    "nombre": "16 PACK 60 M2 INFONAVIT MZA 33 204-D - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 229,
+    "clave": "BJN",
+    "nombre": "16 PACK 60 M2 INFONAVIT MZA 33 204-E - ARECAS BIENESTAR MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 232,
+    "clave": "DM2",
+    "nombre": "DM2 - BARDA PERIMETRAL FRACCIONAMIENTO - PUNTA VELA II JRZ",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 233,
+    "clave": "BEH",
+    "nombre": "BEH - 4 SEVILLAS MZA 8 CALLE LAVANDA ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 234,
+    "clave": "DM1",
+    "nombre": "DM1 - 6 VIV FRACC. PUNTA VELA 2 LOTE - PUNTA VELA II JRZ",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 240,
+    "clave": "ASP",
+    "nombre": "ASP - 1 MOD 20PACK 2R #120-D VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 245,
+    "clave": "ASN",
+    "nombre": "ASN - 1 MOD 16 PACK 3R #120-B VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 246,
+    "clave": "ASO",
+    "nombre": "ASO - 1 MOD 16 PACK 3R #120-C VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 263,
+    "clave": "APF",
+    "nombre": "APF - MUROS CONTENCION TORRE MILOS TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 266,
+    "clave": "BEW",
+    "nombre": "BEW - 11 PALMA MZA 6 LOTE 1-11 ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 267,
+    "clave": "ASR",
+    "nombre": "ASR - 1 MOD 16 PACK 2R 120-F VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 268,
+    "clave": "ASQ",
+    "nombre": "ASQ - 1 MOD 16 PACK 2R #120-E VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 269,
+    "clave": "ASM",
+    "nombre": "ASM - 1 MOD 12 PACK 3R #120-A VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 270,
+    "clave": "ASG",
+    "nombre": "ASG - 1 MOD 12 PACK 3R MOLDE 118 VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 288,
+    "clave": "CSC",
+    "nombre": "CSC - 20 PACK BIENESTAR 2DA 136 B FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 289,
+    "clave": "CSD",
+    "nombre": "CSD -  20 PACK BIENESTAR MZA 22 LOTE 136-C FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 290,
+    "clave": "CSE",
+    "nombre": "CSE - 20 PACK BIENESTAR MZA 22 LOTE 136-D FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 291,
+    "clave": "CSF",
+    "nombre": "CSF - 20 PACK BIENESTAR MZA 22 LOTE 136-E FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 292,
+    "clave": "CSG",
+    "nombre": "CSG - 20 PACK BIENESTAR MZA 22 LOTE 136-F FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 293,
+    "clave": "CSH",
+    "nombre": "CSH - 20 PACK BIENESTAR MZA 22 LOTE 134-A  FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 294,
+    "clave": "CSI",
+    "nombre": "CSI - 20 PACK BIENESTAR MZA 22 LOTE 134-B FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 295,
+    "clave": "CSJ",
+    "nombre": "CSJ - 20 PACK BIENESTAR MZA 22 LOTE 134-C RFLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 296,
+    "clave": "CEG",
+    "nombre": "CEG - BARDAS MEDIANERAS MZA 10 Y 12 FLORENCIA REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 297,
+    "clave": "BEX",
+    "nombre": "BEX - 13 PALMA MZA 6 LOTE 15-27 ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 298,
+    "clave": "BEZ",
+    "nombre": "BEZ - ARCO ACCESO MATAMOROS ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 299,
+    "clave": "BBB",
+    "nombre": "BBB - 14 CASAS SEVILLA 72 M2 LOTES 2 PASEO DE LAS BRISAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 300,
+    "clave": "BF1",
+    "nombre": "BF1 - SEVILLAS 80 M2 MZA 5 Y 6 LOTES ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 301,
+    "clave": "BF2",
+    "nombre": "BF2 - PALMA 69.76 M2 LOTES 9 AL 14 Y ARECAS MAT",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 302,
+    "clave": "HCC",
+    "nombre": "HCC - VELA SUR COTO 2 LOTE 13 QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 304,
+    "clave": "HCD",
+    "nombre": "HCD - ACACIA L44 L45 VELASUR COTO1 QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 305,
+    "clave": "KA0",
+    "nombre": "KA0 - GASTOS FIJOS VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 306,
+    "clave": "KA1",
+    "nombre": "KA1 - 1 MOD 12 PACK 2R MOLDE (184-A) VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "MIGUEL VALLES, MARCELO SANTIN, DELFINO GUERRERO",
+    "estatus": "13"
+  },
+  {
+    "id": 307,
+    "clave": "KA2",
+    "nombre": "KA2 - 16 PACK MOLDE 2 RECAMARAS 184 - B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "MIGUEL VALLES, MARCELO SANTIN, DELFINO GUERRERO",
+    "estatus": "13"
+  },
+  {
+    "id": 308,
+    "clave": "KA3",
+    "nombre": "KA3 - 1 MOD 16 PACK 2R MOLDE 184 - C VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 309,
+    "clave": "KA4",
+    "nombre": "KA4 - 1 MOD 16 PACK 2R MOLDE 184 - D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 310,
+    "clave": "KA5",
+    "nombre": "KA5 - 16 PACK MOLDE 2 RECAMARAS 184 - E VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 311,
+    "clave": "KA6",
+    "nombre": "KA6 - 12 PACK 2R MOLDE #184-F VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 312,
+    "clave": "KA7",
+    "nombre": "KA7 - 1 MOD 12 PACK 2R MOLDE #186 - A VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 313,
+    "clave": "KA8",
+    "nombre": "KA8 - 16 PACK MOLDE 2 RECAMARAS 186-B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 314,
+    "clave": "KA9",
+    "nombre": "KA9 - 16 PACK MOLDE 2 RECAMARAS 186-C VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 315,
+    "clave": "KAA",
+    "nombre": "KAA - 16 PACK 2R MOLDE #186-D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 316,
+    "clave": "KAB",
+    "nombre": "KAB - 16 PACK 2R MOLDE #186-E VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 317,
+    "clave": "KAC",
+    "nombre": "KAC - 12 PACK 2R MOLDE #186-F VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 318,
+    "clave": "KAD",
+    "nombre": "KAD - 12 PACK 2R MOLDE #188-A VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 319,
+    "clave": "KAE",
+    "nombre": "KAE - 16 PACK 2R MOLDE #188-B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 320,
+    "clave": "KAF",
+    "nombre": "KAF - 16 PACK 2R MOLDE #188-C VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 321,
+    "clave": "HC1",
+    "nombre": "HC1 - VELASUR CORREGIDORA VIV / AREA QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 322,
+    "clave": "HC2",
+    "nombre": "HC2 - ARTEMISA COTO2 VELASUR, QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 323,
+    "clave": "HH1",
+    "nombre": "HH1 - FRACC BALLESTA 10VIV AREZZO QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 324,
+    "clave": "HH2",
+    "nombre": "HH2 - L62-L67 AREZZO FRACC BALLESTA QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 326,
+    "clave": "ASU",
+    "nombre": "ASU - 1 MODULO 12 PACK 3R 122 A VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 327,
+    "clave": "ASV",
+    "nombre": "ASV - 1 MODULO 16 PACK 3R 122 B VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 328,
+    "clave": "ASW",
+    "nombre": "ASW - 1 MODULO 16 PACK 3R 122 C VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 329,
+    "clave": "ASX",
+    "nombre": "ASX - 1 MODULO 16 PACK 3R 122 D VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 330,
+    "clave": "ASY",
+    "nombre": "ASY - 1 MODULO 16 PACK 3R 122 E VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 331,
+    "clave": "ASZ",
+    "nombre": "ASZ - 1 MODULO 12 PACK 3R 122 F VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "JOSE TRIGAL",
+    "estatus": "13"
+  },
+  {
+    "id": 332,
+    "clave": "HCE",
+    "nombre": "HCE - ARTEMISA L02 L03 VELASUR COTO2 QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 333,
+    "clave": "HCF",
+    "nombre": "HCF - L175 L177 ARTEMISA COTO OLIVO QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 334,
+    "clave": "GA4",
+    "nombre": "GA4 - 13 VIVIENDAS CALLES TZALAM, TULE, TASISTE ARBOLADA - CUN",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 335,
+    "clave": "HCG",
+    "nombre": "HCG -  L80L89 COTO1VELASUR QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 336,
+    "clave": "HCH",
+    "nombre": "HCH - LOTE60 ACACIA VELASUR, QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 339,
+    "clave": "DGD",
+    "nombre": "DGD - BARDA PERIMETRAL MULTIFAMILIAR - VERONA JRZ",
+    "centro_costo": "",
+    "responsable": "CARLOS RIVERA",
+    "estatus": "13"
+  },
+  {
+    "id": 341,
+    "clave": "COV",
+    "nombre": "COV - 16 PACK 3R TRADICIONAL FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 342,
+    "clave": "COW",
+    "nombre": "COW - 16 PACK 3R TRADICIONAL FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 343,
+    "clave": "COX",
+    "nombre": "COX - 16 PACK 3R TRADICIONAL FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 344,
+    "clave": "COY",
+    "nombre": "COY - 16 PACK 3R TRADICIONAL FLORENCIA BIENESTAR REY",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 350,
+    "clave": "EDX",
+    "nombre": "EDX - COSTOS FIJOS PDC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 351,
+    "clave": "672",
+    "nombre": "672 - TORRE CAPRI 46PACK VELAMAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 352,
+    "clave": "483",
+    "nombre": "483 - TORRE SORRENTO CAPRI VELAMAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 359,
+    "clave": "AT0",
+    "nombre": "AT0 - PRIV LAGO TEXCOCO, MZA 9 Y 10 VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 361,
+    "clave": "AUS",
+    "nombre": "AUS - VALLE ZAFIRO OTE Y VALLE AMBAR VALLE ESMERALDA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 363,
+    "clave": "ICD",
+    "nombre": "ICD - 4 VIVI'S - MZA 3 LOTES 10, 11,12 Y 13 CAB",
+    "centro_costo": "",
+    "responsable": "ARQ. PABLO ABRAHAM BARRERO HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 366,
+    "clave": "KAH",
+    "nombre": "KAH - 16 PACK 2R MOLDE 188E VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 367,
+    "clave": "KAI",
+    "nombre": "KAI - 12 PACK 2R MOLDE 188-F VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 368,
+    "clave": "KAJ",
+    "nombre": "KAJ - 12 PACK 2R MOLDE 190A VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 369,
+    "clave": "KAK",
+    "nombre": "KAK - 16 PACK 2R MOLDE 190B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 370,
+    "clave": "KAL",
+    "nombre": "KAL - 16 PACK 2R MOLDE 190C VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 371,
+    "clave": "KAM",
+    "nombre": "KAM - 16 PACK 2R MOLDE 190D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 372,
+    "clave": "T73",
+    "nombre": "TIPO 7 v. 3",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 373,
+    "clave": "KAN",
+    "nombre": "KAN - 16 PACK 2R MOLDE 190E VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 374,
+    "clave": "KAO",
+    "nombre": "KAO - 12 PACK 2R MOLDE 190F VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 375,
+    "clave": "KAP",
+    "nombre": "KAP - 12 PACK 2R MOLDE 192A VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 376,
+    "clave": "KAQ",
+    "nombre": "KAQ - 16 PACK 2R MOLDE 192B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 377,
+    "clave": "KAR",
+    "nombre": "KAR - 16 PACK 2R MOLDE 192C VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 378,
+    "clave": "KAS",
+    "nombre": "KAS - 16 PACK 2R MOLDE 192D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 379,
+    "clave": "KAT",
+    "nombre": "KAT - 16 PACK 2R MOLDE 192E VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 380,
+    "clave": "KAU",
+    "nombre": "KAU - 12 PACK 2R MOLDE 192F VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 382,
+    "clave": "KAG",
+    "nombre": "KAG - 16 PACK 2R MOLDE 188 D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 383,
+    "clave": "HCI",
+    "nombre": "HCI - L92 L121 ARTEMISA VELASUR QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 389,
+    "clave": "IC5",
+    "nombre": "IC5 - VV4 - 6 VIV MZA 3 - LOTE 1 A LOTE 6 CAB",
+    "centro_costo": "",
+    "responsable": "ARQ. PABLO ABRAHAM BARRERO HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 390,
+    "clave": "AJM",
+    "nombre": "AJM - FRACC VELAMAR MZA-3, L3,L6,L9 VELAMAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 393,
+    "clave": "117",
+    "nombre": "117 - VILLA HERMOSA - VELAHOGARES TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 395,
+    "clave": "DGE",
+    "nombre": "DGE - EDIFICIO B 16 PACK 3R FRACC. VERONA - JRZ",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 396,
+    "clave": "DGF",
+    "nombre": "DGF - EDIFICIO C 16 PACK 3R FRACC. VERONA - JRZ",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 397,
+    "clave": "DGG",
+    "nombre": "DGG - EDIFICIO E 16 PACK 3R FRACC. VERONA - JRZ",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 400,
+    "clave": "KAV",
+    "nombre": "KAV - 194-A - 12 PACK 2R MOLDE BIENESTAR VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 401,
+    "clave": "KAW",
+    "nombre": "KAW - 194-B - 16 PACK 2R MOLDE BIENESTAR VISTA LAGUNA TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 402,
+    "clave": "KAX",
+    "nombre": "KAX - 194-C - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 403,
+    "clave": "HH3",
+    "nombre": "HH3 - L42-L61 AREZZO FRACC BALLESTA QRO",
+    "centro_costo": "",
+    "responsable": "INGAR ARMANDO MARTINEZ HERNANDEZ",
+    "estatus": "13"
+  },
+  {
+    "id": 405,
+    "clave": "KAY",
+    "nombre": "KAY - 194-D - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 406,
+    "clave": "KAZ",
+    "nombre": "KAZ - 194-E - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR  TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 407,
+    "clave": "KB0",
+    "nombre": "KB0 - 194-F - 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 408,
+    "clave": "KB1",
+    "nombre": "KB1 - 196-A - 12PACK 2 R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 409,
+    "clave": "KB2",
+    "nombre": "KB2 - 196-B - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 410,
+    "clave": "KB3",
+    "nombre": "KB3 - 196-C - 16PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 411,
+    "clave": "KB4",
+    "nombre": "KB4 - 196-D - 16PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 412,
+    "clave": "KB5",
+    "nombre": "KB5 - 196-E - 16 PACK MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 413,
+    "clave": "KB6",
+    "nombre": "KB6 - 196-F - 12 PACK MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 414,
+    "clave": "KB7",
+    "nombre": "KB7 - 198-A - 12 PACK MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 415,
+    "clave": "KB8",
+    "nombre": "KB8 - 198-B - 16 PACK M2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 416,
+    "clave": "KB9",
+    "nombre": "KB9 - 198-C - 20 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 424,
+    "clave": "IE0",
+    "nombre": "IE0 - GASTOS GENERALES VISTA VELA HILLS CAB",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 427,
+    "clave": "KBP",
+    "nombre": "KBP - MUROS DE CONTENCION VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 428,
+    "clave": "KBB",
+    "nombre": "KBB - MOD 198-E - 20PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 430,
+    "clave": "KBD",
+    "nombre": "KBD - MOD 200E - 20 PACK 2R VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 431,
+    "clave": "KBE",
+    "nombre": "KBE - MOD 200A 20 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 432,
+    "clave": "KBF",
+    "nombre": "KBF - 12 PACK 2R MOLDE 200B VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 433,
+    "clave": "KBG",
+    "nombre": "KBG - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 434,
+    "clave": "KBH",
+    "nombre": "KBH - 16 PACK 2R MOLDE 202A VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 435,
+    "clave": "KBI",
+    "nombre": "KBI - MOD 202B - 20 PACK 2R VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 436,
+    "clave": "KBJ",
+    "nombre": "KBJ - MOD 202C 20 PACK VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 437,
+    "clave": "KBK",
+    "nombre": "KBK - MOD 202D 20 PACK 2R VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 438,
+    "clave": "KBL",
+    "nombre": "KBL - 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 439,
+    "clave": "KBM",
+    "nombre": "KBM - 12 PACK 2R MOLDE 204D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 441,
+    "clave": "KBN",
+    "nombre": "KBN - 16 PACK 2R MOLDE 216D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 442,
+    "clave": "KBO",
+    "nombre": "KBO - 16 PACK 2 R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 443,
+    "clave": "KBQ",
+    "nombre": "KBQ - MOD 216F 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 444,
+    "clave": "KBR",
+    "nombre": "KBR - MOD 216A 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 445,
+    "clave": "KC5",
+    "nombre": "KC5 - MOD 206-A - 12 PACK 2R MOLDE BIENESTAR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 446,
+    "clave": "KBU",
+    "nombre": "KBU - MOD 204A 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 447,
+    "clave": "KBY",
+    "nombre": "KBY - MOD 206D 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 448,
+    "clave": "KC1",
+    "nombre": "KC1 - MOD 214F 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 449,
+    "clave": "KC2",
+    "nombre": "KC2 - MOD 214A 12 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 450,
+    "clave": "KBS",
+    "nombre": "KBS - MOD 216B 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 451,
+    "clave": "KBT",
+    "nombre": "KBT - MOD 216C 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 452,
+    "clave": "KBV",
+    "nombre": "KBV - MOD 204B 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 453,
+    "clave": "KBX",
+    "nombre": "KBX - MOD 206C 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 454,
+    "clave": "KBZ",
+    "nombre": "KBZ - MOD 214D 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 455,
+    "clave": "KC0",
+    "nombre": "KC0 - MOD 214E 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 456,
+    "clave": "KC3",
+    "nombre": "KC3 - MOD 214B 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 457,
+    "clave": "KC4",
+    "nombre": "KC4 - MOD 214C 16 PACK 2R MOLDE VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 460,
+    "clave": "DI3",
+    "nombre": "PRIVADA SAN MARTINO, 63 2R Y 65V3R",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 461,
+    "clave": "DI4",
+    "nombre": "DI4 PRIVADA CAPRI NAPOLES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 462,
+    "clave": "DI5",
+    "nombre": "DI5 PRIVADA TENTRO CD JAUREZ NAPOLES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 463,
+    "clave": "DI6",
+    "nombre": "DI6 PRIVADA NOLANA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 464,
+    "clave": "DI7",
+    "nombre": "DI7 PRIV. CATERINA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 465,
+    "clave": "DI8",
+    "nombre": "PRIV. MERCATO FRACC. NAPOLES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 466,
+    "clave": "DJ1",
+    "nombre": "DJ1 VALENCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 467,
+    "clave": "DJ2",
+    "nombre": "DJ2 VALENCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 468,
+    "clave": "DJ3",
+    "nombre": "ENRIQUE OCHOA M2Y M3, 19V 3R, 5V 2R",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 469,
+    "clave": "DJ4",
+    "nombre": "32VIV C.MONTE DE JADE FRACC VALENCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 470,
+    "clave": "DJ5",
+    "nombre": "16VIV PRIV. INES ARREDONDO FRACC. VALENCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 471,
+    "clave": "DJ6",
+    "nombre": "11 VIV VALENCIA 3 MZA. 8 PRIV. INES ARREDONDO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 472,
+    "clave": "DJ7",
+    "nombre": "15 VIV VALENCIA 3 PRIV INES ARR.",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 473,
+    "clave": "DJ8",
+    "nombre": "10 VIV CALLE INES ARREDONDO MZA 5 VALENCIA 3",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 474,
+    "clave": "DJ9",
+    "nombre": "21V 3R TRADICIONAL 3V 2R MZA 5",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 475,
+    "clave": "DJA",
+    "nombre": "7 VIV. 3R MOLDE LOTE 150-156",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 476,
+    "clave": "DJB",
+    "nombre": "12 VIV.3R MOLDE 1 VIV.2R TRAD.",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 477,
+    "clave": "DJD",
+    "nombre": "15 VIV TRAD L45 A L59 MZA. 3 PRIV. 3 INES A.",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 478,
+    "clave": "DJE",
+    "nombre": "14 VIV TRAD MZA. 4 PRIV. 3 VALENCIA INES A.",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 479,
+    "clave": "DJF",
+    "nombre": "15 VIV MZA 1 L14 AL 28 PRIV INES VALENCIA 3",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 480,
+    "clave": "DJG",
+    "nombre": "16 VIV MZA 2 15 3R MOLDE 1 2R TRAD",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 481,
+    "clave": "HH4",
+    "nombre": "L78-L89 AREZZO FRACC BALLESTA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 482,
+    "clave": "DGH",
+    "nombre": "EDIFICIO A, 16 PACK VERONA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 485,
+    "clave": "HF9",
+    "nombre": "HF9 PEAFLOR CASETA DE VIGILANCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 504,
+    "clave": "ECY",
+    "nombre": "COTO 12, 10 VIVIENDAS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 536,
+    "clave": "658",
+    "nombre": "TORRE MARBELLA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 573,
+    "clave": "KC6",
+    "nombre": "KC6 - 16 PACK 2R MOLDE CALLE LAGUNA MADRE, COND 13 - MOD 206-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 574,
+    "clave": "KC8",
+    "nombre": "KC8 - 12 PACK 2R MOLDE CALLE LAGUNA MADRE, COND 14 - MOD 208-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 575,
+    "clave": "KCI",
+    "nombre": "KCI - 20 PACK 2R MOLDE CALLE LAGUNA DEL CARMEN, COND 14 - MOD 210-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 576,
+    "clave": "KC7",
+    "nombre": "KC7 - 16 PACK 2R MOLDE CALLE LAGUNA MADRE, COND 14 - MOD 208-C",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 577,
+    "clave": "KC9",
+    "nombre": "KC9 - 16 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 578,
+    "clave": "KCA",
+    "nombre": "KCA - 16 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-E",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 579,
+    "clave": "KCD",
+    "nombre": "KCD - 16 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 580,
+    "clave": "KCE",
+    "nombre": "KCE - 16 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-C",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 581,
+    "clave": "KCG",
+    "nombre": "KCG - 16 PACK 2R MOLDE CALLE LAGUNA MADRE, COND 14 - MOD 208-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 582,
+    "clave": "KCL",
+    "nombre": "KCL - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-A",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 583,
+    "clave": "KCM",
+    "nombre": "KCM - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 584,
+    "clave": "KCP",
+    "nombre": "KCP - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-E",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 585,
+    "clave": "KCQ",
+    "nombre": "KCQ - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-F",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 586,
+    "clave": "KCR",
+    "nombre": "KCR - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 20, LTE 2, MZA 27, MOD. 228-A",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 587,
+    "clave": "KCS",
+    "nombre": "KCS - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 20, LTE 2, MZA 27, MOD. 228-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 588,
+    "clave": "KCV",
+    "nombre": "KCV - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 20, LTE 2, MZA 27, MOD. 228-E",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 589,
+    "clave": "KCW",
+    "nombre": "KCW - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 20, LTE 2, MZA 27, MOD. 228-F",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 590,
+    "clave": "KCY",
+    "nombre": "KCY - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 21, LTE 3, MZA 27, MOD. 226-E",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 591,
+    "clave": "KCZ",
+    "nombre": "KCZ - 16 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 21, LTE 3, MZA 27, MOD. 226-F",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 592,
+    "clave": "KCB",
+    "nombre": "KCB - 12 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-F",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 593,
+    "clave": "KCC",
+    "nombre": "KCC - 12 PACK 2R MOLDE CALLE LAGUNA DE MONTEBELLO, COND 16 - MOD 212-A",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 594,
+    "clave": "KCF",
+    "nombre": "KCF - 12 PACK 2R MOLDE CALLE LAGUNA MADRE, COND 14 - MOD 208-A",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 595,
+    "clave": "KCJ",
+    "nombre": "KCJ - 20 PACK 2R MOLDE CALLE LAGUNA DEL CARMEN, COND 14 - MOD 210-C",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 596,
+    "clave": "KCK",
+    "nombre": "KCK - 20 PACK 2R MOLDE CALLE LAGUNA DEL CARMEN, COND 14 - MOD 210-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 597,
+    "clave": "KCN",
+    "nombre": "KCN - 20 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-C",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 598,
+    "clave": "KCO",
+    "nombre": "KCO - 20 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 19, LTE 1, MZA 27, MOD. 230-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 599,
+    "clave": "KCT",
+    "nombre": "KCT - 20 PACK 2R MOLDE CALLE LAGUNA DEL CARMEN, COND 14 - MOD 210-B",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 600,
+    "clave": "KCU",
+    "nombre": "KCU - 20 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 20, LTE 2, MZA 27, MOD. 228-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 601,
+    "clave": "KCX",
+    "nombre": "KCX - 20 PACK 2R MOLDE CALLE LAG DE MONTEBELLO COND 21, LTE 3, MZA 27, MOD. 226-D",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 602,
+    "clave": "KCH",
+    "nombre": "KCH - 16 PACK 2R MOLDE CALLE LAGUNA DEL CARMEN, COND 14 - MOD 210-A",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 606,
+    "clave": "BF4",
+    "nombre": "BF4-BARDAS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 607,
+    "clave": "AT2",
+    "nombre": "AT2 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-B)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 608,
+    "clave": "HCK",
+    "nombre": "OLIVO LOTE 59 y 99 COTO 2 ARTEMISA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 609,
+    "clave": "AT1",
+    "nombre": "AT1 - 12 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-A)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 610,
+    "clave": "AT6",
+    "nombre": "AT6 - 12 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-F)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 611,
+    "clave": "AT7",
+    "nombre": "AT7 - 12 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 14, LOTE 10, MZA 2, (MOD. 126-A)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 612,
+    "clave": "AT3",
+    "nombre": "AT3 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-C)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 613,
+    "clave": "AT4",
+    "nombre": "AT4 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-D)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 614,
+    "clave": "AT5",
+    "nombre": "AT5 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-E)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 615,
+    "clave": "AT8",
+    "nombre": "AT8 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 14, LOTE 10, MZA 2, (MOD. 126-B)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 616,
+    "clave": "AT9",
+    "nombre": "AT9 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 14, LOTE 10, MZA 2, (MOD. 126-C)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 617,
+    "clave": "ATA",
+    "nombre": "ATA - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 14, LOTE 10, MZA 2, (MOD. 126-D)",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 618,
+    "clave": "AR0",
+    "nombre": "AR0 - URB VISTA LAGUNA TRADICIONAL",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 619,
+    "clave": "DGI",
+    "nombre": "DGI EDIFICIO D 16 PACK 3R",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 621,
+    "clave": "699",
+    "nombre": "POS VENTA  MATAMOROS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 634,
+    "clave": "AST",
+    "nombre": "AST - BARDA ENTRE COTO 118 Y 120",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 641,
+    "clave": "AUU",
+    "nombre": "AUU - VALLE AMBAR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 642,
+    "clave": "DGZ",
+    "nombre": "VERONA, PROTOTIPO SIENNA 3R",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 644,
+    "clave": "AUT",
+    "nombre": "AUT - VALLE AMBAR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 645,
+    "clave": "ECS",
+    "nombre": "URBANIZACION COTO 14 SEGUNDA PARTE",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 646,
+    "clave": "DQ0",
+    "nombre": "VALENCIA II URBANiZACIN + FIJOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 647,
+    "clave": "HC4",
+    "nombre": "URBAN COTO 3 COPAL",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 649,
+    "clave": "AIQ",
+    "nombre": "AIQ - CASA GERBERA  #104 LOMA BONITA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 650,
+    "clave": "IC0",
+    "nombre": "IC0 - VISTA VELA IV",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 651,
+    "clave": "KBA",
+    "nombre": "KBA - 20 PACK 2R MOLDE 198D  VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 652,
+    "clave": "HCL",
+    "nombre": "HCL - L126 COTO2 ARTEMISA 1V MAGNOLIA, ARYVE",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 653,
+    "clave": "DQ2",
+    "nombre": "DQ2 - 16 PACK 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 654,
+    "clave": "DQ3",
+    "nombre": "16 PACK 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 656,
+    "clave": "DQ5",
+    "nombre": "DQ5 - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 657,
+    "clave": "DQ4",
+    "nombre": "16 PACK 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 658,
+    "clave": "DQ6",
+    "nombre": "DQ6 - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 659,
+    "clave": "DQ7",
+    "nombre": "DQ7 - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 660,
+    "clave": "DQ8",
+    "nombre": "DQ8 - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 661,
+    "clave": "DQ9",
+    "nombre": "DQ9 - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 662,
+    "clave": "DQA",
+    "nombre": "DQA - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 663,
+    "clave": "DQB",
+    "nombre": "DQB - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 664,
+    "clave": "DQC",
+    "nombre": "DQC - SIENNA 3R VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 666,
+    "clave": "HH8",
+    "nombre": "HH8 - BARDA PERIMETRAL FRACCIONAMIENTO BALLESTA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 668,
+    "clave": "KBC",
+    "nombre": "KBC - 16 PACK 2R MOLDE 200D VISTA LAGUNA BIENESTAR TAM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 669,
+    "clave": "JA0",
+    "nombre": "MANILA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 670,
+    "clave": "BF6",
+    "nombre": "BF6 - CASAS PALMA M7",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 671,
+    "clave": "BFS",
+    "nombre": "BFS - BANQUETAS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 672,
+    "clave": "DQD",
+    "nombre": "DQD - 2R FLORENCIA TRADICIONAL",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 674,
+    "clave": "QRO-REP-BALLESTA",
+    "nombre": "QUERETARO REPARACION BALLESTA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 675,
+    "clave": "QRO-REP-VELASUR",
+    "nombre": "HC0 QUERETARO REPARACION VELASUR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 676,
+    "clave": "QRO-REP-CIMA",
+    "nombre": "QUERETARO REPARACION CIMA PEA FLOR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 677,
+    "clave": "HCM",
+    "nombre": "HCM - LOTE 129 COTO 2 ARTEMISA 1 VIV OLIVO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 678,
+    "clave": "TAM-REP-LOMA-BONITA",
+    "nombre": "TAMPICO REPARACIONES LOMA BONITA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 679,
+    "clave": "ECZ",
+    "nombre": "ECZ - COTO 14, APERT X COMPRA CISTERNAS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 682,
+    "clave": "AUQ",
+    "nombre": "ALBERCA VALLE JADE Y VALLE ESMERALDA PTE MZA 4",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 683,
+    "clave": "IBF",
+    "nombre": "IBF - EDIFICIO 4 VISTA VELA 3 URBAN",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 685,
+    "clave": "AOO-ENCINOS",
+    "nombre": "CASAS DE ENCINOS AOO - AOR - AOS - AOP - AOQ",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 686,
+    "clave": "HCN",
+    "nombre": "HCN - L149 COTO 2 ARTEMISA 1V OLIVO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 688,
+    "clave": "276",
+    "nombre": "276 - Torre Altamira Orquideas",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 690,
+    "clave": "DQE",
+    "nombre": "DQE - LOTE 12 PROTOTIPO SIENNNA 3R MOLDE/ LOTE 54 PROTOTIPO SIENNA 3R TRADICIONAL",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 691,
+    "clave": "HFA",
+    "nombre": "HFA - EDIFICIO D, 16 PACK",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 692,
+    "clave": "482",
+    "nombre": "482 - TORRE AMALFI",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 693,
+    "clave": "JA1",
+    "nombre": "JA1 - RIVERA CHAMPAYAN ,COL TANCOL 33 DEPTOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 694,
+    "clave": "226",
+    "nombre": "226 - E CARDENAS CALLE 7 ESQ G , 7V COLIBRI",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 697,
+    "clave": "EA0",
+    "nombre": "EA0 - FIJOS VELAMAR PDC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 698,
+    "clave": "JA2",
+    "nombre": "JA2 - RIVERA CHAMPAYAN, COL TANCOL 10 VIV COLIBRI",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 699,
+    "clave": "BF5",
+    "nombre": "BF5 - 2 CASAS SEVILLAS MZA 7 CALLE LIRIOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 700,
+    "clave": "DQF",
+    "nombre": "DQF - EDIFICIO E, 16 PACK 3ER",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 701,
+    "clave": "DQG",
+    "nombre": "DQG - EDIFICIO D, 16 PACK 3ER",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 702,
+    "clave": "BI0",
+    "nombre": "BI0 -  FIJOS BIENESTAR MTM",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 704,
+    "clave": "CSA",
+    "nombre": "CSA - FLORENCIA II FIJOS, INFRAESTRUCTURA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 705,
+    "clave": "DQH",
+    "nombre": "DQH - EDIFICIO F, 16PACK 3ER",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 706,
+    "clave": "DQI",
+    "nombre": "DQI - EDIFICIO G, 16 PACK 3ER",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 707,
+    "clave": "DQJ",
+    "nombre": "DQJ - EDIFICIO L, 16 PACK 3ER",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 708,
+    "clave": "HF8",
+    "nombre": "HF8 - 20 PACK EDFICIO G CIMA PEAFLOR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 710,
+    "clave": "APE",
+    "nombre": "APE - AREAS COMUNES MILOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 711,
+    "clave": "HCO",
+    "nombre": "HCO - LOTE 86 COTO2 ARTEMISA 1V MAGNOLINA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 712,
+    "clave": "HCP",
+    "nombre": "HCP - LOTE 171 COTO2 ARTEMISA, 1V MAGNOLIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 713,
+    "clave": "HCQ",
+    "nombre": "HCQ - LOTE 164 COTO2 ARTEMISA, 1V MAGNOLIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 714,
+    "clave": "APD",
+    "nombre": "APD - Fachada",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 715,
+    "clave": "BJO",
+    "nombre": "BJO - ARECAS 1ER ETAPA - ADITIVAS MAT BIENESTAR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 717,
+    "clave": "AIK",
+    "nombre": "AIK - LOMA BONITA GERANIO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 718,
+    "clave": "DQK",
+    "nombre": "DQK - SIENNA 3R MOLDE LOTE 87 VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 724,
+    "clave": "CSL",
+    "nombre": "CSL - FLORENCIA 1ER ETAPA-ADITIVAS REY BIENESTAR",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 732,
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 733,
+    "clave": "CEF",
+    "nombre": "CEF - LOMA BONITA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 736,
+    "clave": "AOM",
+    "nombre": "AOM - REPARACIONES ENCINOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 737,
+    "clave": "AP7",
+    "nombre": "AP7 - ACABADOS EXTERIORES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 738,
+    "clave": "DGJ",
+    "nombre": "DGJ - CASETA DE VIGILANCIA Y AREAS VERDES FRACC. VERONA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 739,
+    "clave": "ARO",
+    "nombre": "ARO - REPARACIONES VISTA LAGUNA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 740,
+    "clave": "ICX",
+    "nombre": "ICX - CABOS VISTA VELA IV, FIJOS GVDC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 741,
+    "clave": "312",
+    "nombre": "312 - TORRE NIZUC AVE NIZUC - TORRE 2 48DEPTO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 743,
+    "clave": "HCR",
+    "nombre": "HCR - L86, COTO2 ARTEMISA, 1V MAGNOLIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 744,
+    "clave": "HCS",
+    "nombre": "HCS - L150, COTO 2 ARTEMISA 1V MAGNOLIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 745,
+    "clave": "DQL",
+    "nombre": "DQL - BARDA PERIMETRAL VALENCIA II",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 746,
+    "clave": "ICI",
+    "nombre": "ICI - 20 CISTERNAS DE 10,000 LTS CAP.200 M3. P/AREAS VERDES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 748,
+    "clave": "AN0",
+    "nombre": "AN0 - CASETA DE VIGILANCIA VALLE ESMERALDA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 750,
+    "clave": "936",
+    "nombre": "FIJOS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 751,
+    "clave": "293",
+    "nombre": "293 - TAMPICO -REPAR ENTREGAS VIVIENDA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 752,
+    "clave": "297",
+    "nombre": "CABOS VV4 - REPARACIONES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 753,
+    "clave": "291",
+    "nombre": "QRO -COSTO VENTAS CASAS REPARAC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 754,
+    "clave": "292",
+    "nombre": "292 - PLAYA REPARAC PROMOCIONES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 755,
+    "clave": "298",
+    "nombre": "298-  CANCUN  ARBOLADA REPARACIONES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 756,
+    "clave": "DQM",
+    "nombre": "DQM - CASETA DE VIGILANCIA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 757,
+    "clave": "290",
+    "nombre": "JUAREZ -COSTO VTAS CASAS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 758,
+    "clave": "IBM",
+    "nombre": "IBM - GASTOS GENERALES VV3",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 759,
+    "clave": "294",
+    "nombre": "294 - FIJOS REYNOSA",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 760,
+    "clave": "295",
+    "nombre": "295 - FIJOS MATAMOROS",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 761,
+    "clave": "ICB",
+    "nombre": "ICB - MUROS DE CONTENCION",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 762,
+    "clave": "EDA",
+    "nombre": "EDA - 7 viviendas en Coto 12 Selvanova",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 763,
+    "clave": "BD0",
+    "nombre": "BD0 - GASTOS GENERALES",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 764,
+    "clave": "CEH",
+    "nombre": "CEH - CALLE LOMA DE JAZMIN, 14V COLIBRI",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 765,
+    "clave": "HCT",
+    "nombre": "HCT - LOTE 16 COTO 2 ARTEMISA, 1V OLIVO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 766,
+    "clave": "IBN",
+    "nombre": "IBN - LOTE 9 EQUIPAMIENTOS, DVDC",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 767,
+    "clave": "937",
+    "nombre": "937 - FIJOS TAMPICO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 768,
+    "clave": "299",
+    "nombre": "299 - FIJOS PLAYA DE CARMEN",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 769,
+    "clave": "300",
+    "nombre": "300 -  FIJOS QUERETARO",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 770,
+    "clave": "XC5",
+    "nombre": "20 PACK 2 REC LOTE 16",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  },
+  {
+    "id": 771,
+    "clave": "IC2",
+    "nombre": "IC2 - VV, IV, M3, 3V TIPO 1,2,3",
+    "centro_costo": "",
+    "responsable": "NULL",
+    "estatus": "13"
+  }
+]

@@ -1,0 +1,17 @@
+# Caches
+__pycache__/
+*/__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Editores
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
