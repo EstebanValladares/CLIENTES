@@ -158,11 +158,11 @@ def _sondear_telemetria_oc():
         _estado_torre_cache = estado_oc
 
 def _obtener_estado_cliente() -> dict:
-    """Verifica si la versión pública/equipo (DASHBOARD_EK10_APP) está sincronizada con Master"""
+    """Verifica si la versión pública/equipo (CLIENTES) está sincronizada con Master"""
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     publisher_script = os.path.join(base_dir, "publicar_version_equipo.py")
     meta_path = os.path.join(base_dir, ".ultima_publicacion.json")
-    client_dir = os.path.join(os.path.dirname(base_dir), "DASHBOARD_EK10_APP")
+    client_dir = os.path.join(os.path.dirname(base_dir), "CLIENTES")
     
     es_master = os.path.exists(publisher_script)
     
