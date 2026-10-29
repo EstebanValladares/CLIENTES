@@ -29,7 +29,7 @@ def obtener_reporte_insumos(
     obra: str = Query(..., description="Clave de la obra, ej. AT1"),
     insumo: Optional[str] = Query(None, description="Clave específica de insumo"),
     nombre: Optional[str] = Query(None, description="Filtro de nombre de insumo"),
-    usar_cache: bool = Query(False, description="Usar caché local si existe")
+    forzar: bool = Query(False, description="Forzar descarga en vivo desde el servidor")
 ):
     """
     Consulta en vivo el árbol WBS de insumos por partida, frentes,
@@ -40,7 +40,7 @@ def obtener_reporte_insumos(
             obra=obra, 
             insumo=insumo, 
             nombre=nombre, 
-            usar_cache=usar_cache
+            forzar_recarga=forzar
         )
         return reporte
     except Exception as e:

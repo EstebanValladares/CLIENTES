@@ -1715,6 +1715,13 @@
                     <span>Buscar</span>
                   </button>
 
+                  <button @click="cargarReporteInsumos(true)" 
+                          :disabled="cargandoReporteInsumos"
+                          class="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-indigo-400 hover:text-white transition shrink-0 cursor-pointer disabled:opacity-50"
+                          title="Forzar actualización fresca desde el servidor">
+                    <i class="fa-solid fa-rotate text-xs" :class="cargandoReporteInsumos ? 'fa-spin' : ''"></i>
+                  </button>
+
                   <button @click="limpiarFiltrosInsumos" 
                           class="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition shrink-0 cursor-pointer"
                           title="Limpiar filtros">

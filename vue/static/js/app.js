@@ -1286,7 +1286,7 @@ createApp({
       }
     };
 
-    const cargarReporteInsumos = async (usarCache = false) => {
+    const cargarReporteInsumos = async (forzar = false) => {
       if (!obraSeleccionada.value) return;
       const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
       cargandoReporteInsumos.value = true;
@@ -1295,7 +1295,7 @@ createApp({
           obra: clave,
           insumo: filtroInsumoClave.value.trim(),
           nombre: filtroInsumoNombre.value.trim(),
-          usar_cache: usarCache ? 'true' : 'false'
+          forzar: forzar ? 'true' : 'false'
         });
         const res = await fetch(`/api/obras/reporte-insumos?${params.toString()}`);
         if (!res.ok) {
