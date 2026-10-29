@@ -1,3 +1,9 @@
+def _es_modo_master() -> bool:
+    """Verifica si estamos ejecutando en el entorno Master (DASHBOARD_EK10)"""
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    publisher_script = os.path.join(base_dir, "publicar_version_equipo.py")
+    return os.path.exists(publisher_script)
+
 import os
 import json
 import time
@@ -244,15 +250,14 @@ def _obtener_estado_cliente() -> dict:
 
 @app.on_event("startup")
 def startup_event():
-    # Inicia el demonio que mantiene las OCs de Enkontrol sincronizadas en tiempo real cada 2 minutos
-    iniciar_demonio_oc(intervalo_segundos=60)
-    
-    # Hilo de sondeo continuo de telemetría de CONTROL_PAGOS_OC (cada 4s)
-    def _bucle_torre():
-        while True:
-            _sondear_telemetria_oc()
-            time.sleep(4)
-    threading.Thread(target=_bucle_torre, daemon=True).start()
+    # Solo ejecutar demonio de OC y sondeo si estamos en el entorno MASTER
+    if _es_modo_master():
+        iniciar_demonio_oc(intervalo_segundos=60)
+        def _bucle_torre():
+            while True:
+                _sondear_telemetria_oc()
+                time.sleep(4)
+        threading.Thread(target=_bucle_torre, daemon=True).start()
 
 @app.post("/api/torre/sync-oc")
 def sync_oc_manual():
@@ -274,11 +279,11 @@ def publicar_version_cliente_api():
 @app.get("/api/torre/proyectos")
 def obtener_proyectos_torre():
     """
-    Torre de Control: Devuelve al instante (<0.1ms) el estado de la telemetría
-    de todos los proyectos y versiones integradas:
-    - OC (Enkontrol / Aryve)
-    - CLIENTES (Versión Pública / Equipo)
+    Torre de Control: Devuelve al instante el estado de la telemetría
+    SOLO en MODO MASTER. En la versión de CLIENTES (Equipo) retorna lista vacía [].
     """
+    if not _es_modo_master():
+        return []
     with _lock_torre:
         oc = dict(_estado_torre_cache)
     cliente = _obtener_estado_cliente()

@@ -211,41 +211,19 @@ createApp({
       }
     };
 
-    const proyectosTorre = ref([
-      {
-        id: 'OC',
-        nombre: 'OC',
-        descripcion: 'Control de Pagos & Órdenes de Compra',
-        icono: 'fa-solid fa-file-invoice-dollar',
-        salud: '0%',
-        estado: 'OFFLINE',
-        activo: false,
-        servicios: 'Desconectado'
-      },
-      {
-        id: 'CLIENTES',
-        nombre: 'CLIENTES',
-        descripcion: 'Versión Limpia / Equipo (Firebase)',
-        icono: 'fa-solid fa-users-gear',
-        salud: '100%',
-        estado: 'ACTUALIZADO',
-        activo: true,
-        desactualizado: false,
-        servicios: 'Google Firebase Firestore'
-      }
-    ]);
+    const proyectosTorre = ref([]);
 
     const cargarProyectosTorre = async () => {
       try {
         const res = await fetch('/api/torre/proyectos');
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            proyectosTorre.value = data;
-          }
+          proyectosTorre.value = Array.isArray(data) ? data : [];
+        } else {
+          proyectosTorre.value = [];
         }
       } catch (e) {
-        // Fallback al estado reactivo local
+        proyectosTorre.value = [];
       }
     };
 
