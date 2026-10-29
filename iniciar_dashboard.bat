@@ -31,16 +31,16 @@ if %errorlevel% neq 0 (
 
 :: 2. Sincronizacion con Git (si esta enlazado al repositorio remoto)
 if exist ".git" (
-    echo [1/3] Verificando actualizaciones en GitHub...
+    echo [1/4] Verificando actualizaciones en GitHub...
     git pull origin main --quiet 2>nul
     echo [OK] Sistema al dia con la nube.
 ) else (
-    echo [1/3] Repositorio local preparado.
+    echo [1/4] Repositorio local preparado.
 )
 echo.
 
 :: 3. Verificacion y auto-instalacion de dependencias
-echo [2/3] Verificando dependencias necesarias (FastAPI, Uvicorn, Firebase)...
+echo [2/4] Verificando dependencias necesarias (FastAPI, Uvicorn, Firebase)...
 %PY_CMD% -c "import fastapi, uvicorn, firebase_admin, pydantic, requests" >nul 2>&1
 if %errorlevel% neq 0 (
     echo.
@@ -64,9 +64,36 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-:: 4. Lanzamiento del servidor y apertura automatica del navegador
-echo [3/3] Iniciando servidor del Dashboard en http://127.0.0.1:8000 ...
-echo [INFO] Para cerrar el sistema, simplemente cierra esta ventana o presiona CTRL+C.
+:: 4. Configuracion de credenciales Aryve (.env) en primer arranque
+if not exist ".env" (
+    echo ======================================================================
+    echo             CONFIGURACION INICIAL DE CREDENCIALES ARYVE
+    echo ======================================================================
+    echo [!] Es la primera vez que inicias el sistema en este equipo.
+    echo Para que los procesos y bots funcionen con tu usuario oficial,
+    echo por favor ingresa tus credenciales de Grupo Velas.
+    echo.
+    echo (Tus claves se guardan UNICAMENTE en este equipo y NUNCA se comparten)
+    echo ----------------------------------------------------------------------
+    set /p "USER_EMAIL=>> Correo de Grupo Velas (ej. usuario@grupovelas.com): "
+    set /p "USER_PASS=>> Contrasena de Aryve / Enkontrol: "
+    echo.
+    (
+        echo # ==============================================================================
+        echo # CREDENCIALES LOCALES DEL USUARIO (Privado - Protegido por .gitignore)
+        echo # ==============================================================================
+        echo EK10_USER=%USER_EMAIL%
+        echo EK10_PASS=%USER_PASS%
+        echo EK9_USER=%USER_EMAIL%
+        echo EK9_PASS=%USER_PASS%
+    ) > ".env"
+    echo [OK] Credenciales guardadas localmente en .env con exito.
+    echo.
+)
+
+:: 5. Lanzamiento del servidor y apertura automatica del navegador
+echo [3/4] Iniciando servidor del Dashboard en http://127.0.0.1:8000 ...
+echo [INFO] Para apagar el servidor, simplemente cierra esta ventana o presiona CTRL+C.
 echo.
 start "" "http://127.0.0.1:8000"
 %PY_CMD% -m uvicorn api.main:app --host 127.0.0.1 --port 8000

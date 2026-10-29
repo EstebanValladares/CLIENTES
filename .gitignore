@@ -3,6 +3,11 @@ __pycache__/
 */__pycache__/
 *.pyc
 
+# Credenciales locales del usuario (NUNCA se comparten ni se sobreescriben en Git)
+.env
+.env.*
+*.env
+
 # Logs
 *.log
 

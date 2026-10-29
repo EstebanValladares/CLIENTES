@@ -10,7 +10,8 @@ Dashboard ejecutivo y operativo para gestión centralizada de:
 ## 🚀 Inicio Rápido (1 solo clic)
 1. Asegúrate de tener Python instalado con la casilla "Add python.exe to PATH".
 2. Da doble clic en **`iniciar_dashboard.bat`**.
-3. El archivo verificará e instalará automáticamente cualquier librería faltante (`FastAPI`, `Uvicorn`, `Firebase`, etc.) y abrirá tu navegador en `http://127.0.0.1:8000`.
+3. La primera vez te solicitará tu correo y contraseña de Aryve. Se guardarán en tu archivo local seguro `.env` y no te los volverá a pedir.
+4. El sistema verificará e instalará automáticamente las dependencias y abrirá tu navegador en `http://127.0.0.1:8000`.
 
 ---
 *Desarrollado para Grupo Velas • 2026*
