@@ -28,7 +28,7 @@ USUARIOS/
 ## ⚡ Capacidades Principales
 
 1. **Búsqueda y Sincronización en Vivo**:
-   - Conexión directa a la API Cloud de Aryve (`/Aryve/base/kontrol/usuarios/GetBP/GetUsuario`).
+   - Conexión directa a la API Cloud de Aryve (`/Aryve/base/kontrol/usuarios/usuarios/consultar`).
    - Sincronización instantánea en memoria, JSON y CSV sin requerir Selenium.
 
 2. **Creación de Posiciones (Puestos)**:
