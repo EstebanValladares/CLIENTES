@@ -81,6 +81,19 @@ createApp({
     const frentesExpandidos = ref({});
     const partidasExpandidas = ref({});
 
+    // Motor Insumos & Órdenes de Compra (Clon REA)
+    const filtroInsumoClave = ref('');
+    const filtroInsumoNombre = ref('');
+    const reporteInsumos = ref(null);
+    const cargandoReporteInsumos = ref(false);
+    const suministrandoObra = ref(false);
+    const sincronizandoFirestoreObra = ref(false);
+    const modalMovimientosVisible = ref(false);
+    const cargandoMovimientos = ref(false);
+    const tabMovimientos = ref('OC');
+    const movimientosActuales = ref({ requisiciones: [], ordenes_compra: [] });
+    const insumoMovimientoSeleccionado = ref(null);
+
     const metricas = ref({
       total_usuarios: 0,
       total_bots: 0,
@@ -1260,6 +1273,132 @@ createApp({
       }
     };
 
+    const cargarReporteInsumos = async (usarCache = false) => {
+      if (!obraSeleccionada.value) return;
+      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      cargandoReporteInsumos.value = true;
+      try {
+        const params = new URLSearchParams({
+          obra: clave,
+          insumo: filtroInsumoClave.value.trim(),
+          nombre: filtroInsumoNombre.value.trim(),
+          usar_cache: usarCache ? 'true' : 'false'
+        });
+        const res = await fetch(`/api/obras/reporte-insumos?${params.toString()}`);
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        reporteInsumos.value = data;
+        // Expandir todos los frentes por defecto para visibilidad completa
+        if (data.frentes && Array.isArray(data.frentes)) {
+          data.frentes.forEach(f => {
+            frentesExpandidos.value[f.id] = true;
+          });
+        }
+      } catch (e) {
+        console.error('Error cargando reporte de insumos:', e);
+        reporteInsumos.value = null;
+      } finally {
+        cargandoReporteInsumos.value = false;
+      }
+    };
+
+    const limpiarFiltrosInsumos = () => {
+      filtroInsumoClave.value = '';
+      filtroInsumoNombre.value = '';
+      cargarReporteInsumos(false);
+    };
+
+    const filtrarPorTagInsumo = (tag) => {
+      filtroInsumoClave.value = '';
+      filtroInsumoNombre.value = tag;
+      cargarReporteInsumos(false);
+    };
+
+    const verMovimientos = async (partida, insumo, tipoInicial = 'OC') => {
+      if (!obraSeleccionada.value || !partida || !insumo) return;
+      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      insumoMovimientoSeleccionado.value = { partida, insumo };
+      tabMovimientos.value = tipoInicial;
+      modalMovimientosVisible.value = true;
+      cargandoMovimientos.value = true;
+      movimientosActuales.value = { requisiciones: [], ordenes_compra: [] };
+      try {
+        const params = new URLSearchParams({
+          obra: clave,
+          partida: partida.codigo || partida.id || '',
+          insumo: insumo.clave || ''
+        });
+        const res = await fetch(`/api/obras/movimientos?${params.toString()}`);
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || `HTTP ${res.status}`);
+        }
+        movimientosActuales.value = await res.json();
+      } catch (e) {
+        console.error('Error cargando movimientos de insumo:', e);
+      } finally {
+        cargandoMovimientos.value = false;
+      }
+    };
+
+    const cerrarModalMovimientos = () => {
+      modalMovimientosVisible.value = false;
+      insumoMovimientoSeleccionado.value = null;
+    };
+
+    const suministrarInsumosObra = async () => {
+      if (!obraSeleccionada.value || suministrandoObra.value) return;
+      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      if (!confirm(`¿Deseas suministrar masivamente los insumos actualizables para la obra ${clave} en Aryve?`)) {
+        return;
+      }
+      suministrandoObra.value = true;
+      try {
+        const res = await fetch('/api/obras/suministrar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ obra: clave })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert(`✅ Suministro completado: ${data.filas_actualizadas || 0} filas actualizadas.`);
+          await cargarReporteInsumos(false);
+        } else {
+          alert(`⚠️ Aviso: ${data.mensaje || 'No se realizaron cambios'}`);
+        }
+      } catch (e) {
+        alert(`❌ Error al suministrar: ${e.message}`);
+      } finally {
+        suministrandoObra.value = false;
+      }
+    };
+
+    const sincronizarFirestoreObraActual = async () => {
+      if (!obraSeleccionada.value || sincronizandoFirestoreObra.value) return;
+      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      sincronizandoFirestoreObra.value = true;
+      try {
+        const res = await fetch('/api/obras/sincronizar-firestore-obra', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ obra: clave })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert(`✅ Obra ${clave} sincronizada en Firebase Firestore para CLIENTES.`);
+        } else {
+          alert(`Error: ${data.mensaje}`);
+        }
+      } catch (e) {
+        alert(`Error al sincronizar con Firestore: ${e.message}`);
+      } finally {
+        sincronizandoFirestoreObra.value = false;
+      }
+    };
+
     const seleccionarObra = async (obra) => {
       if (!obra) return;
       obraSeleccionada.value = obra;
@@ -1271,6 +1410,7 @@ createApp({
       if (cacheArbolesObras.has(clave)) {
         arbolObraActual.value = cacheArbolesObras.get(clave);
         expandirFrenteInicial();
+        cargarReporteInsumos(false);
         return;
       }
 
@@ -1280,6 +1420,7 @@ createApp({
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         cacheArbolesObras.set(clave, data);
+        cargarReporteInsumos(false);
         arbolObraActual.value = data;
         expandirFrenteInicial();
       } catch (e) {
@@ -1429,6 +1570,26 @@ createApp({
       recargarObras,
       sincronizandoObras,
       sincronizarObrasAryve,
+
+      // Insumos & Órdenes de Compra (Clon REA)
+      filtroInsumoClave,
+      filtroInsumoNombre,
+      reporteInsumos,
+      cargandoReporteInsumos,
+      suministrandoObra,
+      sincronizandoFirestoreObra,
+      modalMovimientosVisible,
+      cargandoMovimientos,
+      tabMovimientos,
+      movimientosActuales,
+      insumoMovimientoSeleccionado,
+      cargarReporteInsumos,
+      limpiarFiltrosInsumos,
+      filtrarPorTagInsumo,
+      verMovimientos,
+      cerrarModalMovimientos,
+      suministrarInsumosObra,
+      sincronizarFirestoreObraActual,
 
       // Torre de Control (Proyectos)
       proyectosTorre,

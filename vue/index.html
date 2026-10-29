@@ -239,7 +239,7 @@
                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
                 : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
         <i class="fa-solid fa-helmet-safety"></i>
-        <span>OBRAS & WBS</span>
+        <span>OBRAS & ORDEN DE COMPRA</span>
         <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
           {{ metricasObras.total_obras || obrasCatalogo.length }}
         </span>
@@ -1536,7 +1536,7 @@
         <div>
           <h2 class="text-lg font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-helmet-safety text-indigo-400"></i>
-            <span>Centro de Presupuestos & Estructura WBS</span>
+            <span>Centro de Presupuestos, Insumos & Órdenes de Compra (OCs)</span>
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">
             Exploración ultrarrápida O(1) con desglose en tiempo real: Obra → Frente → Partida → Tarjetas.
@@ -1626,15 +1626,16 @@
         </div>
 
         <!-- ==================================================== -->
-        <!-- TABLA DERECHA: VISTA RÁPIDA DE OBRA, FRENTE Y PARTIDA-->
         <!-- ==================================================== -->
-        <div class="xl:col-span-8 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[750px] shadow-lg">
+        <!-- TABLA DERECHA: MOTOR DE INSUMOS & ÓRDENES DE COMPRA   -->
+        <!-- ==================================================== -->
+        <div class="xl:col-span-8 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[850px] shadow-lg">
           
           <div v-if="obraSeleccionada" class="flex flex-col h-full">
             
             <!-- Encabezado de la Obra Seleccionada -->
-            <div class="pb-4 border-b border-slate-700/70 mb-4">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="pb-3 border-b border-slate-700/70 mb-3">
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                 <div class="min-w-0">
                   <div class="flex items-center gap-2.5 flex-wrap">
                     <span class="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-indigo-600 text-white shadow-sm">
@@ -1647,195 +1648,273 @@
                   <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-2 font-mono flex-wrap">
                     <span>ID: #{{ obraSeleccionada.id_obra }}</span>
                     <span>•</span>
-                    <span>Presupuesto: {{ obraSeleccionada.clave_presupuesto || 'N/A' }}</span>
+                    <span>Presupuesto: {{ obraSeleccionada.clave_presupuesto || 'Oficial' }}</span>
                     <span>•</span>
-                    <span>WBS: {{ obraSeleccionada.tipo_wbs || 'BK' }}</span>
+                    <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check text-[10px]"></i> Conexión en vivo API Aryve</span>
                   </p>
                 </div>
 
-                <!-- Métricas Resumen -->
-                <div class="flex items-center gap-2 shrink-0">
-                  <div class="bg-slate-900/80 border border-slate-700/80 px-3 py-1.5 rounded-xl text-right">
-                    <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Presupuesto Total</span>
-                    <span class="text-sm font-extrabold text-emerald-400 font-mono">
-                      ${{ Number(obraSeleccionada.importe_total || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+                <!-- Métricas KPI Cards Estilo REA -->
+                <div v-if="reporteInsumos && reporteInsumos.metricas" class="grid grid-cols-2 sm:grid-cols-4 gap-2 shrink-0">
+                  <div class="bg-slate-900/90 border border-slate-700/80 p-2 rounded-xl text-center">
+                    <span class="text-[9px] uppercase font-bold text-slate-400 block tracking-tight">Presupuesto Real</span>
+                    <span class="text-xs sm:text-sm font-extrabold text-white font-mono">
+                      {{ (reporteInsumos.metricas.presupuesto_real_total || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }) }}
+                    </span>
+                  </div>
+                  <div class="bg-slate-900/90 border border-slate-700/80 p-2 rounded-xl text-center">
+                    <span class="text-[9px] uppercase font-bold text-indigo-400 block tracking-tight">Requisitado</span>
+                    <span class="text-xs sm:text-sm font-extrabold text-indigo-300 font-mono">
+                      {{ (reporteInsumos.metricas.requisitado_total || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }) }}
+                    </span>
+                  </div>
+                  <div class="bg-slate-900/90 border border-slate-700/80 p-2 rounded-xl text-center">
+                    <span class="text-[9px] uppercase font-bold text-emerald-400 block tracking-tight">Comprado (OC)</span>
+                    <span class="text-xs sm:text-sm font-extrabold text-emerald-300 font-mono">
+                      {{ (reporteInsumos.metricas.comprado_total || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }) }}
+                    </span>
+                  </div>
+                  <div class="bg-slate-900/90 border border-slate-700/80 p-2 rounded-xl text-center"
+                       :class="reporteInsumos.metricas.por_comprar_total < 0 ? 'border-rose-500/40 bg-rose-950/20' : ''">
+                    <span class="text-[9px] uppercase font-bold text-amber-400 block tracking-tight">Por Comprar</span>
+                    <span class="text-xs sm:text-sm font-extrabold font-mono"
+                          :class="reporteInsumos.metricas.por_comprar_total < 0 ? 'text-rose-400' : 'text-amber-300'">
+                      {{ (reporteInsumos.metricas.por_comprar_total || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }) }}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <!-- Barra de Herramientas del Árbol -->
-              <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-4 pt-3 border-t border-slate-800">
-                <div class="relative flex-1">
-                  <i class="fa-solid fa-filter absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                  <input type="text" 
-                         v-model="filtroArbolObra" 
-                         placeholder="Filtrar frentes, partidas o tarjetas (ej. MUROS, 3030103)..." 
-                         class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-8 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
-                </div>
-
-                <div class="flex items-center gap-2 shrink-0">
-                  <button @click="expandirTodoArbol" 
-                          class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
-                          title="Expandir todos los frentes y partidas">
-                    <i class="fa-solid fa-arrows-up-to-line text-indigo-400"></i>
-                    <span>Expandir Todo</span>
-                  </button>
-
-                  <button @click="colapsarTodoArbol" 
-                          class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
-                          title="Colapsar todos los frentes y partidas">
-                    <i class="fa-solid fa-arrows-down-to-line text-slate-400"></i>
-                    <span>Colapsar</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Cargando Arbol Spinner -->
-            <div v-if="cargandoArbolObra" class="flex-1 flex flex-col items-center justify-center py-20 text-indigo-400 gap-3">
-              <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-              <span class="text-xs font-medium text-slate-400">Recuperando árbol jerárquico desde memoria RAM O(1)...</span>
-            </div>
-
-            <!-- CONTENEDOR DEL ÁRBOL JERÁRQUICO ESTILO ARYVE -->
-            <div v-else class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-2">
-              
-              <!-- NIVEL 0: NODO RAÍZ OBRA -->
-              <div class="p-3 bg-slate-900 border border-rose-500/30 rounded-xl flex items-center justify-between gap-3 shadow-sm">
-                <div class="flex items-center gap-2.5 min-w-0">
-                  <span class="text-xs font-bold text-slate-400 font-mono">1</span>
-                  <span class="px-2 py-0.5 rounded-md text-xs font-bold bg-rose-500 text-white shrink-0">
-                    O
-                  </span>
-                  <span class="text-xs sm:text-sm font-bold text-white truncate">
-                    {{ obraSeleccionada.nombre }}
-                  </span>
-                </div>
-                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 shrink-0">
-                  OBRA
-                </span>
-              </div>
-
-              <!-- LISTADO DE FRENTES (NIVEL 1) -->
-              <div v-for="f in arbolFiltrado" :key="f.codigo" class="space-y-1.5">
+              <!-- BARRA DE FILTROS IDÉNTICA A REA PERO CON DISEÑO DARK -->
+              <div class="mt-3 pt-3 border-t border-slate-800 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5">
                 
-                <!-- FILA DE FRENTE -->
-                <div @click="toggleFrente(f.codigo)" 
-                     class="p-2.5 bg-slate-900/90 hover:bg-slate-900 border border-slate-700/80 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition select-none group">
-                  
+                <div class="flex items-center gap-2 flex-1 flex-wrap sm:flex-nowrap">
+                  <!-- Clave Insumo -->
+                  <div class="relative w-full sm:w-40 shrink-0">
+                    <input type="text" 
+                           v-model="filtroInsumoClave" 
+                           @keyup.enter="cargarReporteInsumos(false)"
+                           placeholder="Clave (ej. 1080003)" 
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-cyan-300 placeholder-slate-500 font-mono focus:outline-none focus:border-cyan-500 transition">
+                  </div>
+
+                  <!-- Nombre Insumo -->
+                  <div class="relative flex-1">
+                    <input type="text" 
+                           v-model="filtroInsumoNombre" 
+                           @keyup.enter="cargarReporteInsumos(false)"
+                           placeholder="Nombre insumo (ej. cemento, varilla, herramienta)..." 
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+                  </div>
+
+                  <!-- Botones de Acción Insumos -->
+                  <button @click="cargarReporteInsumos(false)" 
+                          :disabled="cargandoReporteInsumos"
+                          class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow shrink-0 cursor-pointer disabled:opacity-50">
+                    <i class="fa-solid" :class="cargandoReporteInsumos ? 'fa-circle-notch fa-spin' : 'fa-magnifying-glass'"></i>
+                    <span>Buscar</span>
+                  </button>
+
+                  <button @click="limpiarFiltrosInsumos" 
+                          class="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition shrink-0 cursor-pointer"
+                          title="Limpiar filtros">
+                    <i class="fa-solid fa-rotate-left text-xs"></i>
+                  </button>
+                </div>
+
+                <!-- Botones Especiales: Suministrar y Sincronizar Firestore -->
+                <div class="flex items-center gap-2 shrink-0">
+                  <button @click="suministrarInsumosObra" 
+                          :disabled="suministrandoObra"
+                          class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                          title="Suministrar masivamente insumos con Token de Autorización">
+                    <i class="fa-solid" :class="suministrandoObra ? 'fa-spinner fa-spin' : 'fa-bolt'"></i>
+                    <span>{{ suministrandoObra ? 'Suministrando...' : 'Suministrar' }}</span>
+                  </button>
+
+                  <button @click="sincronizarFirestoreObraActual" 
+                          :disabled="sincronizandoFirestoreObra"
+                          class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 transition flex items-center gap-1 cursor-pointer"
+                          title="Subir a Firestore para que CLIENTES lo tenga en la nube">
+                    <i class="fa-solid" :class="sincronizandoFirestoreObra ? 'fa-spinner fa-spin' : 'fa-cloud-arrow-up'"></i>
+                    <span>Nube</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- CHIPS RÁPIDOS DE BÚSQUEDA -->
+              <div class="flex items-center gap-1.5 mt-2 overflow-x-auto custom-scrollbar pb-1 text-[11px]">
+                <span class="text-slate-500 text-[10px] font-semibold uppercase tracking-wider shrink-0 mr-1">Filtros rápidos:</span>
+                <button @click="filtrarPorTagInsumo('')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Todos</button>
+                <button @click="filtrarPorTagInsumo('cemento')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Cemento</button>
+                <button @click="filtrarPorTagInsumo('acero')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Acero / Varilla</button>
+                <button @click="filtrarPorTagInsumo('concreto')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Concreto</button>
+                <button @click="filtrarPorTagInsumo('block')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Block</button>
+                <button @click="filtrarPorTagInsumo('pintura')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Pintura</button>
+                <button @click="filtrarPorTagInsumo('herramienta')" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition">Herramientas</button>
+              </div>
+            </div>
+
+            <!-- Cargando Reporte Spinner -->
+            <div v-if="cargandoReporteInsumos" class="flex-1 flex flex-col items-center justify-center py-20 text-indigo-400 gap-3">
+              <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
+              <span class="text-xs font-medium text-slate-400">Consultando reporte en vivo desde la API de Suministros...</span>
+            </div>
+
+            <!-- CONTENEDOR DEL ÁRBOL JERÁRQUICO CON TABLA DE INSUMOS -->
+            <div v-else-if="reporteInsumos && reporteInsumos.frentes && reporteInsumos.frentes.length > 0" class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-3">
+              
+              <!-- Recorrido de Frentes -->
+              <div v-for="frente in reporteInsumos.frentes" :key="frente.id" class="border border-slate-700/80 rounded-xl overflow-hidden bg-slate-900/60">
+                
+                <!-- Encabezado de Frente (Acordeón) -->
+                <div @click="toggleFrente(frente.id)" 
+                     class="p-2.5 bg-slate-900 hover:bg-slate-800/90 flex items-center justify-between gap-3 cursor-pointer transition select-none">
                   <div class="flex items-center gap-2.5 min-w-0">
-                    <button class="w-5 h-5 flex items-center justify-center text-slate-400 group-hover:text-white transition">
-                      <i class="fa-solid text-xs" :class="frentesExpandidos[f.codigo] ? 'fa-chevron-down text-indigo-400' : 'fa-chevron-right'"></i>
-                    </button>
-                    <span class="text-xs font-bold text-slate-300 font-mono shrink-0">{{ f.codigo }}</span>
-                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-600 text-white shrink-0">
-                      F
-                    </span>
-                    <span class="text-xs font-semibold text-white truncate">{{ f.nombre }}</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500 text-white shrink-0">
-                      {{ f.tipo_avance || 'VOLUMEN' }}
-                    </span>
+                    <i class="fa-solid text-xs text-indigo-400" :class="frentesExpandidos[frente.id] ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-600 text-white shrink-0">Frente</span>
+                    <span class="text-xs font-bold text-white font-mono">{{ frente.codigo }}</span>
+                    <span class="text-xs font-semibold text-slate-200 truncate">{{ frente.nombre }}</span>
                   </div>
-
-                  <div class="flex items-center gap-3 shrink-0">
-                    <span class="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">
-                      {{ (f.partidas || []).length }} partidas
-                    </span>
-                    <span v-if="f.importe" class="text-xs font-mono font-semibold text-slate-300">
-                      ${{ Number(f.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-                    </span>
-                  </div>
+                  <span class="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700 shrink-0">
+                    {{ (frente.partidas || []).length }} partidas
+                  </span>
                 </div>
 
-                <!-- LISTADO DE PARTIDAS (NIVEL 2) CON SANGRÍA -->
-                <div v-if="frentesExpandidos[f.codigo]" class="pl-5 border-l-2 border-blue-500/40 ml-4 space-y-1.5 py-1">
-                  
-                  <div v-for="p in (f.partidas || [])" :key="p.codigo" class="space-y-1.5">
+                <!-- Contenido de Partidas del Frente -->
+                <div v-show="frentesExpandidos[frente.id]" class="p-2.5 space-y-3 bg-slate-950/40">
+                  <div v-for="partida in frente.partidas" :key="partida.codigo || partida.id" class="border border-slate-800 rounded-xl p-3 bg-slate-900/80">
                     
-                    <!-- FILA DE PARTIDA -->
-                    <div @click="togglePartida(p.codigo)" 
-                         class="p-2 bg-slate-900/70 hover:bg-slate-800/90 border border-slate-700/60 rounded-lg flex items-center justify-between gap-3 cursor-pointer transition select-none group">
-                      
+                    <!-- Título de la Partida -->
+                    <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800">
                       <div class="flex items-center gap-2 min-w-0">
-                        <button class="w-4 h-4 flex items-center justify-center text-slate-400 group-hover:text-white transition">
-                          <i class="fa-solid text-[11px]" :class="partidasExpandidas[p.codigo] ? 'fa-chevron-down text-emerald-400' : 'fa-chevron-right'"></i>
-                        </button>
-                        <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0">
-                          <i class="fa-solid fa-check"></i>
-                        </span>
-                        <span class="text-xs font-bold text-slate-300 font-mono shrink-0">{{ p.codigo }}</span>
-                        <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-blue-600 text-white shrink-0">
-                          P
-                        </span>
-                        <span class="text-xs font-medium text-slate-100 truncate">{{ p.nombre }}</span>
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-600 text-white shrink-0">Partida</span>
+                        <span class="text-xs font-mono font-bold text-emerald-400">{{ partida.codigo }}</span>
+                        <span class="text-xs font-semibold text-white truncate">{{ partida.nombre }}</span>
                       </div>
-
-                      <div class="flex items-center gap-2.5 shrink-0">
-                        <span class="text-[10px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
-                          {{ (p.tarjetas || []).length }} tarjetas
-                        </span>
-                        <span v-if="p.importe" class="text-xs font-mono text-emerald-400">
-                          ${{ Number(p.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-                        </span>
-                      </div>
+                      <span v-if="partida.leyenda" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        {{ partida.leyenda }}
+                      </span>
                     </div>
 
-                    <!-- LISTADO DE TARJETAS (NIVEL 3) CON SANGRÍA -->
-                    <div v-if="partidasExpandidas[p.codigo]" class="pl-5 border-l-2 border-emerald-500/40 ml-4 space-y-1 py-1">
-                      
-                      <div v-for="t in (p.tarjetas || [])" :key="t.codigo" 
-                           class="p-2 bg-slate-950/80 hover:bg-slate-950 border border-slate-800/80 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
-                        
-                        <!-- Lado Izquierdo: Check, Código, Clave Tarjeta, Ojo y Nombre -->
-                        <div class="flex items-center gap-2 min-w-0">
-                          <span class="w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[9px] shrink-0">
-                            <i class="fa-solid fa-check"></i>
-                          </span>
-                          <span class="text-slate-400 font-mono text-[11px] shrink-0">{{ t.codigo }}</span>
-                          <i class="fa-solid fa-arrows-up-down text-slate-500 text-[10px] shrink-0"></i>
-                          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-cyan-500 text-white shrink-0 shadow-sm">
-                            {{ t.clave_tarjeta }}
-                          </span>
-                          <i class="fa-regular fa-eye text-slate-400 text-xs shrink-0 cursor-pointer hover:text-white" title="Ver detalle de tarjeta"></i>
-                          <span class="text-xs text-slate-200 font-medium truncate" :title="t.nombre">{{ t.nombre }}</span>
-                        </div>
+                    <!-- TABLA DE INSUMOS DE LA PARTIDA (CLON EXACTO DE REA) -->
+                    <div class="overflow-x-auto custom-scrollbar">
+                      <table class="w-full text-left text-xs font-sans">
+                        <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/80 border-b border-slate-800">
+                          <tr>
+                            <th class="py-1.5 px-2 font-bold font-mono">Clave</th>
+                            <th class="py-1.5 px-2 font-bold">Insumo</th>
+                            <th class="py-1.5 px-2 text-right font-bold">Ppto Real</th>
+                            <th class="py-1.5 px-2 text-right font-bold text-indigo-400">Requisitado</th>
+                            <th class="py-1.5 px-2 text-right font-bold text-emerald-400">Comprado (OC)</th>
+                            <th class="py-1.5 px-2 text-right font-bold text-slate-400">Por Req</th>
+                            <th class="py-1.5 px-2 text-right font-bold text-amber-400">Por Comprar</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+                          <tr v-for="insumo in (partida.insumos || [])" :key="insumo.clave" class="hover:bg-slate-800/40 transition">
+                            <td class="py-1.5 px-2 text-cyan-400 font-bold shrink-0">{{ insumo.clave }}</td>
+                            <td class="py-1.5 px-2 font-sans text-slate-200 text-xs font-medium">
+                              {{ insumo.nombre }}
+                              <span v-if="insumo.unidad" class="text-[10px] text-slate-500 font-mono ml-1">({{ insumo.unidad }})</span>
+                            </td>
+                            <td class="py-1.5 px-2 text-right text-slate-300">{{ Number(insumo.presupuesto_real || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                            
+                            <!-- Requisitado (Clickable para ver detalle de requisiciones) -->
+                            <td class="py-1.5 px-2 text-right">
+                              <button v-if="Number(insumo.requisitado || 0) > 0" 
+                                      @click="verMovimientos(partida, insumo, 'REQ')"
+                                      class="px-1.5 py-0.5 rounded bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/40 transition cursor-pointer font-bold inline-flex items-center gap-1"
+                                      title="Ver Requisiciones">
+                                <span>{{ Number(insumo.requisitado).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                              </button>
+                              <span v-else class="text-slate-500">0</span>
+                            </td>
 
-                        <!-- Lado Derecho: Cantidad, P.U. e Importe -->
-                        <div class="flex items-center gap-3 shrink-0 self-end sm:self-auto text-right font-mono text-[11px]">
-                          <span class="text-slate-400">
-                            {{ Number(t.cantidad).toLocaleString('es-MX', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) }} {{ t.unidad }}
-                          </span>
-                          <span class="text-slate-400">
-                            P.U. ${{ Number(t.precio_unitario).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-                          </span>
-                          <span class="text-emerald-400 font-bold">
-                            ${{ Number(t.importe).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-                          </span>
-                        </div>
-                      </div>
+                            <!-- Comprado (Clickable para ver Órdenes de Compra) -->
+                            <td class="py-1.5 px-2 text-right">
+                              <button v-if="Number(insumo.comprado || 0) > 0" 
+                                      @click="verMovimientos(partida, insumo, 'OC')"
+                                      class="px-1.5 py-0.5 rounded bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 transition cursor-pointer font-bold inline-flex items-center gap-1 shadow-sm"
+                                      title="Ver Órdenes de Compra">
+                                <span>{{ Number(insumo.comprado).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</span>
+                                <i class="fa-solid fa-file-invoice-dollar text-[9px]"></i>
+                              </button>
+                              <span v-else class="text-slate-500">0</span>
+                            </td>
 
-                      <div v-if="(p.tarjetas || []).length === 0" class="text-slate-500 text-[11px] py-1 pl-2 italic">
-                        Sin tarjetas registradas en esta partida.
-                      </div>
-
+                            <td class="py-1.5 px-2 text-right" :class="Number(insumo.por_requisitar) < 0 ? 'text-rose-400 font-bold' : 'text-slate-400'">
+                              {{ Number(insumo.por_requisitar || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}
+                            </td>
+                            <td class="py-1.5 px-2 text-right" :class="Number(insumo.por_comprar) < 0 ? 'text-rose-400 font-bold' : 'text-amber-300'">
+                              {{ Number(insumo.por_comprar || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
 
                   </div>
-
-                  <div v-if="(f.partidas || []).length === 0" class="text-slate-500 text-[11px] py-1 pl-2 italic">
-                    Sin partidas registradas en este frente.
-                  </div>
-
                 </div>
 
               </div>
 
-              <div v-if="arbolFiltrado.length === 0" class="text-center py-16 text-slate-500 text-xs">
-                <i class="fa-solid fa-filter-circle-xmark text-3xl mb-2 text-slate-600"></i>
-                <p>No se encontraron frentes o partidas que coincidan con "{{ filtroArbolObra }}".</p>
+              <!-- RESUMEN GENERAL DE LA OBRA -->
+              <div v-if="reporteInsumos.resumen && reporteInsumos.resumen.length > 0" class="mt-4 border border-indigo-500/40 rounded-xl p-4 bg-slate-900/90 shadow-lg">
+                <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-indigo-400 text-sm"></i>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">Resumen Consolidado de la Obra</h4>
+                  </div>
+                  <span class="text-xs font-mono text-indigo-300 bg-indigo-500/10 px-2.5 py-0.5 rounded-lg border border-indigo-500/20 font-bold">
+                    {{ reporteInsumos.resumen.length }} insumos totales
+                  </span>
+                </div>
+
+                <div class="overflow-x-auto custom-scrollbar">
+                  <table class="w-full text-left text-xs font-sans">
+                    <thead class="text-[10px] text-slate-400 uppercase bg-slate-950/90 border-b border-slate-800">
+                      <tr>
+                        <th class="py-2 px-2 font-bold font-mono">Clave</th>
+                        <th class="py-2 px-2 font-bold">Insumo</th>
+                        <th class="py-2 px-2 text-right font-bold">Ppto Real</th>
+                        <th class="py-2 px-2 text-right font-bold text-indigo-400">Requisitado</th>
+                        <th class="py-2 px-2 text-right font-bold text-emerald-400">Comprado (OC)</th>
+                        <th class="py-2 px-2 text-right font-bold text-slate-400">Por Requisitar</th>
+                        <th class="py-2 px-2 text-right font-bold text-amber-400">Por Comprar</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/80 font-mono text-[11px]">
+                      <tr v-for="insumo in reporteInsumos.resumen" :key="'resumen-'+insumo.clave" class="hover:bg-slate-800/40 transition">
+                        <td class="py-2 px-2 text-cyan-400 font-bold">{{ insumo.clave }}</td>
+                        <td class="py-2 px-2 font-sans text-slate-200 text-xs font-medium">
+                          {{ insumo.nombre }}
+                          <span v-if="insumo.unidad" class="text-[10px] text-slate-500 font-mono ml-1">({{ insumo.unidad }})</span>
+                        </td>
+                        <td class="py-2 px-2 text-right text-slate-300 font-bold">{{ Number(insumo.presupuesto_real || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                        <td class="py-2 px-2 text-right text-indigo-300 font-bold">{{ Number(insumo.requisitado || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                        <td class="py-2 px-2 text-right text-emerald-300 font-bold">{{ Number(insumo.comprado || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                        <td class="py-2 px-2 text-right" :class="Number(insumo.por_requisitar) < 0 ? 'text-rose-400 font-bold' : 'text-slate-400'">
+                          {{ Number(insumo.por_requisitar || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}
+                        </td>
+                        <td class="py-2 px-2 text-right font-bold" :class="Number(insumo.por_comprar) < 0 ? 'text-rose-400' : 'text-amber-300'">
+                          {{ Number(insumo.por_comprar || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
+            </div>
+
+            <!-- Estado Vacío cuando no hay resultados de búsqueda -->
+            <div v-else class="flex-1 flex flex-col items-center justify-center py-20 text-slate-500 text-xs text-center">
+              <i class="fa-solid fa-box-open text-3xl mb-2 text-slate-600"></i>
+              <p class="font-semibold text-slate-300">No se encontraron insumos para los filtros especificados.</p>
+              <p class="text-slate-500 text-[11px] mt-1">Prueba haciendo clic en "Todos" o buscando otro nombre de insumo.</p>
             </div>
 
           </div>
@@ -1846,7 +1925,7 @@
               <i class="fa-solid fa-trowel-bricks"></i>
             </div>
             <p class="font-semibold text-slate-300">Selecciona una obra de la columna izquierda</p>
-            <p class="text-slate-500 text-[11px] mt-1">Podrás visualizar su árbol completo de Frentes, Partidas y Tarjetas.</p>
+            <p class="text-slate-500 text-[11px] mt-1">Podrás visualizar su árbol completo de Insumos, Requisiciones y Órdenes de Compra.</p>
           </div>
 
         </div>
@@ -2341,6 +2420,143 @@
               <span>Iniciar en Aryve</span>
             </button>
           </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- MODAL MOVIMIENTOS: ÓRDENES DE COMPRA & REQUISICIONES     -->
+    <!-- ======================================================== -->
+    <div v-if="modalMovimientosVisible" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-5xl rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto custom-scrollbar flex flex-col">
+        
+        <!-- Header del Modal -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                {{ insumoMovimientoSeleccionado?.insumo?.clave }}
+              </span>
+              <h3 class="text-base font-bold text-white truncate">
+                {{ insumoMovimientoSeleccionado?.insumo?.nombre }}
+              </h3>
+            </div>
+            <p class="text-xs text-slate-400 mt-1 font-mono">
+              Partida: <span class="text-emerald-400 font-bold">{{ insumoMovimientoSeleccionado?.partida?.codigo }} - {{ insumoMovimientoSeleccionado?.partida?.nombre }}</span>
+              • Obra: <span class="text-indigo-400 font-bold">{{ obraSeleccionada?.clave }}</span>
+            </p>
+          </div>
+          <button @click="cerrarModalMovimientos" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Tabs de Navegación del Modal -->
+        <div class="flex items-center gap-3 my-4 border-b border-slate-800 pb-2">
+          <button @click="tabMovimientos = 'OC'" 
+                  class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer"
+                  :class="tabMovimientos === 'OC' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30' : 'bg-slate-800 text-slate-400 hover:text-white'">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span>Órdenes de Compra (OCs)</span>
+            <span class="ml-1 px-2 py-0.2 rounded-full text-[10px] font-mono bg-white/20">
+              {{ (movimientosActuales.ordenes_compra || []).length }}
+            </span>
+          </button>
+
+          <button @click="tabMovimientos = 'REQ'" 
+                  class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer"
+                  :class="tabMovimientos === 'REQ' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'bg-slate-800 text-slate-400 hover:text-white'">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span>Requisiciones</span>
+            <span class="ml-1 px-2 py-0.2 rounded-full text-[10px] font-mono bg-white/20">
+              {{ (movimientosActuales.requisiciones || []).length }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Spinner Cargando Movimientos -->
+        <div v-if="cargandoMovimientos" class="py-16 text-center text-indigo-400 flex flex-col items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+          <span class="text-xs text-slate-400">Consultando movimientos en firme...</span>
+        </div>
+
+        <!-- TAB 1: ÓRDENES DE COMPRA -->
+        <div v-else-if="tabMovimientos === 'OC'" class="overflow-x-auto custom-scrollbar flex-1">
+          <table v-if="(movimientosActuales.ordenes_compra || []).length > 0" class="w-full text-left text-xs font-sans">
+            <thead class="text-[10px] text-slate-400 uppercase bg-slate-950 border-b border-slate-800">
+              <tr>
+                <th class="py-2.5 px-3 font-bold font-mono">Folio OC</th>
+                <th class="py-2.5 px-3 font-bold">Fecha</th>
+                <th class="py-2.5 px-3 font-bold">Proveedor</th>
+                <th class="py-2.5 px-3 text-right font-bold">Cantidad</th>
+                <th class="py-2.5 px-3 text-right font-bold">Precio</th>
+                <th class="py-2.5 px-3 text-right font-bold text-emerald-400">Importe</th>
+                <th class="py-2.5 px-3 font-bold">Estatus</th>
+                <th class="py-2.5 px-3 font-bold font-mono">Requisición</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-[11px] font-mono">
+              <tr v-for="oc in movimientosActuales.ordenes_compra" :key="oc.folio + oc.pda" class="hover:bg-slate-800/50 transition">
+                <td class="py-2 px-3 text-emerald-400 font-bold">{{ oc.folio }}</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">{{ oc.fecha }}</td>
+                <td class="py-2 px-3 text-white font-sans font-medium">{{ oc.proveedor }}</td>
+                <td class="py-2 px-3 text-right text-slate-300 font-bold">{{ Number(oc.cantidad || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                <td class="py-2 px-3 text-right text-slate-400">${{ Number(oc.precio || 0).toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</td>
+                <td class="py-2 px-3 text-right text-emerald-400 font-bold">${{ Number(oc.importe || 0).toLocaleString('en-US', { minimumFractionDigits: 2 }) }}</td>
+                <td class="py-2 px-3 font-sans">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold"
+                        :class="oc.estatus_surtido === 'Totalmente Surtida' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'">
+                    {{ oc.estatus_surtido || 'Por Surtir' }}
+                  </span>
+                </td>
+                <td class="py-2 px-3 text-cyan-400">{{ oc.requisicion || '-' }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div v-else class="text-center py-12 text-slate-500 text-xs">
+            <i class="fa-solid fa-file-circle-xmark text-3xl mb-2 text-slate-600"></i>
+            <p>No se encontraron Órdenes de Compra para este insumo en esta partida.</p>
+          </div>
+        </div>
+
+        <!-- TAB 2: REQUISICIONES -->
+        <div v-else-if="tabMovimientos === 'REQ'" class="overflow-x-auto custom-scrollbar flex-1">
+          <table v-if="(movimientosActuales.requisiciones || []).length > 0" class="w-full text-left text-xs font-sans">
+            <thead class="text-[10px] text-slate-400 uppercase bg-slate-950 border-b border-slate-800">
+              <tr>
+                <th class="py-2.5 px-3 font-bold font-mono">Folio Req</th>
+                <th class="py-2.5 px-3 font-bold">Fecha</th>
+                <th class="py-2.5 px-3 font-bold">Solicitante</th>
+                <th class="py-2.5 px-3 text-right font-bold">Cantidad Req</th>
+                <th class="py-2.5 px-3 text-right font-bold text-emerald-400">Comprada</th>
+                <th class="py-2.5 px-3 text-right font-bold text-amber-400">Pendiente</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-[11px] font-mono">
+              <tr v-for="req in movimientosActuales.requisiciones" :key="req.folio + req.pda" class="hover:bg-slate-800/50 transition">
+                <td class="py-2 px-3 text-indigo-400 font-bold">{{ req.folio }}</td>
+                <td class="py-2 px-3 text-slate-400 font-sans">{{ req.fecha }}</td>
+                <td class="py-2 px-3 text-white font-sans font-medium">{{ req.solicitante }}</td>
+                <td class="py-2 px-3 text-right text-slate-300 font-bold">{{ Number(req.cantidad || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                <td class="py-2 px-3 text-right text-emerald-400 font-bold">{{ Number(req.cantidad_comprada || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+                <td class="py-2 px-3 text-right text-amber-300 font-bold">{{ Number(req.cantidad_pendiente || 0).toLocaleString('en-US', { maximumFractionDigits: 3 }) }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div v-else class="text-center py-12 text-slate-500 text-xs">
+            <i class="fa-solid fa-file-circle-xmark text-3xl mb-2 text-slate-600"></i>
+            <p>No se encontraron Requisiciones para este insumo en esta partida.</p>
+          </div>
+        </div>
+
+        <!-- Footer del Modal -->
+        <div class="pt-4 border-t border-slate-800 mt-4 flex justify-end">
+          <button @click="cerrarModalMovimientos" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer">
+            Cerrar
+          </button>
         </div>
 
       </div>
