@@ -1,8 +1,8 @@
 {
-  "timestamp": 1793303869.0974379,
-  "fecha_hora": "29/10/2026 01:57 PM",
+  "timestamp": 1793305922.0898285,
+  "fecha_hora": "29/10/2026 02:32 PM",
   "blindado": true,
-  "commit": "4cb284d",
+  "commit": "a17d7bc",
   "carpeta": "CLIENTES",
   "ok": true,
   "mensaje": "Versi\u00f3n del equipo en CLIENTES sincronizada y blindada con \u00e9xito."
