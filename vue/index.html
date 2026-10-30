@@ -1719,14 +1719,14 @@
                   </div>
 
                   <!-- Botones de Acción Insumos -->
-                  <button @click="buscarReporteObra(false)" 
+                  <button @click="buscarReporteObra(false)"
                           :disabled="cargandoReporteInsumos"
                           class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow shrink-0 cursor-pointer disabled:opacity-50">
                     <i class="fa-solid" :class="cargandoReporteInsumos ? 'fa-circle-notch fa-spin' : 'fa-magnifying-glass'"></i>
                     <span>Buscar</span>
                   </button>
 
-                  <button @click="buscarReporteObra(true)" 
+                  <button @click="buscarReporteObra(true)"
                           :disabled="cargandoReporteInsumos"
                           class="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-indigo-400 hover:text-white transition shrink-0 cursor-pointer disabled:opacity-50"
                           :title="modoBusquedaFolioOC ? 'Volver a consultar la copia local de órdenes de compra' : 'Forzar actualización fresca desde el servidor'">
@@ -1798,7 +1798,7 @@
               <div v-else class="overflow-x-auto rounded-xl border border-slate-700">
                 <div class="px-3 py-2 bg-amber-950/30 border-b border-amber-500/20 text-[11px] text-amber-200">
                   <i class="fa-solid fa-database mr-1"></i>
-                  Consulta de la copia local de Control de Pagos; puede no reflejar cambios recientes de Aryve.
+                  Copia local de Control de Pagos; puede no reflejar cambios recientes de Aryve. No guarda el tipo de origen ni el detalle de surtido de Aryve.
                 </div>
                 <table class="w-full text-left text-xs">
                   <thead class="bg-slate-900 text-[10px] uppercase text-slate-400">
@@ -1808,8 +1808,9 @@
                       <th class="px-3 py-2">Fecha</th>
                       <th class="px-3 py-2">Proveedor</th>
                       <th class="px-3 py-2 text-right">Total</th>
-                      <th class="px-3 py-2">Estatus</th>
+                      <th class="px-3 py-2">Estatus (código local)</th>
                       <th class="px-3 py-2">Origen</th>
+                      <th class="px-3 py-2">Copia actualizada</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-800">
@@ -1821,6 +1822,7 @@
                       <td class="px-3 py-2 text-right font-mono">{{ Number(oc.total || 0).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) }}</td>
                       <td class="px-3 py-2">{{ oc.estatus || 'Sin dato' }}</td>
                       <td class="px-3 py-2 text-slate-400">{{ oc.tipo_origen || 'No guardado en la copia local' }}</td>
+                      <td class="px-3 py-2 text-slate-400">{{ oc.actualizado_en || '-' }}</td>
                     </tr>
                   </tbody>
                 </table>
