@@ -1113,7 +1113,7 @@ createApp({
     const cargarInfoPuesto = async (puesto) => {
       if (!puesto) {
         return { total: 0, area: '', categorias: [], clasificadores: {} };
-      }
+}
       try {
         const res = await fetch(`/api/usuarios/clasificadores/puesto-info?puesto=${encodeURIComponent(puesto)}`);
         if (res.ok) {
@@ -1568,7 +1568,105 @@ createApp({
       cargandoObras.value = false;
     };
 
-    onMounted(() => {
+    
+    // ========================================================
+    // REPARADOR DE PRESUPUESTO KONTROL (BOT ANTI-BLOQUEO OC)
+    // ========================================================
+    const modalRepararVisible = ref(false);
+    const reparandoPresupuesto = ref(false);
+    const diagnosticandoPresupuesto = ref(false);
+    const diagnosticoEjecutado = ref(false);
+    const formReparar = ref({ obra: '', insumo: '', folio_req: '' });
+    const diagnosticoTarjetas = ref([]);
+    const tarjetasSeleccionadasParaReparar = ref([]);
+    const logsReparacion = ref([]);
+    const resultadoReparacion = ref(null);
+
+    const abrirModalRepararPresupuesto = () => {
+      formReparar.value.obra = obraSeleccionada.value ? obraSeleccionada.value.clave : 'KB5';
+      formReparar.value.insumo = filtroInsumoClave.value || '1040025';
+      formReparar.value.folio_req = filtroFolioOC.value || '';
+      diagnosticoTarjetas.value = [];
+      tarjetasSeleccionadasParaReparar.value = [];
+      logsReparacion.value = [];
+      resultadoReparacion.value = null;
+      diagnosticoEjecutado.value = false;
+      modalRepararVisible.value = true;
+      diagnosticarTarjetas();
+    };
+
+    const diagnosticarTarjetas = async () => {
+      if (!formReparar.value.obra) return;
+      diagnosticandoPresupuesto.value = true;
+      diagnosticoEjecutado.value = true;
+      diagnosticoTarjetas.value = [];
+      tarjetasSeleccionadasParaReparar.value = [];
+      try {
+        const res = await fetch('/api/obras/reparar-presupuesto/diagnostico', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formReparar.value)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+        diagnosticoTarjetas.value = data.tarjetas || [];
+        tarjetasSeleccionadasParaReparar.value = [...(data.tarjetas || [])];
+      } catch (e) {
+        console.error('Error diagnosticando tarjetas:', e);
+        alert(`Error en diagnóstico: ${e.message}`);
+      } finally {
+        diagnosticandoPresupuesto.value = false;
+      }
+    };
+
+    const seleccionarTodasTarjetas = (seleccionar) => {
+      if (seleccionar) {
+        tarjetasSeleccionadasParaReparar.value = [...diagnosticoTarjetas.value];
+      } else {
+        tarjetasSeleccionadasParaReparar.value = [];
+      }
+    };
+
+    const ejecutarReparacionPresupuestoBot = async () => {
+      if (!formReparar.value.obra || tarjetasSeleccionadasParaReparar.value.length === 0) return;
+      reparandoPresupuesto.value = true;
+      resultadoReparacion.value = null;
+      logsReparacion.value = [];
+
+      const agregarLog = (texto) => {
+        const hora = new Date().toLocaleTimeString('es-MX', { hour12: false });
+        logsReparacion.value.push({ hora, texto });
+      };
+
+      agregarLog(`Iniciando conexión con Chrome REA para obra ${formReparar.value.obra}...`);
+      agregarLog(`Se procesarán ${tarjetasSeleccionadasParaReparar.value.length} tarjetas en PptoKontrol.`);
+
+      try {
+        const res = await fetch('/api/obras/reparar-presupuesto/ejecutar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            obra: formReparar.value.obra,
+            tarjetas: tarjetasSeleccionadasParaReparar.value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+        resultadoReparacion.value = data;
+        agregarLog(`✅ ${data.mensaje || 'Reparación completada con éxito.'}`);
+        setTimeout(() => {
+          buscarReporteObra(true);
+        }, 1500);
+      } catch (e) {
+        console.error('Error ejecutando bot reparador:', e);
+        resultadoReparacion.value = { ok: false, error: e.message };
+        agregarLog(`❌ Error: ${e.message}`);
+      } finally {
+        reparandoPresupuesto.value = false;
+      }
+    };
+
+onMounted(() => {
       // 1. Carga escalonada (Waterfall) para evitar saturación de sockets concurrentes (cuellos de botella)
       cargarMetricas();
       setTimeout(cargarUsuarios, 70);
@@ -1610,6 +1708,21 @@ createApp({
     });
 
     return {
+      // Reparador de Presupuesto Bot
+      modalRepararVisible,
+      reparandoPresupuesto,
+      diagnosticandoPresupuesto,
+      diagnosticoEjecutado,
+      formReparar,
+      diagnosticoTarjetas,
+      tarjetasSeleccionadasParaReparar,
+      logsReparacion,
+      resultadoReparacion,
+      abrirModalRepararPresupuesto,
+      diagnosticarTarjetas,
+      seleccionarTodasTarjetas,
+      ejecutarReparacionPresupuestoBot,
+
       // Módulo Obras
       metricasObras,
       obrasCatalogo,

@@ -1757,6 +1757,13 @@
                     <i class="fa-solid" :class="sincronizandoFirestoreObra ? 'fa-spinner fa-spin' : 'fa-cloud-arrow-up'"></i>
                     <span>Nube</span>
                   </button>
+
+                  <button @click="abrirModalRepararPresupuesto" 
+                          class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 transition flex items-center gap-1.5 shadow cursor-pointer"
+                          title="Reparar 'Presupuesto no Disponible' en Aryve (PptoKontrol Bot)">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                    <span>Reparar Presupuesto OC</span>
+                  </button>
                 </div>
 
               </div>
@@ -2624,6 +2631,139 @@
           <button @click="cerrarModalMovimientos" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer">
             Cerrar
           </button>
+        </div>
+
+      </div>
+    </div>
+
+  
+
+    <!-- ======================================================== -->
+    <!-- MODAL REPARAR PRESUPUESTO KONTROL (BOT ANTI-BLOQUEO OC)  -->
+    <!-- ======================================================== -->
+    <div v-if="modalRepararVisible" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 max-h-[92vh] overflow-y-auto custom-scrollbar flex flex-col">
+        
+        <!-- Header del Modal -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-xl">
+              <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <span>Reparador de Presupuesto Kontrol & Suministros</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Anti-Bloqueo OC</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Resuelve el error <span class="text-rose-400 font-mono font-semibold">"Insumo X: Presupuesto no Disponible"</span> persistiendo los suministros en Destajo y Subcontrato.
+              </p>
+            </div>
+          </div>
+          <button @click="modalRepararVisible = false" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Formulario de Entrada: Obra, Insumo, Folio Requisición -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4 p-4 rounded-xl bg-slate-850 border border-slate-800">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Obra</label>
+            <input type="text" v-model="formReparar.obra" placeholder="Ej. KB5" 
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono font-bold text-indigo-300 focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Clave Insumo</label>
+            <input type="text" v-model="formReparar.insumo" placeholder="Ej. 1040025 o Varilla" 
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono font-bold text-cyan-300 focus:outline-none focus:border-cyan-500">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Folio Req / OC (Opcional)</label>
+            <div class="flex gap-2">
+              <input type="text" v-model="formReparar.folio_req" placeholder="Ej. KB5-00000002" 
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-emerald-300 focus:outline-none focus:border-emerald-500">
+              <button @click="diagnosticarTarjetas" :disabled="diagnosticandoPresupuesto"
+                      class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shrink-0 cursor-pointer disabled:opacity-50"
+                      title="Analizar estructura WBS">
+                <i class="fa-solid" :class="diagnosticandoPresupuesto ? 'fa-spinner fa-spin' : 'fa-magnifying-glass'"></i>
+                <span>Diagnosticar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resultados del Diagnóstico (Tarjetas Detectadas) -->
+        <div v-if="diagnosticoTarjetas.length > 0" class="flex-1 flex flex-col min-h-0 mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-list-check text-indigo-400"></i>
+              <span>Tarjetas detectadas en el WBS ({{ tarjetasSeleccionadasParaReparar.length }} de {{ diagnosticoTarjetas.length }} seleccionadas):</span>
+            </span>
+            <div class="flex items-center gap-2">
+              <button @click="seleccionarTodasTarjetas(true)" class="text-[11px] text-indigo-400 hover:underline cursor-pointer">Seleccionar todas</button>
+              <span class="text-slate-600">•</span>
+              <button @click="seleccionarTodasTarjetas(false)" class="text-[11px] text-slate-400 hover:underline cursor-pointer">Deseleccionar</button>
+            </div>
+          </div>
+
+          <div class="max-h-60 overflow-y-auto custom-scrollbar border border-slate-800 rounded-xl bg-slate-950/60 divide-y divide-slate-800/80">
+            <div v-for="t in diagnosticoTarjetas" :key="t.codigo + t.clave_tarjeta" 
+                 class="p-2.5 flex items-center justify-between hover:bg-slate-800/40 transition gap-3 text-xs">
+              <label class="flex items-center gap-2.5 cursor-pointer min-w-0">
+                <input type="checkbox" :value="t" v-model="tarjetasSeleccionadasParaReparar" 
+                       class="rounded text-amber-500 focus:ring-amber-400 bg-slate-850 border-slate-700">
+                <span class="font-mono font-bold text-amber-300 shrink-0">{{ t.codigo }}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950 text-cyan-300 border border-cyan-800/50 shrink-0">#{{ t.clave_tarjeta }}</span>
+                <span class="text-slate-300 truncate" :title="t.nombre">{{ t.nombre }}</span>
+              </label>
+              <div class="text-[11px] text-slate-400 shrink-0 text-right">
+                <span class="text-slate-400">{{ t.frente }}</span> • <span class="text-emerald-400">{{ t.partida }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="diagnosticoEjecutado && diagnosticoTarjetas.length === 0" class="p-6 text-center text-slate-500 text-xs border border-dashed border-slate-800 rounded-xl mb-4">
+          <i class="fa-solid fa-circle-info text-2xl text-slate-600 mb-2"></i>
+          <p>No se encontraron tarjetas que coincidan con los criterios. Verifica la clave de la obra o insumo.</p>
+        </div>
+
+        <!-- Terminal / Consola de Ejecución en Vivo -->
+        <div v-if="logsReparacion.length > 0" class="mb-4 bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] max-h-48 overflow-y-auto custom-scrollbar">
+          <div class="text-slate-500 text-[10px] pb-1 border-b border-slate-800 mb-1 flex items-center justify-between">
+            <span>CONSOLA DE AUTOMATIZACIÓN (CHROME PORT 9222)</span>
+            <span v-if="reparandoPresupuesto" class="text-amber-400 flex items-center gap-1"><i class="fa-solid fa-spinner fa-spin"></i> Ejecutando</span>
+          </div>
+          <div v-for="(log, idx) in logsReparacion" :key="idx" class="text-slate-300 leading-relaxed">
+            <span class="text-slate-500">[{{ log.hora }}]</span> {{ log.texto }}
+          </div>
+        </div>
+
+        <!-- Banner de Resultado -->
+        <div v-if="resultadoReparacion" class="p-3.5 rounded-xl text-xs mb-4 flex items-center gap-2.5 border"
+             :class="resultadoReparacion.ok ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/40 border-rose-500/30 text-rose-300'">
+          <i class="fa-solid" :class="resultadoReparacion.ok ? 'fa-circle-check text-emerald-400 text-base' : 'fa-triangle-exclamation text-rose-400 text-base'"></i>
+          <span class="font-medium">{{ resultadoReparacion.mensaje || resultadoReparacion.error }}</span>
+        </div>
+
+        <!-- Footer y Acciones -->
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
+          <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-question text-slate-500"></i>
+            <span>Requiere tener Chrome abierto con <code class="text-amber-300 font-mono">1_abrir_aryve_rea.bat</code></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button @click="modalRepararVisible = false" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer">
+              Cerrar
+            </button>
+            <button @click="ejecutarReparacionPresupuestoBot" 
+                    :disabled="reparandoPresupuesto || tarjetasSeleccionadasParaReparar.length === 0"
+                    class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 disabled:bg-slate-800 disabled:text-slate-600 text-white transition flex items-center gap-2 shadow-lg shadow-amber-600/30 cursor-pointer">
+              <i class="fa-solid" :class="reparandoPresupuesto ? 'fa-spinner fa-spin' : 'fa-play'"></i>
+              <span>{{ reparandoPresupuesto ? 'Reparando en Aryve...' : 'Iniciar Reparación con Bot REA' }}</span>
+            </button>
+          </div>
         </div>
 
       </div>

@@ -142,3 +142,35 @@ def sincronizar_obras_aryve():
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en sincronización: {e}")
+
+
+@router.post("/reparar-presupuesto/diagnostico")
+def diagnosticar_reparacion_presupuesto(payload: Dict[str, Any] = Body(...)):
+    """
+    Analiza el WBS local para hallar las tarjetas afectadas por 'Presupuesto no Disponible'.
+    """
+    from core.reparador_presupuesto_bot import ReparadorPresupuestoBot
+    obra = payload.get("obra", "")
+    insumo = payload.get("insumo", "")
+    folio_req = payload.get("folio_req", "")
+    if not obra:
+        raise HTTPException(status_code=400, detail="Debe especificar la clave de la obra (ej. KB5).")
+    res = ReparadorPresupuestoBot.diagnosticar(clave_obra=obra, clave_insumo=insumo, folio_req=folio_req)
+    if not res.get("ok"):
+        raise HTTPException(status_code=400, detail=res.get("error", "Error en diagnóstico"))
+    return res
+
+@router.post("/reparar-presupuesto/ejecutar")
+def ejecutar_reparacion_presupuesto(payload: Dict[str, Any] = Body(...)):
+    """
+    Ejecuta el bot Selenium / REA en vivo para guardar suministros en Destajo y Subcontrato.
+    """
+    from core.reparador_presupuesto_bot import ReparadorPresupuestoBot
+    obra = payload.get("obra", "")
+    tarjetas = payload.get("tarjetas", [])
+    if not obra:
+        raise HTTPException(status_code=400, detail="Debe especificar la clave de la obra.")
+    res = ReparadorPresupuestoBot.ejecutar_reparacion(clave_obra=obra, tarjetas=tarjetas)
+    if not res.get("ok"):
+        raise HTTPException(status_code=400, detail=res.get("error", "Error ejecutando reparación"))
+    return res
