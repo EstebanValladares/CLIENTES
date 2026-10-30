@@ -1,0 +1,102 @@
+{
+  "obra": {
+    "id_obra": 755,
+    "clave": "298",
+    "nombre": "298-  CANCUN  ARBOLADA REPARACIONES",
+    "presupuesto_clave": "PP-KONTROL-298",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 721,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 7,
+    "id_nodo_raiz": 326864,
+    "importe_total": 151814.25,
+    "precio_total": 151814.25,
+    "total_frentes": 1,
+    "total_partidas": 3,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 326865,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 151814.25,
+      "importe": 151814.25,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326866,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 67473.0,
+          "importe": 67473.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326867,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "PERSONAL DETALLISTA PARA TORRE NIZUC",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 16868.25,
+              "importe": 67473.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326868,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 84341.25,
+          "importe": 84341.25,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": [
+            {
+              "id": 326869,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "PERSONAL DETALLISTA PARA TORRE NIZUC",
+              "cantidad": 5.0,
+              "unidad": "",
+              "precio_unitario": 16868.25,
+              "importe": 84341.25,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        },
+        {
+          "id": 326870,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

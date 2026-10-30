@@ -35,7 +35,7 @@ class UserService:
         usuarios: List[Dict[str, Any]] = []
         ids_vistos = set()
 
-        if False and os.path.exists(RUTA_USUARIOS_JSON):
+        if os.path.exists(RUTA_USUARIOS_JSON):
             try:
                 with open(RUTA_USUARIOS_JSON, "r", encoding="utf-8") as f:
                     datos = json.load(f)
@@ -76,7 +76,7 @@ class UserService:
                 from core.firebase_client import FirebaseClient
                 db = FirebaseClient.get_db()
                 if db is not None:
-                    docs = db.collection("USUARIOS").stream()
+                    docs = db.collection("USUARIOS").stream(timeout=3)
                     for d in docs:
                         u = d.to_dict()
                         uid = str(u.get("id", ""))

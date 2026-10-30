@@ -8,6 +8,7 @@ from fastapi import APIRouter, HTTPException, Query, Body
 from typing import Dict, Any, List, Optional
 from core.obras_service import ObrasCoreService
 from core.insumos_service import InsumosService
+from core.ordenes_compra_service import OrdenesCompraService
 
 router = APIRouter(prefix="/api/obras", tags=["Obras"])
 
@@ -60,6 +61,21 @@ def obtener_movimientos(
         return movs
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/ordenes-compra")
+def buscar_ordenes_compra(
+    obra: str = Query(..., description="Clave de obra/centro de costos, ej. GA4"),
+    folio: str = Query(..., min_length=1, description="Folio OC, ej. GA4-00000794")
+):
+    """Busca órdenes por folio dentro de la obra seleccionada en la copia local."""
+    try:
+        return OrdenesCompraService.buscar_por_folio(obra=obra, folio=folio)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
 @router.post("/suministrar")
 def ejecutar_suministro(payload: Dict[str, Any] = Body(...)):

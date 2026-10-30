@@ -1,0 +1,227 @@
+{
+  "obra": {
+    "id_obra": 676,
+    "clave": "QRO-REP-CIMA",
+    "nombre": "QUERETARO REPARACION CIMA PEÑA FLOR",
+    "presupuesto_clave": "PP-KONTROL-QRO-REP-CIMA",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 643,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 16,
+    "id_nodo_raiz": 305169,
+    "importe_total": 5366600.22,
+    "precio_total": 5366600.22,
+    "total_frentes": 3,
+    "total_partidas": 3,
+    "total_tarjetas": 9
+  },
+  "frentes": [
+    {
+      "id": 305170,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "HF3 OFICINA DE VENTAS CIMA PEÑA FLOR",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 4616.94,
+      "importe": 4616.94,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305171,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "JUNIO 2026",
+          "cantidad": 1.0,
+          "precio": 4616.94,
+          "importe": 4616.94,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305173,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101001",
+              "nombre": "FACTURA 11D1B0E6-A615-4653-B8A5-850A13F04390 REPARACION DE LLANTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1160.0,
+              "importe": 1160.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305174,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101002",
+              "nombre": "FACTURA 2A-F19633-5E27-4016-AFE9-9B4CBB4123CD GRUPO GARSO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 263.0,
+              "importe": 263.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305180,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101004",
+              "nombre": "FACTURA 4KAAFFI65456 HOME DEPOT MEXICO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2848.99,
+              "importe": 2848.99,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305183,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "01010005",
+              "nombre": "FACTURA GM1856 FERRETERIA GRUPO MAXI",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 344.95,
+              "importe": 344.95,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305187,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101007",
+              "nombre": "MATERIALES CAJA CHICA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 305172,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "HF5 EDIFICIO \"K\" CIMA PEÑAFLOR",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 1014.15,
+      "importe": 1014.15,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305181,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "JUNIO 2026",
+          "cantidad": 1.0,
+          "precio": 1014.15,
+          "importe": 1014.15,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305182,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101003",
+              "nombre": "FACTURA 1B1553F7-0039-42B-BBE2-A56B1C2F0B3B GRUPO GARSO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 925.15,
+              "importe": 925.15,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305184,
+              "codigo": "1.2.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101006",
+              "nombre": "FACTURA IXDCJ15411",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 89.0,
+              "importe": 89.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305188,
+              "codigo": "1.2.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101007",
+              "nombre": "MATERIALES CAJA CHICA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 326091,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "ELECTRIFICACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 5360969.13,
+      "importe": 5360969.13,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326092,
+          "codigo": "1.3.1",
+          "tipo": "PARTIDA",
+          "nombre": "ELECTRIFICACION FRACC. CIMA PEÑA FLOR",
+          "cantidad": 1.0,
+          "precio": 5360969.13,
+          "importe": 5360969.13,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326093,
+              "codigo": "1.3.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0131001",
+              "nombre": "INSTALACION ELECTRICA CIMA PEÑA FLOR - UNICA ETAPA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 5360969.13,
+              "importe": 5360969.13,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

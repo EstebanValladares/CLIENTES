@@ -1,0 +1,159 @@
+{
+  "obra": {
+    "id_obra": 390,
+    "clave": "AJM",
+    "nombre": "AJM - FRACC VELAMAR MZA-3, L3,L6,L9 VELAMAR TAM",
+    "presupuesto_clave": "PP-KONTROL-AJM",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 394,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 11,
+    "id_nodo_raiz": 180601,
+    "importe_total": 290901.8,
+    "precio_total": 290901.8,
+    "total_frentes": 1,
+    "total_partidas": 3,
+    "total_tarjetas": 6
+  },
+  "frentes": [
+    {
+      "id": 180604,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "CASAS VELAMAR",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 290901.8,
+      "importe": 290901.8,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 180603,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "MATERIALES",
+          "cantidad": 1.0,
+          "precio": 28059.8,
+          "importe": 28059.8,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 180598,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "5000000",
+              "nombre": "MATERIALES PARA DELIMITACION DE CASAS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 28059.8,
+              "importe": 28059.8,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 180602,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "MANO DE OBRA",
+          "cantidad": 1.0,
+          "precio": 17850.0,
+          "importe": 17850.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 180599,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "5000001",
+              "nombre": "MANO DE OBRA PARA ARMADO DE CADENA DE CERRAMIENTO CON ARMEX 15-20-40, CIMBRADO Y COLADO DE LA MISMA PARA DELIMITACION DE VIVIENDAS",
+              "cantidad": 100.0,
+              "unidad": "",
+              "precio_unitario": 108.29,
+              "importe": 10829.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 180600,
+              "codigo": "1.1.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "5000002",
+              "nombre": "MANO DE OBRA PARA ENRASE DE 1 HILADA DE BLOCK PARA DELIMITACION DE CASA",
+              "cantidad": 100.0,
+              "unidad": "",
+              "precio_unitario": 70.21,
+              "importe": 7021.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 291312,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "VENTANERIA",
+          "cantidad": 1.0,
+          "precio": 244992.0,
+          "importe": 244992.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 291313,
+              "codigo": "1.1.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "VENT-LOTE- 4-12",
+              "nombre": "CAMBIO DE VENTANERIA APLICA PARA LOTES 4 Y 12",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 29116.0,
+              "importe": 58232.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291314,
+              "codigo": "1.1.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "VENT-LOTE- 6-15",
+              "nombre": "CAMBIO DE VENTANERIA APLICA PARA LOTES 6 Y 15",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 93380.0,
+              "importe": 186760.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291369,
+              "codigo": "1.1.3.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "IND-SUB",
+              "nombre": "INDIRECTOS DE SUBCONTRATOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 3674.88,
+              "importe": 3674.88,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

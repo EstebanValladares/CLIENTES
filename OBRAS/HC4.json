@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 647,
+    "clave": "HC4",
+    "nombre": "URBAN COTO 3 COPAL",
+    "presupuesto_clave": "PP-KONTROL-HC4",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 615,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 4,
+    "id_nodo_raiz": 325547,
+    "importe_total": 252563.45,
+    "precio_total": 252563.45,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 325548,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "MATERIAL  (URBANIZACION COPAL)",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 252563.45,
+      "importe": 252563.45,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 325549,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "MATERIAL PARA LA INSTALACION SANITARIA POR URBANIZACION",
+          "cantidad": 1.0,
+          "precio": 252563.45,
+          "importe": 252563.45,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325550,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0111002",
+              "nombre": "MATERIAL PARA INSTALACIO SANITARIA, COPAL.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 252563.45,
+              "importe": 252563.45,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

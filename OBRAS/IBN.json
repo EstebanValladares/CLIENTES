@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 766,
+    "clave": "IBN",
+    "nombre": "IBN - LOTE 9 EQUIPAMIENTOS, DVDC",
+    "presupuesto_clave": "PP-KONTROL-IBN",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 732,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 327539,
+    "importe_total": 18372.41,
+    "precio_total": 18372.41,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 327540,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "ADICIONALES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 18372.41,
+      "importe": 18372.41,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327548,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "ADICIONALES",
+          "cantidad": 1.0,
+          "precio": 18372.41,
+          "importe": 18372.41,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327549,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ADIC-001",
+              "nombre": "REPARACION DEFINITIVA DE RED ELECTRICA DE MT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 18372.41,
+              "importe": 18372.41,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

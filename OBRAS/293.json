@@ -1,0 +1,105 @@
+{
+  "obra": {
+    "id_obra": 751,
+    "clave": "293",
+    "nombre": "293 - TAMPICO -REPAR ENTREGAS VIVIENDA",
+    "presupuesto_clave": "PP-KONTROL-293",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 717,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 7,
+    "id_nodo_raiz": 327049,
+    "importe_total": 197756.86,
+    "precio_total": 197756.86,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 4
+  },
+  "frentes": [
+    {
+      "id": 327050,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "NOMINAS 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 197756.86,
+      "importe": 197756.86,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327051,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 197756.86,
+          "importe": 197756.86,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327065,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS - OCT-26 - POSVENTA",
+              "nombre": "FIJOS DE OBRA SEM 42 - POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 65918.62,
+              "importe": 65918.62,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327752,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS - SEM 43-OCT-26",
+              "nombre": "FIJOS DE OBRA SEM 43 - POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 65918.62,
+              "importe": 65918.62,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328173,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS SEM 44 - OCT -26",
+              "nombre": "FIJOS DE OBRA SEM 44 - POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 65918.62,
+              "importe": 65918.62,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328174,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "REU",
+              "nombre": "REU",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1.0,
+              "importe": 1.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

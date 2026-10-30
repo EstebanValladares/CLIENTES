@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 714,
+    "clave": "APD",
+    "nombre": "APD - Fachada",
+    "presupuesto_clave": "PP-KONTROL-APD",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 680,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 4,
+    "id_nodo_raiz": 321717,
+    "importe_total": 204624.0,
+    "precio_total": 204624.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 321718,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FACHADA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 204624.0,
+      "importe": 204624.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 321719,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "BUÑA PVC FACHADA",
+          "cantidad": 1.0,
+          "precio": 204624.0,
+          "importe": 204624.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": [
+            {
+              "id": 321720,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "100000",
+              "nombre": "30 JUN 2026/ BULA PVC FACHADA PPTO BASE $27,180.88",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 204624.0,
+              "importe": 204624.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

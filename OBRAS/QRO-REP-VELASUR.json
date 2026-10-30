@@ -1,0 +1,404 @@
+{
+  "obra": {
+    "id_obra": 675,
+    "clave": "QRO-REP-VELASUR",
+    "nombre": "HC0 QUERETARO REPARACION VELASUR",
+    "presupuesto_clave": "PP-KONTROL-QRO-REP-VELASUR",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 642,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 29,
+    "id_nodo_raiz": 303768,
+    "importe_total": 6523.77,
+    "precio_total": 6523.77,
+    "total_frentes": 4,
+    "total_partidas": 6,
+    "total_tarjetas": 18
+  },
+  "frentes": [
+    {
+      "id": 303769,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "C.C. HCB LOTE 122 ARTEMISA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 2562.06,
+      "importe": 2562.06,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 303770,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "JUNIO 2026",
+          "cantidad": 1.0,
+          "precio": 2043.06,
+          "importe": 2043.06,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305130,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101001",
+              "nombre": "FACTURA A1053 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 146.58,
+              "importe": 146.58,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305142,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101002",
+              "nombre": "FACTURA 4KAAGJI75147 (HOME DEPOT MEXICO)",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 387.57,
+              "importe": 387.57,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305149,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101003",
+              "nombre": "FACTURA A1064 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 190.01,
+              "importe": 190.01,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305150,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101004",
+              "nombre": "FACTURA A1066 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 282.0,
+              "importe": 282.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309412,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101009",
+              "nombre": "FACTURA B520342 ELECTRICA JIBE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1036.9,
+              "importe": 1036.9,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 321462,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "JULIO 2026",
+          "cantidad": 1.0,
+          "precio": 519.0,
+          "importe": 519.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 321463,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101010",
+              "nombre": "FACTURA 4KAAGJI84943 HOME DEPOT MEXICO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 519.0,
+              "importe": 519.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 304241,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "C.C. HCG LOTE 89 ACACIA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 2984.71,
+      "importe": 2984.71,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305131,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "JUNIO 2026",
+          "cantidad": 1.0,
+          "precio": 2704.71,
+          "importe": 2704.71,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305152,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0102001",
+              "nombre": "FACTURA A1114 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 115.03,
+              "importe": 115.03,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305153,
+              "codigo": "1.2.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0102002",
+              "nombre": "FACTURA A115 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 595.03,
+              "importe": 595.03,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305154,
+              "codigo": "1.2.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0102003",
+              "nombre": "FACTURA 4KAAGJI77773 HOME DEPOT MEXICO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 475.0,
+              "importe": 475.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305155,
+              "codigo": "1.2.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0102004",
+              "nombre": "FACTURA A 1147 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 110.0,
+              "importe": 110.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305156,
+              "codigo": "1.2.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0102005",
+              "nombre": "FACTURA A1187 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 402.0,
+              "importe": 402.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309408,
+              "codigo": "1.2.1.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101005",
+              "nombre": "FACTURA A1165 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 345.0,
+              "importe": 345.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309409,
+              "codigo": "1.2.1.7",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101006",
+              "nombre": "FACTURA A1176 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 229.0,
+              "importe": 229.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309410,
+              "codigo": "1.2.1.8",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101007",
+              "nombre": "FACTURA FA00254806 PLOMERIA Y CERAMICA DE QUERETARO S.A. DE C.V.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 333.65,
+              "importe": 333.65,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309411,
+              "codigo": "1.2.1.9",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0101008",
+              "nombre": "FACTURA A1229 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 100.0,
+              "importe": 100.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 321361,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "JULIO 2026",
+          "cantidad": 1.0,
+          "precio": 280.0,
+          "importe": 280.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 321362,
+              "codigo": "1.2.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0201001",
+              "nombre": "FACTURA A 1354 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 208.0,
+              "importe": 208.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 321464,
+              "codigo": "1.2.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0201002",
+              "nombre": "FACTURA A151 FERREMATERIALES \"EL PROGRESO\"",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 72.0,
+              "importe": 72.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 321363,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "C.C. HCH LOTE 60 ACACIA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 977.0,
+      "importe": 977.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 321364,
+          "codigo": "1.3.1",
+          "tipo": "PARTIDA",
+          "nombre": "JULIO 2026",
+          "cantidad": 1.0,
+          "precio": 977.0,
+          "importe": 977.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 321365,
+              "codigo": "1.3.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0301001",
+              "nombre": "FACTURA 4KAAGJI89881 HOME DEPOT MEXICO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 977.0,
+              "importe": 977.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 322004,
+      "codigo": "1.4",
+      "tipo": "FRENTE",
+      "nombre": "C.C. HCA LOTE 107 ACACIA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 0.0,
+      "importe": 0.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 322005,
+          "codigo": "1.4.1",
+          "tipo": "PARTIDA",
+          "nombre": "JULIO 2026",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "obra": {
+    "id_obra": 49,
+    "clave": "AP4",
+    "nombre": "AP4 - TORRE MILOS PILAS TAM",
+    "presupuesto_clave": "PP-KONTROL-AP4",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 55,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 11,
+    "id_nodo_raiz": 9577,
+    "importe_total": 9095394.0364623,
+    "precio_total": 9095394.0364623,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 8
+  },
+  "frentes": [
+    {
+      "id": 9580,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "PILAS",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 9095394.0364623,
+      "importe": 9095394.0364623,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 9581,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "PILAS",
+          "cantidad": 1.0,
+          "precio": 9095394.0364623,
+          "importe": 9095394.0364623,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 9582,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102005",
+              "nombre": "TERRACERIA EN PLATAFORMAS GDT - ARYVE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 978542.33,
+              "importe": 978542.33,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9583,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102007",
+              "nombre": "DEMOLICION DE CASA EXISTENTE - GDT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 397000.0,
+              "importe": 397000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9584,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102018",
+              "nombre": "PILA (P-1) 1.20 MTS DE DIAMETRO, L=34.10 ML., ARMADA 23VS#8 Y EST#3@10 CMS., COLADO CON CONCRETO F'C=250 KG/CM??.  INCLUYE: ARMADO, CIMBRADO, COLADO,",
+              "cantidad": 6.0,
+              "unidad": "",
+              "precio_unitario": 247336.46,
+              "importe": 1484018.76,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9585,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102019",
+              "nombre": "PILA (P-2) 1.10 MTS DE DIAMETRO, L=34.10 ML., ARMADA 19VS#8 Y EST#3@10 CMS., COLADO CON CONCRETO F'C=250 KG/CM??.  INCLUYE: ARMADO, CIMBRADO, COLADO,",
+              "cantidad": 10.0,
+              "unidad": "",
+              "precio_unitario": 209489.4,
+              "importe": 2094894.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9586,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102020",
+              "nombre": "PILA (P-3) 1.00 MTS DE DIAMETRO, L=30.00 ML., ARMADA 16VS#8 Y EST#3@10 CMS., COLADO CON CONCRETO F'C=250 KG/CM??.  INCLUYE: ARMADO, CIMBRADO, COLADO,",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 174914.38,
+              "importe": 349828.76,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9587,
+              "codigo": "1.1.1.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "102021",
+              "nombre": "PILA (P-4) 0.80 MTS DE DIAMETRO, L=34.10 ML., ARMADA 16VS#8 Y EST#3@10 CMS., COLADO CON CONCRETO F'C=250 KG/CM??.  INCLUYE: ARMADO, CIMBRADO, COLADO,",
+              "cantidad": 6.0,
+              "unidad": "",
+              "precio_unitario": 140517.72,
+              "importe": 843106.32,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9588,
+              "codigo": "1.1.1.7",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "402007",
+              "nombre": "HINCADO DE PILOTES QUE INCLUYE PERFORACIÓN EN SUELO, COLOCACIÓN DE BENTONITA Y COLADO DE PILAS DE CIMENTACIÓN, MAQUINARIA, OPERACIÓN Y COMBUSTIBLES DE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2948002.0,
+              "importe": 2948002.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 9589,
+              "codigo": "1.1.1.8",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "402008",
+              "nombre": "DIFERENCIA POR CAMBIO DE PRECIO DE ACERO A FAVOR",
+              "cantidad": 1e-05,
+              "unidad": "",
+              "precio_unitario": 186646.23,
+              "importe": 1.8664623,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

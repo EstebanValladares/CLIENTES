@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 771,
+    "clave": "IC2",
+    "nombre": "IC2 - VV, IV, M3, 3V TIPO 1,2,3",
+    "presupuesto_clave": "PP-KONTROL-IC2",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 737,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 327672,
+    "importe_total": 2380.0,
+    "precio_total": 2380.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 327673,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "ADICIONALES VV4 M3 LOTES 7, 8 Y 9",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 2380.0,
+      "importe": 2380.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327674,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "ADICIONALES VV4 M3 LOTES 7, 8 Y 9",
+          "cantidad": 1.0,
+          "precio": 2380.0,
+          "importe": 2380.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327676,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.1.1.01",
+              "nombre": "INSTALACION DE HIDRONEUMATICO, Y REV. HID. LOTE 8",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2380.0,
+              "importe": 2380.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

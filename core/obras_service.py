@@ -69,12 +69,55 @@ class ObrasCoreService:
                 except Exception as e:
                     print(f"[ObrasCoreService] Error al cargar obras.json local: {e}")
 
+            # 1b. Intentar cargar desde catalogo_obras.json local si existe
+            cat_local = os.path.join(BASE_DIR, "OBRAS", "catalogo_obras.json")
+            if not cls._cargado and os.path.exists(cat_local):
+                try:
+                    with open(cat_local, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    catalogo = []
+                    mapa = {}
+                    for o in data:
+                        clave = str(o.get("clave", "")).strip().upper()
+                        id_obra = str(o.get("id", o.get("id_obra", ""))).strip()
+                        resumen = {
+                            "id_obra": id_obra,
+                            "clave": clave,
+                            "nombre": o.get("nombre", ""),
+                            "clave_presupuesto": o.get("presupuesto_clave", ""),
+                            "tipo_wbs": o.get("tipo_wbs", ""),
+                            "total_frentes": o.get("total_frentes", 0),
+                            "total_partidas": o.get("total_partidas", 0),
+                            "total_tarjetas": o.get("total_tarjetas", 0),
+                            "importe_total": o.get("importe_total", 0.0),
+                            "precio_total": o.get("precio_total", 0.0)
+                        }
+                        catalogo.append(resumen)
+                        if clave:
+                            mapa[clave] = resumen
+                        if id_obra:
+                            mapa[id_obra] = resumen
+
+                    cls._catalogo_ligero = catalogo
+                    cls._obras_map = mapa
+                    cls._metadata = {
+                        "total_obras": len(catalogo),
+                        "total_frentes": sum(o.get("total_frentes", 0) for o in catalogo),
+                        "total_partidas": sum(o.get("total_partidas", 0) for o in catalogo),
+                        "total_tarjetas": sum(o.get("total_tarjetas", 0) for o in catalogo),
+                        "fecha_extraccion": None
+                    }
+                    cls._cargado = True
+                    return
+                except Exception as e_cat:
+                    print(f"[ObrasCoreService] Error al cargar catalogo_obras.json: {e_cat}")
+
             # 2. Si no hay archivo local, cargar catálogo desde Firebase Firestore
             try:
                 from core.firebase_client import FirebaseClient
                 db = FirebaseClient.get_db()
                 if db is not None:
-                    cat_doc = db.collection("OBRAS").document("catalogo").get()
+                    cat_doc = db.collection("OBRAS").document("catalogo").get(timeout=3)
                     if cat_doc.exists:
                         d = cat_doc.to_dict()
                         cls._metadata = d.get("metadata", {})
@@ -132,15 +175,27 @@ class ObrasCoreService:
         cls._cargar_en_memoria()
         clave_limpia = str(clave_o_id).strip().upper()
 
-        if clave_limpia in cls._obras_map:
+        if clave_limpia in cls._obras_map and "frentes" in cls._obras_map[clave_limpia]:
             return cls._obras_map[clave_limpia]
 
-        # Si no está en memoria, consultar Firebase Firestore
+        # 1. Buscar árbol en archivo local OBRAS/{clave}.json
+        ruta_arbol_local = os.path.join(BASE_DIR, "OBRAS", f"{clave_limpia}.json")
+        if os.path.exists(ruta_arbol_local):
+            try:
+                with open(ruta_arbol_local, "r", encoding="utf-8") as f:
+                    arbol = json.load(f)
+                with cls._lock:
+                    cls._obras_map[clave_limpia] = arbol
+                return arbol
+            except Exception as e_arbol:
+                print(f"[ObrasCoreService] Error leyendo {ruta_arbol_local}: {e_arbol}")
+
+        # 2. Si no está en disco local, consultar Firebase Firestore
         try:
             from core.firebase_client import FirebaseClient
             db = FirebaseClient.get_db()
             if db is not None:
-                doc = db.collection("OBRAS").document("arboles").collection("items").document(clave_limpia).get()
+                doc = db.collection("OBRAS").document("arboles").collection("items").document(clave_limpia).get(timeout=3)
                 if doc.exists:
                     arbol = doc.to_dict()
                     # Reensamblar obras particionadas (>850 KB como AUS)

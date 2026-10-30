@@ -1,0 +1,91 @@
+{
+  "obra": {
+    "id_obra": 424,
+    "clave": "IE0",
+    "nombre": "IE0 - GASTOS GENERALES VISTA VELA HILLS CAB",
+    "presupuesto_clave": "PP-KONTROL-IE0",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 428,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 6,
+    "id_nodo_raiz": 196633,
+    "importe_total": 722785.01,
+    "precio_total": 722785.01,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 3
+  },
+  "frentes": [
+    {
+      "id": 196634,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "GASTOS DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 722785.01,
+      "importe": 722785.01,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 196635,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "PRELIMINARES",
+          "cantidad": 1.0,
+          "precio": 722785.01,
+          "importe": 722785.01,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": [
+            {
+              "id": 196636,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "101000",
+              "nombre": "RENTA DE SANITARIO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2949.33,
+              "importe": 2949.33,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 196637,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "101001",
+              "nombre": "ESTUDIO DE MECANICA DE SUELOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 284835.68,
+              "importe": 284835.68,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 196638,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "101002",
+              "nombre": "PAGO DE PROYECTO - ARQ.VELA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 435000.0,
+              "importe": 435000.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

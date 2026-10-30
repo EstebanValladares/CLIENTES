@@ -1,0 +1,1768 @@
+{
+  "obra": {
+    "id_obra": 350,
+    "clave": "EDX",
+    "nombre": "EDX - COSTOS FIJOS PDC",
+    "presupuesto_clave": "PP-KONTROL-EDX",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 354,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 130,
+    "id_nodo_raiz": 155452,
+    "importe_total": 8349022.2663904,
+    "precio_total": 8349022.2663904,
+    "total_frentes": 12,
+    "total_partidas": 43,
+    "total_tarjetas": 74
+  },
+  "frentes": [
+    {
+      "id": 155453,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 743832.357,
+      "importe": 743832.357,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 155454,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "LLAVERA",
+          "cantidad": 1.0,
+          "precio": 171360.357,
+          "importe": 171360.357,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 205982,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000008",
+              "nombre": "LLAVERAS AUTORIZADAS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 42840.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 205983,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000008",
+              "nombre": "LLAVERAS AUTORIZADAS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 42840.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291227,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000008",
+              "nombre": "LLAVERAS AUTORIZADAS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 42840.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 322112,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000008",
+              "nombre": "LLAVERAS AUTORIZADAS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 42840.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325504,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000008",
+              "nombre": "LLAVERAS AUTORIZADAS",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 0.357,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        },
+        {
+          "id": 205977,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "JARDINEROS",
+          "cantidad": 1.0,
+          "precio": 572472.0,
+          "importe": 572472.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 240972,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000009",
+              "nombre": "4 JARDINEROS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 15232.0,
+              "importe": 182784.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 240973,
+              "codigo": "1.1.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000009",
+              "nombre": "4 JARDINEROS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 15232.0,
+              "importe": 182784.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 303633,
+              "codigo": "1.1.2.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000009",
+              "nombre": "4 JARDINEROS",
+              "cantidad": 12.0,
+              "unidad": "",
+              "precio_unitario": 15232.0,
+              "importe": 182784.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325474,
+              "codigo": "1.1.2.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000013",
+              "nombre": "(09SEP2026) INCAPACIDAD JARDINERO",
+              "cantidad": 36.0,
+              "unidad": "",
+              "precio_unitario": 670.0,
+              "importe": 24120.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 205978,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "GEOFONO",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 205979,
+          "codigo": "1.1.4",
+          "tipo": "PARTIDA",
+          "nombre": "TUBERO",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 155455,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "REPARACIONES / REMODELACIONES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 280251.94,
+      "importe": 280251.94,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 155456,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "OFICINA SELVANOVA",
+          "cantidad": 1.0,
+          "precio": 203490.0,
+          "importe": 203490.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155459,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000001",
+              "nombre": "TRABAJOS DE REMODELACION OFICINA DE VENTAS SELVANOVA",
+              "cantidad": 171000.0,
+              "unidad": "",
+              "precio_unitario": 1.19,
+              "importe": 203490.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155461,
+              "codigo": "1.2.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "IND F-",
+              "nombre": "INDIRECTOS DE MANO DE OBRA",
+              "cantidad": 32490.0,
+              "unidad": "",
+              "precio_unitario": 1.0,
+              "importe": 32490.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291371,
+              "codigo": "1.2.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000013",
+              "nombre": "(03JUN2026) LIMPIEZA AV. PPAL SELVANOVA POR TRABAJOS DE CFE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4754.06,
+              "importe": 4754.06,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 1
+            },
+            {
+              "id": 293524,
+              "codigo": "1.2.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000014",
+              "nombre": "(03JUN2026) LIMPIEZA AV. PPAL SELVANOVA POR TRABAJOS DE CFE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4754.06,
+              "importe": 4754.06,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 310516,
+              "codigo": "1.2.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000007",
+              "nombre": "(14JUL2026) LIMPIEZA Y RETIRO DE BASURA CON ESCOMBRO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 33408.9,
+              "importe": 33408.9,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 155457,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "OFICINA VELAMAR",
+          "cantidad": 1.0,
+          "precio": 33915.0,
+          "importe": 33915.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155460,
+              "codigo": "1.2.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000001",
+              "nombre": "TRABAJOS DE REMODELACION OFICINA DE VENTAS SELVANOVA",
+              "cantidad": 28500.0,
+              "unidad": "",
+              "precio_unitario": 1.19,
+              "importe": 33915.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155462,
+              "codigo": "1.2.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "IND F-",
+              "nombre": "INDIRECTOS DE MANO DE OBRA",
+              "cantidad": 5415.0,
+              "unidad": "",
+              "precio_unitario": 1.0,
+              "importe": 5415.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 169450,
+          "codigo": "1.2.3",
+          "tipo": "PARTIDA",
+          "nombre": "COMPLEMENTO OFICINA DE VENTAS SELVANOVA",
+          "cantidad": 1.0,
+          "precio": 36357.5,
+          "importe": 36357.5,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 169451,
+              "codigo": "1.2.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000002",
+              "nombre": "(10MAR2026) SUBOCNTRATOS DE MANTENIMIENTO OFICINA DE VENTAS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 30824.0,
+              "importe": 30824.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 169456,
+              "codigo": "1.2.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000003",
+              "nombre": "(10MAR2026) REPARACIONES DE INSTALACIONES OF. VENTAS SELVANOVA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 5533.5,
+              "importe": 5533.5,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 169457,
+              "codigo": "1.2.3.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000004",
+              "nombre": "INDIRECTOS SUB/ INST REPARACIONES",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 462.36,
+              "importe": 462.36,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 249855,
+              "codigo": "1.2.3.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000010",
+              "nombre": "(28ABR2026) MAQUINARIA LIMPIEZA AREA VERDE FRENTE AL ACCESO COTO 14.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 32380.3,
+              "importe": 32380.3,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 272599,
+              "codigo": "1.2.3.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000012",
+              "nombre": "(13MAY2026) COMPLEMENTO LIMPIEZA AREA VERDE FRENTE AL ACCESO COTO 14.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 23680.3,
+              "importe": 23680.3,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 180430,
+          "codigo": "1.2.4",
+          "tipo": "PARTIDA",
+          "nombre": "INDIRECTOS SUB/ INST REPARACIONES",
+          "cantidad": 1.0,
+          "precio": 1849.44,
+          "importe": 1849.44,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 180431,
+              "codigo": "1.2.4.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000004",
+              "nombre": "INDIRECTOS SUB/ INST REPARACIONES",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 462.36,
+              "importe": 462.36,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 181598,
+              "codigo": "1.2.4.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000005",
+              "nombre": "INDIRECTOS SUB/ INST REPARACIONES",
+              "cantidad": 3.0,
+              "unidad": "",
+              "precio_unitario": 462.36,
+              "importe": 1387.08,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 323223,
+          "codigo": "1.2.5",
+          "tipo": "PARTIDA",
+          "nombre": "REPARACIONES COTO 14",
+          "cantidad": 1.0,
+          "precio": 4640.0,
+          "importe": 4640.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 323224,
+              "codigo": "1.2.5.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000009",
+              "nombre": "(20AGO2026) REPARACION DE MALLA COTO 14",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4640.0,
+              "importe": 4640.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325291,
+              "codigo": "1.2.5.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000012",
+              "nombre": "(04SEP2026) PASTO PARA CAMELLON FRENTE A COTO 14",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 12650.0,
+              "importe": 12650.0,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 1
+            },
+            {
+              "id": 325494,
+              "codigo": "1.2.5.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000012",
+              "nombre": "(04SEP2026) PASTO PARA CAMELLON FRENTE A COTO 14",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 12650.0,
+              "importe": 12650.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 155613,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "SEGURIDAD",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 5689472.75188,
+      "importe": 5689472.75188,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 155614,
+          "codigo": "1.3.1",
+          "tipo": "PARTIDA",
+          "nombre": "SEGURIDAD PRIVADA JJ DEL CARIBE",
+          "cantidad": 1.0,
+          "precio": 337795.87,
+          "importe": 337795.87,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155615,
+              "codigo": "1.3.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0300000",
+              "nombre": "SEGURIDAD",
+              "cantidad": 337795.87,
+              "unidad": "",
+              "precio_unitario": 1.0,
+              "importe": 337795.87,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 155616,
+          "codigo": "1.3.2",
+          "tipo": "PARTIDA",
+          "nombre": "BRAZALETES DE SEGURIDAD",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 191501,
+          "codigo": "1.3.3",
+          "tipo": "PARTIDA",
+          "nombre": "SEGURIDAD PRIV. JJ DEL CARIBE",
+          "cantidad": 1.0,
+          "precio": 5351676.88188,
+          "importe": 5351676.88188,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 191502,
+              "codigo": "1.3.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0300000",
+              "nombre": "SEGURIDAD",
+              "cantidad": 357802.0,
+              "unidad": "",
+              "precio_unitario": 1.0,
+              "importe": 357802.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 264376,
+              "codigo": "1.3.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "03000001",
+              "nombre": "SEGURIDAD",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 352415.73,
+              "importe": 1409662.92,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 264377,
+              "codigo": "1.3.3.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "03000001",
+              "nombre": "SEGURIDAD",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 352415.73,
+              "importe": 1409662.92,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 324836,
+              "codigo": "1.3.3.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000010",
+              "nombre": "SEGURIDAD",
+              "cantidad": 6.0,
+              "unidad": "",
+              "precio_unitario": 362418.8,
+              "importe": 2174512.8,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 0
+            },
+            {
+              "id": 324837,
+              "codigo": "1.3.3.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000010",
+              "nombre": "SEGURIDAD",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 362418.8,
+              "importe": 36.24188,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 181414,
+      "codigo": "1.4",
+      "tipo": "FRENTE",
+      "nombre": "VIGILANCIA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 47600.0,
+      "importe": 47600.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 181415,
+          "codigo": "1.4.1",
+          "tipo": "PARTIDA",
+          "nombre": "GRATIFICACION",
+          "cantidad": 1.0,
+          "precio": 47600.0,
+          "importe": 47600.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 181416,
+              "codigo": "1.4.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100046",
+              "nombre": "VIGILANCIA GRATIFICACION",
+              "cantidad": 40.0,
+              "unidad": "",
+              "precio_unitario": 1190.0,
+              "importe": 47600.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 181417,
+          "codigo": "1.4.2",
+          "tipo": "PARTIDA",
+          "nombre": "2026",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 182485,
+      "codigo": "1.5",
+      "tipo": "FRENTE",
+      "nombre": "EXTINTORES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 4290.0,
+      "importe": 4290.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 182486,
+          "codigo": "1.5.1",
+          "tipo": "PARTIDA",
+          "nombre": "RECARGA EXTINTORES",
+          "cantidad": 1.0,
+          "precio": 4290.0,
+          "importe": 4290.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 182487,
+              "codigo": "1.5.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000006",
+              "nombre": "(01ABR2026) RCARGA DE EXTINTORES",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4290.0,
+              "importe": 4290.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 203552,
+      "codigo": "1.6",
+      "tipo": "FRENTE",
+      "nombre": "RENTA DE ESTACION TOTAL",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 113680.3248,
+      "importe": 113680.3248,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 203553,
+          "codigo": "1.6.1",
+          "tipo": "PARTIDA",
+          "nombre": "RENTA DE ESTACION TOTAL",
+          "cantidad": 1.0,
+          "precio": 113680.3248,
+          "importe": 113680.3248,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 203554,
+              "codigo": "1.6.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000007",
+              "nombre": "RENTA DE ESTACION TOTAL PARA TRAZOS",
+              "cantidad": 10.0,
+              "unidad": "",
+              "precio_unitario": 3248.0,
+              "importe": 32480.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 203555,
+              "codigo": "1.6.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000007",
+              "nombre": "RENTA DE ESTACION TOTAL PARA TRAZOS",
+              "cantidad": 18.0,
+              "unidad": "",
+              "precio_unitario": 3248.0,
+              "importe": 58464.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 290600,
+              "codigo": "1.6.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000007",
+              "nombre": "RENTA DE ESTACION TOTAL PARA TRAZOS",
+              "cantidad": 7.0,
+              "unidad": "",
+              "precio_unitario": 3248.0,
+              "importe": 22736.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325299,
+              "codigo": "1.6.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0000007",
+              "nombre": "RENTA DE ESTACION TOTAL PARA TRAZOS",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 3248.0,
+              "importe": 0.3248,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 290601,
+      "codigo": "1.7",
+      "tipo": "FRENTE",
+      "nombre": "GASOLINA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 12000.0025,
+      "importe": 12000.0025,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 290602,
+          "codigo": "1.7.1",
+          "tipo": "PARTIDA",
+          "nombre": "GASOLINA",
+          "cantidad": 1.0,
+          "precio": 12000.0025,
+          "importe": 12000.0025,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 290603,
+              "codigo": "1.7.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "(05MAY2026) GASOLINA",
+              "cantidad": 320.0,
+              "unidad": "",
+              "precio_unitario": 25.0,
+              "importe": 8000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291137,
+              "codigo": "1.7.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "(05MAY2026) GASOLINA",
+              "cantidad": 160.0,
+              "unidad": "",
+              "precio_unitario": 25.0,
+              "importe": 4000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 319650,
+              "codigo": "1.7.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "(05MAY2026) GASOLINA",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 25.0,
+              "importe": 0.0025,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 305105,
+      "codigo": "1.8",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS DE ERNESTO PARA ENTREGA POSVENTA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 1187590.4500784,
+      "importe": 1187590.4500784,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305106,
+          "codigo": "1.8.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 25",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305107,
+              "codigo": "1.8.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 305108,
+          "codigo": "1.8.2",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 26",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305178,
+              "codigo": "1.8.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 305179,
+          "codigo": "1.8.3",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 27",
+          "cantidad": 1.0,
+          "precio": 49623.0,
+          "importe": 49623.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 308852,
+              "codigo": "1.8.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000003",
+              "nombre": "(29JUN2026) DETALLES GENERALES DE PERSONAL FIJO DE ERNESTO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 49623.0,
+              "importe": 49623.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 308853,
+          "codigo": "1.8.4",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS ENESTO SEM 28",
+          "cantidad": 1.0,
+          "precio": 53788.0,
+          "importe": 53788.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 309455,
+              "codigo": "1.8.4.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000005",
+              "nombre": "(07JUL2026) DETALLES GENERALES DE PERSONAL FIJO DE ERNESTO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 53788.0,
+              "importe": 53788.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 309454,
+          "codigo": "1.8.5",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 29",
+          "cantidad": 1.0,
+          "precio": 39389.0,
+          "importe": 39389.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 310514,
+              "codigo": "1.8.5.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000006",
+              "nombre": "(14JUL2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 39389.0,
+              "importe": 39389.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 310515,
+          "codigo": "1.8.6",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 30",
+          "cantidad": 1.0,
+          "precio": 58905.0,
+          "importe": 58905.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 313686,
+              "codigo": "1.8.6.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000008",
+              "nombre": "(20JUL2026) FIJOS PARA DETALLES DE ENTREGA ERNESTO BUGARIN",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 58905.0,
+              "importe": 58905.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 313687,
+          "codigo": "1.8.7",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 31",
+          "cantidad": 1.0,
+          "precio": 58905.0,
+          "importe": 58905.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 313688,
+              "codigo": "1.8.7.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000008",
+              "nombre": "(20JUL2026) FIJOS PARA DETALLES DE ENTREGA ERNESTO BUGARIN",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 58905.0,
+              "importe": 58905.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 319612,
+          "codigo": "1.8.8",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 32",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 321766,
+              "codigo": "1.8.8.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 321767,
+          "codigo": "1.8.9",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 33",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 321768,
+              "codigo": "1.8.9.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 322102,
+          "codigo": "1.8.10",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 34",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 322931,
+              "codigo": "1.8.10.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 322932,
+          "codigo": "1.8.11",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 35",
+          "cantidad": 1.0,
+          "precio": 51298.067537,
+          "importe": 51298.067537,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324030,
+              "codigo": "1.8.11.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.74195559,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 51298.067537,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 324031,
+          "codigo": "1.8.12",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 36",
+          "cantidad": 1.0,
+          "precio": 66382.9597489,
+          "importe": 66382.9597489,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324705,
+              "codigo": "1.8.12.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.96013769,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 66382.9597489,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 324706,
+          "codigo": "1.8.13",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 37",
+          "cantidad": 1.0,
+          "precio": 66382.9597489,
+          "importe": 66382.9597489,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325465,
+              "codigo": "1.8.13.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.96013769,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 66382.9597489,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 325466,
+          "codigo": "1.8.14",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 38",
+          "cantidad": 1.0,
+          "precio": 69139.0,
+          "importe": 69139.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325483,
+              "codigo": "1.8.14.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 69139.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 325484,
+          "codigo": "1.8.15",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 39",
+          "cantidad": 1.0,
+          "precio": 55691.9996359,
+          "importe": 55691.9996359,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325977,
+              "codigo": "1.8.15.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.80550774,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 55691.9996359,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 325978,
+          "codigo": "1.8.16",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 40",
+          "cantidad": 1.0,
+          "precio": 55691.4645,
+          "importe": 55691.4645,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326128,
+              "codigo": "1.8.16.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.8055,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 55691.4645,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326129,
+          "codigo": "1.8.17",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 41",
+          "cantidad": 1.0,
+          "precio": 49623.0,
+          "importe": 49623.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326566,
+              "codigo": "1.8.17.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000003",
+              "nombre": "(29JUN2026) DETALLES GENERALES DE PERSONAL FIJO DE ERNESTO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 49623.0,
+              "importe": 49623.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326565,
+          "codigo": "1.8.18",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 42",
+          "cantidad": 1.0,
+          "precio": 55691.9996359,
+          "importe": 55691.9996359,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327216,
+              "codigo": "1.8.18.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.80550774,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 55691.9996359,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327217,
+          "codigo": "1.8.19",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 43",
+          "cantidad": 1.0,
+          "precio": 55691.9996359,
+          "importe": 55691.9996359,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327663,
+              "codigo": "1.8.19.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.80550774,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 55691.9996359,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327664,
+          "codigo": "1.8.20",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 44",
+          "cantidad": 1.0,
+          "precio": 55691.9996359,
+          "importe": 55691.9996359,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 328102,
+              "codigo": "1.8.20.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "(17JUN2026) DETALLES GENERALES DE ALBAÑILERIA  PARA ENTREGA POSVENTA",
+              "cantidad": 0.80550774,
+              "unidad": "",
+              "precio_unitario": 69139.0,
+              "importe": 55691.9996359,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": 0
+            }
+          ]
+        },
+        {
+          "id": 328103,
+          "codigo": "1.8.21",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS SEM 45",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 305192,
+      "codigo": "1.9",
+      "tipo": "FRENTE",
+      "nombre": "LABORATORIO URBANIZACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 29232.4872,
+      "importe": 29232.4872,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305193,
+          "codigo": "1.9.1",
+          "tipo": "PARTIDA",
+          "nombre": "LABORATORIO",
+          "cantidad": 1.0,
+          "precio": 29232.4872,
+          "importe": 29232.4872,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 305194,
+              "codigo": "1.9.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "LABORATORIO URBANIZACION",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4872.0,
+              "importe": 4872.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305195,
+              "codigo": "1.9.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "LABORATORIO URBANIZACION",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4872.0,
+              "importe": 4872.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309491,
+              "codigo": "1.9.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "LABORATORIO URBANIZACION",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 4872.0,
+              "importe": 9744.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 310499,
+              "codigo": "1.9.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "LABORATORIO URBANIZACION",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 4872.0,
+              "importe": 9744.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 313685,
+              "codigo": "1.9.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "LABORATORIO URBANIZACION",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 4872.0,
+              "importe": 0.4872,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 309417,
+      "codigo": "1.10",
+      "tipo": "FRENTE",
+      "nombre": "SANITARIOS",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 26917.952932,
+      "importe": 26917.952932,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 309418,
+          "codigo": "1.10.1",
+          "tipo": "PARTIDA",
+          "nombre": "SANITARIOS SUPERVISORES",
+          "cantidad": 1.0,
+          "precio": 26917.952932,
+          "importe": 26917.952932,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 309419,
+              "codigo": "1.10.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000004",
+              "nombre": "SANITARIOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 6729.32,
+              "importe": 6729.32,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 309420,
+              "codigo": "1.10.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000004",
+              "nombre": "SANITARIOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 6729.32,
+              "importe": 6729.32,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 322012,
+              "codigo": "1.10.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000004",
+              "nombre": "SANITARIOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 6729.32,
+              "importe": 6729.32,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325300,
+              "codigo": "1.10.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000004",
+              "nombre": "SANITARIOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 6729.32,
+              "importe": 6729.32,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 326536,
+              "codigo": "1.10.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000004",
+              "nombre": "SANITARIOS",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 6729.32,
+              "importe": 0.672932,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 325528,
+      "codigo": "1.11",
+      "tipo": "FRENTE",
+      "nombre": "DEVOLUCION FONDO DE GARANTIA SELVANOVA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 200002.0,
+      "importe": 200002.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 325529,
+          "codigo": "1.11.1",
+          "tipo": "PARTIDA",
+          "nombre": "CANCELERIAS JULIO CESAR RAMIREZ",
+          "cantidad": 1.0,
+          "precio": 200002.0,
+          "importe": 200002.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 325530,
+              "codigo": "1.11.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000014",
+              "nombre": "(11SEP2026) DEVOLUCION DE FONDO DE GARANTIA JULIO CESAR RAMIREZ",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 200000.0,
+              "importe": 200000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325531,
+              "codigo": "1.11.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000014",
+              "nombre": "(11SEP2026) DEVOLUCION DE FONDO DE GARANTIA JULIO CESAR RAMIREZ",
+              "cantidad": 1e-05,
+              "unidad": "",
+              "precio_unitario": 200000.0,
+              "importe": 2.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        },
+        {
+          "id": 325532,
+          "codigo": "1.11.2",
+          "tipo": "PARTIDA",
+          "nombre": "REU",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 327910,
+      "codigo": "1.12",
+      "tipo": "FRENTE",
+      "nombre": "PLATAFORMAS COTO 14",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 14152.0,
+      "importe": 14152.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327911,
+          "codigo": "1.12.1",
+          "tipo": "PARTIDA",
+          "nombre": "LABORATORIO",
+          "cantidad": 1.0,
+          "precio": 14152.0,
+          "importe": 14152.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 327912,
+              "codigo": "1.12.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000015",
+              "nombre": "LABORATORIO PARA REVISION DE PLATAFORMA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 14152.0,
+              "importe": 14152.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

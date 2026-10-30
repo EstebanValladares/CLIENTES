@@ -1,0 +1,526 @@
+{
+  "obra": {
+    "id_obra": 352,
+    "clave": "483",
+    "nombre": "483 - TORRE SORRENTO CAPRI VELAMAR TAM",
+    "presupuesto_clave": "PP-KONTROL-483",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 355,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 38,
+    "id_nodo_raiz": 151029,
+    "importe_total": 1436502.3243125,
+    "precio_total": 1436502.3243125,
+    "total_frentes": 4,
+    "total_partidas": 11,
+    "total_tarjetas": 22
+  },
+  "frentes": [
+    {
+      "id": 155511,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "JARDINERAS TORRE SORRENTO",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 289413.1243125,
+      "importe": 289413.1243125,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 155512,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "MATERIALES",
+          "cantidad": 1.0,
+          "precio": 93290.95,
+          "importe": 93290.95,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155513,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1000000",
+              "nombre": "MATERIALES",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 93290.95,
+              "importe": 93290.95,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 291347,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "MATERIAL-FALTANTE",
+              "nombre": "MATERIALES PARA TERMINO DE JARDINERAS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4645.8,
+              "importe": 4645.8,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 318744,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ADI-MAT-ICPRECIO",
+              "nombre": "MATERIALES INCREMENTO PRECIO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 336.4,
+              "importe": 336.4,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 155514,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "MANO DE OBRA",
+          "cantidad": 1.0,
+          "precio": 27144.6443125,
+          "importe": 27144.6443125,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155515,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000000",
+              "nombre": "DEMOLICION DE MURO DE BLOCK (INCLUYE DEMOLICION DE MURO DE BLOCK, CASTILLOS, ETC, LIMPIEZA Y RETIRO DEL LUGAR)",
+              "cantidad": 50.0474,
+              "unidad": "",
+              "precio_unitario": 93.2,
+              "importe": 4664.41768,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155516,
+              "codigo": "1.1.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000001",
+              "nombre": "RETIRO DE IMPERMEABILIZANTE EN JARDINERAS. INCLUYE RETIRO Y LIMPIEZA, ASI COMO HERRAMIENTA NECESARIA Y RETIRO DEL LUGAR",
+              "cantidad": 62.8782,
+              "unidad": "",
+              "precio_unitario": 41.65,
+              "importe": 2618.87703,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155517,
+              "codigo": "1.1.2.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000002",
+              "nombre": "APLICACION DE IMPERMEABILIZANTE EN JARDINERAS. INCLUYE APLICACION, LIMPIEZA Y HERRAMIENTA PARA SU CORRECTA EJECUCION.",
+              "cantidad": 62.8782,
+              "unidad": "",
+              "precio_unitario": 30.94,
+              "importe": 1945.451508,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155518,
+              "codigo": "1.1.2.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000006",
+              "nombre": "APLANADO DE ESTUCO EN PARED EXTERIOR",
+              "cantidad": 50.09865,
+              "unidad": "",
+              "precio_unitario": 59.33,
+              "importe": 2972.3529045,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155519,
+              "codigo": "1.1.2.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000007",
+              "nombre": "RETIRO DE ZOCLO EN FIRME PRINCIPAL",
+              "cantidad": 47.635,
+              "unidad": "",
+              "precio_unitario": 17.85,
+              "importe": 850.28475,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155520,
+              "codigo": "1.1.2.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000008",
+              "nombre": "COLOCACION DE COLADERAS METALICAS",
+              "cantidad": 7.0,
+              "unidad": "",
+              "precio_unitario": 89.25,
+              "importe": 624.75,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155521,
+              "codigo": "1.1.2.7",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000009",
+              "nombre": "ENTORTADO DE PISO DE 5 CM DE ESPESOR",
+              "cantidad": 62.8782,
+              "unidad": "",
+              "precio_unitario": 35.7,
+              "importe": 2244.75174,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 155522,
+              "codigo": "1.1.2.8",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "2000010",
+              "nombre": "COLOCACION DE PISO CERAMICO.",
+              "cantidad": 62.8782,
+              "unidad": "",
+              "precio_unitario": 178.5,
+              "importe": 11223.7587,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 270588,
+              "codigo": "1.1.2.9",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "MO-SORRENTO-001",
+              "nombre": "AJUSTE DE MANO DE OBRA DE JARDINERAS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 122795.15,
+              "importe": 122795.15,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 155523,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "SUBCONTRATOS",
+          "cantidad": 1.0,
+          "precio": 142901.0,
+          "importe": 142901.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 155524,
+              "codigo": "1.1.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "3000000",
+              "nombre": "INSTALACION DE PANEL TECHWOOD PARA JARDINERA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 142901.0,
+              "importe": 142901.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 179499,
+              "codigo": "1.1.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "4961238",
+              "nombre": "TRABAJOS ELECTRICOS EN TORRE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 10850.0,
+              "importe": 10850.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 291229,
+          "codigo": "1.1.4",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS ELECTRICOS CABLEADO",
+          "cantidad": 1.0,
+          "precio": 21635.33,
+          "importe": 21635.33,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 291230,
+              "codigo": "1.1.4.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ELECT01",
+              "nombre": "TRABAJOS ELECTRICOS DE CABLEADO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 21635.33,
+              "importe": 21635.33,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 320996,
+          "codigo": "1.1.5",
+          "tipo": "PARTIDA",
+          "nombre": "PINTURA EN JARDINERAS",
+          "cantidad": 1.0,
+          "precio": 4441.2,
+          "importe": 4441.2,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 320997,
+              "codigo": "1.1.5.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "PINT0001",
+              "nombre": "PINTURA EN JARDINERAS",
+              "cantidad": 120.0,
+              "unidad": "",
+              "precio_unitario": 37.01,
+              "importe": 4441.2,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 290796,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "ADECUACIONES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 261719.2,
+      "importe": 261719.2,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 290801,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "IMPERMEABILIZACION LADO A",
+          "cantidad": 1.0,
+          "precio": 111081.6,
+          "importe": 111081.6,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 290805,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "IMP650001",
+              "nombre": "IMPERMEABILIZACION LADO A",
+              "cantidad": 532.0,
+              "unidad": "",
+              "precio_unitario": 208.8,
+              "importe": 111081.6,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 290879,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "IMPERMEABILIZACION LADO G",
+          "cantidad": 1.0,
+          "precio": 111081.6,
+          "importe": 111081.6,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 290880,
+              "codigo": "1.2.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "IMPER650002",
+              "nombre": "IMPERMEABILIZACION LADO G",
+              "cantidad": 532.0,
+              "unidad": "",
+              "precio_unitario": 208.8,
+              "importe": 111081.6,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 324832,
+          "codigo": "1.2.3",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS ALBAÑILERIA EN COLUMNA LATERAL",
+          "cantidad": 1.0,
+          "precio": 25288.0,
+          "importe": 25288.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324833,
+              "codigo": "1.2.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1230001",
+              "nombre": "TRABAJOS ALBAÑILERIA CON GUINDOLA COLUMNA LATERAL",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 25288.0,
+              "importe": 25288.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 325122,
+          "codigo": "1.2.4",
+          "tipo": "PARTIDA",
+          "nombre": "PUERTA DE ALUMINIO PARA ESTACIONAMIENTO",
+          "cantidad": 1.0,
+          "precio": 14268.0,
+          "importe": 14268.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325123,
+              "codigo": "1.2.4.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1240001",
+              "nombre": "PUERTA DE ALUMINIO S-50 G2 ALUMINIO OSCURO C/DUELA 2.30X1.10",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 14268.0,
+              "importe": 14268.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 322381,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "DEPARTAMENTO 6B",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 850000.0,
+      "importe": 850000.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 322382,
+          "codigo": "1.3.1",
+          "tipo": "PARTIDA",
+          "nombre": "ADECUACIONES DEPARTAMENTO 6B",
+          "cantidad": 1.0,
+          "precio": 850000.0,
+          "importe": 850000.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 322383,
+              "codigo": "1.3.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ADEC00001",
+              "nombre": "ADECUACIONES EN DEPARTAMENTO 6B",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 850000.0,
+              "importe": 850000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 325124,
+      "codigo": "1.4",
+      "tipo": "FRENTE",
+      "nombre": "ELECTRIFICACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 35370.0,
+      "importe": 35370.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 325125,
+          "codigo": "1.4.1",
+          "tipo": "PARTIDA",
+          "nombre": "ELECTRIFICACION TORRE SORRENTO",
+          "cantidad": 1.0,
+          "precio": 35370.0,
+          "importe": 35370.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325126,
+              "codigo": "1.4.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0141001",
+              "nombre": "REPOSICION DE LUMINARIAS EN EST. Y ALBERCA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35370.0,
+              "importe": 35370.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

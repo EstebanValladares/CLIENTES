@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 737,
+    "clave": "AP7",
+    "nombre": "AP7 - ACABADOS EXTERIORES",
+    "presupuesto_clave": "PP-KONTROL-AP7",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 703,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 324596,
+    "importe_total": 867354.76,
+    "precio_total": 867354.76,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 324597,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "SISTEMA CONTRA INCENDIOS",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 867354.76,
+      "importe": 867354.76,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 324598,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "SISTEMA CONTRA INCENDIOS",
+          "cantidad": 1.0,
+          "precio": 867354.76,
+          "importe": 867354.76,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324599,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1000000",
+              "nombre": "26 AGOSTO 26 SISTEMA CONTRA INCENDIOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 867354.76,
+              "importe": 867354.76,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

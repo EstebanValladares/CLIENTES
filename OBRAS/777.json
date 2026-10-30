@@ -1,0 +1,77 @@
+{
+  "obra": {
+    "id_obra": 777,
+    "clave": "BK",
+    "nombre": "APB - GASTOS FIJOS MILOS",
+    "presupuesto_clave": "PP-KONTROL-APB",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 743,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 5,
+    "id_nodo_raiz": 327826,
+    "importe_total": 88298.0,
+    "precio_total": 88298.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 327827,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS DE MANO DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 88298.0,
+      "importe": 88298.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327828,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE MANO DE OBRA",
+          "cantidad": 1.0,
+          "precio": 88298.0,
+          "importe": 88298.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327829,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-MILOS",
+              "nombre": "FIJOS DE OBRA MILOS APB",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 44149.0,
+              "importe": 44149.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327830,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-MILOS",
+              "nombre": "FIJOS DE OBRA MILOS APB",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 44149.0,
+              "importe": 44149.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

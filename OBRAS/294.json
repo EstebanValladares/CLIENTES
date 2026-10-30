@@ -1,0 +1,105 @@
+{
+  "obra": {
+    "id_obra": 759,
+    "clave": "294",
+    "nombre": "294 - FIJOS REYNOSA",
+    "presupuesto_clave": "PP-KONTROL-294",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 725,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 7,
+    "id_nodo_raiz": 327107,
+    "importe_total": 467540.38,
+    "precio_total": 467540.38,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 4
+  },
+  "frentes": [
+    {
+      "id": 327108,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS OCTUBRE",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 467540.38,
+      "importe": 467540.38,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327109,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 467540.38,
+          "importe": 467540.38,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327110,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBRE",
+              "nombre": "FIJOS 1 SEMANAS OCTUBRE REYNOSA SOLICITO DALAY $158,349.74",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 158349.74,
+              "importe": 158349.74,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327774,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBREII",
+              "nombre": "FIJOS OCTUBRE REYNOSA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 159536.0,
+              "importe": 159536.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 329066,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBRE III",
+              "nombre": "FIJOS 1 SEMANAS OCTUBRE REYNOSA SOLICITO DALAY $149,654.64",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 149654.64,
+              "importe": 149654.64,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 329067,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBRE III",
+              "nombre": "FIJOS 1 SEMANAS OCTUBRE REYNOSA SOLICITO DALAY $149,654.64",
+              "cantidad": 0.0,
+              "unidad": "",
+              "precio_unitario": 149654.64,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

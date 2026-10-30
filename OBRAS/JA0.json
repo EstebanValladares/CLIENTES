@@ -1,0 +1,813 @@
+{
+  "obra": {
+    "id_obra": 669,
+    "clave": "JA0",
+    "nombre": "MANILA",
+    "presupuesto_clave": "PP-KONTROL-JA0",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 636,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 59,
+    "id_nodo_raiz": 301207,
+    "importe_total": 2924361.0,
+    "precio_total": 2924361.0,
+    "total_frentes": 5,
+    "total_partidas": 16,
+    "total_tarjetas": 37
+  },
+  "frentes": [
+    {
+      "id": 301208,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "URBANIZACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 2434674.61,
+      "importe": 2434674.61,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 301209,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "URBANIZACION CANJUNTO MANILA",
+          "cantidad": 1.0,
+          "precio": 2225799.2,
+          "importe": 2225799.2,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 301210,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0111001",
+              "nombre": "TRABAJOS DE URBANIZACION CONJUNTO MANILA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2225799.2,
+              "importe": 2225799.2,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 318779,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "SUMINISTRO DE MATERIALES PARA TRABAJOS DE URBANIZACION.",
+          "cantidad": 1.0,
+          "precio": 47387.24,
+          "importe": 47387.24,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 318780,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112001",
+              "nombre": "SUMINISTRO DE  CAL HIDRA PARA ESTABILIZACION.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 47387.24,
+              "importe": 47387.24,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 321716,
+              "codigo": "1.1.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112002",
+              "nombre": "SUMINISTRO DE CAL HIDRA (INSUMO TIPO 7)",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 47387.24,
+              "importe": 47387.24,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 323271,
+              "codigo": "1.1.2.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112003",
+              "nombre": "AJUSTE DE CAL HIDRA  (INSUMO TIPO 7)",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 45097.97,
+              "importe": 45097.97,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325362,
+              "codigo": "1.1.2.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2 MR 38 REV. 12-14 CON ACELERANTE A 3 DIAS PARA PRIVADA #2",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 84472.6,
+              "importe": 84472.6,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 1
+            },
+            {
+              "id": 325363,
+              "codigo": "1.1.2.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112005",
+              "nombre": "CONCRETO F'C= 250 KG/CM2 MR 38 REV. 12-14 NORMAL PARA PRIVADA #2",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 77015.57,
+              "importe": 77015.57,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 325440,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "MATERIALES PARA URBANIZACION",
+          "cantidad": 1.0,
+          "precio": 161488.17,
+          "importe": 161488.17,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325441,
+              "codigo": "1.1.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2 MR 38 REV. 12-14 CON ACELERANTE A 3 DIAS PARA PRIVADA #2",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 84472.6,
+              "importe": 84472.6,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325442,
+              "codigo": "1.1.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112005",
+              "nombre": "CONCRETO F'C= 250 KG/CM2 MR 38 REV. 12-14 NORMAL PARA PRIVADA #2",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 77015.57,
+              "importe": 77015.57,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 310517,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 165223.64,
+      "importe": 165223.64,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 310518,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA JULIO 2026",
+          "cantidad": 1.0,
+          "precio": 28560.0,
+          "importe": 28560.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 310519,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-JUL-26",
+              "nombre": "FIJOS DE MANO DE OBRA - 1 MAESTRO DE OBRA + 1 AY TOPOGRAFO",
+              "cantidad": 3.0,
+              "unidad": "",
+              "precio_unitario": 9520.0,
+              "importe": 28560.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 310520,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA AGOSTO 2026",
+          "cantidad": 1.0,
+          "precio": 38080.0,
+          "importe": 38080.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 310524,
+              "codigo": "1.2.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-MO",
+              "nombre": "FIJOS DE MANO DE OBRA - 1 MAESTRO DE OBRA + 1 AY TOPOGRAFO",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 9520.0,
+              "importe": 38080.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 310521,
+          "codigo": "1.2.3",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA SEPTIEMBRE 2026",
+          "cantidad": 1.0,
+          "precio": 47600.0,
+          "importe": 47600.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 310525,
+              "codigo": "1.2.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-MO",
+              "nombre": "FIJOS DE MANO DE OBRA - 1 MAESTRO DE OBRA + 1 AY TOPOGRAFO",
+              "cantidad": 5.0,
+              "unidad": "",
+              "precio_unitario": 9520.0,
+              "importe": 47600.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 310522,
+          "codigo": "1.2.4",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA OCTUBRE 2026",
+          "cantidad": 1.0,
+          "precio": 38080.0,
+          "importe": 38080.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 310526,
+              "codigo": "1.2.4.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS-MO",
+              "nombre": "FIJOS DE MANO DE OBRA - 1 MAESTRO DE OBRA + 1 AY TOPOGRAFO",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 9520.0,
+              "importe": 38080.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 310523,
+          "codigo": "1.2.5",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA NOVIEMBRE 2026",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 318732,
+          "codigo": "1.2.6",
+          "tipo": "PARTIDA",
+          "nombre": "GASTOS DE ELECTRIFICACION",
+          "cantidad": 1.0,
+          "precio": 12903.64,
+          "importe": 12903.64,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 318733,
+              "codigo": "1.2.6.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "36001",
+              "nombre": "MAT Y MO ACOMETIDA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 12903.64,
+              "importe": 12903.64,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 318783,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "HERRAMIENTA Y EQUIPO",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 129544.95,
+      "importe": 129544.95,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 318784,
+          "codigo": "1.3.1",
+          "tipo": "PARTIDA",
+          "nombre": "HERRAMIENTA Y EQUIPO",
+          "cantidad": 1.0,
+          "precio": 124846.95,
+          "importe": 124846.95,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 318790,
+              "codigo": "1.3.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "7000002",
+              "nombre": "24 JUL 2026/ HERRAMIENTA Y EQUIPO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 12028.35,
+              "importe": 12028.35,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 318791,
+              "codigo": "1.3.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "7000001",
+              "nombre": "HERRAMIENTA Y EQUIPO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 24.7,
+              "importe": 24.7,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 318794,
+              "codigo": "1.3.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "7000003",
+              "nombre": "24 JUL 2026/ MATERIAL TOMA AGUA P/CISTERNA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2447.54,
+              "importe": 2447.54,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 319643,
+              "codigo": "1.3.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "GASOLINA",
+              "nombre": "COMPRA DE GASOLINA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1426.8,
+              "importe": 1426.8,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 322011,
+              "codigo": "1.3.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "GASOLINA 2",
+              "nombre": "COMPRA DE GASOLINA PARA EQUIPO MENOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 8560.8,
+              "importe": 8560.8,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 322560,
+              "codigo": "1.3.1.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "HERRAMIENTA",
+              "nombre": "HERRAMIENTA GENERAL DE OBRA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 33526.66,
+              "importe": 33526.66,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 322807,
+              "codigo": "1.3.1.7",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "GASOLINA 3",
+              "nombre": "COMPRA DE GASOLINA PARA EQUIPO MENOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 9512.0,
+              "importe": 9512.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 324692,
+              "codigo": "1.3.1.8",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "EPP SOLICITADO POR RH",
+              "nombre": "EPP SOLICITADO POR RECURSOS HUMANOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 54752.35,
+              "importe": 54752.35,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325420,
+              "codigo": "1.3.1.9",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1000047",
+              "nombre": "ARTESAS PARA CONCRETO SOLICITADO PARA TRABAJOS EN OBRA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 57320.1,
+              "importe": 57320.1,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325472,
+              "codigo": "1.3.1.10",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "GASOLINA 4",
+              "nombre": "GASOLINA PARA EQUIPO MENOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 10203.59,
+              "importe": 10203.59,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325973,
+              "codigo": "1.3.1.11",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "EPP SOLICITADO POR RH 2",
+              "nombre": "EPP SOLICITADO POR RECURSOS HUMANOS SEGUNDA PETICION",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 19826.87,
+              "importe": 19826.87,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 324753,
+          "codigo": "1.3.2",
+          "tipo": "PARTIDA",
+          "nombre": "ELECTROLITOS",
+          "cantidad": 1.0,
+          "precio": 4698.0,
+          "importe": 4698.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324754,
+              "codigo": "1.3.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1320001",
+              "nombre": "ELECTROLITOS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4698.0,
+              "importe": 4698.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 322107,
+      "codigo": "1.4",
+      "tipo": "FRENTE",
+      "nombre": "TRABAJOS GENERALES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 89235.68,
+      "importe": 89235.68,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 322108,
+          "codigo": "1.4.1",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS ALMACEN",
+          "cantidad": 1.0,
+          "precio": 62640.0,
+          "importe": 62640.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 322116,
+              "codigo": "1.4.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ACARREOS-LIMPIEZA",
+              "nombre": "ACARREOS DE MATERIAL",
+              "cantidad": 30.0,
+              "unidad": "",
+              "precio_unitario": 2088.0,
+              "importe": 62640.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 322117,
+          "codigo": "1.4.2",
+          "tipo": "PARTIDA",
+          "nombre": "TABLEROS ELECTRICOS",
+          "cantidad": 1.0,
+          "precio": 17360.58,
+          "importe": 17360.58,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 322118,
+              "codigo": "1.4.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "TAB-ELEC",
+              "nombre": "TRABAJOS ELECTRICOS PARA TABLEROS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 17360.58,
+              "importe": 17360.58,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 322120,
+          "codigo": "1.4.3",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS GENERALES",
+          "cantidad": 1.0,
+          "precio": 9235.1,
+          "importe": 9235.1,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 323225,
+              "codigo": "1.4.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ACOMETIDA",
+              "nombre": "ACOMETIDA GENERAL",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 8514.4,
+              "importe": 8514.4,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 323226,
+              "codigo": "1.4.3.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "CONEXION CISTERNA",
+              "nombre": "COLOCACION DE TOMA Y FLOTADOR EN CISTERNA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 696.0,
+              "importe": 696.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 323227,
+              "codigo": "1.4.3.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "7000001",
+              "nombre": "HERRAMIENTA Y EQUIPO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 24.7,
+              "importe": 24.7,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 325596,
+              "codigo": "1.4.3.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1000052",
+              "nombre": "MATERIAL SOLICITADO PARA AREA DE VENTAS 14.09.2026",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 28535.53,
+              "importe": 28535.53,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 326369,
+              "codigo": "1.4.3.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FOSA SEP",
+              "nombre": "RENTA DE FOSA SEPTICA",
+              "cantidad": 6.0,
+              "unidad": "",
+              "precio_unitario": 4292.0,
+              "importe": 25752.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 323877,
+      "codigo": "1.5",
+      "tipo": "FRENTE",
+      "nombre": "ELECTRIFICACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 105682.12,
+      "importe": 105682.12,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 323878,
+          "codigo": "1.5.1",
+          "tipo": "PARTIDA",
+          "nombre": "ELECTRIFICACION",
+          "cantidad": 1.0,
+          "precio": 99741.06,
+          "importe": 99741.06,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 324707,
+              "codigo": "1.5.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "01511001",
+              "nombre": "SUMINISTRO E INSTALACION DE TRANSFORMADOR 13.2 KV",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 93800.0,
+              "importe": 93800.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 324708,
+              "codigo": "1.5.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "DIESEL",
+              "nombre": "DIESEL PARA GENERADOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 5941.06,
+              "importe": 5941.06,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        },
+        {
+          "id": 323879,
+          "codigo": "1.5.2",
+          "tipo": "PARTIDA",
+          "nombre": "COMBUSTIBLE PARA GENERADOR",
+          "cantidad": 1.0,
+          "precio": 5941.06,
+          "importe": 5941.06,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 323880,
+              "codigo": "1.5.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "DIESEL",
+              "nombre": "DIESEL PARA GENERADOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 5941.06,
+              "importe": 5941.06,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325471,
+              "codigo": "1.5.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "GENERADOR",
+              "nombre": "RENTA DE GENERADOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 11474.01,
+              "importe": 11474.01,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 325473,
+              "codigo": "1.5.2.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "DIESEL 2",
+              "nombre": "DIESEL PARA GENERADOR",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 16328.74,
+              "importe": 16328.74,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -175,11 +175,11 @@ class InsumosService:
             if not db:
                 return None
 
-            doc = db.collection("OBRAS").document(obra_clean).get()
+            doc = db.collection("OBRAS").document(obra_clean).get(timeout=3)
             if doc.exists:
                 doc_data = doc.to_dict() or {}
                 sub_frentes = []
-                for f_doc in db.collection("OBRAS").document(obra_clean).collection("frentes").stream():
+                for f_doc in db.collection("OBRAS").document(obra_clean).collection("frentes").stream(timeout=3):
                     sub_frentes.append(f_doc.to_dict())
 
                 return {

@@ -1,0 +1,185 @@
+{
+  "obra": {
+    "id_obra": 650,
+    "clave": "IC0",
+    "nombre": "IC0 - VISTA VELA IV",
+    "presupuesto_clave": "PP-KONTROL-IC0",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 618,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 13,
+    "id_nodo_raiz": 291348,
+    "importe_total": 62686288.09,
+    "precio_total": 62686288.09,
+    "total_frentes": 2,
+    "total_partidas": 4,
+    "total_tarjetas": 6
+  },
+  "frentes": [
+    {
+      "id": 291349,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "URBANIZACION",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 62666477.69,
+      "importe": 62666477.69,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 291350,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "DISTRIBUCION ELECTRICA EN MEDIA TENSION",
+          "cantidad": 1.0,
+          "precio": 9666477.69,
+          "importe": 9666477.69,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 291351,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0111001",
+              "nombre": "DISTRIBUCION ELECTRICA EN MEDIA TENSION 13.2 KV. S",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 9666477.69,
+              "importe": 9666477.69,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 322083,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "URBANIZACION TEZAL, LOS CABOS, SAN LUCAS.",
+          "cantidad": 1.0,
+          "precio": 53000000.0,
+          "importe": 53000000.0,
+          "autorizado": false,
+          "estatus_ap": "REC",
+          "tarjetas": [
+            {
+              "id": 322084,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0112001",
+              "nombre": "TEZAL , LOS CABOS, SAN LUCAS.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 53000000.0,
+              "importe": 53000000.0,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 327659,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "TRABAJOS GENERALES VISTA VELA 4",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 19810.4,
+      "importe": 19810.4,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327660,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS GENERALES VISTA VELA 4",
+          "cantidad": 1.0,
+          "precio": 7080.5,
+          "importe": 7080.5,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327661,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.2.1.01",
+              "nombre": "REPARACION DE CISTERNA EDIFICIO # 1",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 2082.5,
+              "importe": 2082.5,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327669,
+              "codigo": "1.2.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.2.1.2",
+              "nombre": "INSTALACION DE BOMBA DE ACHIQUE EDIFICIO #1",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 4998.0,
+              "importe": 4998.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327692,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "TRABAJOS GENERALES VISTA VELA 4",
+          "cantidad": 1.0,
+          "precio": 12729.9,
+          "importe": 12729.9,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327693,
+              "codigo": "1.2.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.2.1.3",
+              "nombre": "CONEXION ELECTRICA DE BOMBA EN CTO DE MAQ EDIF #1",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1642.2,
+              "importe": 1642.2,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327710,
+              "codigo": "1.2.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.2.2.2",
+              "nombre": "INSTAL. DE LUCES DE OBSTRUCCION EN EDIFICIOS",
+              "cantidad": 5.0,
+              "unidad": "",
+              "precio_unitario": 2217.54,
+              "importe": 11087.7,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

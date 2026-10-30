@@ -1,0 +1,133 @@
+{
+  "obra": {
+    "id_obra": 536,
+    "clave": "658",
+    "nombre": "TORRE MARBELLA",
+    "presupuesto_clave": "PP-KONTROL-658",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 501,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 9,
+    "id_nodo_raiz": 232798,
+    "importe_total": 178872.74,
+    "precio_total": 178872.74,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 6
+  },
+  "frentes": [
+    {
+      "id": 240534,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "TORRE MARBELLA - DURMIENTES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 178872.74,
+      "importe": 178872.74,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 240541,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "DURMIENTES",
+          "cantidad": 1.0,
+          "precio": 178872.74,
+          "importe": 178872.74,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 240542,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8000002",
+              "nombre": "DESCARGA DE 150 DURMIENTES Y TRATAMIENTO A 150 DURMIENTES CON ACEITE QUEMADO Y EMULSION. INCLUYE EL ACEITE",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 12500.0,
+              "importe": 12500.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 240543,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8000000",
+              "nombre": "SUMINISTRO Y COLOCACION DE DURMIENTES PARA AREA DE CISTERNAS: INCLUYE: NIVELACION DE TERRENO, MATERIALES, MANO DE OBRA Y TODO LO NECESARIO PARA SU COR",
+              "cantidad": 150.0,
+              "unidad": "",
+              "precio_unitario": 1007.45,
+              "importe": 151117.5,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 240544,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "315001",
+              "nombre": "SUMINISTRO Y COLOCACION DE PASTO NATURAL. INCLUYE: MATERIALES, MANO DE OBRA, HERRAMIENTA Y TODO LO NECESARIO PARA SU CORRECTA COLOCACION.",
+              "cantidad": 117.0,
+              "unidad": "",
+              "precio_unitario": 123.72,
+              "importe": 14475.24,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 240545,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8000003",
+              "nombre": "SUMINISTRO Y COLOCACION DE PASTO SINTETICO. INCLUYE: MATERIALES, MANO DE OBRA Y TODO LO NECESARIO PARA SU CORRECTA EJECUCION.",
+              "cantidad": 20.0,
+              "unidad": "",
+              "precio_unitario": 39.0,
+              "importe": 780.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 290618,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "315002",
+              "nombre": "SUMINISTRO Y COLOCACION DE PASTO NATURAL. INCLUYE: MATERIALES, MANO DE OBRA, HERRAMIENTA Y TODO LO NECESARIO PARA SU CORRECTA COLOCACION.",
+              "cantidad": 120.0,
+              "unidad": "",
+              "precio_unitario": 183.7,
+              "importe": 22044.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 305190,
+              "codigo": "1.1.1.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "MOVIMIENTO TIERRA NEGRA",
+              "nombre": "MOVIMIENTO DE TIERRA NEGR CON RRETOEXCAVADORA",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 725.0,
+              "importe": 2900.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

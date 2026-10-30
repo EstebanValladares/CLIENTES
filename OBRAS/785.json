@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 785,
+    "clave": "BK",
+    "nombre": "IBG - EDIFICIO 5, 24 PACK",
+    "presupuesto_clave": "PP-KONTROL-IBG",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 751,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 328209,
+    "importe_total": 1190.0,
+    "precio_total": 1190.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 328210,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "ADICIONALES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 1190.0,
+      "importe": 1190.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 328211,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "ADICIONALES",
+          "cantidad": 1.0,
+          "precio": 1190.0,
+          "importe": 1190.0,
+          "autorizado": true,
+          "estatus_ap": "PA",
+          "tarjetas": [
+            {
+              "id": 328212,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.1.1",
+              "nombre": "ENERGIZACION ELECTRICA A 2 DEPTOS  EDIF - 05",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 595.0,
+              "importe": 1190.0,
+              "autorizado": true,
+              "estatus_ap": "PA",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

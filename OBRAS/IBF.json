@@ -1,0 +1,90 @@
+{
+  "obra": {
+    "id_obra": 683,
+    "clave": "IBF",
+    "nombre": "IBF - EDIFICIO 4 VISTA VELA 3 URBAN",
+    "presupuesto_clave": "PP-KONTROL-IBF",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 649,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 6,
+    "id_nodo_raiz": 305134,
+    "importe_total": 36007.0,
+    "precio_total": 36007.0,
+    "total_frentes": 1,
+    "total_partidas": 2,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 305135,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "Electrificacion edificio 4 - 20 Pack",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 36007.0,
+      "importe": 36007.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 305136,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "Desconexión y extracción de alimentador",
+          "cantidad": 1.0,
+          "precio": 14587.0,
+          "importe": 14587.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 305137,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0111001",
+              "nombre": "Desconexión y extracción del alimentador.",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 14587.0,
+              "importe": 14587.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 328206,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "1.2.1 ENERGIZACION ELECTRICA A 6 DEPARTAMENTOS",
+          "cantidad": 1.0,
+          "precio": 21420.0,
+          "importe": 21420.0,
+          "autorizado": true,
+          "estatus_ap": "PA",
+          "tarjetas": [
+            {
+              "id": 328207,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1.1.2.1",
+              "nombre": "ENERGIZACION ELECTRICA A 6 DEPTOS  EDIF - 04",
+              "cantidad": 6.0,
+              "unidad": "",
+              "precio_unitario": 3570.0,
+              "importe": 21420.0,
+              "autorizado": true,
+              "estatus_ap": "PA",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 757,
+    "clave": "290",
+    "nombre": "JUAREZ -COSTO VTAS CASAS",
+    "presupuesto_clave": "PP-KONTROL-290",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 723,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 326730,
+    "importe_total": 272071.84,
+    "precio_total": 272071.84,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 326731,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS OCTUBRE",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 272071.84,
+      "importe": 272071.84,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326732,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS JUAREZ",
+          "cantidad": 1.0,
+          "precio": 272071.84,
+          "importe": 272071.84,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326734,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "octubre",
+              "nombre": "FIJOS OCTUBRE JUAREZ",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 272071.84,
+              "importe": 272071.84,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

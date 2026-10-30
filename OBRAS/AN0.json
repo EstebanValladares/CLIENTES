@@ -1,0 +1,77 @@
+{
+  "obra": {
+    "id_obra": 748,
+    "clave": "AN0",
+    "nombre": "AN0 - CASETA DE VIGILANCIA VALLE ESMERALDA",
+    "presupuesto_clave": "PP-KONTROL-AN0",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 714,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 5,
+    "id_nodo_raiz": 325793,
+    "importe_total": 40600.0,
+    "precio_total": 40600.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 325794,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "GASTOS GENERALES",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 40600.0,
+      "importe": 40600.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 325795,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "CASETA DE VIGILANCIA",
+          "cantidad": 1.0,
+          "precio": 40600.0,
+          "importe": 40600.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 325796,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "1000054",
+              "nombre": "CASETA DE VIGILANCIA SOLICITADA POR MARCO ACEVEDO/ESTEBAN GUZMAN PARA V.ESMERALDA,AUTORIZADA POR ING.NOSTI 09.09.2026 CON COSTO DE $40,600 NETO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40600.0,
+              "importe": 40600.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327825,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "ACOMETIDA",
+              "nombre": "ACOMETIDA GENERAL",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 23050.36,
+              "importe": 23050.36,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

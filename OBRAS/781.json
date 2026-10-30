@@ -1,0 +1,19 @@
+{
+  "obra": {
+    "id_obra": 781,
+    "clave": null,
+    "nombre": "",
+    "presupuesto_clave": null,
+    "tipo_wbs": null,
+    "nombre_wbs": null,
+    "id_tabulador": null,
+    "moneda": null,
+    "valuada": null,
+    "explosionada": null,
+    "total_nodos": 0,
+    "total_frentes": 0,
+    "total_partidas": 0,
+    "total_tarjetas": 0
+  },
+  "frentes": []
+}

@@ -1,0 +1,139 @@
+{
+  "obra": {
+    "id_obra": 754,
+    "clave": "292",
+    "nombre": "292 - PLAYA REPARAC PROMOCIONES",
+    "presupuesto_clave": "PP-KONTROL-292",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 720,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 10,
+    "id_nodo_raiz": 326916,
+    "importe_total": 395181.08,
+    "precio_total": 395181.08,
+    "total_frentes": 2,
+    "total_partidas": 5,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 326917,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS POSTVENTA PDC SCOBE 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 172083.84,
+      "importe": 172083.84,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326918,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 172083.84,
+          "importe": 172083.84,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326919,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "FIJOS PARA DETALLES POSVENTA",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 43020.96,
+              "importe": 172083.84,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326920,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 326921,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 327054,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS POSTVENTA PDC TANTOSKYA 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 223097.24,
+      "importe": 223097.24,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327055,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 223097.24,
+          "importe": 223097.24,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327056,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "FIJOS POSTVENTA PDC TANTOSKYA 2026",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 55774.31,
+              "importe": 223097.24,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327057,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

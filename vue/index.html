@@ -1693,7 +1693,7 @@
                   <div class="relative w-full sm:w-40 shrink-0">
                     <input type="text" 
                            v-model="filtroInsumoClave" 
-                           @keyup.enter="cargarReporteInsumos(false)"
+                           @keyup.enter="buscarReporteObra(false)"
                            placeholder="Clave (ej. 1080003)" 
                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-cyan-300 placeholder-slate-500 font-mono focus:outline-none focus:border-cyan-500 transition">
                   </div>
@@ -1702,23 +1702,34 @@
                   <div class="relative flex-1">
                     <input type="text" 
                            v-model="filtroInsumoNombre" 
-                           @keyup.enter="cargarReporteInsumos(false)"
+                           @keyup.enter="buscarReporteObra(false)"
                            placeholder="Nombre insumo (ej. cemento, varilla, herramienta)..." 
                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
                   </div>
 
+                  <!-- Folio de orden de compra -->
+                  <div class="relative w-full sm:w-44 shrink-0">
+                    <input type="text"
+                           v-model="filtroFolioOC"
+                           @input="alCambiarFolioOC"
+                           @keyup.enter="buscarReporteObra(false)"
+                           placeholder="Folio OC (ej. GA4-00000794)"
+                           aria-label="Buscar por folio de orden de compra"
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-emerald-300 placeholder-slate-500 font-mono focus:outline-none focus:border-emerald-500 transition">
+                  </div>
+
                   <!-- Botones de Acción Insumos -->
-                  <button @click="cargarReporteInsumos(false)" 
+                  <button @click="buscarReporteObra(false)" 
                           :disabled="cargandoReporteInsumos"
                           class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow shrink-0 cursor-pointer disabled:opacity-50">
                     <i class="fa-solid" :class="cargandoReporteInsumos ? 'fa-circle-notch fa-spin' : 'fa-magnifying-glass'"></i>
                     <span>Buscar</span>
                   </button>
 
-                  <button @click="cargarReporteInsumos(true)" 
+                  <button @click="buscarReporteObra(true)" 
                           :disabled="cargandoReporteInsumos"
                           class="p-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-indigo-400 hover:text-white transition shrink-0 cursor-pointer disabled:opacity-50"
-                          title="Forzar actualización fresca desde el servidor">
+                          :title="modoBusquedaFolioOC ? 'Volver a consultar la copia local de órdenes de compra' : 'Forzar actualización fresca desde el servidor'">
                     <i class="fa-solid fa-rotate text-xs" :class="cargandoReporteInsumos ? 'fa-spin' : ''"></i>
                   </button>
 
@@ -1766,7 +1777,54 @@
             <!-- Cargando Reporte Spinner -->
             <div v-if="cargandoReporteInsumos" class="flex-1 flex flex-col items-center justify-center py-20 text-indigo-400 gap-3">
               <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-              <span class="text-xs font-medium text-slate-400">Consultando reporte en vivo desde la API de Suministros...</span>
+              <span class="text-xs font-medium text-slate-400">
+                {{ modoBusquedaFolioOC ? 'Buscando folio en la copia local de órdenes de compra...' : 'Consultando reporte en vivo desde la API de Suministros...' }}
+              </span>
+            </div>
+
+            <!-- Resultados de búsqueda por folio de OC -->
+            <div v-else-if="modoBusquedaFolioOC" class="flex-1 overflow-y-auto custom-scrollbar pr-2">
+              <div v-if="errorBusquedaFolioOC" class="rounded-xl border border-rose-500/30 bg-rose-950/30 p-4 text-sm text-rose-300">
+                <i class="fa-solid fa-triangle-exclamation mr-2"></i>{{ errorBusquedaFolioOC }}
+              </div>
+              <div v-else-if="!busquedaFolioEjecutada" class="py-12 text-center text-slate-400">
+                <i class="fa-solid fa-magnifying-glass text-3xl text-slate-600 mb-2"></i>
+                <p class="text-xs">Presiona Buscar para consultar {{ filtroFolioOC }} en {{ obraSeleccionada.clave }}.</p>
+              </div>
+              <div v-else-if="ordenesCompraPorFolio.length === 0" class="py-12 text-center text-slate-400">
+                <i class="fa-solid fa-file-circle-xmark text-3xl text-slate-600 mb-2"></i>
+                <p class="text-xs">No se encontraron órdenes para {{ filtroFolioOC }} en {{ obraSeleccionada.clave }}.</p>
+              </div>
+              <div v-else class="overflow-x-auto rounded-xl border border-slate-700">
+                <div class="px-3 py-2 bg-amber-950/30 border-b border-amber-500/20 text-[11px] text-amber-200">
+                  <i class="fa-solid fa-database mr-1"></i>
+                  Consulta de la copia local de Control de Pagos; puede no reflejar cambios recientes de Aryve.
+                </div>
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-900 text-[10px] uppercase text-slate-400">
+                    <tr>
+                      <th class="px-3 py-2">Folio OC</th>
+                      <th class="px-3 py-2">Empresa</th>
+                      <th class="px-3 py-2">Fecha</th>
+                      <th class="px-3 py-2">Proveedor</th>
+                      <th class="px-3 py-2 text-right">Total</th>
+                      <th class="px-3 py-2">Estatus</th>
+                      <th class="px-3 py-2">Origen</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-800">
+                    <tr v-for="oc in ordenesCompraPorFolio" :key="`${oc.empresa}-${oc.centro_costos}-${oc.numero_oc}`" class="text-slate-200">
+                      <td class="px-3 py-2 font-mono font-bold text-emerald-300">{{ oc.folio }}</td>
+                      <td class="px-3 py-2">{{ oc.empresa }}</td>
+                      <td class="px-3 py-2">{{ oc.fecha || '-' }}</td>
+                      <td class="px-3 py-2">{{ oc.proveedor || '-' }}</td>
+                      <td class="px-3 py-2 text-right font-mono">{{ Number(oc.total || 0).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) }}</td>
+                      <td class="px-3 py-2">{{ oc.estatus || 'Sin dato' }}</td>
+                      <td class="px-3 py-2 text-slate-400">{{ oc.tipo_origen || 'No guardado en la copia local' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <!-- CONTENEDOR DEL ÁRBOL JERÁRQUICO CON TABLA DE INSUMOS -->

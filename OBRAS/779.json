@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 779,
+    "clave": "BK",
+    "nombre": "COJ - EDIFICIO 108-G 16 PACK 2 REC MOLDE TRADICIONAL",
+    "presupuesto_clave": "PP-KONTROL-COJ",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 745,
+    "moneda": "MXN",
+    "valuada": false,
+    "explosionada": false,
+    "total_nodos": 4,
+    "id_nodo_raiz": 328137,
+    "importe_total": 35820.0,
+    "precio_total": 35820.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 328138,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 35820.0,
+      "importe": 35820.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 328139,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 35820.0,
+          "importe": 35820.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": [
+            {
+              "id": 328140,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0110008",
+              "nombre": "ADITIVA DE JARDINERIA EN COJ (108-G) )",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35820.0,
+              "importe": 35820.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

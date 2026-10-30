@@ -84,6 +84,11 @@ createApp({
     // Motor Insumos & Órdenes de Compra (Clon REA)
     const filtroInsumoClave = ref('');
     const filtroInsumoNombre = ref('');
+    const filtroFolioOC = ref('');
+    const modoBusquedaFolioOC = ref(false);
+    const busquedaFolioEjecutada = ref(false);
+    const ordenesCompraPorFolio = ref([]);
+    const errorBusquedaFolioOC = ref('');
     const reporteInsumos = ref(null);
     const cargandoReporteInsumos = ref(false);
     const suministrandoObra = ref(false);
@@ -1289,6 +1294,10 @@ createApp({
     const cargarReporteInsumos = async (forzar = false) => {
       if (!obraSeleccionada.value) return;
       const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      modoBusquedaFolioOC.value = false;
+      busquedaFolioEjecutada.value = false;
+      ordenesCompraPorFolio.value = [];
+      errorBusquedaFolioOC.value = '';
       cargandoReporteInsumos.value = true;
       try {
         const params = new URLSearchParams({
@@ -1318,16 +1327,56 @@ createApp({
       }
     };
 
+    const buscarReporteObra = async (forzar = false) => {
+      const folio = filtroFolioOC.value.trim();
+      if (!folio) {
+        await cargarReporteInsumos(forzar);
+        return;
+      }
+      if (!obraSeleccionada.value) return;
+
+      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
+      modoBusquedaFolioOC.value = true;
+      busquedaFolioEjecutada.value = true;
+      ordenesCompraPorFolio.value = [];
+      errorBusquedaFolioOC.value = '';
+      reporteInsumos.value = null;
+      cargandoReporteInsumos.value = true;
+      try {
+        const params = new URLSearchParams({ obra: clave, folio });
+        const res = await fetch(`/api/obras/ordenes-compra?${params.toString()}`);
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || `HTTP ${res.status}`);
+        }
+        ordenesCompraPorFolio.value = data.ordenes_compra || [];
+      } catch (e) {
+        console.error('Error buscando orden de compra por folio:', e);
+        errorBusquedaFolioOC.value = e.message || 'No se pudo consultar el folio.';
+      } finally {
+        cargandoReporteInsumos.value = false;
+      }
+    };
+
+    const alCambiarFolioOC = () => {
+      modoBusquedaFolioOC.value = !!filtroFolioOC.value.trim();
+      busquedaFolioEjecutada.value = false;
+      ordenesCompraPorFolio.value = [];
+      errorBusquedaFolioOC.value = '';
+    };
+
     const limpiarFiltrosInsumos = () => {
       filtroInsumoClave.value = '';
       filtroInsumoNombre.value = '';
-      cargarReporteInsumos(false);
+      filtroFolioOC.value = '';
+      buscarReporteObra(false);
     };
 
     const filtrarPorTagInsumo = (tag) => {
       filtroInsumoClave.value = '';
       filtroInsumoNombre.value = tag;
-      cargarReporteInsumos(false);
+      filtroFolioOC.value = '';
+      buscarReporteObra(false);
     };
 
     const verMovimientos = async (partida, insumo, tipoInicial = 'OC') => {
@@ -1423,7 +1472,7 @@ createApp({
       if (cacheArbolesObras.has(clave)) {
         arbolObraActual.value = cacheArbolesObras.get(clave);
         expandirFrenteInicial();
-        cargarReporteInsumos(false);
+        buscarReporteObra(false);
         return;
       }
 
@@ -1433,7 +1482,7 @@ createApp({
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         cacheArbolesObras.set(clave, data);
-        cargarReporteInsumos(false);
+        buscarReporteObra(false);
         arbolObraActual.value = data;
         expandirFrenteInicial();
       } catch (e) {
@@ -1587,6 +1636,11 @@ createApp({
       // Insumos & Órdenes de Compra (Clon REA)
       filtroInsumoClave,
       filtroInsumoNombre,
+      filtroFolioOC,
+      modoBusquedaFolioOC,
+      busquedaFolioEjecutada,
+      ordenesCompraPorFolio,
+      errorBusquedaFolioOC,
       reporteInsumos,
       cargandoReporteInsumos,
       suministrandoObra,
@@ -1597,6 +1651,8 @@ createApp({
       movimientosActuales,
       insumoMovimientoSeleccionado,
       cargarReporteInsumos,
+      buscarReporteObra,
+      alCambiarFolioOC,
       limpiarFiltrosInsumos,
       filtrarPorTagInsumo,
       verMovimientos,

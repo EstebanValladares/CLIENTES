@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 776,
+    "clave": "BK",
+    "nombre": "CO0 - FLORENCIA REYNOSA",
+    "presupuesto_clave": "PP-KONTROL-CO0",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 742,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 327816,
+    "importe_total": 14580.0,
+    "precio_total": 14580.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 327817,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 14580.0,
+      "importe": 14580.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327818,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS",
+          "cantidad": 1.0,
+          "precio": 14580.0,
+          "importe": 14580.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327819,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS",
+              "nombre": "FIJOS",
+              "cantidad": 2.0,
+              "unidad": "",
+              "precio_unitario": 7290.0,
+              "importe": 14580.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

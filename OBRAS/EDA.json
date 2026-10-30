@@ -1,0 +1,454 @@
+{
+  "obra": {
+    "id_obra": 762,
+    "clave": "EDA",
+    "nombre": "EDA - 7 viviendas en Coto 12 Selvanova",
+    "presupuesto_clave": "PP-KONTROL-EDA",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 728,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 33,
+    "id_nodo_raiz": 327090,
+    "importe_total": 503562.46,
+    "precio_total": 503562.46,
+    "total_frentes": 8,
+    "total_partidas": 7,
+    "total_tarjetas": 17
+  },
+  "frentes": [
+    {
+      "id": 327091,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 91 - TIPO A1 - JUVENAL",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 40000.0,
+      "importe": 40000.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327092,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 40000.0,
+          "importe": 40000.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": [
+            {
+              "id": 327093,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100000",
+              "nombre": "MADERA Y CLAVO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40000.0,
+              "importe": 40000.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 327094,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 92 - TIPO B1 - JUVENAL",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 0.0,
+      "importe": 0.0,
+      "autorizado": false,
+      "partidas": []
+    },
+    {
+      "id": 327095,
+      "codigo": "1.3",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 93 - TIPO A1 - JUVENAL",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 0.0,
+      "importe": 0.0,
+      "autorizado": false,
+      "partidas": []
+    },
+    {
+      "id": 327096,
+      "codigo": "1.4",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 94 - TIPO B1 - PAT",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 75700.0,
+      "importe": 75700.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327163,
+          "codigo": "1.4.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 75700.0,
+          "importe": 75700.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 327164,
+              "codigo": "1.4.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100000",
+              "nombre": "MADERA Y CLAVO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40000.0,
+              "importe": 40000.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327165,
+              "codigo": "1.4.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100001",
+              "nombre": "MAQUINARIA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327166,
+              "codigo": "1.4.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100010",
+              "nombre": "UTILIDAD PAT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35700.0,
+              "importe": 35700.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 327097,
+      "codigo": "1.5",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 95 - TIPO A1 - PAT",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 75700.0,
+      "importe": 75700.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327167,
+          "codigo": "1.5.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 75700.0,
+          "importe": 75700.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 327168,
+              "codigo": "1.5.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100000",
+              "nombre": "MADERA Y CLAVO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40000.0,
+              "importe": 40000.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327169,
+              "codigo": "1.5.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100001",
+              "nombre": "MAQUINARIA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327170,
+              "codigo": "1.5.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100010",
+              "nombre": "UTILIDAD PAT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35700.0,
+              "importe": 35700.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 327098,
+      "codigo": "1.6",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 96 - TIPO B1 - PAT",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 75700.0,
+      "importe": 75700.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327171,
+          "codigo": "1.6.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 75700.0,
+          "importe": 75700.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 327172,
+              "codigo": "1.6.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100000",
+              "nombre": "MADERA Y CLAVO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40000.0,
+              "importe": 40000.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327173,
+              "codigo": "1.6.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100001",
+              "nombre": "MAQUINARIA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327174,
+              "codigo": "1.6.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100010",
+              "nombre": "UTILIDAD PAT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35700.0,
+              "importe": 35700.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 327099,
+      "codigo": "1.7",
+      "tipo": "FRENTE",
+      "nombre": "LOTE 97 - TIPO A1 - PAT",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 75700.0,
+      "importe": 75700.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327100,
+          "codigo": "1.7.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA",
+          "cantidad": 1.0,
+          "precio": 75700.0,
+          "importe": 75700.0,
+          "autorizado": false,
+          "estatus_ap": "PRE",
+          "tarjetas": [
+            {
+              "id": 327101,
+              "codigo": "1.7.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100000",
+              "nombre": "MADERA Y CLAVO",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 40000.0,
+              "importe": 40000.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327102,
+              "codigo": "1.7.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100001",
+              "nombre": "MAQUINARIA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            },
+            {
+              "id": 327162,
+              "codigo": "1.7.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "0100010",
+              "nombre": "UTILIDAD PAT",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 35700.0,
+              "importe": 35700.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 328060,
+      "codigo": "1.8",
+      "tipo": "FRENTE",
+      "nombre": "TRABAJOS EN PLATAFORMAS",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 160762.46,
+      "importe": 160762.46,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 328061,
+          "codigo": "1.8.1",
+          "tipo": "PARTIDA",
+          "nombre": "ESCARIFICACION",
+          "cantidad": 1.0,
+          "precio": 153454.46,
+          "importe": 153454.46,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 328062,
+              "codigo": "1.8.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "181000",
+              "nombre": "(27OCT2026) PPTO GDT TRABAJOS DE ESCARIFICACION",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 153454.46,
+              "importe": 153454.46,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328063,
+              "codigo": "1.8.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8888",
+              "nombre": "TARJETA PROV",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        },
+        {
+          "id": 328064,
+          "codigo": "1.8.2",
+          "tipo": "PARTIDA",
+          "nombre": "LABORATORIO",
+          "cantidad": 1.0,
+          "precio": 7308.0,
+          "importe": 7308.0,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 328065,
+              "codigo": "1.8.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "182000",
+              "nombre": "(19OCT2026) LABORATORIO PLATAFORMA AUT ING NOSTI",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 7308.0,
+              "importe": 7308.0,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328066,
+              "codigo": "1.8.2.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8888",
+              "nombre": "TARJETA PROV",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 0.0,
+              "importe": 0.0,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

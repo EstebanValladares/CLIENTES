@@ -1,0 +1,151 @@
+{
+  "obra": {
+    "id_obra": 753,
+    "clave": "291",
+    "nombre": "QRO -COSTO VENTAS CASAS REPARAC",
+    "presupuesto_clave": "PP-KONTROL-291",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 719,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 11,
+    "id_nodo_raiz": 326884,
+    "importe_total": 392349.12,
+    "precio_total": 392349.12,
+    "total_frentes": 2,
+    "total_partidas": 6,
+    "total_tarjetas": 2
+  },
+  "frentes": [
+    {
+      "id": 326885,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS POSTVENTA QRO TANTOS KYA 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 339938.24,
+      "importe": 339938.24,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326886,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 339938.24,
+          "importe": 339938.24,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326887,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "PERSONA DE POSTVENTA",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 84984.56,
+              "importe": 339938.24,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326888,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 326889,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    },
+    {
+      "id": 327059,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS POSTVENTA PDC TANTOSKYA 2026 (936)",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 52410.88,
+      "importe": 52410.88,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327060,
+          "codigo": "1.2.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 52410.88,
+          "importe": 52410.88,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327061,
+              "codigo": "1.2.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "FIJOS POSTVENTA QRO TANTOSKYA 2026",
+              "cantidad": 4.0,
+              "unidad": "",
+              "precio_unitario": 13102.72,
+              "importe": 52410.88,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327062,
+          "codigo": "1.2.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 327063,
+          "codigo": "1.2.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

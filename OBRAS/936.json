@@ -1,0 +1,117 @@
+{
+  "obra": {
+    "id_obra": 750,
+    "clave": "936",
+    "nombre": "FIJOS",
+    "presupuesto_clave": "PP-KONTROL-936",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 716,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 8,
+    "id_nodo_raiz": 326727,
+    "importe_total": 1462939.31,
+    "precio_total": 1462939.31,
+    "total_frentes": 1,
+    "total_partidas": 3,
+    "total_tarjetas": 3
+  },
+  "frentes": [
+    {
+      "id": 326728,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "OCTUBRE",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 1462939.31,
+      "importe": 1462939.31,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326729,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 283633.78,
+          "importe": 283633.78,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 326737,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBRE MATAMORO",
+              "nombre": "FIJOS OCTUBRE MATAMOROS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 283633.78,
+              "importe": 283633.78,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 326757,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS OCTUBRE REYNOSA",
+          "cantidad": 1.0,
+          "precio": 895671.75,
+          "importe": 895671.75,
+          "autorizado": false,
+          "estatus_ap": "REC",
+          "tarjetas": [
+            {
+              "id": 326758,
+              "codigo": "1.1.2.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCTUBRE REYNOSA",
+              "nombre": "FIJOS OCTUBRE REYNOSA",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 895671.75,
+              "importe": 895671.75,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 0
+            }
+          ]
+        },
+        {
+          "id": 326769,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS OCTUBRE MATAMOROS",
+          "cantidad": 1.0,
+          "precio": 283633.78,
+          "importe": 283633.78,
+          "autorizado": false,
+          "estatus_ap": "REC",
+          "tarjetas": [
+            {
+              "id": 326770,
+              "codigo": "1.1.3.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS OCT MAT",
+              "nombre": "FIJOS OCTUBRE MATAMOROS",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 283633.78,
+              "importe": 283633.78,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

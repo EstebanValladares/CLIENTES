@@ -1,0 +1,115 @@
+{
+  "obra": {
+    "id_obra": 768,
+    "clave": "299",
+    "nombre": "299 - FIJOS PLAYA DE CARMEN",
+    "presupuesto_clave": "PP-KONTROL-299",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 734,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 8,
+    "id_nodo_raiz": 327552,
+    "importe_total": 133179.08,
+    "precio_total": 133179.08,
+    "total_frentes": 1,
+    "total_partidas": 3,
+    "total_tarjetas": 3
+  },
+  "frentes": [
+    {
+      "id": 327553,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS PDC 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 133179.08,
+      "importe": 133179.08,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327554,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 133179.08,
+          "importe": 133179.08,
+          "autorizado": true,
+          "estatus_ap": "AUT",
+          "tarjetas": [
+            {
+              "id": 327555,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "FIJOS PLAYA DEL CARMEN",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 45082.5,
+              "importe": 45082.5,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327813,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "FIJOS PLAYA DEL CARMEN SEM 42",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 44048.29,
+              "importe": 44048.29,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328234,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000002",
+              "nombre": "FIJOS PLAYA DEL CARMEN SEM 44",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 44048.29,
+              "importe": 44048.29,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            }
+          ]
+        },
+        {
+          "id": 327557,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 327558,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

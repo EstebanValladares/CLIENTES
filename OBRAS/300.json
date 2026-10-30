@@ -1,0 +1,115 @@
+{
+  "obra": {
+    "id_obra": 769,
+    "clave": "300",
+    "nombre": "300 -  FIJOS QUERETARO",
+    "presupuesto_clave": "PP-KONTROL-300",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 735,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 8,
+    "id_nodo_raiz": 327559,
+    "importe_total": 20864.66972,
+    "precio_total": 20864.66972,
+    "total_frentes": 1,
+    "total_partidas": 3,
+    "total_tarjetas": 3
+  },
+  "frentes": [
+    {
+      "id": 327560,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS QUERETARO 2026",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 20864.66972,
+      "importe": 20864.66972,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 327561,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "OCTUBRE",
+          "cantidad": 1.0,
+          "precio": 20864.66972,
+          "importe": 20864.66972,
+          "autorizado": false,
+          "estatus_ap": "REC",
+          "tarjetas": [
+            {
+              "id": 327562,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000000",
+              "nombre": "FIJOS QUERETARO SEM 42",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 10266.41,
+              "importe": 10266.41,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327811,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "FIJOS SEM 43",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 10597.2,
+              "importe": 10597.2,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327812,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "6000001",
+              "nombre": "FIJOS SEM 43",
+              "cantidad": 0.0001,
+              "unidad": "",
+              "precio_unitario": 10597.2,
+              "importe": 1.05972,
+              "autorizado": false,
+              "estatus_ap": "REC",
+              "bloqueado": 0
+            }
+          ]
+        },
+        {
+          "id": 327564,
+          "codigo": "1.1.2",
+          "tipo": "PARTIDA",
+          "nombre": "NOVIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        },
+        {
+          "id": 327565,
+          "codigo": "1.1.3",
+          "tipo": "PARTIDA",
+          "nombre": "DICIEMBRE",
+          "cantidad": 1.0,
+          "precio": 0.0,
+          "importe": 0.0,
+          "autorizado": false,
+          "estatus_ap": "",
+          "tarjetas": []
+        }
+      ]
+    }
+  ]
+}

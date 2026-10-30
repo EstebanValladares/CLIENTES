@@ -1,0 +1,145 @@
+{
+  "obra": {
+    "id_obra": 758,
+    "clave": "IBM",
+    "nombre": "IBM - GASTOS GENERALES VV3",
+    "presupuesto_clave": "PP-KONTROL-IBM",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 724,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": false,
+    "total_nodos": 10,
+    "id_nodo_raiz": 326798,
+    "importe_total": 334951.4,
+    "precio_total": 334951.4,
+    "total_frentes": 2,
+    "total_partidas": 1,
+    "total_tarjetas": 6
+  },
+  "frentes": [
+    {
+      "id": 326799,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "FIJOS DE OBRA",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 334951.4,
+      "importe": 334951.4,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 326800,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "FIJOS DE OBRA 2026",
+          "cantidad": 1.0,
+          "precio": 334951.4,
+          "importe": 334951.4,
+          "autorizado": true,
+          "estatus_ap": "PA",
+          "tarjetas": [
+            {
+              "id": 326802,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FINIQUITO VV3",
+              "nombre": "FINIQUITO DE PERSONAL VV3",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 50117.4,
+              "importe": 50117.4,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327074,
+              "codigo": "1.1.1.2",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS DE OBRA OCTUBRE 202",
+              "nombre": "FIJOS DE OBRA OCTUBRE 2026",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 58317.16,
+              "importe": 58317.16,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327546,
+              "codigo": "1.1.1.3",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FINIQUITO VV3 - 15-OCT-26",
+              "nombre": "FINIQUITO DE PERSONAL VV3 - 15-OCT-26",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 105795.89,
+              "importe": 105795.89,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 327831,
+              "codigo": "1.1.1.4",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIUJOS SEM 43-VV3",
+              "nombre": "FIJOS DE OBRA SEM 43 - VV3 OCTUBRE 2026",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 63395.45,
+              "importe": 63395.45,
+              "autorizado": true,
+              "estatus_ap": "AUT",
+              "bloqueado": 1
+            },
+            {
+              "id": 328171,
+              "codigo": "1.1.1.5",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS SEM 44-VV3",
+              "nombre": "FIJOS DE OBRA SEM 44 - VV3 OCTUBRE 2026",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 57324.31,
+              "importe": 57324.31,
+              "autorizado": true,
+              "estatus_ap": "PA",
+              "bloqueado": 1
+            },
+            {
+              "id": 328172,
+              "codigo": "1.1.1.6",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "FIJOS VV3",
+              "nombre": "FIJOS VV3",
+              "cantidad": 1.0,
+              "unidad": "",
+              "precio_unitario": 1.19,
+              "importe": 1.19,
+              "autorizado": false,
+              "estatus_ap": "",
+              "bloqueado": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 326804,
+      "codigo": "1.2",
+      "tipo": "FRENTE",
+      "nombre": "GASTOS GENERALES VV3",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 0.0,
+      "importe": 0.0,
+      "autorizado": false,
+      "partidas": []
+    }
+  ]
+}

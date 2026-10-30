@@ -1,0 +1,63 @@
+{
+  "obra": {
+    "id_obra": 786,
+    "clave": "BK",
+    "nombre": "451 - VELAMAR GENERALES",
+    "presupuesto_clave": "PP-KONTROL-451",
+    "tipo_wbs": "BK",
+    "nombre_wbs": "Kontrol",
+    "id_tabulador": 752,
+    "moneda": "MXN",
+    "valuada": true,
+    "explosionada": true,
+    "total_nodos": 4,
+    "id_nodo_raiz": 328133,
+    "importe_total": 34800.0,
+    "precio_total": 34800.0,
+    "total_frentes": 1,
+    "total_partidas": 1,
+    "total_tarjetas": 1
+  },
+  "frentes": [
+    {
+      "id": 328134,
+      "codigo": "1.1",
+      "tipo": "FRENTE",
+      "nombre": "VIVERO VELAMAR",
+      "tipo_avance": "V",
+      "cantidad": 1.0,
+      "precio": 34800.0,
+      "importe": 34800.0,
+      "autorizado": false,
+      "partidas": [
+        {
+          "id": 328135,
+          "codigo": "1.1.1",
+          "tipo": "PARTIDA",
+          "nombre": "ACARREO TIERRA NEGRA DE VISTA LAGUNA A VELAMAR",
+          "cantidad": 1.0,
+          "precio": 34800.0,
+          "importe": 34800.0,
+          "autorizado": true,
+          "estatus_ap": "PA",
+          "tarjetas": [
+            {
+              "id": 328136,
+              "codigo": "1.1.1.1",
+              "tipo": "TARJETA",
+              "clave_tarjeta": "8000001",
+              "nombre": "ACARREO DE TIERRA NEGRA",
+              "cantidad": 20.0,
+              "unidad": "",
+              "precio_unitario": 1740.0,
+              "importe": 34800.0,
+              "autorizado": true,
+              "estatus_ap": "PA",
+              "bloqueado": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

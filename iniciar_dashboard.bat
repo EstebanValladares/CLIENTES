@@ -9,7 +9,6 @@ echo           CENTRO DE INTELIGENCIA OPERATIVA - GRUPO VELAS
 echo ======================================================================
 echo.
 
-:: Git pull opcional si existe
 if exist ".git" (
     echo [1/2] Verificando actualizaciones en GitHub...
     git pull origin main --quiet 2>nul
@@ -17,7 +16,6 @@ if exist ".git" (
     echo.
 )
 
-:: Lanzar con Python
 echo [2/2] Iniciando sistema...
 py -3 arrancar.py 2>nul
 if errorlevel 1 (
