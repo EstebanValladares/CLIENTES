@@ -25,7 +25,7 @@ if %errorlevel% equ 0 (
 :: Prueba 2: Comando 'python' si tiene pip funcional
 if not defined PY_CMD (
     python -c "import sys; sys.exit(0)" >nul 2>&1
-    if !errorlevel% equ 0 (
+    if !errorlevel! equ 0 (
         python -m pip --version >nul 2>&1
         if !errorlevel! equ 0 set "PY_CMD=python"
     )
