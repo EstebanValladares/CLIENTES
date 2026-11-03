@@ -8,3 +8,101 @@
 {"fecha": "2026-10-28 15:06:16", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-011", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-10-28 15:10:23", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-012", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-10-28 15:14:30", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-013", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:24", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:26", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:29", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-REGISTRO-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:38", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "PROSPECTOS CLIENTES", "nombre_clasificador": "P-PROSPECTO-EDICION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:48", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "PLAZAS", "nombre_clasificador": "PDC", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:55", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:46:58", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:00", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:04", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:07", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:17", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "CI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:19", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "GI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:22", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "V-EDICIONCONPP", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:28", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:30", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:33", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:35", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:37", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:40", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:48", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "AUTORIZACIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:47:50", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:48:09", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "TipoVivienda.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:48:11", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Etapa.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:48:14", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Frente.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:48:17", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Manzana.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 08:48:19", "usuario": "ASESOR DE VENTAS PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Lote.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:49:52", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:49:54", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:49:56", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:04", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROSPECTOS CLIENTES", "nombre_clasificador": "P-PROSPECTO-EDICION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:09", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PLAZAS", "nombre_clasificador": "QRO", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:13", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:16", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:22", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:45", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:48", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:50:58", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:51:00", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:51:06", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Autorizaciones", "nombre_clasificador": "BTN-REENVIO-AUTORIZACION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:51:11", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Estatus.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:51:25", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:02", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:03", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:04", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:06", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-REGISTRO-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:12", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROSPECTOS CLIENTES", "nombre_clasificador": "P-PROSPECTO-EDICION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:18", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PLAZAS", "nombre_clasificador": "QRO", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:22", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:23", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:25", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:37", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "CI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:38", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "V-EDICIONCONPP", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:46", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:48", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:49", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:53", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:56:56", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:06", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:08", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:14", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Autorizaciones", "nombre_clasificador": "BTN-REENVIO-AUTORIZACION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:20", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Estatus.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:22", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "PorcentajeAvance.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:23", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Ubicacion.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:25", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EntregaServicioCliente.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:32", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 12:57:33", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:04:55", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:04:58", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:01", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:03", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-REGISTRO-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:11", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROSPECTOS CLIENTES", "nombre_clasificador": "P-PROSPECTO-EDICION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:18", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PLAZAS", "nombre_clasificador": "QRO", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:24", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:26", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:29", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:31", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:33", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:36", "usuario": "BROKER QUERETARO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "QRO-006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:43", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "CI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:48", "usuario": "BROKER QUERETARO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "GI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:54", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:57", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:05:59", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:01", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:04", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:08", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:16", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "EXPEDIENTE INCOMPLETO", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:19", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "AUTORIZACIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:22", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:24", "usuario": "BROKER QUERETARO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:32", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Clasificador de Autorizaciones", "nombre_clasificador": "BTN-REENVIO-AUTORIZACION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:39", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Estatus.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:42", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "PorcentajeAvance.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:44", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Ubicacion.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:46", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EntregaServicioCliente.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:06:50", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EtapasVentas.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:07:06", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-03 13:07:13", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}

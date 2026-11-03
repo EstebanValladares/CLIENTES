@@ -56,7 +56,7 @@ DEFECTO = {
     "gemini_api_key": "",
     "modelo_vision": "gemini-3.8-flash",
     "dias_retencion_capturas": 30,
-    "url_portal": "",
+    "url_portal": "https://suite.ekloud.net:1445/Aryve/",
 }
 
 _cache = None

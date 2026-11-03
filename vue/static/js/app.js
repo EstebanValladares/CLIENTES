@@ -2,6 +2,35 @@ const { createApp, ref, computed, onMounted } = Vue;
 
 createApp({
   setup() {
+    // ==========================================
+    // SISTEMA DE TEMA CLARO / OSCURO (PERSISTENTE)
+    // ==========================================
+    const temaActual = ref(localStorage.getItem('theme_preference') === 'claro' ? 'claro' : 'oscuro');
+
+    const aplicarTema = (modo) => {
+      temaActual.value = modo;
+      try {
+        localStorage.setItem('theme_preference', modo);
+      } catch (e) {}
+
+      if (modo === 'claro') {
+        document.documentElement.classList.add('theme-light');
+        if (document.body) document.body.classList.add('theme-light');
+      } else {
+        document.documentElement.classList.remove('theme-light');
+        if (document.body) document.body.classList.remove('theme-light');
+      }
+    };
+
+    const toggleTema = () => {
+      const nuevo = temaActual.value === 'claro' ? 'oscuro' : 'claro';
+      aplicarTema(nuevo);
+    };
+
+    aplicarTema(temaActual.value);
+    window.toggleTema = toggleTema;
+    window.aplicarTema = aplicarTema;
+
     // NAVEGACIÓN DE VISTAS (USUARIOS / PROYECTOS)
     const vistaActiva = ref('USUARIOS');
 
@@ -93,8 +122,7 @@ createApp({
     const cargandoReporteInsumos = ref(false);
     const suministrandoObra = ref(false);
     const esMaster = ref(false);
-    const sincronizandoFirestoreObra = ref(false);
-    const modalMovimientosVisible = ref(false);
+        const modalMovimientosVisible = ref(false);
     const cargandoMovimientos = ref(false);
     const tabMovimientos = ref('OC');
     const movimientosActuales = ref({ requisiciones: [], ordenes_compra: [] });
@@ -116,36 +144,28 @@ createApp({
     const historialPermisosContenido = ref('');
     const ejecutandoDepuracion = ref(false);
 
-    // ESTADO PROVEEDORES (COLA / SELECCIÓN / REGISTRO)
-    const colaProveedores = ref([]);
-    const proveedoresRegistrados = ref([]);
-    const busquedaProveedores = ref('');
-    const ejecutandoProveedores = ref(false);
-    const terminalProveedoresContenido = ref('[Sistema preparado. Llena el formulario o agrega proveedores a la cola.]');
+    // ==========================================
+    // MÓDULO UNIFICADO: PROVEEDORES & CONTRATISTAS (EK10 / ARYVE)
+    // ==========================================
+    const provContraRegistros = ref([]);
+    const provContraMetricas = ref({});
+    const provContraCargando = ref(false);
+    const provContraEjecutando = ref(false);
+    const provContraModoReal = ref(false);
+    const provContraLector = ref('db');
+    const provContraInputNumpro = ref('');
+    const provContraConsultandoDb = ref(false);
+    const provContraSubiendoImagen = ref(false);
+    const provContraBusqueda = ref('');
+    const provContraFiltro = ref('TODOS');
+    const provContraSeleccionados = ref([]);
+    const provContraTerminalLogs = ref('[Sistema preparado. Ingrese un número de proveedor o arrastre una captura EK9.]');
+    const provContraModalEditor = ref(false);
+    const provContraRegistroEditando = ref(null);
+    const provContraModalVisor = ref(false);
+    const provContraImagenVisorUrl = ref('');
+    let provContraIntervaloTrabajo = null;
 
-    // ESTADO CONTRATISTAS (DBA VS EN FILA + RPA ARYVE)
-    const contratistasDB = ref([]);
-    const cargandoContratistas = ref(false);
-    const busquedaContratistas = ref('');
-    const filtroEstatusContratistas = ref('TODOS');
-    const colaContratistas = ref([]);
-    const ejecutandoContratistas = ref(false);
-    const terminalContratistasContenido = ref('[Sistema preparado. Marca los contratistas de la tabla izquierda para agregarlos a "EN FILA" y presiona "Iniciar Proceso".]');
-    let intervaloContratistas = null;
-
-    const formProveedor = ref({
-      tipo_persona: 'MORAL',
-      nombre: '',
-      paterno: '',
-      materno: '',
-      rfc: '',
-      calle: '',
-      ext: '',
-      cp: '',
-      colonia: '',
-      clave: 'EK-PROV-...',
-      nombre_corto: '...'
-    });
 
     // MODAL USUARIO
     const modalUsuarioAbierto = ref(false);
@@ -258,37 +278,40 @@ createApp({
       }
     };
 
-    const proveedoresFiltrados = computed(() => {
-      const b = busquedaProveedores.value.trim().toUpperCase();
-      if (!b) return proveedoresRegistrados.value;
-      return proveedoresRegistrados.value.filter(p => 
-        (p.id && String(p.id).toUpperCase().includes(b)) ||
-        (p.clave && String(p.clave).toUpperCase().includes(b))
-      );
+    
+    
+    const provContraEnRevision = computed(() => {
+      return provContraRegistros.value.filter(r => !r.en_historial);
     });
 
-    const contratistasFiltrados = computed(() => {
-      let list = contratistasDB.value;
-      if (filtroEstatusContratistas.value === 'SIN_FOTO') {
-        list = list.filter(c => !c.tiene_foto);
-      } else if (filtroEstatusContratistas.value === 'COMPLETO') {
-        list = list.filter(c => c.tiene_foto);
+    const provContraEnRevisionCount = computed(() => {
+      return provContraEnRevision.value.length;
+    });
+
+    const provContraFiltrados = computed(() => {
+      let list = provContraRegistros.value.filter(r => r.en_historial);
+      if (provContraFiltro.value === 'PENDIENTES') {
+        list = list.filter(r => !r.id_ek10 || (r.quiere_contratista && !r.id_contratista));
+      } else if (provContraFiltro.value === 'PROVEEDORES') {
+        list = list.filter(r => r.id_ek10);
+      } else if (provContraFiltro.value === 'CONTRATISTAS') {
+        list = list.filter(r => r.id_contratista);
       }
 
-      const q = busquedaContratistas.value.trim().toUpperCase();
+      const q = provContraBusqueda.value.trim().toUpperCase();
       if (!q) return list;
 
-      return list.filter(c => {
-        const id = String(c.id || '').toUpperCase();
-        const nom = (c.nombre || '').toUpperCase();
-        const cve = String(c.clave || c.numpro || '').toUpperCase();
-        const rfc = (c.rfc || '').toUpperCase();
-        const rep = (c.representante || '').toUpperCase();
-        return id.includes(q) || ('#' + id).includes(q) || nom.includes(q) || cve.includes(q) || rfc.includes(q) || rep.includes(q);
+      return list.filter(r => {
+        const nom = (r.nombre || '').toUpperCase();
+        const rfc = (r.rfc || '').toUpperCase();
+        const num = String(r.proveedor || r.id || '').toUpperCase();
+        const cve = (r.clave_proveedor || '').toUpperCase();
+        const idek = String(r.id_ek10 || '').toUpperCase();
+        const idct = String(r.id_contratista || '').toUpperCase();
+        return nom.includes(q) || rfc.includes(q) || num.includes(q) || cve.includes(q) || idek.includes(q) || idct.includes(q);
       });
     });
 
-    
     const obrasFiltradas = computed(() => {
       const q = filtroBusquedaObra.value.trim().toUpperCase();
       if (!q) return obrasCatalogo.value;
@@ -341,12 +364,10 @@ createApp({
       vistaActiva.value = vista;
       if (vista === 'PROYECTOS') {
         cargarPermisos();
-      } else if (vista === 'PROVEEDORES') {
-        cargarProveedores();
+      } else if (vista === 'PROV_CONTRA') {
+        cargarProvContraRegistros();
       } else if (vista === 'USUARIOS') {
         cargarUsuarios();
-      } else if (vista === 'CONTRATISTAS') {
-        cargarContratistas();
       } else if (vista === 'OBRAS') {
         cargarCatalogoObras();
       }
@@ -558,334 +579,264 @@ createApp({
       }
     };
 
-    // MÉTODOS: PROVEEDORES (COLA / GENERACIÓN / SELENIUM)
-    const cambiarTipoPersona = (tipo) => {
-      formProveedor.value.tipo_persona = tipo;
-      calcularClavesProveedor();
+    
+    // ==========================================
+    // MÉTODOS: PROVEEDORES & CONTRATISTAS UNIFICADO
+    // ==========================================
+    const cargarProvContraRegistros = async () => {
+      provContraCargando.value = true;
+      try {
+        const res = await fetch('/api/prov-contra/registros');
+        if (res.ok) {
+          const data = await res.json();
+          provContraRegistros.value = data.registros || [];
+          provContraMetricas.value = data.metricas || {};
+        }
+      } catch (e) {
+        console.error('Error cargando registros de proveedores/contratistas:', e);
+      } finally {
+        provContraCargando.value = false;
+      }
     };
 
-    let calcTimeout = null;
-    const calcularClavesProveedor = () => {
-      clearTimeout(calcTimeout);
-      calcTimeout = setTimeout(async () => {
-        const nom = formProveedor.value.nombre.trim().toUpperCase();
-        const tipo = formProveedor.value.tipo_persona;
-        const pat = formProveedor.value.paterno ? formProveedor.value.paterno.trim().toUpperCase() : '';
-        if (!nom) {
-          formProveedor.value.clave = 'EK-PROV-...';
-          formProveedor.value.nombre_corto = '...';
-          return;
+    const consultarProvContraPorNumpro = async () => {
+      const num = provContraInputNumpro.value.trim();
+      if (!num) return;
+      provContraConsultandoDb.value = true;
+      try {
+        const res = await fetch('/api/prov-contra/consultar-db', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ numpro: num })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          provContraInputNumpro.value = '';
+          await cargarProvContraRegistros();
+          provContraTerminalLogs.value += `\n[OK]: Proveedor #${num} consultado desde Enkontrol y añadido a la cola.`;
+        } else {
+          alert(data.detail || 'No se pudo consultar el proveedor en Enkontrol.');
         }
+      } catch (e) {
+        alert('Error de conexión con el servidor al consultar Enkontrol.');
+      } finally {
+        provContraConsultandoDb.value = false;
+      }
+    };
+
+    const manejarDropCapturaProvContra = (e) => {
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        subirArchivoCapturaProvContra(files[0]);
+      }
+    };
+
+    const manejarSeleccionCapturaProvContra = (e) => {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        subirArchivoCapturaProvContra(files[0]);
+      }
+    };
+
+    const subirArchivoCapturaProvContra = (file) => {
+      provContraSubiendoImagen.value = true;
+      const reader = new FileReader();
+      reader.onload = async () => {
         try {
-          const res = await fetch('/api/operaciones/proveedores/calcular', {
+          const res = await fetch('/api/prov-contra/subir-captura', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre: nom, tipo_persona: tipo, paterno: pat })
+            body: JSON.stringify({
+              imagen_base64: reader.result,
+              filename: file.name,
+              lector: provContraLector.value
+            })
           });
           const data = await res.json();
-          formProveedor.value.clave = data.clave;
-          formProveedor.value.nombre_corto = data.nombre_corto;
-        } catch (e) {
-          console.error(e);
+          if (res.ok && data.ok) {
+            await cargarProvContraRegistros();
+            provContraTerminalLogs.value += `\n[OK]: Captura ${file.name} procesada correctamente.`;
+          } else {
+            alert(data.detail || 'Error procesando la captura de imagen.');
+          }
+        } catch (err) {
+          alert('Fallo de conexión al enviar captura al servidor.');
+        } finally {
+          provContraSubiendoImagen.value = false;
         }
-      }, 120);
+      };
+      reader.readAsDataURL(file);
     };
 
-    const cargarProveedores = async (intentos = 3) => {
+    const toggleCasillaRegistro = async (id, campo, valor) => {
       try {
-        const [resCola, resReg] = await Promise.all([
-          fetch('/api/operaciones/proveedores/cola'),
-          fetch('/api/operaciones/proveedores/registrados')
-        ]);
-        if (resCola.ok) colaProveedores.value = await resCola.json();
-        if (resReg.ok) proveedoresRegistrados.value = await resReg.json();
-      } catch (e) {
-        console.error('Error cargando proveedores:', e);
-        if (intentos > 1) setTimeout(() => cargarProveedores(intentos - 1), 1200);
-      }
-    };
-
-    const guardarEnListaProveedor = async () => {
-      const nom = formProveedor.value.nombre.trim().toUpperCase();
-      const rfc = formProveedor.value.rfc.trim().toUpperCase();
-      if (!nom) {
-        alert('El nombre o razón social es obligatorio.');
-        return;
-      }
-      if (!rfc) {
-        alert('El RFC es obligatorio.');
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/operaciones/proveedores/cola', {
-          method: 'POST',
+        await fetch(`/api/prov-contra/registros/${id}`, {
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            tipo_persona: formProveedor.value.tipo_persona,
-            nombre: nom,
-            paterno: formProveedor.value.paterno ? formProveedor.value.paterno.trim().toUpperCase() : '',
-            materno: formProveedor.value.materno ? formProveedor.value.materno.trim().toUpperCase() : '',
-            rfc: rfc,
-            calle: formProveedor.value.calle ? formProveedor.value.calle.trim().toUpperCase() : '',
-            ext: formProveedor.value.ext ? formProveedor.value.ext.trim().toUpperCase() : '',
-            colonia: formProveedor.value.colonia ? formProveedor.value.colonia.trim().toUpperCase() : '',
-            cp: formProveedor.value.cp ? formProveedor.value.cp.trim().toUpperCase() : '',
-            clave: formProveedor.value.clave,
-            nombre_corto: formProveedor.value.nombre_corto
-          })
+          body: JSON.stringify({ [campo]: valor })
         });
-        colaProveedores.value = await res.json();
+        const item = provContraRegistros.value.find(r => r.id === id);
+        if (item) item[campo] = valor ? 1 : 0;
+      } catch (e) {
+        console.error('Error actualizando casilla:', e);
+      }
+    };
 
-        // Limpiar formulario preservando el tipo de persona seleccionado
-        const tipoActual = formProveedor.value.tipo_persona;
-        formProveedor.value = {
-          tipo_persona: tipoActual,
-          nombre: '',
-          paterno: '',
-          materno: '',
-          rfc: '',
-          calle: '',
-          ext: '',
-          cp: '',
-          colonia: '',
-          clave: 'EK-PROV-...',
-          nombre_corto: '...'
+    const enviarRegistroAHistorial = async (id) => {
+      try {
+        const res = await fetch(`/api/prov-contra/registros/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ en_historial: 1 })
+        });
+        if (res.ok) {
+          await cargarProvContraRegistros();
+        }
+      } catch (e) {
+        console.error('Error enviando a historial:', e);
+      }
+    };
+
+    const enviarTodosAHistorial = async () => {
+      const pendientes = provContraEnRevision.value;
+      for (const item of pendientes) {
+        await enviarRegistroAHistorial(item.id);
+      }
+      await cargarProvContraRegistros();
+    };
+
+    const toggleSeleccionProvContra = (id) => {
+      const idx = provContraSeleccionados.value.indexOf(id);
+      if (idx > -1) {
+        provContraSeleccionados.value.splice(idx, 1);
+      } else {
+        provContraSeleccionados.value.push(id);
+      }
+    };
+
+    const toggleSeleccionarTodosProvContra = () => {
+      if (provContraSeleccionados.value.length === provContraFiltrados.value.length) {
+        provContraSeleccionados.value = [];
+      } else {
+        provContraSeleccionados.value = provContraFiltrados.value.map(r => r.id);
+      }
+    };
+
+    const abrirEditorProvContra = async (item) => {
+      try {
+        const res = await fetch(`/api/prov-contra/registros/${item.id}`);
+        if (res.ok) {
+          provContraRegistroEditando.value = await res.json();
+          provContraModalEditor.value = true;
+        }
+      } catch (e) {
+        console.error('Error abriendo editor:', e);
+      }
+    };
+
+    const guardarEdicionProvContra = async () => {
+      if (!provContraRegistroEditando.value) return;
+      try {
+        const id = provContraRegistroEditando.value.id;
+        const res = await fetch(`/api/prov-contra/registros/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ campos: provContraRegistroEditando.value.campos })
+        });
+        if (res.ok) {
+          provContraModalEditor.value = false;
+          await cargarProvContraRegistros();
+        } else {
+          const err = await res.json();
+          alert(err.detail || 'Error guardando campos editados.');
+        }
+      } catch (e) {
+        alert('Error conectando con el servidor al guardar.');
+      }
+    };
+
+    const eliminarRegistroProvContra = async (id) => {
+      if (!confirm('¿Deseas eliminar este registro del historial?')) return;
+      try {
+        const res = await fetch(`/api/prov-contra/registros/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          provContraSeleccionados.value = provContraSeleccionados.value.filter(i => i !== id);
+          await cargarProvContraRegistros();
+        }
+      } catch (e) {
+        console.error('Error eliminando registro:', e);
+      }
+    };
+
+    const abrirVisorImagenProvContra = (id) => {
+      provContraImagenVisorUrl.value = `/api/prov-contra/imagen/${id}`;
+      provContraModalVisor.value = true;
+    };
+
+    const iniciarEjecucionProvContra = async (soloVerificar = false) => {
+      if (provContraSeleccionados.value.length === 0) {
+        alert('Seleccione al menos un registro de la tabla para procesar.');
+        return;
+      }
+
+      provContraEjecutando.value = true;
+      provContraTerminalLogs.value = `[Iniciando Selenium para procesar ${provContraSeleccionados.value.length} registro(s)...]`;
+
+      try {
+        const payload = {
+          proveedor: soloVerificar ? [] : provContraSeleccionados.value,
+          contratista: soloVerificar ? [] : provContraSeleccionados.value,
+          guardar: provContraModoReal.value,
+          verificar: soloVerificar ? provContraSeleccionados.value : []
         };
-      } catch (e) {
-        console.error('Error agregando a la cola de proveedores:', e);
-      }
-    };
 
-    const eliminarDeColaProveedor = async (idx) => {
-      try {
-        const res = await fetch(`/api/operaciones/proveedores/cola/${idx}`, { method: 'DELETE' });
-        colaProveedores.value = await res.json();
-      } catch (e) {
-        console.error(e);
-      }
-    };
+        const res = await fetch('/api/prov-contra/ejecutar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
 
-    const vaciarColaProveedor = async () => {
-      if (!confirm('¿Deseas vaciar la lista de proveedores en espera?')) return;
-      try {
-        const res = await fetch('/api/operaciones/proveedores/cola', { method: 'DELETE' });
-        colaProveedores.value = await res.json();
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const iniciarProcesamientoProveedores = async () => {
-      if (!colaProveedores.value.length) {
-        alert('La lista de proveedores está vacía. Agrega al menos uno para iniciar.');
-        return;
-      }
-
-      ejecutandoProveedores.value = true;
-      terminalProveedoresContenido.value = `[Iniciando Selenium para procesar ${colaProveedores.value.length} proveedor(es) en Aryve...]\n`;
-
-      try {
-        const resInit = await fetch('/api/operaciones/proveedores/ejecutar', { method: 'POST' });
-        const initData = await resInit.json();
-        if (!resInit.ok) {
-          terminalProveedoresContenido.value += `\n[ERROR]: ${initData.detail || 'Fallo al iniciar el bot.'}`;
-          ejecutandoProveedores.value = false;
+        if (!res.ok) {
+          const err = await res.json();
+          provContraTerminalLogs.value += `\n[ERROR]: ${err.detail || 'Fallo iniciando automatización.'}`;
+          provContraEjecutando.value = false;
           return;
         }
 
-        const interval = setInterval(async () => {
-          const res = await fetch('/api/operaciones/proveedores/estado');
-          const data = await res.json();
-          if (data.logs && data.logs.length) {
-            terminalProveedoresContenido.value = data.logs.join('\n');
-            const el = document.getElementById('terminal-prov');
-            if (el) el.scrollTop = el.scrollHeight;
-          }
-          if (!data.ejecutando) {
-            clearInterval(interval);
-            ejecutandoProveedores.value = false;
-            await cargarProveedores();
-          }
-        }, 1000);
-      } catch (e) {
-        terminalProveedoresContenido.value += `\n[ERROR]: No se pudo conectar con el servidor.`;
-        ejecutandoProveedores.value = false;
-      }
-    };
-
-    const exportarCSVProveedores = () => {
-      if (!proveedoresFiltrados.value.length) {
-        alert('No hay proveedores registrados para exportar.');
-        return;
-      }
-      let csv = 'id,clave\n';
-      proveedoresFiltrados.value.forEach(p => {
-        csv += `"${p.id}","${p.clave}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'proveedores_id_clave.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-    };
-
-    // =========================================================================
-    // MÉTODOS CONTRATISTAS (DBA VS EN FILA + RPA ARYVE)
-    // =========================================================================
-    const cargarContratistas = async (forzar = false) => {
-      if (cargandoContratistas.value) return; // Anti-collision guard
-      cargandoContratistas.value = true;
-      try {
-        const [resDb, resCola] = await Promise.all([
-          fetch(`/api/contratistas/db?forzar=${forzar}`),
-          fetch('/api/contratistas/cola')
-        ]);
-        if (resDb.ok) contratistasDB.value = await resDb.json();
-        if (resCola.ok) colaContratistas.value = await resCola.json();
-      } catch (e) {
-        console.error('Error cargando contratistas:', e);
-      } finally {
-        cargandoContratistas.value = false;
-      }
-    };
-
-    const estaEnFila = (c) => {
-      if (!c) return false;
-      const cid = c.id !== undefined && c.id !== null ? String(c.id).trim() : null;
-      const cve = String(c.clave || c.numpro || (typeof c === 'string' || typeof c === 'number' ? c : '')).trim();
-      return colaContratistas.value.some(item => {
-        const itemId = item.id !== undefined && item.id !== null ? String(item.id).trim() : null;
-        const itemCve = String(item.clave || item.numpro || '').trim();
-        if (cid && itemId && cid === itemId) return true;
-        if (cve && itemCve && cve === itemCve) return true;
-        return false;
-      });
-    };
-
-    const toggleContratistaFila = async (item) => {
-      try {
-        const res = await fetch('/api/contratistas/cola/toggle', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(item)
-        });
-        if (res.ok) {
-          colaContratistas.value = await res.json();
-        }
-      } catch (e) {
-        console.error('Error toggle fila contratistas:', e);
-      }
-    };
-
-    const quitarDeFila = async (itemOrKey) => {
-      try {
-        const key = typeof itemOrKey === 'object' ? (itemOrKey.clave || itemOrKey.numpro || itemOrKey.id) : itemOrKey;
-        const res = await fetch(`/api/contratistas/cola/${key}`, { method: 'DELETE' });
-        if (res.ok) {
-          colaContratistas.value = await res.json();
-        }
-      } catch (e) {
-        console.error('Error quitando de fila:', e);
-      }
-    };
-
-    const vaciarFila = async () => {
-      try {
-        const res = await fetch('/api/contratistas/cola', { method: 'DELETE' });
-        if (res.ok) {
-          colaContratistas.value = [];
-        }
-      } catch (e) {
-        console.error('Error vaciando fila:', e);
-      }
-    };
-
-    const sincronizarContratistasDB = async () => {
-      await cargarContratistas(true);
-    };
-
-    const seleccionarTodosSinFoto = async () => {
-      const pendientes = contratistasFiltrados.value.filter(c => !c.tiene_foto);
-      if (!pendientes.length) return;
-      try {
-        const res = await fetch('/api/contratistas/cola/sincronizar', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: pendientes })
-        });
-        if (res.ok) {
-          colaContratistas.value = await res.json();
-        }
-      } catch (e) {
-        console.error('Error seleccionando contratistas sin foto:', e);
-      }
-    };
-    const seleccionarTodosSinMapear = seleccionarTodosSinFoto;
-
-    const limpiarTerminalContratistas = () => {
-      terminalContratistasContenido.value = '[Consola limpia. Esperando inicio de tareas...]';
-    };
-
-    const iniciarProcesamientoContratistas = async () => {
-      if (!colaContratistas.value.length) {
-        alert('La lista "EN FILA" está vacía. Marca al menos un contratista de la tabla izquierda.');
-        return;
-      }
-      ejecutandoContratistas.value = true;
-      terminalContratistasContenido.value = `[Iniciando proceso para ${colaContratistas.value.length} contratista(s) en fila...]\n`;
-
-      try {
-        const resInit = await fetch('/api/contratistas/iniciar', { method: 'POST' });
-        const initData = await resInit.json();
-        if (!resInit.ok) {
-          terminalContratistasContenido.value += `\n[ERROR]: ${initData.detail || initData.mensaje || 'Fallo al iniciar el bot.'}`;
-          ejecutandoContratistas.value = false;
-          return;
-        }
-
-        if (intervaloContratistas) clearInterval(intervaloContratistas);
-        intervaloContratistas = setInterval(async () => {
+        // Iniciar Polling de logs
+        if (provContraIntervaloTrabajo) clearInterval(provContraIntervaloTrabajo);
+        provContraIntervaloTrabajo = setInterval(async () => {
           try {
-            const res = await fetch('/api/contratistas/estado');
-            const data = await res.json();
-            if (data.logs && data.logs.length) {
-              terminalContratistasContenido.value = data.logs.join('\n');
-              const el = document.getElementById('terminal-contratistas');
+            const resp = await fetch('/api/prov-contra/trabajo');
+            if (resp.ok) {
+              const est = await resp.json();
+              provContraTerminalLogs.value = est.lineas.join('\n');
+              const el = document.getElementById('terminal-prov-contra');
               if (el) el.scrollTop = el.scrollHeight;
-            }
-            if (data.cola) {
-              const prevLen = colaContratistas.value.length;
-              colaContratistas.value = data.cola;
-              if (data.cola.length !== prevLen) {
-                // Se guardo un contratista en JSON, refrescar tabla para mostrarlo en verde en tiempo real
-                cargarContratistas(false);
+
+              if (!est.activo) {
+                clearInterval(provContraIntervaloTrabajo);
+                provContraEjecutando.value = false;
+                await cargarProvContraRegistros();
               }
             }
-            if (!data.ejecutando) {
-              clearInterval(intervaloContratistas);
-              ejecutandoContratistas.value = false;
-              await cargarContratistas(true);
-            }
-          } catch (err) {
-            console.error('Error sondeando estado:', err);
+          } catch (e) {
+            console.error('Error obteniendo estado del trabajo:', e);
           }
-        }, 1000);
+        }, 1200);
+
       } catch (e) {
-        terminalContratistasContenido.value += `\n[ERROR]: No se pudo conectar con el servidor: ${e}`;
-        ejecutandoContratistas.value = false;
+        provContraTerminalLogs.value += `\n[ERROR]: Fallo de conexión: ${e.message}`;
+        provContraEjecutando.value = false;
       }
     };
 
-    const detenerProcesamientoContratistas = async () => {
+    const limpiarTerminalProvContra = async () => {
       try {
-        const res = await fetch('/api/contratistas/detener', { method: 'POST' });
-        const data = await res.json();
-        terminalContratistasContenido.value += `\n[SOLICITUD]: ${data.mensaje}`;
+        await fetch('/api/prov-contra/limpiar-terminal', { method: 'POST' });
+        provContraTerminalLogs.value = '[Consola limpia. Sistema listo.]';
       } catch (e) {
-        console.error('Error deteniendo bot:', e);
+        provContraTerminalLogs.value = '[Consola limpia.]';
       }
     };
 
@@ -1113,9 +1064,9 @@ createApp({
     const cargarInfoPuesto = async (puesto) => {
       if (!puesto) {
         return { total: 0, area: '', categorias: [], clasificadores: {} };
-}
+      }
       try {
-        const res = await fetch(`/api/usuarios/clasificadores/puesto-info?puesto=${encodeURIComponent(puesto)}`);
+        const res = await fetch('/api/usuarios/clasificadores/puesto-info?puesto=' + encodeURIComponent(puesto));
         if (res.ok) {
           const d = await res.json();
           return {
@@ -1438,29 +1389,7 @@ createApp({
       }
     };
 
-    const sincronizarFirestoreObraActual = async () => {
-      if (!obraSeleccionada.value || sincronizandoFirestoreObra.value) return;
-      const clave = String(obraSeleccionada.value.clave || obraSeleccionada.value.id_obra).toUpperCase();
-      sincronizandoFirestoreObra.value = true;
-      try {
-        const res = await fetch('/api/obras/sincronizar-firestore-obra', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ obra: clave })
-        });
-        const data = await res.json();
-        if (data.ok) {
-          alert(`✅ Obra ${clave} sincronizada en Firebase Firestore para CLIENTES.`);
-        } else {
-          alert(`Error: ${data.mensaje}`);
-        }
-      } catch (e) {
-        alert(`Error al sincronizar con Firestore: ${e.message}`);
-      } finally {
-        sincronizandoFirestoreObra.value = false;
-      }
-    };
-
+    
     const seleccionarObra = async (obra) => {
       if (!obra) return;
       obraSeleccionada.value = obra;
@@ -1666,7 +1595,331 @@ createApp({
       }
     };
 
-onMounted(() => {
+    // ==========================================
+    // NAVEGACIÓN AUTOMATIZADA: IR A OBRA EN ARYVE
+    // Busca en /scco/Obra, abre panel lateral,
+    // clic en APLICAR CONFIGURACIÓN y clic en IR A OBRA
+    // ==========================================
+    const modalIrAObraVisible = ref(false);
+    const ejecutandoIrAObra = ref(false);
+    const obraDestinoAryve = ref('');
+    const logsIrAObra = ref([]);
+    const resultadoIrAObra = ref(null);
+
+    const abrirModalIrAObra = (clave) => {
+      const c = clave || (obraSeleccionada.value ? obraSeleccionada.value.clave : 'KB5');
+      obraDestinoAryve.value = c;
+      logsIrAObra.value = [];
+      resultadoIrAObra.value = null;
+      modalIrAObraVisible.value = true;
+    };
+
+    const ejecutarIrAObraEnAryve = async (clave) => {
+      const c = clave || obraDestinoAryve.value;
+      if (!c) return;
+      obraDestinoAryve.value = c;
+      ejecutandoIrAObra.value = true;
+      resultadoIrAObra.value = null;
+      logsIrAObra.value = [];
+      modalIrAObraVisible.value = true;
+
+      const agregarLog = (texto) => {
+        const hora = new Date().toLocaleTimeString('es-MX', { hour12: false });
+        logsIrAObra.value.push({ hora, texto });
+      };
+
+      agregarLog('Iniciando automatización para ingresar a la obra ' + c + ' en Aryve...');
+      agregarLog('Comprobando sesión activa en Chrome (puerto 9222) o credenciales de .env...');
+
+      try {
+        const res = await fetch('/api/obras/ir-a-obra', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ obra: c })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || ('HTTP ' + res.status));
+
+        resultadoIrAObra.value = data;
+        if (data.logs && Array.isArray(data.logs)) {
+          data.logs.forEach(l => agregarLog(l));
+        }
+        agregarLog('✅ Proceso finalizado exitosamente. URL destino: ' + (data.url_final || ''));
+      } catch (e) {
+        console.error('Error al ir a obra en Aryve:', e);
+        resultadoIrAObra.value = { ok: false, error: e.message };
+        agregarLog('❌ Error: ' + e.message);
+      } finally {
+        ejecutandoIrAObra.value = false;
+      }
+    };
+
+    // ==========================================
+    // APARTADO: OPTIMIZACIÓN DE INSUMOS (EK10)
+    // Previene error de material no disponible en EK10
+    // ==========================================
+    const gruposInsumosTipo = ref([]);
+    const cargandoGruposInsumos = ref(false);
+    const filtroGruposInsumos = ref('');
+    const seleccionGruposInsumos = ref({});
+    const tiposExpandidosOptimizacion = ref({});
+    const colaObrasOptimizacion = ref([]);
+    const inputNuevaObraOptimizacion = ref('');
+    const obraSelectOptimizacion = ref('');
+    const ejecutandoOptimizacion = ref(false);
+
+    const cargarGruposInsumosTipo = async () => {
+      cargandoGruposInsumos.value = true;
+      try {
+        const res = await fetch('/api/obras/grupos-insumos-tipo');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const lista = data.GRUPO_INSUMOS_TIPO || [];
+        gruposInsumosTipo.value = lista;
+        
+        // Inicializar checks: por defecto marcar todos excepto los que digan 'Disponible / No usar'
+        const sel = {};
+        const expandidos = {};
+        lista.forEach((item, idx) => {
+          expandidos[item.tipo] = idx === 0; // Por defecto expandir el primero (MATERIALES)
+          if (Array.isArray(item.datos)) {
+            item.datos.forEach(hijo => {
+              const key = `${item.tipo}:::${hijo}`;
+              if (!hijo.toLowerCase().includes('disponible') && !hijo.toLowerCase().includes('no usar')) {
+                sel[key] = true;
+              } else {
+                sel[key] = false;
+              }
+            });
+          }
+        });
+        seleccionGruposInsumos.value = sel;
+        tiposExpandidosOptimizacion.value = expandidos;
+      } catch (e) {
+        console.error('Error cargando grupos de insumos:', e);
+      } finally {
+        cargandoGruposInsumos.value = false;
+      }
+    };
+
+    const toggleTipoOptimizacion = (tipoNombre) => {
+      tiposExpandidosOptimizacion.value[tipoNombre] = !tiposExpandidosOptimizacion.value[tipoNombre];
+    };
+
+    const esHijoSeleccionado = (tipoNombre, hijoNombre) => {
+      return !!seleccionGruposInsumos.value[`${tipoNombre}:::${hijoNombre}`];
+    };
+
+    const toggleHijoInsumo = (tipoNombre, hijoNombre) => {
+      const key = `${tipoNombre}:::${hijoNombre}`;
+      seleccionGruposInsumos.value[key] = !seleccionGruposInsumos.value[key];
+    };
+
+    const contarHijosSeleccionadosTipo = (tipo) => {
+      if (!tipo || !Array.isArray(tipo.datos)) return 0;
+      return tipo.datos.filter(h => !!seleccionGruposInsumos.value[`${tipo.tipo}:::${h}`]).length;
+    };
+
+    const esTipoTotalmenteSeleccionado = (tipo) => {
+      if (!tipo || !Array.isArray(tipo.datos)) return false;
+      const validos = tipo.datos.filter(h => !h.toLowerCase().includes('disponible') && !h.toLowerCase().includes('no usar'));
+      if (validos.length === 0) return false;
+      return validos.every(h => !!seleccionGruposInsumos.value[`${tipo.tipo}:::${h}`]);
+    };
+
+    const toggleTodosHijosDeTipo = (tipo) => {
+      const todos = esTipoTotalmenteSeleccionado(tipo);
+      const nuevoEstado = !todos;
+      tipo.datos.forEach(h => {
+        if (!h.toLowerCase().includes('disponible') && !h.toLowerCase().includes('no usar')) {
+          seleccionGruposInsumos.value[`${tipo.tipo}:::${h}`] = nuevoEstado;
+        }
+      });
+    };
+
+    const marcarTodosGruposInsumos = () => {
+      gruposInsumosTipo.value.forEach(item => {
+        item.datos.forEach(h => {
+          if (!h.toLowerCase().includes('disponible') && !h.toLowerCase().includes('no usar')) {
+            seleccionGruposInsumos.value[`${item.tipo}:::${h}`] = true;
+          }
+        });
+      });
+    };
+
+    const desmarcarTodosGruposInsumos = () => {
+      gruposInsumosTipo.value.forEach(item => {
+        item.datos.forEach(h => {
+          seleccionGruposInsumos.value[`${item.tipo}:::${h}`] = false;
+        });
+      });
+    };
+
+    const seleccionarSoloMateriales = () => {
+      gruposInsumosTipo.value.forEach(item => {
+        const esMateriales = item.tipo.toLowerCase().includes('materiales');
+        item.datos.forEach(h => {
+          if (esMateriales && !h.toLowerCase().includes('disponible') && !h.toLowerCase().includes('no usar')) {
+            seleccionGruposInsumos.value[`${item.tipo}:::${h}`] = true;
+          } else {
+            seleccionGruposInsumos.value[`${item.tipo}:::${h}`] = false;
+          }
+        });
+      });
+      tiposExpandidosOptimizacion.value['Tipo 1:MATERIALES'] = true;
+    };
+
+    const totalGruposInsumosSeleccionados = computed(() => {
+      return Object.values(seleccionGruposInsumos.value).filter(Boolean).length;
+    });
+
+    const gruposInsumosFiltrados = computed(() => {
+      const q = filtroGruposInsumos.value.trim().toLowerCase();
+      if (!q) return gruposInsumosTipo.value;
+
+      return gruposInsumosTipo.value.map(tipo => {
+        const tipoMatch = tipo.tipo.toLowerCase().includes(q);
+        const hijosFiltrados = (tipo.datos || []).filter(h => h.toLowerCase().includes(q));
+        if (tipoMatch) {
+          return tipo;
+        }
+        if (hijosFiltrados.length > 0) {
+          return {
+            ...tipo,
+            datos: hijosFiltrados
+          };
+        }
+        return null;
+      }).filter(Boolean);
+    });
+
+    const agregarObraActualACola = () => {
+      if (!obraSeleccionada.value) return;
+      agregarObraACola(obraSeleccionada.value);
+    };
+
+    const agregarObraACola = (obraObj) => {
+      if (!obraObj) return;
+      const clave = String(obraObj.clave || obraObj.id_obra || '').trim().toUpperCase();
+      if (!clave) return;
+
+      const yaExiste = colaObrasOptimizacion.value.some(o => o.clave === clave);
+      if (yaExiste) {
+        alert(`La obra ${clave} ya se encuentra en la lista.`);
+        return;
+      }
+
+      colaObrasOptimizacion.value.push({
+        id: Date.now() + Math.random(),
+        id_obra: obraObj.id_obra || clave,
+        clave: clave,
+        nombre: obraObj.nombre || `Obra ${clave}`,
+        estatus: 'PENDIENTE',
+        mensaje: 'En espera'
+      });
+    };
+
+    const agregarObraPorInputManual = () => {
+      const clave = inputNuevaObraOptimizacion.value.trim().toUpperCase();
+      if (!clave) return;
+
+      const encontrada = obrasCatalogo.value.find(o => String(o.clave || o.id_obra).toUpperCase() === clave);
+      if (encontrada) {
+        agregarObraACola(encontrada);
+      } else {
+        agregarObraACola({ clave, id_obra: clave, nombre: `Obra ${clave}` });
+      }
+      inputNuevaObraOptimizacion.value = '';
+    };
+
+    const agregarObraPorSelect = () => {
+      const clave = obraSelectOptimizacion.value;
+      if (!clave) return;
+      const encontrada = obrasCatalogo.value.find(o => String(o.clave || o.id_obra).toUpperCase() === clave);
+      if (encontrada) {
+        agregarObraACola(encontrada);
+      }
+      obraSelectOptimizacion.value = '';
+    };
+
+    const eliminarObraDeCola = (index) => {
+      colaObrasOptimizacion.value.splice(index, 1);
+    };
+
+    const limpiarColaObras = () => {
+      colaObrasOptimizacion.value = [];
+    };
+
+        const iniciarOptimizacionObras = async () => {
+      if (!colaObrasOptimizacion.value.length) {
+        alert('Agrega al menos una obra a la lista para comenzar.');
+        return;
+      }
+      if (totalGruposInsumosSeleccionados.value === 0) {
+        alert('Debes marcar al menos un grupo de insumos.');
+        return;
+      }
+
+      const obrasAProcesar = colaObrasOptimizacion.value.map(o => o.clave);
+      const gruposAInyectar = [];
+      gruposInsumosTipo.value.forEach(t => {
+        if (Array.isArray(t.datos)) {
+          t.datos.forEach(hijo => {
+            const k = `${t.tipo}:::${hijo}`;
+            if (seleccionGruposInsumos.value[k]) {
+              gruposAInyectar.push({ tipo: t.tipo, grupo: hijo });
+            }
+          });
+        }
+      });
+
+      ejecutandoOptimizacion.value = true;
+      obraDestinoAryve.value = obrasAProcesar.join(', ');
+      logsIrAObra.value = [];
+      resultadoIrAObra.value = null;
+      modalIrAObraVisible.value = true;
+
+      const agregarLog = (texto) => {
+        const hora = new Date().toLocaleTimeString('es-MX', { hour12: false });
+        logsIrAObra.value.push({ hora, texto });
+      };
+
+      agregarLog(`Iniciando Optimización de Insumos para ${obrasAProcesar.length} obra(s)...`);
+      agregarLog(`Grupos seleccionados para inyección: ${gruposAInyectar.length}`);
+      agregarLog(`IMPORTANTE: Al terminar, el bot mantendrá la pantalla en edición SIN GUARDAR.`);
+
+      colaObrasOptimizacion.value.forEach(o => o.estado = 'PROCESANDO...');
+
+      try {
+        const res = await fetch('/api/obras/optimizar-insumos/ejecutar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            obras: obrasAProcesar,
+            grupos: gruposAInyectar
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+
+        resultadoIrAObra.value = data;
+        if (data.logs && Array.isArray(data.logs)) {
+          data.logs.forEach(l => agregarLog(l));
+        }
+
+        colaObrasOptimizacion.value.forEach(o => o.estado = 'COMPLETADA (SIN GUARDAR)');
+        agregarLog(`✅ ¡Llenado completado exitosamente! Pantalla en edición lista para revisión (SIN GUARDAR).`);
+      } catch (e) {
+        console.error('Error ejecutando optimización:', e);
+        resultadoIrAObra.value = { ok: false, error: e.message };
+        colaObrasOptimizacion.value.forEach(o => o.estado = 'ERROR');
+        agregarLog(`❌ Error: ${e.message}`);
+      } finally {
+        ejecutandoOptimizacion.value = false;
+      }
+    };
+
+    onMounted(() => {
       // 1. Carga escalonada (Waterfall) para evitar saturación de sockets concurrentes (cuellos de botella)
       cargarMetricas();
       setTimeout(cargarUsuarios, 70);
@@ -1675,9 +1928,9 @@ onMounted(() => {
 
       // Carga en diferido de vistas secundarias
       setTimeout(cargarPermisos, 350);
-      setTimeout(cargarProveedores, 450);
-      setTimeout(cargarContratistas, 550);
+      setTimeout(cargarProvContraRegistros, 450);
       setTimeout(cargarCatalogoObras, 650);
+      setTimeout(cargarGruposInsumosTipo, 750);
 
       // 2. Polling inteligente de Torre de Control: solo si la ventana está visible
       setInterval(() => {
@@ -1686,19 +1939,11 @@ onMounted(() => {
         }
       }, 6000);
 
-      // 3. Polling inteligente de Contratistas:
-      // Se ejecuta ÚNICAMENTE si la pestaña CONTRATISTAS está activa, visible y sin procesos corriendo
-      setInterval(() => {
-        if (!document.hidden && vistaActiva.value === 'CONTRATISTAS' && !ejecutandoContratistas.value && !cargandoContratistas.value) {
-          cargarContratistas(false);
-        }
-      }, 15000);
-
       // 4. Page Visibility API: pausa llamadas cuando el usuario minimiza o cambia de ventana
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden) {
-          if (vistaActiva.value === 'CONTRATISTAS' && !cargandoContratistas.value) {
-            cargarContratistas(false);
+          if (vistaActiva.value === 'PROV_CONTRA') {
+            cargarProvContraRegistros();
           } else if (vistaActiva.value === 'USUARIOS') {
             cargarUsuarios();
           }
@@ -1708,6 +1953,50 @@ onMounted(() => {
     });
 
     return {
+      // Tema Claro / Oscuro (Persistente)
+      temaActual,
+      toggleTema,
+      aplicarTema,
+
+      // Navegación Automatizada Aryve (Ir a Obra)
+      modalIrAObraVisible,
+      ejecutandoIrAObra,
+      obraDestinoAryve,
+      logsIrAObra,
+      resultadoIrAObra,
+      abrirModalIrAObra,
+      ejecutarIrAObraEnAryve,
+
+      // Optimización de Insumos (EK10)
+      gruposInsumosTipo,
+      cargandoGruposInsumos,
+      filtroGruposInsumos,
+      seleccionGruposInsumos,
+      tiposExpandidosOptimizacion,
+      colaObrasOptimizacion,
+      inputNuevaObraOptimizacion,
+      obraSelectOptimizacion,
+      ejecutandoOptimizacion,
+      cargarGruposInsumosTipo,
+      toggleTipoOptimizacion,
+      esHijoSeleccionado,
+      toggleHijoInsumo,
+      contarHijosSeleccionadosTipo,
+      esTipoTotalmenteSeleccionado,
+      toggleTodosHijosDeTipo,
+      marcarTodosGruposInsumos,
+      desmarcarTodosGruposInsumos,
+      seleccionarSoloMateriales,
+      totalGruposInsumosSeleccionados,
+      gruposInsumosFiltrados,
+      agregarObraActualACola,
+      agregarObraACola,
+      agregarObraPorInputManual,
+      agregarObraPorSelect,
+      eliminarObraDeCola,
+      limpiarColaObras,
+      iniciarOptimizacionObras,
+
       // Reparador de Presupuesto Bot
       modalRepararVisible,
       reparandoPresupuesto,
@@ -1757,8 +2046,7 @@ onMounted(() => {
       reporteInsumos,
       cargandoReporteInsumos,
       suministrandoObra,
-      sincronizandoFirestoreObra,
-      modalMovimientosVisible,
+            modalMovimientosVisible,
       cargandoMovimientos,
       tabMovimientos,
       movimientosActuales,
@@ -1771,8 +2059,7 @@ onMounted(() => {
       verMovimientos,
       cerrarModalMovimientos,
       suministrarInsumosObra,
-      sincronizarFirestoreObraActual,
-      esMaster,
+            esMaster,
 
       // Torre de Control (Proyectos)
       proyectosTorre,
@@ -1811,41 +2098,45 @@ onMounted(() => {
       eliminarObra,
       cargarObrasDesdeJSON,
       iniciarDepuracionPermisos,
-      // Proveedores
-      colaProveedores,
-      proveedoresRegistrados,
-      proveedoresFiltrados,
-      busquedaProveedores,
-      ejecutandoProveedores,
-      terminalProveedoresContenido,
-      formProveedor,
-      cambiarTipoPersona,
-      calcularClavesProveedor,
-      cargarProveedores,
-      guardarEnListaProveedor,
-      eliminarDeColaProveedor,
-      vaciarColaProveedor,
-      iniciarProcesamientoProveedores,
-      exportarCSVProveedores,
-      // Contratistas
-      contratistasDB,
-      cargandoContratistas,
-      busquedaContratistas,
-      filtroEstatusContratistas,
-      contratistasFiltrados,
-      colaContratistas,
-      ejecutandoContratistas,
-      terminalContratistasContenido,
-      cargarContratistas,
-      estaEnFila,
-      toggleContratistaFila,
-      quitarDeFila,
-      vaciarFila,
-      sincronizarContratistasDB,
-      seleccionarTodosSinMapear,
-      limpiarTerminalContratistas,
-      iniciarProcesamientoContratistas,
-      detenerProcesamientoContratistas,
+      
+      // Proveedores y Contratistas Unificado (EK10 / Aryve)
+      provContraRegistros,
+      provContraMetricas,
+      provContraCargando,
+      provContraEjecutando,
+      provContraModoReal,
+      provContraLector,
+      provContraInputNumpro,
+      provContraConsultandoDb,
+      provContraSubiendoImagen,
+      provContraBusqueda,
+      provContraFiltro,
+      provContraSeleccionados,
+      provContraTerminalLogs,
+      provContraModalEditor,
+      provContraRegistroEditando,
+      provContraModalVisor,
+      provContraImagenVisorUrl,
+      provContraEnRevision,
+      provContraEnRevisionCount,
+      provContraFiltrados,
+      cargarProvContraRegistros,
+      consultarProvContraPorNumpro,
+      manejarDropCapturaProvContra,
+      manejarSeleccionCapturaProvContra,
+      subirArchivoCapturaProvContra,
+      toggleCasillaRegistro,
+      enviarRegistroAHistorial,
+      enviarTodosAHistorial,
+      toggleSeleccionProvContra,
+      toggleSeleccionarTodosProvContra,
+      abrirEditorProvContra,
+      guardarEdicionProvContra,
+      eliminarRegistroProvContra,
+      abrirVisorImagenProvContra,
+      iniciarEjecucionProvContra,
+      limpiarTerminalProvContra,
+
       // Buscadores reactivos de Puestos / Posiciones
       busquedaPuestoNuevoUsuario,
       mostrarDropdownPuestoNuevoUsuario,

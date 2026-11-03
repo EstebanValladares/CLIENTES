@@ -1,0 +1,2040 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "226",
+    "nombre": "226 - E CARDENAS CALLE 7 ESQ G , 7V COLIBRI"
+  },
+  "metricas": {
+    "total_partidas": 26,
+    "total_frentes": 2,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 576.3358,
+    "requisitado_total": 566.4888,
+    "comprado_total": 1125.0,
+    "por_comprar_total": -558.5112
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "EDIFICIO 12 PACK 3 REC",
+      "partidas": [
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 185.892,
+              "importe_ppto": 3531.9486,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 185.892,
+              "vigente_tarjetas": 185.892,
+              "diferencia": 0,
+              "requisitado": 185.892,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 925,
+              "en_proceso_compra": 0,
+              "recibido": 925,
+              "por_requisitar": 0,
+              "por_comprar": -739.108,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.3",
+          "codigo": "1.1.3",
+          "nombre": "MUROS PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 43.9735,
+              "importe_ppto": 835.4967,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 43.9735,
+              "vigente_tarjetas": 43.9735,
+              "diferencia": 0,
+              "requisitado": 43.9735,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 43,
+              "en_proceso_compra": 0,
+              "recibido": 43,
+              "por_requisitar": 0,
+              "por_comprar": 0.9735,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.4",
+          "codigo": "1.1.4",
+          "nombre": "MUROS 1ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 13.5904,
+              "importe_ppto": 258.2178,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 13.5904,
+              "vigente_tarjetas": 43.9735,
+              "diferencia": -30.3831,
+              "requisitado": 13.5904,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 13,
+              "en_proceso_compra": 0,
+              "recibido": 13,
+              "por_requisitar": 0,
+              "por_comprar": 0.5904,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "MUROS 2DO NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 43.9735,
+              "importe_ppto": 835.4967,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 43.9735,
+              "vigente_tarjetas": 43.9735,
+              "diferencia": 0,
+              "requisitado": 43.9735,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 43,
+              "en_proceso_compra": 0,
+              "recibido": 43,
+              "por_requisitar": 0,
+              "por_comprar": 0.9735,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "MUROS 3ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 46.4124,
+              "importe_ppto": 881.8358,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 46.4124,
+              "vigente_tarjetas": 47.454,
+              "diferencia": -1.0416,
+              "requisitado": 46.4124,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 46,
+              "en_proceso_compra": 0,
+              "recibido": 46,
+              "por_requisitar": 0,
+              "por_comprar": 0.4124,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.7",
+          "codigo": "1.1.7",
+          "nombre": "LOSA ENTREPISO PB",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 23.1161,
+              "importe_ppto": 439.2059,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 23.1161,
+              "vigente_tarjetas": 23.1161,
+              "diferencia": 0,
+              "requisitado": 23.1161,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 23,
+              "en_proceso_compra": 0,
+              "recibido": 23,
+              "por_requisitar": 0,
+              "por_comprar": 0.1161,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.8",
+          "codigo": "1.1.8",
+          "nombre": "LOSA ENTREPISO 1ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 20.6161,
+              "importe_ppto": 391.7059,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 20.6161,
+              "vigente_tarjetas": 23.1161,
+              "diferencia": -2.5,
+              "requisitado": 20.6161,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 20,
+              "en_proceso_compra": 0,
+              "recibido": 20,
+              "por_requisitar": 0,
+              "por_comprar": 0.6161,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.9",
+          "codigo": "1.1.9",
+          "nombre": "LOSA ENTREPISO 2DO NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 20.6161,
+              "importe_ppto": 391.7059,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 20.6161,
+              "vigente_tarjetas": 23.1161,
+              "diferencia": -2.5,
+              "requisitado": 20.6161,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 12,
+              "en_proceso_compra": 0,
+              "recibido": 12,
+              "por_requisitar": 0,
+              "por_comprar": 8.6161,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.10",
+          "codigo": "1.1.10",
+          "nombre": "LOSA ENTREPISO 3ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 20.6161,
+              "importe_ppto": 391.7059,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 20.6161,
+              "vigente_tarjetas": 23.1161,
+              "diferencia": -2.5,
+              "requisitado": 20.6161,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 20.6161,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ESCALERA PB A 1ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 4.082,
+              "importe_ppto": 77.5588,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 4.082,
+              "vigente_tarjetas": 4.082,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.082,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.12",
+          "codigo": "1.1.12",
+          "nombre": "ESCALERA 1ER A 2DO NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 4.082,
+              "importe_ppto": 77.5588,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 4.082,
+              "vigente_tarjetas": 4.082,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.082,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.13",
+          "codigo": "1.1.13",
+          "nombre": "ESCALERA 2DO A 3ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 4.082,
+              "importe_ppto": 77.5588,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 4.082,
+              "vigente_tarjetas": 4.082,
+              "diferencia": 0,
+              "requisitado": 4.082,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 4.082,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.14",
+          "codigo": "1.1.14",
+          "nombre": "PRETILES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.683,
+              "importe_ppto": 31.977,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.683,
+              "vigente_tarjetas": 2.8455,
+              "diferencia": -1.1625,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.683,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.33",
+          "codigo": "1.1.33",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0,
+              "importe_ppto": 0,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0,
+              "vigente_tarjetas": 0,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.50",
+          "codigo": "1.1.50",
+          "nombre": "AMUEBLADO PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.5,
+              "importe_ppto": 142.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.5,
+              "vigente_tarjetas": 7.5,
+              "diferencia": 0,
+              "requisitado": 7.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.5,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.51",
+          "codigo": "1.1.51",
+          "nombre": "AMUEBLADO 1ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.5,
+              "importe_ppto": 142.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.5,
+              "vigente_tarjetas": 7.5,
+              "diferencia": 0,
+              "requisitado": 7.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.5,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.52",
+          "codigo": "1.1.52",
+          "nombre": "AMUEBLADO 2DO NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.5,
+              "importe_ppto": 142.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.5,
+              "vigente_tarjetas": 7.5,
+              "diferencia": 0,
+              "requisitado": 7.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.5,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.53",
+          "codigo": "1.1.53",
+          "nombre": "AMUEBLADO 3ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.5,
+              "importe_ppto": 142.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.5,
+              "vigente_tarjetas": 7.5,
+              "diferencia": 0,
+              "requisitado": 7.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.5,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.55",
+          "codigo": "1.1.55",
+          "nombre": "MURETE Y CONEXION-ACOMETIDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "EDIFICIO 12 PACK 3 REC"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.1899,
+              "importe_ppto": 41.6072,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.1899,
+              "vigente_tarjetas": 2.1899,
+              "diferencia": 0,
+              "requisitado": 2.1899,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 2.1899,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "ELEVADOR P/EDIF-12 DEPTOS",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "FOSA DEL ELEVADOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 19.8079,
+              "importe_ppto": 376.3501,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 19.8079,
+              "vigente_tarjetas": 19.8079,
+              "diferencia": 0,
+              "requisitado": 19.8079,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 19.8079,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.2",
+          "codigo": "1.2.2",
+          "nombre": "ELEVADOR PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 8.151,
+              "importe_ppto": 154.869,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 8.151,
+              "vigente_tarjetas": 15.3024,
+              "diferencia": -7.1514,
+              "requisitado": 8.151,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 8.151,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.3",
+          "codigo": "1.2.3",
+          "nombre": "ELEVADOR 1ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 8.151,
+              "importe_ppto": 154.869,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 8.151,
+              "vigente_tarjetas": 15.3024,
+              "diferencia": -7.1514,
+              "requisitado": 8.151,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 8.151,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.4",
+          "codigo": "1.2.4",
+          "nombre": "ELEVADOR 2DO NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.1514,
+              "importe_ppto": 135.8766,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.1514,
+              "vigente_tarjetas": 15.3024,
+              "diferencia": -8.151,
+              "requisitado": 7.1514,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.1514,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.5",
+          "codigo": "1.2.5",
+          "nombre": "ELEVADOR 3ER NIVEL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 8.6904,
+              "importe_ppto": 165.1176,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 8.6904,
+              "vigente_tarjetas": 15.3024,
+              "diferencia": -6.612,
+              "requisitado": 8.6904,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 8.6904,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.6",
+          "codigo": "1.2.6",
+          "nombre": "ELEVADOR AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 17.7577,
+              "importe_ppto": 337.3963,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 17.7577,
+              "vigente_tarjetas": 17.7577,
+              "diferencia": 0,
+              "requisitado": 17.7577,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 17.7577,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.8",
+          "codigo": "1.2.8",
+          "nombre": "ESCALERA - CAMBIO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 41.7012,
+              "importe_ppto": 792.3228,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 41.7012,
+              "vigente_tarjetas": 41.7012,
+              "diferencia": 0,
+              "requisitado": 41.7012,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 41.7012,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 185.892,
+          "importe_ppto": 3531.9486,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 185.892,
+          "vigente_tarjetas": 185.892,
+          "diferencia": 0,
+          "requisitado": 185.892,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 925,
+          "en_proceso_compra": 0,
+          "recibido": 925,
+          "por_requisitar": 0,
+          "por_comprar": -739.108,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.3",
+      "codigo": "1.1.3",
+      "nombre": "MUROS PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 43.9735,
+          "importe_ppto": 835.4967,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 43.9735,
+          "vigente_tarjetas": 43.9735,
+          "diferencia": 0,
+          "requisitado": 43.9735,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 43,
+          "en_proceso_compra": 0,
+          "recibido": 43,
+          "por_requisitar": 0,
+          "por_comprar": 0.9735,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.4",
+      "codigo": "1.1.4",
+      "nombre": "MUROS 1ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 13.5904,
+          "importe_ppto": 258.2178,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 13.5904,
+          "vigente_tarjetas": 43.9735,
+          "diferencia": -30.3831,
+          "requisitado": 13.5904,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 13,
+          "en_proceso_compra": 0,
+          "recibido": 13,
+          "por_requisitar": 0,
+          "por_comprar": 0.5904,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "MUROS 2DO NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 43.9735,
+          "importe_ppto": 835.4967,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 43.9735,
+          "vigente_tarjetas": 43.9735,
+          "diferencia": 0,
+          "requisitado": 43.9735,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 43,
+          "en_proceso_compra": 0,
+          "recibido": 43,
+          "por_requisitar": 0,
+          "por_comprar": 0.9735,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "MUROS 3ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 46.4124,
+          "importe_ppto": 881.8358,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 46.4124,
+          "vigente_tarjetas": 47.454,
+          "diferencia": -1.0416,
+          "requisitado": 46.4124,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 46,
+          "en_proceso_compra": 0,
+          "recibido": 46,
+          "por_requisitar": 0,
+          "por_comprar": 0.4124,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.7",
+      "codigo": "1.1.7",
+      "nombre": "LOSA ENTREPISO PB",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 23.1161,
+          "importe_ppto": 439.2059,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 23.1161,
+          "vigente_tarjetas": 23.1161,
+          "diferencia": 0,
+          "requisitado": 23.1161,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 23,
+          "en_proceso_compra": 0,
+          "recibido": 23,
+          "por_requisitar": 0,
+          "por_comprar": 0.1161,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.8",
+      "codigo": "1.1.8",
+      "nombre": "LOSA ENTREPISO 1ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 20.6161,
+          "importe_ppto": 391.7059,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 20.6161,
+          "vigente_tarjetas": 23.1161,
+          "diferencia": -2.5,
+          "requisitado": 20.6161,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 20,
+          "en_proceso_compra": 0,
+          "recibido": 20,
+          "por_requisitar": 0,
+          "por_comprar": 0.6161,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.9",
+      "codigo": "1.1.9",
+      "nombre": "LOSA ENTREPISO 2DO NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 20.6161,
+          "importe_ppto": 391.7059,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 20.6161,
+          "vigente_tarjetas": 23.1161,
+          "diferencia": -2.5,
+          "requisitado": 20.6161,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 12,
+          "en_proceso_compra": 0,
+          "recibido": 12,
+          "por_requisitar": 0,
+          "por_comprar": 8.6161,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.10",
+      "codigo": "1.1.10",
+      "nombre": "LOSA ENTREPISO 3ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 20.6161,
+          "importe_ppto": 391.7059,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 20.6161,
+          "vigente_tarjetas": 23.1161,
+          "diferencia": -2.5,
+          "requisitado": 20.6161,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 20.6161,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ESCALERA PB A 1ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 4.082,
+          "importe_ppto": 77.5588,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 4.082,
+          "vigente_tarjetas": 4.082,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.082,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.12",
+      "codigo": "1.1.12",
+      "nombre": "ESCALERA 1ER A 2DO NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 4.082,
+          "importe_ppto": 77.5588,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 4.082,
+          "vigente_tarjetas": 4.082,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.082,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.13",
+      "codigo": "1.1.13",
+      "nombre": "ESCALERA 2DO A 3ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 4.082,
+          "importe_ppto": 77.5588,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 4.082,
+          "vigente_tarjetas": 4.082,
+          "diferencia": 0,
+          "requisitado": 4.082,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 4.082,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.14",
+      "codigo": "1.1.14",
+      "nombre": "PRETILES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.683,
+          "importe_ppto": 31.977,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.683,
+          "vigente_tarjetas": 2.8455,
+          "diferencia": -1.1625,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.683,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.33",
+      "codigo": "1.1.33",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0,
+          "importe_ppto": 0,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0,
+          "vigente_tarjetas": 0,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.50",
+      "codigo": "1.1.50",
+      "nombre": "AMUEBLADO PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.5,
+          "importe_ppto": 142.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.5,
+          "vigente_tarjetas": 7.5,
+          "diferencia": 0,
+          "requisitado": 7.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.5,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.51",
+      "codigo": "1.1.51",
+      "nombre": "AMUEBLADO 1ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.5,
+          "importe_ppto": 142.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.5,
+          "vigente_tarjetas": 7.5,
+          "diferencia": 0,
+          "requisitado": 7.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.5,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.52",
+      "codigo": "1.1.52",
+      "nombre": "AMUEBLADO 2DO NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.5,
+          "importe_ppto": 142.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.5,
+          "vigente_tarjetas": 7.5,
+          "diferencia": 0,
+          "requisitado": 7.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.5,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.53",
+      "codigo": "1.1.53",
+      "nombre": "AMUEBLADO 3ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.5,
+          "importe_ppto": 142.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.5,
+          "vigente_tarjetas": 7.5,
+          "diferencia": 0,
+          "requisitado": 7.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.5,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.55",
+      "codigo": "1.1.55",
+      "nombre": "MURETE Y CONEXION-ACOMETIDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "EDIFICIO 12 PACK 3 REC"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.1899,
+          "importe_ppto": 41.6072,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.1899,
+          "vigente_tarjetas": 2.1899,
+          "diferencia": 0,
+          "requisitado": 2.1899,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 2.1899,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "FOSA DEL ELEVADOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 19.8079,
+          "importe_ppto": 376.3501,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 19.8079,
+          "vigente_tarjetas": 19.8079,
+          "diferencia": 0,
+          "requisitado": 19.8079,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 19.8079,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.2",
+      "codigo": "1.2.2",
+      "nombre": "ELEVADOR PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 8.151,
+          "importe_ppto": 154.869,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 8.151,
+          "vigente_tarjetas": 15.3024,
+          "diferencia": -7.1514,
+          "requisitado": 8.151,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 8.151,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.3",
+      "codigo": "1.2.3",
+      "nombre": "ELEVADOR 1ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 8.151,
+          "importe_ppto": 154.869,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 8.151,
+          "vigente_tarjetas": 15.3024,
+          "diferencia": -7.1514,
+          "requisitado": 8.151,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 8.151,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.4",
+      "codigo": "1.2.4",
+      "nombre": "ELEVADOR 2DO NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.1514,
+          "importe_ppto": 135.8766,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.1514,
+          "vigente_tarjetas": 15.3024,
+          "diferencia": -8.151,
+          "requisitado": 7.1514,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.1514,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.5",
+      "codigo": "1.2.5",
+      "nombre": "ELEVADOR 3ER NIVEL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 8.6904,
+          "importe_ppto": 165.1176,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 8.6904,
+          "vigente_tarjetas": 15.3024,
+          "diferencia": -6.612,
+          "requisitado": 8.6904,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 8.6904,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.6",
+      "codigo": "1.2.6",
+      "nombre": "ELEVADOR AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 17.7577,
+          "importe_ppto": 337.3963,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 17.7577,
+          "vigente_tarjetas": 17.7577,
+          "diferencia": 0,
+          "requisitado": 17.7577,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 17.7577,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.8",
+      "codigo": "1.2.8",
+      "nombre": "ESCALERA - CAMBIO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ELEVADOR P/EDIF-12 DEPTOS"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 41.7012,
+          "importe_ppto": 792.3228,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 41.7012,
+          "vigente_tarjetas": 41.7012,
+          "diferencia": 0,
+          "requisitado": 41.7012,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 41.7012,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040001",
+      "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 576.3358,
+      "importe_ppto": 10950.3812,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 576.3358,
+      "vigente_tarjetas": 645.4888,
+      "diferencia": -69.153,
+      "requisitado": 566.4888,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 1125,
+      "en_proceso_compra": 0,
+      "recibido": 1125,
+      "por_requisitar": 9.8471,
+      "por_comprar": -558.5112,
+      "situacion": "COMPRADO EXCEDE REQUISITADO",
+      "pendiente_suministro": false
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "226",
+    "insumo": "1040001",
+    "nombre": ""
+  }
+}

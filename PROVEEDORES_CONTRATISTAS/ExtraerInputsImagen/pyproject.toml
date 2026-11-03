@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "extraer-inputs-imagen"
+version = "1.0.0"
+description = "Extraccion local de los datos de los inputs de capturas PNG/JPG (Ollama + OCR)."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"  # paddlepaddle aun no publica ruedas para 3.14
+license = { text = "Propietaria - Grupo Velas" }
+authors = [{ name = "Grupo Velas - Automatizaciones" }]
+
+[project.scripts]
+extraer-inputs = "extraer_inputs.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra -q"

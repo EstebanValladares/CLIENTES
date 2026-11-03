@@ -24,7 +24,7 @@ RUTA_USUARIOS_TXT: Path = BASE_DIR / "ENKONTROL.TXT"
 RUTA_LOG: Path = BASE_DIR / "log_depuracion.txt"
 
 # --- URLS DE ARYVE ---
-URL_BASE_ARYVE: str = os.getenv("ARYVE_BASE_URL", "")
+URL_BASE_ARYVE: str = os.getenv("ARYVE_BASE_URL", "https://suite.ekloud.net:1445/Aryve/")
 URL_PROYECTOS: str = f"{URL_BASE_ARYVE.rstrip('/')}/#/scco/Proyectos"
 
 # --- TIMEOUTS Y POLLING REACTIVO (SEGUNDOS) ---

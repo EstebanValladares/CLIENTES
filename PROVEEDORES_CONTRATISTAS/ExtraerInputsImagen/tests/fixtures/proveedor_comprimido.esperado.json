@@ -1,0 +1,56 @@
+{
+  "criticos": {
+    "PROVEEDOR": "PRV-004512",
+    "NOMBRE": "MATERIALES Y ACEROS DEL GOLFO SA DE CV",
+    "DIRECCION": "AV. HIDALGO 1520 COL. AGUILA, TAMPICO, TAMPS.",
+    "CODIGO POSTAL": "89230",
+    "RFC": "MAG010203K64"
+  },
+  "campos": [
+    {
+      "etiqueta": "PROVEEDOR",
+      "valor": "PRV-004512",
+      "tipo": "texto"
+    },
+    {
+      "etiqueta": "NOMBRE",
+      "valor": "MATERIALES Y ACEROS DEL GOLFO SA DE CV",
+      "tipo": "texto"
+    },
+    {
+      "etiqueta": "DIRECCION",
+      "valor": "AV. HIDALGO 1520 COL. AGUILA, TAMPICO, TAMPS.",
+      "tipo": "texto"
+    },
+    {
+      "etiqueta": "CODIGO POSTAL",
+      "valor": "89230",
+      "tipo": "numero"
+    },
+    {
+      "etiqueta": "RFC",
+      "valor": "MAG010203K64",
+      "tipo": "texto"
+    },
+    {
+      "etiqueta": "TELEFONO",
+      "valor": "833 214 5566",
+      "tipo": "texto"
+    },
+    {
+      "etiqueta": "CORREO",
+      "valor": "",
+      "tipo": "vacio"
+    },
+    {
+      "etiqueta": "TIPO PERSONA",
+      "valor": "MORAL",
+      "tipo": "select"
+    },
+    {
+      "etiqueta": "ACTIVO",
+      "valor": "true",
+      "tipo": "checkbox"
+    }
+  ]
+}

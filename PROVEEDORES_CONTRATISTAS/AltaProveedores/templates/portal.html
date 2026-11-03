@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alta de Proveedores EK10</title>
+<style>
+  :root {
+    --bg: #f4f6f9; --panel: #ffffff; --texto: #1f2933; --suave: #5f6b7a; --borde: #dde3ea;
+    --primario: #0b72b9; --primario-texto: #ffffff; --ok: #1e8e4e; --ok-fondo: #e3f5ea;
+    --aviso: #a86200; --aviso-fondo: #fff4e0; --error: #c0392b; --error-fondo: #fdecea;
+    --info-fondo: #e8f1fa; --codigo: #0f1720; --codigo-texto: #d6e2ee;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.45 "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--texto); }
+  header { background: var(--panel); border-bottom: 1px solid var(--borde); padding: 14px 24px; display: flex;
+           align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 19px; color: var(--primario); }
+  header span { color: var(--suave); font-size: 12px; }
+  main { max-width: 1400px; margin: 0 auto; padding: 20px 24px 140px; }
+  section { background: var(--panel); border: 1px solid var(--borde); border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+  h2 { margin: 0 0 12px; font-size: 15px; text-transform: uppercase; letter-spacing: .04em; }
+  .alerta { border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; }
+  .alerta.error { background: var(--error-fondo); color: var(--error); }
+  .alerta.aviso { background: var(--aviso-fondo); color: var(--aviso); }
+  #zona { border: 2px dashed var(--borde); border-radius: 8px; padding: 28px; text-align: center; color: var(--suave);
+          cursor: pointer; transition: background .15s, border-color .15s; }
+  #zona.encima { background: var(--info-fondo); border-color: var(--primario); }
+  #zona strong { color: var(--primario); }
+  .tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; margin-top: 16px; }
+  .tarjeta { border: 1px solid var(--borde); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+  .tarjeta img { width: 100%; height: 130px; object-fit: cover; object-position: top left; cursor: zoom-in;
+                 border-bottom: 1px solid var(--borde); background: var(--bg); }
+  .tarjeta .cuerpo { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .tarjeta .titulo { font-weight: 600; }
+  .tarjeta.cargando .cuerpo { color: var(--suave); }
+  .tarjeta.fallo { border-color: var(--error); }
+  .linea { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 13px; }
+  .etiqueta { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600;
+              background: var(--info-fondo); color: var(--primario); }
+  .etiqueta.ok { background: var(--ok-fondo); color: var(--ok); }
+  .etiqueta.aviso { background: var(--aviso-fondo); color: var(--aviso); }
+  .etiqueta.error { background: var(--error-fondo); color: var(--error); }
+  .dudas { margin: 0; padding-left: 18px; color: var(--aviso); font-size: 12px; }
+  .casillas { display: flex; gap: 18px; padding-top: 6px; border-top: 1px solid var(--borde); margin-top: auto; flex-wrap: wrap; align-items: center; }
+  .acciones { display: flex; gap: 8px; padding-top: 8px; }
+  .acciones .primario { flex: 1; }
+  .paso1-cab { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--suave); }
+  .paso1-cab button { margin-left: auto; }
+  .paso1-cab[hidden] { display: none; }
+  label.casilla { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; font-weight: 600; }
+  label.casilla input { width: 16px; height: 16px; }
+  button { font: inherit; border: 1px solid var(--borde); background: var(--panel); color: var(--texto); border-radius: 5px;
+           padding: 5px 12px; cursor: pointer; }
+  button:hover { border-color: var(--primario); }
+  button.primario { background: var(--primario); color: var(--primario-texto); border-color: var(--primario); font-weight: 600; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.chico { padding: 2px 8px; font-size: 12px; }
+  .filtros { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .filtros button.activo { background: var(--info-fondo); border-color: var(--primario); color: var(--primario); font-weight: 600; }
+  .filtros input { margin-left: auto; padding: 5px 10px; border: 1px solid var(--borde); border-radius: 5px; min-width: 220px; font: inherit; }
+  .tabla { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 7px 8px; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
+  th { color: var(--suave); font-weight: 600; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
+  td.paso { min-width: 190px; }
+  td .res { display: block; color: var(--suave); font-size: 11px; margin-top: 2px; }
+  td img { width: 70px; height: 34px; object-fit: cover; object-position: top left; border: 1px solid var(--borde); cursor: zoom-in; }
+  .vacio { color: var(--suave); text-align: center; padding: 24px; }
+  #barra { position: fixed; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--borde);
+           padding: 10px 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; box-shadow: 0 -2px 8px rgba(0,0,0,.06); }
+  #barra .modo { display: flex; gap: 12px; }
+  #barra .resumen { color: var(--suave); }
+  #barra .derecha { margin-left: auto; display: flex; gap: 8px; }
+  #log { background: var(--codigo); color: var(--codigo-texto); font: 12px/1.5 Consolas, monospace; padding: 12px;
+         border-radius: 6px; max-height: 320px; overflow: auto; white-space: pre-wrap; margin: 0; }
+  #log .warning { color: #f5c26b; } #log .error { color: #ff8a80; }
+  dialog { border: none; border-radius: 10px; padding: 0; max-width: 92vw; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+  #editor { width: 1100px; }
+  dialog::backdrop { background: rgba(15, 23, 32, .55); }
+  .modal-cab { padding: 14px 18px; border-bottom: 1px solid var(--borde); display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+  .modal-cuerpo { padding: 14px 18px; max-height: 70vh; overflow: auto; }
+  .modal-pie { padding: 12px 18px; border-top: 1px solid var(--borde); display: flex; justify-content: flex-end; gap: 8px; }
+  .campos td { padding: 3px 6px; border: none; }
+  .campos input { width: 100%; padding: 4px 8px; border: 1px solid var(--borde); border-radius: 4px; font: inherit; }
+  .campos input.nombre { font-weight: 600; min-width: 160px; }
+  #visor img { display: block; max-width: 90vw; max-height: 80vh; }
+  #editor-imagen { display: block; max-width: 100%; border: 1px solid var(--borde); margin-bottom: 12px; }
+  #editor-imagen[hidden] { display: none; }
+  .campos tr.dudoso input { border-color: var(--aviso); background: var(--aviso-fondo); }
+  @media (max-width: 700px) { main, header, #barra { padding-left: 16px; padding-right: 16px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Alta de Proveedores y Contratistas EK10</h1>
+  <span>Lector de imagenes: {{ lector }} · Datos: {{ carpeta_datos }}</span>
+</header>
+<main>
+  {% if falta_api_key %}
+  <div class="alerta error">El lector es Claude pero no esta definida la variable <b>ANTHROPIC_API_KEY</b>:
+    no se podran leer imagenes nuevas. El historial y la ejecucion de los bots si funcionan.</div>
+  {% endif %}
+
+  <section>
+    <h2>1. Cargar capturas de proveedores</h2>
+    <div class="alerta aviso">Para una buena lectura: capture solo la pestaña <b>Datos Generales</b>,
+      <b>quite el mouse</b> de los campos y <b>no deje texto seleccionado</b>. Revise siempre los datos
+      marcados en amarillo antes de ejecutar.</div>
+    <div id="zona">Arrastra aqui las imagenes de la pantalla <b>Datos Generales</b> del proveedor
+      o <strong>haz clic para elegirlas</strong> (png, jpg)</div>
+    <input type="file" id="archivos" accept=".png,.jpg,.jpeg,.gif,.webp" multiple hidden>
+    <div class="tarjetas" id="tarjetas-carga"></div>
+    <div class="paso1-cab" id="paso1-cab" hidden>
+      <span id="paso1-cuenta"></span>
+      <button class="primario" id="agregar-todos">Agregar todos al historial</button>
+    </div>
+    <div class="tarjetas" id="tarjetas"></div>
+  </section>
+
+  <section>
+    <h2>2. Historial</h2>
+    <div class="filtros" id="filtros">
+      <button data-filtro="todos" class="activo">Todos</button>
+      <button data-filtro="pendientes">Pendientes</button>
+      <button data-filtro="marcados">Marcados para ejecutar</button>
+      <button data-filtro="registrados">Registrados</button>
+      <input type="search" id="buscar" placeholder="Buscar nombre, numero o clave">
+    </div>
+    <div class="tabla">
+      <table>
+        <thead><tr>
+          <th>Imagen</th><th>Proveedor</th><th>Nombre</th><th>Tipo</th><th>Clave EK10</th>
+          <th>Alta proveedor</th><th>Alta contratista</th><th>Actualizado</th><th></th>
+        </tr></thead>
+        <tbody id="historial"><tr><td colspan="9" class="vacio">Cargando...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="seccion-log" hidden>
+    <h2>Ejecucion <span id="estado-trabajo" class="etiqueta"></span></h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+
+<div id="barra">
+  <div class="modo">
+    <label class="casilla"><input type="radio" name="modo" value="prueba" checked> Prueba (no guarda)</label>
+    <label class="casilla"><input type="radio" name="modo" value="real"> Alta real</label>
+  </div>
+  <span class="resumen" id="resumen-marcados"></span>
+  <div class="derecha">
+    <button class="primario" id="ejecutar">Ejecutar marcados</button>
+  </div>
+</div>
+
+<dialog id="editor">
+  <div class="modal-cab"><b id="editor-titulo">Editar</b><button class="chico" data-cerrar>Cerrar</button></div>
+  <div class="modal-cuerpo">
+    <div id="editor-avisos"></div>
+    <img id="editor-imagen" alt="Captura del proveedor">
+    <table class="campos"><tbody id="editor-campos"></tbody></table>
+  </div>
+  <div class="modal-pie">
+    <button data-cerrar>Cancelar</button>
+    <button class="primario" id="editor-guardar">Guardar CSV</button>
+  </div>
+</dialog>
+
+<dialog id="visor"><img alt="Captura del proveedor"></dialog>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+let registros = [];
+let filtro = "todos";
+
+async function api(url, opciones = {}) {
+  const r = await fetch(url, {headers: {"Content-Type": "application/json"}, ...opciones});
+  const datos = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(datos.error || `Error ${r.status}`);
+  return datos;
+}
+
+/* ---------- Estado de cada paso ---------- */
+function estadoProveedor(r) {
+  if (r.id_ek10) return `<span class="etiqueta ok">ID EK10 ${esc(r.id_ek10)}</span>`;
+  return "";
+}
+function estadoContratista(r) {
+  if (r.id_contratista) return `<span class="etiqueta ok">ID ${esc(r.id_contratista)}</span>`;
+  return "";
+}
+function resultado(texto) {
+  if (!texto) return "";
+  const clase = /ERROR|FALTAN|DUPLICAD|YA EXISTE|SIN ID/.test(texto) ? "error" : "";
+  return `<span class="res ${clase}">${esc(texto)}</span>`;
+}
+function casilla(r, paso) {
+  const hecho = paso === "proveedor" ? r.id_ek10 : r.id_contratista;
+  const marcado = paso === "proveedor" ? r.quiere_proveedor : r.quiere_contratista;
+  return `<label class="casilla"><input type="checkbox" data-id="${r.id}" data-paso="${paso}"
+    ${marcado && !hecho ? "checked" : ""} ${hecho ? "disabled" : ""}> ${hecho ? "" : "Generar"}</label>`;
+}
+
+/* ---------- Historial ---------- */
+function visible(r) {
+  if (!r.en_historial) return false;
+  const texto = $("#buscar").value.trim().toLowerCase();
+  if (texto && ![r.proveedor, r.nombre, r.clave_proveedor].join(" ").toLowerCase().includes(texto)) return false;
+  if (filtro === "pendientes") return (!r.id_ek10 && r.quiere_proveedor) || (!r.id_contratista && r.quiere_contratista);
+  if (filtro === "marcados") return marcados(r).length > 0;
+  if (filtro === "registrados") return r.id_ek10 || r.id_contratista;
+  return true;
+}
+function marcados(r) {
+  const pasos = [];
+  if (r.quiere_proveedor && !r.id_ek10) pasos.push("proveedor");
+  if (r.quiere_contratista && !r.id_contratista) pasos.push("contratista");
+  return pasos;
+}
+function pintarHistorial() {
+  const filas = registros.filter(visible);
+  $("#historial").innerHTML = filas.length ? filas.map(r => `
+    <tr>
+      <td>${r.imagen ? `<img src="/imagen/${r.id}" data-visor="${r.id}" alt="">` : ""}</td>
+      <td>${esc(r.proveedor)}</td>
+      <td>${esc(r.nombre)}${r.faltantes.length ? `<span class="res error">Faltan: ${esc(r.faltantes.join(", "))}</span>` : ""}
+          ${r.error_csv ? `<span class="res error">${esc(r.error_csv)}</span>` : ""}</td>
+      <td>${r.tipo_persona ? `<span class="etiqueta">${esc(r.tipo_persona)}</span>` : ""}</td>
+      <td>${esc(r.clave_proveedor)}</td>
+      <td class="paso">${casilla(r, "proveedor")} ${estadoProveedor(r)}${resultado(r.res_proveedor)}</td>
+      <td class="paso">${casilla(r, "contratista")} ${estadoContratista(r)}${resultado(r.res_contratista)}</td>
+      <td>${esc(r.actualizado)}</td>
+      <td style="white-space:nowrap">
+        <button class="chico" data-verificar="${r.id}"
+          title="Busca el RFC en EK10 y, si el proveedor ya existe, anota su ID EK10 (no crea nada)">Verificar en EK10</button>
+        <button class="chico" data-editar="${r.id}">Editar</button>
+        <a href="/csv/${r.id}"><button class="chico">CSV</button></a>
+        <button class="chico" data-borrar="${r.id}" title="Quitar del historial (no borra archivos)">Quitar</button>
+      </td>
+    </tr>`).join("") : `<tr><td colspan="9" class="vacio">Sin registros</td></tr>`;
+  const p = paraEjecutar("proveedor").length, c = paraEjecutar("contratista").length;
+  $("#resumen-marcados").textContent = `Marcados en el historial: ${p} proveedor(es), ${c} contratista(s)`;
+}
+function paraEjecutar(paso) {
+  return registros.filter(r => r.en_historial && (paso === "proveedor"
+    ? r.quiere_proveedor && !r.id_ek10 : r.quiere_contratista && !r.id_contratista)).map(r => r.id);
+}
+async function cargarHistorial() {
+  registros = await api("/api/registros");
+  pintarTarjetas();
+  pintarHistorial();
+}
+
+/* ---------- Carga de imagenes ---------- */
+function tarjeta(r) {
+  return `
+    <img src="/imagen/${r.id}" data-visor="${r.id}" alt="">
+    <div class="cuerpo">
+      <div class="titulo">${esc(r.proveedor)} · ${esc(r.nombre)}</div>
+      <div class="linea"><span class="etiqueta">${esc(r.tipo_persona)}</span> Clave: <b>${esc(r.clave_proveedor)}</b></div>
+      ${r.aviso ? `<div class="linea"><span class="etiqueta aviso">${esc(r.aviso)}</span></div>` : ""}
+      ${r.faltantes.length ? `<div class="linea"><span class="etiqueta error">Faltan: ${esc(r.faltantes.join(", "))}</span></div>` : ""}
+      ${r.dudas.length ? `<ul class="dudas">${r.dudas.map(d => `<li>${esc(d)}</li>`).join("")}</ul>` : ""}
+      <div class="casillas">
+        ${casilla(r, "proveedor").replace("Generar", "Proveedor")} ${estadoProveedor(r)}
+        ${casilla(r, "contratista").replace("Generar", "Contratista")} ${estadoContratista(r)}
+        <button class="chico" data-editar="${r.id}" style="margin-left:auto">Revisar datos</button>
+      </div>
+      ${r.res_proveedor ? `<div class="linea">${resultado(r.res_proveedor)}</div>` : ""}
+      <div class="acciones">
+        <button class="primario" data-agregar="${r.id}">Agregar al historial</button>
+        <button data-verificar="${r.id}" title="Busca el RFC en EK10 para saber si el proveedor ya existe (no crea nada)">Verificar en EK10</button>
+        <button data-descartar="${r.id}" title="Quitar esta imagen sin agregarla al historial">Descartar</button>
+      </div>
+    </div>`;
+}
+function pintarTarjetas() {
+  const pendientes = registros.filter(r => !r.en_historial);
+  $("#tarjetas").innerHTML = pendientes.map(r => `<div class="tarjeta" data-tarjeta="${r.id}">${tarjeta(r)}</div>`).join("");
+  $("#paso1-cab").hidden = pendientes.length === 0;
+  $("#paso1-cuenta").textContent = `${pendientes.length} imagen(es) por revisar`;
+}
+async function agregarAlHistorial(ids) {
+  for (const id of ids) {
+    await api(`/api/registros/${id}`, {method: "PUT", body: JSON.stringify({en_historial: true})});
+  }
+  await cargarHistorial();
+}
+async function subir(archivos) {
+  for (const archivo of archivos) {
+    const div = document.createElement("div");
+    div.className = "tarjeta cargando";
+    div.innerHTML = `<div class="cuerpo"><div class="titulo">${esc(archivo.name)}</div>Leyendo imagen... <span data-reloj>0:00</span></div>`;
+    $("#tarjetas-carga").prepend(div);
+    // Contador: con el lector local una imagen tarda varios minutos
+    const inicio = Date.now(), reloj = div.querySelector("[data-reloj]");
+    const tic = setInterval(() => {
+      const s = Math.floor((Date.now() - inicio) / 1000);
+      reloj.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+    }, 1000);
+    const datos = new FormData();
+    datos.append("imagen", archivo);
+    try {
+      const r = await fetch("/api/imagenes", {method: "POST", body: datos}).finally(() => clearInterval(tic));
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || `Error ${r.status}`);
+      if (j.aviso) alert(j.aviso);
+      div.remove();
+      await cargarHistorial();
+    } catch (e) {
+      div.className = "tarjeta fallo";
+      div.innerHTML = `<div class="cuerpo"><div class="titulo">${esc(archivo.name)}</div>
+        <span class="etiqueta error">${esc(e.message)}</span>
+        <div class="acciones"><button data-cerrar-tarjeta>Quitar</button></div></div>`;
+    }
+  }
+}
+const zona = $("#zona");
+zona.addEventListener("click", () => $("#archivos").click());
+$("#archivos").addEventListener("change", e => { subir([...e.target.files]); e.target.value = ""; });
+zona.addEventListener("dragover", e => { e.preventDefault(); zona.classList.add("encima"); });
+zona.addEventListener("dragleave", () => zona.classList.remove("encima"));
+zona.addEventListener("drop", e => { e.preventDefault(); zona.classList.remove("encima"); subir([...e.dataTransfer.files]); });
+
+/* ---------- Casillas, editar, quitar, visor ---------- */
+document.addEventListener("change", async e => {
+  const c = e.target.closest("input[data-paso]");
+  if (!c) return;
+  const campo = c.dataset.paso === "proveedor" ? "quiere_proveedor" : "quiere_contratista";
+  try {
+    const r = await api(`/api/registros/${c.dataset.id}`, {method: "PUT", body: JSON.stringify({[campo]: c.checked})});
+    registros = registros.map(x => x.id === r.id ? {...x, ...r} : x);
+    document.querySelectorAll(`input[data-id="${r.id}"][data-paso="${c.dataset.paso}"]`).forEach(i => i.checked = c.checked);
+    pintarHistorial();
+  } catch (err) { alert(err.message); c.checked = !c.checked; }
+});
+
+let editando = null;
+document.addEventListener("click", async e => {
+  const visor = e.target.closest("[data-visor]");
+  if (visor) { $("#visor img").src = `/imagen/${visor.dataset.visor}`; $("#visor").showModal(); return; }
+  if (e.target.closest("[data-cerrar]")) { e.target.closest("dialog").close(); return; }
+  const editar = e.target.closest("[data-editar]");
+  if (editar) {
+    const r = await api(`/api/registros/${editar.dataset.editar}`);
+    editando = r.id;
+    $("#editor-titulo").textContent = `${r.proveedor} · ${r.nombre}`;
+    $("#editor-avisos").innerHTML = [
+      r.id_ek10 ? `<div class="alerta aviso">Ya tiene ID EK10 ${esc(r.id_ek10)}: los cambios no se reflejan en EK10.</div>` : "",
+      r.dudas.length ? `<div class="alerta aviso"><b>Revisar:</b><ul class="dudas">${r.dudas.map(d => `<li>${esc(d)}</li>`).join("")}</ul></div>` : "",
+    ].join("");
+    $("#editor-imagen").hidden = !r.imagen;
+    if (r.imagen) $("#editor-imagen").src = `/imagen/${r.id}?t=${Date.now()}`;
+    // Resalta los campos mencionados en las dudas
+    const dudoso = (c) => r.dudas.some(d => d.includes(` ${c}:`) || d.startsWith(`${c} `) ||
+      (c === "R.F.C." && d.includes("RFC")) || (c === "Código Postal" && d.includes("Codigo Postal")));
+    $("#editor-campos").innerHTML = r.campos.map(([c, v]) => `
+      <tr class="${dudoso(c) ? "dudoso" : ""}"><td><input class="nombre" value="${esc(c)}"></td>
+      <td><input value="${esc(v)}"></td></tr>`).join("");
+    $("#editor").showModal();
+    return;
+  }
+  const verificar = e.target.closest("[data-verificar]");
+  if (verificar) {
+    const r = registros.find(x => x.id === Number(verificar.dataset.verificar));
+    if (!confirm(`Verificar en EK10 el proveedor ${r.proveedor} ${r.nombre}?\n` +
+                 "Se busca su RFC; si ya existe se anota su ID EK10. No se crea nada.")) return;
+    try {
+      await api("/api/ejecutar", {method: "POST", body: JSON.stringify({verificar: [r.id]})});
+      $("#log").textContent = ""; lineasLeidas = 0;
+      seguirTrabajo();
+    } catch (err) { alert(err.message); }
+    return;
+  }
+  const agregar = e.target.closest("[data-agregar]");
+  if (agregar) {
+    try { await agregarAlHistorial([agregar.dataset.agregar]); } catch (err) { alert(err.message); }
+    return;
+  }
+  const descartar = e.target.closest("[data-descartar]");
+  if (descartar && confirm("¿Descartar esta imagen? No se agregara al historial y se borran su CSV e imagen.")) {
+    await api(`/api/registros/${descartar.dataset.descartar}`, {method: "DELETE"});
+    await cargarHistorial();
+    return;
+  }
+  if (e.target.closest("[data-cerrar-tarjeta]")) { e.target.closest(".tarjeta").remove(); return; }
+  const borrar = e.target.closest("[data-borrar]");
+  if (borrar && confirm("¿Quitar este registro del historial? El CSV y la imagen se conservan en disco.")) {
+    await api(`/api/registros/${borrar.dataset.borrar}`, {method: "DELETE"});
+    await cargarHistorial();
+  }
+});
+$("#visor").addEventListener("click", () => $("#visor").close());
+$("#agregar-todos").addEventListener("click", async () => {
+  try { await agregarAlHistorial(registros.filter(r => !r.en_historial).map(r => r.id)); } catch (err) { alert(err.message); }
+});
+$("#editor-guardar").addEventListener("click", async () => {
+  const campos = [...$("#editor-campos").rows].map(f => [...f.querySelectorAll("input")].map(i => i.value));
+  try {
+    await api(`/api/registros/${editando}`, {method: "PUT", body: JSON.stringify({campos})});
+    $("#editor").close();
+    await cargarHistorial();
+  } catch (err) { alert(err.message); }
+});
+
+/* ---------- Filtros ---------- */
+$("#filtros").addEventListener("click", e => {
+  const b = e.target.closest("button[data-filtro]");
+  if (!b) return;
+  filtro = b.dataset.filtro;
+  document.querySelectorAll("#filtros button").forEach(x => x.classList.toggle("activo", x === b));
+  pintarHistorial();
+});
+$("#buscar").addEventListener("input", pintarHistorial);
+
+/* ---------- Ejecucion ---------- */
+let lineasLeidas = 0, sondeo = null;
+$("#ejecutar").addEventListener("click", async () => {
+  const proveedor = paraEjecutar("proveedor"), contratista = paraEjecutar("contratista");
+  if (!proveedor.length && !contratista.length) {
+    alert("No hay registros marcados en el historial. Las imagenes del paso 1 se agregan con 'Agregar al historial'.");
+    return;
+  }
+  const real = document.querySelector("input[name=modo]:checked").value === "real";
+  const texto = `${real ? "ALTA REAL" : "PRUEBA (no guarda)"}\n${proveedor.length} proveedor(es) y ${contratista.length} contratista(s).\n¿Continuar?`;
+  if (!confirm(texto)) return;
+  try {
+    await api("/api/ejecutar", {method: "POST", body: JSON.stringify({proveedor, contratista, guardar: real})});
+    $("#log").textContent = ""; lineasLeidas = 0;
+    seguirTrabajo();
+  } catch (err) { alert(err.message); }
+});
+function seguirTrabajo() {
+  $("#seccion-log").hidden = false;
+  $("#ejecutar").disabled = true;
+  clearInterval(sondeo);
+  sondeo = setInterval(async () => {
+    const t = await api(`/api/trabajo?desde=${lineasLeidas}`);
+    lineasLeidas = t.total_lineas;
+    for (const l of t.lineas) {
+      const s = document.createElement("span");
+      s.className = l.includes(" - ERROR - ") ? "error" : l.includes(" - WARNING - ") ? "warning" : "";
+      s.textContent = l + "\n";
+      $("#log").appendChild(s);
+    }
+    if (t.lineas.length) $("#log").scrollTop = $("#log").scrollHeight;
+    $("#estado-trabajo").textContent = t.activo ? `${t.modo} en curso desde ${t.inicio}` : `${t.modo} terminada ${t.fin}`;
+    $("#estado-trabajo").className = "etiqueta " + (t.activo ? "" : "ok");
+    if (!t.activo) {
+      clearInterval(sondeo);
+      $("#ejecutar").disabled = false;
+      await cargarHistorial();
+    }
+  }, 2000);
+}
+
+cargarHistorial();
+api("/api/trabajo").then(t => { if (t.activo) seguirTrabajo(); });
+</script>
+</body>
+</html>

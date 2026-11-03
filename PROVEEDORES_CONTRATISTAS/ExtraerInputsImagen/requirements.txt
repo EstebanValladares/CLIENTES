@@ -1,0 +1,8 @@
+# Dependencias de ejecucion (Python 3.13: paddlepaddle aun no publica ruedas para 3.14).
+# Para desarrollo/pruebas usar requirements-dev.txt.
+ollama>=0.4
+paddlepaddle>=3.0
+paddleocr>=3.0
+easyocr>=1.7        # OCR alternativo si PaddleOCR no esta disponible o falla
+rapidfuzz>=3.0
+pillow>=10.0

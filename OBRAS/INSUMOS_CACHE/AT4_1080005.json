@@ -1,0 +1,476 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AT4",
+    "nombre": "AT4 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-D)"
+  },
+  "metricas": {
+    "total_partidas": 5,
+    "total_frentes": 5,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 121.4198,
+    "requisitado_total": 119.7025,
+    "comprado_total": 0.0,
+    "por_comprar_total": 119.7025
+  },
+  "frentes": [
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "ALBAÑILERIA N°1",
+      "partidas": [
+        {
+          "id": "1.7.1",
+          "codigo": "1.7.1",
+          "nombre": "ALBAÑILERIA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "ALBAÑILERIA N°1"
+          },
+          "insumos": [
+            {
+              "clave": "1080005",
+              "nombre": "ESTUCO (SACO CON 40KG)",
+              "unidad": "SACO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 24.1185,
+              "importe_ppto": 3810.7199,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 24.1185,
+              "vigente_tarjetas": 24.1185,
+              "diferencia": 0,
+              "requisitado": 24.1185,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 24.1185,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.8",
+      "codigo": "1.8",
+      "nombre": "ALBAÑILERIA N°2",
+      "partidas": [
+        {
+          "id": "1.8.1",
+          "codigo": "1.8.1",
+          "nombre": "ALBAÑILERIA NIVEL 2",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "ALBAÑILERIA N°2"
+          },
+          "insumos": [
+            {
+              "clave": "1080005",
+              "nombre": "ESTUCO (SACO CON 40KG)",
+              "unidad": "SACO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 23.896,
+              "importe_ppto": 3775.568,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 23.896,
+              "vigente_tarjetas": 23.896,
+              "diferencia": 0,
+              "requisitado": 23.896,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 23.896,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.9",
+      "codigo": "1.9",
+      "nombre": "ALBAÑILERIA N°3",
+      "partidas": [
+        {
+          "id": "1.9.1",
+          "codigo": "1.9.1",
+          "nombre": "ALBAÑILERIA NIVEL 3",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "ALBAÑILERIA N°3"
+          },
+          "insumos": [
+            {
+              "clave": "1080005",
+              "nombre": "ESTUCO (SACO CON 40KG)",
+              "unidad": "SACO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 23.896,
+              "importe_ppto": 3775.568,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 23.896,
+              "vigente_tarjetas": 23.896,
+              "diferencia": 0,
+              "requisitado": 23.896,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 23.896,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.10",
+      "codigo": "1.10",
+      "nombre": "ALBAÑILERIA N°4",
+      "partidas": [
+        {
+          "id": "1.10.1",
+          "codigo": "1.10.1",
+          "nombre": "ALBAÑILERIA NIVEL 4",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "ALBAÑILERIA N°4"
+          },
+          "insumos": [
+            {
+              "clave": "1080005",
+              "nombre": "ESTUCO (SACO CON 40KG)",
+              "unidad": "SACO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 23.896,
+              "importe_ppto": 3775.568,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 23.896,
+              "vigente_tarjetas": 23.896,
+              "diferencia": 0,
+              "requisitado": 23.896,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 23.896,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.11",
+      "codigo": "1.11",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "partidas": [
+        {
+          "id": "1.11.1",
+          "codigo": "1.11.1",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.11",
+            "codigo": "1.11",
+            "nombre": "ALBAÑILERIA AZOTEA"
+          },
+          "insumos": [
+            {
+              "clave": "1080005",
+              "nombre": "ESTUCO (SACO CON 40KG)",
+              "unidad": "SACO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 25.6133,
+              "importe_ppto": 4046.8982,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 25.6133,
+              "vigente_tarjetas": 25.6133,
+              "diferencia": 0,
+              "requisitado": 23.896,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.7173,
+              "por_comprar": 23.896,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.7.1",
+      "codigo": "1.7.1",
+      "nombre": "ALBAÑILERIA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "ALBAÑILERIA N°1"
+      },
+      "insumos": [
+        {
+          "clave": "1080005",
+          "nombre": "ESTUCO (SACO CON 40KG)",
+          "unidad": "SACO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 24.1185,
+          "importe_ppto": 3810.7199,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 24.1185,
+          "vigente_tarjetas": 24.1185,
+          "diferencia": 0,
+          "requisitado": 24.1185,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 24.1185,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.1",
+      "codigo": "1.8.1",
+      "nombre": "ALBAÑILERIA NIVEL 2",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "ALBAÑILERIA N°2"
+      },
+      "insumos": [
+        {
+          "clave": "1080005",
+          "nombre": "ESTUCO (SACO CON 40KG)",
+          "unidad": "SACO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 23.896,
+          "importe_ppto": 3775.568,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 23.896,
+          "vigente_tarjetas": 23.896,
+          "diferencia": 0,
+          "requisitado": 23.896,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 23.896,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.1",
+      "codigo": "1.9.1",
+      "nombre": "ALBAÑILERIA NIVEL 3",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "ALBAÑILERIA N°3"
+      },
+      "insumos": [
+        {
+          "clave": "1080005",
+          "nombre": "ESTUCO (SACO CON 40KG)",
+          "unidad": "SACO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 23.896,
+          "importe_ppto": 3775.568,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 23.896,
+          "vigente_tarjetas": 23.896,
+          "diferencia": 0,
+          "requisitado": 23.896,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 23.896,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.1",
+      "codigo": "1.10.1",
+      "nombre": "ALBAÑILERIA NIVEL 4",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "ALBAÑILERIA N°4"
+      },
+      "insumos": [
+        {
+          "clave": "1080005",
+          "nombre": "ESTUCO (SACO CON 40KG)",
+          "unidad": "SACO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 23.896,
+          "importe_ppto": 3775.568,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 23.896,
+          "vigente_tarjetas": 23.896,
+          "diferencia": 0,
+          "requisitado": 23.896,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 23.896,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.11.1",
+      "codigo": "1.11.1",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.11",
+        "codigo": "1.11",
+        "nombre": "ALBAÑILERIA AZOTEA"
+      },
+      "insumos": [
+        {
+          "clave": "1080005",
+          "nombre": "ESTUCO (SACO CON 40KG)",
+          "unidad": "SACO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 25.6133,
+          "importe_ppto": 4046.8982,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 25.6133,
+          "vigente_tarjetas": 25.6133,
+          "diferencia": 0,
+          "requisitado": 23.896,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.7173,
+          "por_comprar": 23.896,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1080005",
+      "nombre": "ESTUCO (SACO CON 40KG)",
+      "unidad": "SACO",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 121.4198,
+      "importe_ppto": 19184.3221,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 121.4198,
+      "vigente_tarjetas": 121.4198,
+      "diferencia": 0,
+      "requisitado": 119.7025,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 1.7173,
+      "por_comprar": 119.7025,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AT4",
+    "insumo": "1080005",
+    "nombre": ""
+  }
+}

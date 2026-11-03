@@ -62,7 +62,7 @@ class UserService:
                             "fecha_creacion": str(u.get("Creado", "")).strip(),
                             "telefono": str(u.get("Telefono", "")).strip(),
                             "time_zone": str(u.get("TimeZone", "")).strip(),
-                            "url_aryve": f"#/usuarios/{uid}" if uid else ""
+                            "url_aryve": ""
                         }
                         usuarios.append(user_dict)
                         if uid:
@@ -134,7 +134,7 @@ class UserService:
                                 "fecha_creacion": str(reg.get("fecha", "")).strip(),
                                 "telefono": "",
                                 "time_zone": "",
-                                "url_aryve": f"#/usuarios/{uid}" if uid else ""
+                                "url_aryve": ""
                             })
                             if uid:
                                 ids_vistos.add(uid)
@@ -146,6 +146,13 @@ class UserService:
         cls._cache_usuarios = usuarios
         cls._last_load_time = ahora
         return usuarios
+
+    @classmethod
+    def recargar(cls) -> List[Dict[str, Any]]:
+        """Invalida la caché y recarga los usuarios desde el archivo JSON local."""
+        cls._cache_usuarios = None
+        cls._last_load_time = None
+        return cls.obtener_usuarios(force_reload=True)
 
     @classmethod
     def buscar_usuarios(cls, query: str = "", filtro_vigencia: str = "TODOS") -> List[Dict[str, Any]]:
@@ -229,6 +236,6 @@ class UserService:
 
     @classmethod
     def sincronizar_desde_aryve(cls) -> Dict[str, Any]:
-        """En versión del equipo, recarga los datos desde Firebase Firestore"""
+        """En versión del equipo, recarga los datos del catálogo local de Usuarios.json"""
         cls.recargar()
-        return {"ok": True, "mensaje": "Base de usuarios sincronizada desde Firebase Firestore."}
+        return {"ok": True, "mensaje": "Catálogo de usuarios recargado localmente con éxito."}

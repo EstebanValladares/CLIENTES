@@ -19,8 +19,9 @@ if "%USER_EMAIL%"=="" (
 )
 (
     echo # ==============================================================================
-    echo # CREDENCIALES LOCALES DEL USUARIO (Privado - Protegido por .gitignore)
+    echo # CREDENCIALES LOCALES DEL USUARIO - Protegido por .gitignore
     echo # ==============================================================================
+    echo ARYVE_BASE_URL=https://suite.ekloud.net:1445/Aryve/
     echo EK10_USER=%USER_EMAIL%
     echo EK10_PASS=%USER_PASS%
     echo EK9_USER=%USER_EMAIL%

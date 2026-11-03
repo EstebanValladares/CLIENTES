@@ -26,7 +26,410 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(71, 85, 105, 1);
     }
-  </style>
+  
+    /* ======================================================== */
+    /* MODO CLARO: ALTO CONTRASTE & COLORES VIBRANTES INTENSOS  */
+    /* ======================================================== */
+    html.theme-light, 
+    body.theme-light {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+
+    /* 1. CONTENEDORES, TARJETAS, MODALES Y DROPDOWNS */
+    .theme-light .bg-slate-900,
+    .theme-light .bg-slate-900\/60,
+    .theme-light .bg-slate-900\/80,
+    .theme-light .bg-slate-900\/90,
+    .theme-light .bg-slate-950,
+    .theme-light .bg-slate-950\/40,
+    .theme-light .bg-slate-950\/60,
+    .theme-light .bg-slate-950\/70,
+    .theme-light .bg-slate-950\/80,
+    .theme-light .bg-slate-950\/90,
+    .theme-light .bg-slate-850 {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .theme-light .bg-slate-800,
+    .theme-light .bg-slate-800\/40,
+    .theme-light .bg-slate-800\/50,
+    .theme-light .bg-slate-800\/60,
+    .theme-light .bg-slate-800\/80,
+    .theme-light .bg-slate-800\/90 {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    /* Fondos para paneles interiores / detalles secundarios */
+    .theme-light div.bg-slate-950\/60,
+    .theme-light div.bg-slate-950\/40 {
+      background-color: #f8fafc !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    /* Bordes nitidos de alta definicion */
+    .theme-light .border-slate-700,
+    .theme-light .border-slate-700\/60,
+    .theme-light .border-slate-700\/70,
+    .theme-light .border-slate-700\/80,
+    .theme-light .border-slate-800,
+    .theme-light .border-slate-800\/80,
+    .theme-light .border-slate-800\/90,
+    .theme-light .border-slate-850,
+    .theme-light .border-slate-900 {
+      border-color: #cbd5e1 !important;
+    }
+
+    /* 2. TEXTOS GENERALES DE ALTO CONTRASTE (EXCLUYE BOTONES SOLIDOS) */
+    .theme-light .text-white,
+    .theme-light .text-slate-100 {
+      color: #0f172a !important;
+      font-weight: 700;
+    }
+    .theme-light .text-slate-200 {
+      color: #1e293b !important;
+      font-weight: 600;
+    }
+    .theme-light .text-slate-300 {
+      color: #334155 !important;
+      font-weight: 600;
+    }
+    .theme-light .text-slate-400 {
+      color: #475569 !important;
+      font-weight: 500;
+    }
+    .theme-light .text-slate-500 {
+      color: #64748b !important;
+      font-weight: 600;
+    }
+    .theme-light h1, .theme-light h2, .theme-light h3, .theme-light h4 {
+      color: #0f172a !important;
+    }
+
+    /* 3. BOTONES PRIMARIOS SOLIDOS (TEXTO BLANCO SIEMPRE GARANTIZADO) */
+    .theme-light .bg-indigo-600:not(:disabled),
+    .theme-light button.bg-indigo-600:not(:disabled) {
+      background-color: #4f46e5 !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
+    }
+    .theme-light .bg-indigo-600:not(:disabled):hover,
+    .theme-light button.bg-indigo-600:not(:disabled):hover {
+      background-color: #4338ca !important;
+    }
+    .theme-light .bg-indigo-600:not(:disabled) *,
+    .theme-light button.bg-indigo-600:not(:disabled) * {
+      color: #ffffff !important;
+    }
+
+    .theme-light .bg-emerald-600:not(:disabled),
+    .theme-light button.bg-emerald-600:not(:disabled) {
+      background-color: #059669 !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4) !important;
+    }
+    .theme-light .bg-emerald-600:not(:disabled):hover,
+    .theme-light button.bg-emerald-600:not(:disabled):hover {
+      background-color: #047857 !important;
+    }
+    .theme-light .bg-emerald-600:not(:disabled) *,
+    .theme-light button.bg-emerald-600:not(:disabled) * {
+      color: #ffffff !important;
+    }
+
+    .theme-light .bg-amber-600:not(:disabled),
+    .theme-light button.bg-amber-600:not(:disabled),
+    .theme-light .bg-orange-600:not(:disabled),
+    .theme-light button.bg-orange-600:not(:disabled) {
+      background-color: #ea580c !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
+    }
+    .theme-light .bg-amber-600:not(:disabled):hover,
+    .theme-light .bg-orange-600:not(:disabled):hover {
+      background-color: #c2410c !important;
+    }
+    .theme-light .bg-amber-600:not(:disabled) *,
+    .theme-light button.bg-amber-600:not(:disabled) * {
+      color: #ffffff !important;
+    }
+
+    .theme-light .bg-rose-600:not(:disabled),
+    .theme-light button.bg-rose-600:not(:disabled) {
+      background-color: #e11d48 !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4) !important;
+    }
+    .theme-light .bg-rose-600:not(:disabled):hover,
+    .theme-light button.bg-rose-600:not(:disabled):hover {
+      background-color: #be123c !important;
+    }
+    .theme-light .bg-rose-600:not(:disabled) *,
+    .theme-light button.bg-rose-600:not(:disabled) * {
+      color: #ffffff !important;
+    }
+
+    .theme-light .bg-cyan-600:not(:disabled),
+    .theme-light button.bg-cyan-600:not(:disabled) {
+      background-color: #0891b2 !important;
+      border-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4) !important;
+    }
+    .theme-light .bg-cyan-600:not(:disabled):hover,
+    .theme-light button.bg-cyan-600:not(:disabled):hover {
+      background-color: #0e7490 !important;
+    }
+    .theme-light .bg-cyan-600:not(:disabled) *,
+    .theme-light button.bg-cyan-600:not(:disabled) * {
+      color: #ffffff !important;
+    }
+
+    /* 4. BOTONES DESHABILITADOS (SIN BLOQUES NEGROS) */
+    .theme-light button:disabled,
+    .theme-light button[disabled],
+    .theme-light [disabled] {
+      background-color: #e2e8f0 !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #94a3b8 !important;
+      box-shadow: none !important;
+      cursor: not-allowed !important;
+      opacity: 0.85 !important;
+    }
+    .theme-light button:disabled *,
+    .theme-light button[disabled] *,
+    .theme-light [disabled] * {
+      color: #94a3b8 !important;
+    }
+
+    /* 5. BOTONES SECUNDARIOS / BLANCOS (Guardar Datos, Editar, Limpiar, Iconos) */
+    .theme-light button.bg-slate-800:not(:disabled),
+    .theme-light label.bg-slate-800 {
+      background-color: #ffffff !important;
+      border: 1.5px solid #cbd5e1 !important;
+      color: #1e293b !important;
+      font-weight: 700 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    }
+    .theme-light button.bg-slate-800:not(:disabled):hover {
+      background-color: #f1f5f9 !important;
+      border-color: #94a3b8 !important;
+      color: #0f172a !important;
+    }
+    .theme-light button.bg-slate-800:not(:disabled) * {
+      color: #1e293b !important;
+    }
+
+    /* 6. CREDENCIAL DIGITAL (VISTA PREVIA EN ALTA DE USUARIO) */
+    .theme-light .credencial-digital-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 55%, #ffffff 100%) !important;
+      border: 1.5px solid #c7d2fe !important;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    .theme-light .credencial-digital-card h4 {
+      color: #0f172a !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .credencial-digital-card p {
+      color: #4338ca !important;
+      font-weight: 600 !important;
+    }
+    .theme-light .credencial-digital-card .border-slate-700\/70,
+    .theme-light .credencial-digital-card .border-slate-700\/60 {
+      border-color: #e2e8f0 !important;
+    }
+    .theme-light .credencial-digital-card div.bg-slate-950\/60 {
+      background-color: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    }
+    .theme-light .credencial-digital-card div.bg-slate-950\/60 span:first-child {
+      color: #64748b !important;
+      font-weight: 700 !important;
+    }
+    .theme-light .credencial-digital-card div.bg-slate-950\/60 span:last-child {
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+
+    /* 7. ELEMENTOS SELECCIONADOS / ACTIVOS (LISTAS Y FILAS) */
+    .theme-light .bg-slate-700\/80,
+    .theme-light .bg-slate-700\/90,
+    .theme-light [class*="ring-indigo-500"] {
+      background-color: #eef2ff !important;
+      border: 1.5px solid #4f46e5 !important;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15) !important;
+    }
+    .theme-light .bg-slate-700\/80 *,
+    .theme-light [class*="ring-indigo-500"] * {
+      color: #1e1b4b !important;
+    }
+    .theme-light .bg-slate-700\/80 h4,
+    .theme-light [class*="ring-indigo-500"] h4 {
+      color: #312e81 !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-slate-700\/80 p,
+    .theme-light [class*="ring-indigo-500"] p {
+      color: #4338ca !important;
+      font-weight: 600 !important;
+    }
+
+    /* 8. PALETA REFORZADA VIBRANTE (BADGES Y BOTONES SUAVES) */
+    .theme-light .text-emerald-400,
+    .theme-light .text-emerald-300,
+    .theme-light .text-emerald-500 {
+      color: #047857 !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-emerald-500\/10,
+    .theme-light .bg-emerald-600\/20,
+    .theme-light .bg-emerald-950\/40,
+    .theme-light .bg-emerald-950\/50 {
+      background-color: #d1fae5 !important;
+      border: 1.5px solid #059669 !important;
+      color: #065f46 !important;
+      font-weight: 800 !important;
+    }
+
+    .theme-light .text-indigo-400,
+    .theme-light .text-indigo-300,
+    .theme-light .text-indigo-500,
+    .theme-light .text-blue-400 {
+      color: #3730a3 !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-indigo-600\/20,
+    .theme-light .bg-indigo-600\/30,
+    .theme-light .bg-indigo-500\/10,
+    .theme-light .bg-indigo-400\/20 {
+      background-color: #e0e7ff !important;
+      border: 1.5px solid #4f46e5 !important;
+      color: #312e81 !important;
+      font-weight: 800 !important;
+    }
+
+    .theme-light .text-cyan-400,
+    .theme-light .text-cyan-300,
+    .theme-light .text-cyan-500 {
+      color: #0e7490 !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-cyan-600\/20,
+    .theme-light .bg-cyan-500\/10 {
+      background-color: #cffafe !important;
+      border: 1.5px solid #0891b2 !important;
+      color: #155e75 !important;
+      font-weight: 800 !important;
+    }
+
+    .theme-light .text-amber-400,
+    .theme-light .text-amber-300,
+    .theme-light .text-amber-500,
+    .theme-light .text-orange-400 {
+      color: #9a3412 !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-amber-500\/10,
+    .theme-light .bg-amber-500\/20,
+    .theme-light .bg-amber-400\/20,
+    .theme-light .bg-orange-500\/10 {
+      background-color: #fef3c7 !important;
+      border: 1.5px solid #f59e0b !important;
+      color: #92400e !important;
+      font-weight: 800 !important;
+    }
+
+    .theme-light .text-rose-400,
+    .theme-light .text-rose-300,
+    .theme-light .text-rose-500 {
+      color: #be123c !important;
+      font-weight: 800 !important;
+    }
+    .theme-light .bg-rose-500\/10,
+    .theme-light .bg-rose-950\/20,
+    .theme-light .bg-rose-950\/40,
+    .theme-light .bg-rose-950\/50 {
+      background-color: #ffe4e6 !important;
+      border: 1.5px solid #f43f5e !important;
+      color: #9f1239 !important;
+      font-weight: 800 !important;
+    }
+
+    /* 9. FORMULARIOS, INPUTS Y SELECTS */
+    .theme-light input,
+    .theme-light select,
+    .theme-light textarea {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #94a3b8 !important;
+      font-weight: 500 !important;
+    }
+    .theme-light input::placeholder {
+      color: #64748b !important;
+    }
+    .theme-light input:focus,
+    .theme-light select:focus {
+      border-color: #4f46e5 !important;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25) !important;
+    }
+
+    /* 10. TABLAS Y HOVERS */
+    .theme-light tr:hover,
+    .theme-light div.hover\:bg-slate-800\/80:hover,
+    .theme-light div.hover\:bg-slate-800\/50:hover,
+    .theme-light button.hover\:bg-slate-800:hover {
+      background-color: #f1f5f9 !important;
+    }
+
+    .theme-light .custom-scrollbar::-webkit-scrollbar-track {
+      background: #e2e8f0 !important;
+    }
+    .theme-light .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8 !important;
+      border-radius: 4px;
+    }
+    .theme-light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b !important;
+    }
+
+    /* 11. TERMINALES Y LOGS DE CONSOLA */
+    .theme-light pre,
+    .theme-light pre.bg-slate-950,
+    .theme-light #terminal-live {
+      background-color: #0f172a !important;
+      color: #38bdf8 !important;
+      border-color: #334155 !important;
+    }
+
+    /* 12. OVERLAYS Y MODALES */
+    .theme-light .fixed.inset-0.bg-slate-950\/80 {
+      background-color: rgba(15, 23, 42, 0.6) !important;
+      backdrop-filter: blur(4px) !important;
+    }
+</style>
+  <script>
+    (function() {
+      try {
+        var temaGuardado = localStorage.getItem('theme_preference');
+        if (temaGuardado === 'claro') {
+          document.documentElement.classList.add('theme-light');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white">
 
@@ -98,54 +501,40 @@
         </button>
       </div>
 
-      <!-- BOTONES DE ACCIÓN PARA LA VISTA PROVEEDORES -->
-      <div v-else-if="vistaActiva === 'PROVEEDORES'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
-        <button @click="iniciarProcesamientoProveedores" 
-                :disabled="ejecutandoProveedores || colaProveedores.length === 0"
+      
+
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA PROVEEDORES & CONTRATISTAS -->
+      <div v-else-if="vistaActiva === 'PROV_CONTRA'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <label class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 px-3 py-2 rounded-xl text-xs cursor-pointer select-none">
+          <input type="checkbox" v-model="provContraModoReal" class="accent-emerald-500 w-4 h-4 cursor-pointer">
+          <span :class="provContraModoReal ? 'text-emerald-400 font-bold' : 'text-slate-400'">
+            {{ provContraModoReal ? '● Guardar en Aryve (Real)' : '○ Modo Prueba (Sin Guardar)' }}
+          </span>
+        </label>
+
+        <button @click="iniciarEjecucionProvContra(false)" 
+                :disabled="provContraEjecutando || provContraSeleccionados.length === 0"
                 class="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer">
-          <i v-if="ejecutandoProveedores" class="fa-solid fa-circle-notch fa-spin"></i>
+          <i v-if="provContraEjecutando" class="fa-solid fa-circle-notch fa-spin"></i>
           <i v-else class="fa-solid fa-play"></i>
-          <span>{{ ejecutandoProveedores ? 'Procesando en Aryve...' : 'Iniciar Llenado de Proveedores' }}</span>
+          <span>{{ provContraEjecutando ? 'Procesando en Aryve...' : 'Iniciar Automatización (' + provContraSeleccionados.length + ')' }}</span>
         </button>
 
-        <button @click="cargarProveedores" 
+        <button @click="iniciarEjecucionProvContra(true)" 
+                :disabled="provContraEjecutando || provContraSeleccionados.length === 0"
+                class="bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50"
+                title="Buscar RFCs en Aryve para verificar si ya existen sin dar de alta">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Verificar en EK10</span>
+        </button>
+
+        <button @click="cargarProvContraRegistros" 
                 class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
-                title="Actualizar Proveedores">
-          <i class="fa-solid fa-rotate"></i>
+                title="Actualizar">
+          <i class="fa-solid fa-rotate" :class="{'fa-spin': provContraCargando}"></i>
         </button>
       </div>
 
-      <!-- BOTONES DE ACCIÓN PARA LA VISTA CONTRATISTAS -->
-      <div v-else-if="vistaActiva === 'CONTRATISTAS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
-        <button @click="sincronizarContratistasDB" 
-                :disabled="cargandoContratistas"
-                class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50" 
-                title="Sincronizar con Base de Datos (DBA.SU_CONTRATISTAS)">
-          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': cargandoContratistas}"></i>
-          <span>{{ cargandoContratistas ? 'Sincronizando...' : 'Sincronizar DB' }}</span>
-        </button>
-        <button @click="iniciarProcesamientoContratistas" 
-                :disabled="ejecutandoContratistas || colaContratistas.length === 0"
-                class="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer">
-          <i v-if="ejecutandoContratistas" class="fa-solid fa-circle-notch fa-spin"></i>
-          <i v-else class="fa-solid fa-play"></i>
-          <span>{{ ejecutandoContratistas ? 'Procesando en Aryve...' : 'Iniciar Proceso (' + colaContratistas.length + ')' }}</span>
-        </button>
-
-        <button @click="detenerProcesamientoContratistas" 
-                :disabled="!ejecutandoContratistas"
-                class="bg-rose-600 hover:bg-rose-500 disabled:bg-slate-800 disabled:text-slate-600 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-rose-600/25 transition cursor-pointer">
-          <i class="fa-solid fa-stop"></i>
-          <span>Detener</span>
-        </button>
-
-        <button @click="cargarContratistas(true)" 
-                class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
-                title="Actualizar DBA (Enkontrol)">
-          <i class="fa-solid fa-rotate" :class="{'fa-spin': cargandoContratistas}"></i>
-        </button>
-      </div>
-    
       <!-- BOTONES DE ACCIÓN PARA LA VISTA OBRAS -->
       <div v-else-if="vistaActiva === 'OBRAS'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
         <div class="hidden md:flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 px-3 py-1.5 rounded-xl text-xs font-mono text-slate-300">
@@ -177,7 +566,7 @@
 
     </header>
 
-    <!-- BARRA NAVEGADORA DE VISTAS ESTILO CONTROL_PAGOS_OC (USUARIOS / PROYECTOS / PROVEEDORES) -->
+    <!-- BARRA NAVEGADORA DE VISTAS (USUARIOS / PROYECTOS / OBRAS) -->
     <nav class="flex items-center gap-3 my-5 border-b border-slate-700/80 pb-3 flex-wrap">
       <button @click="cambiarVista('USUARIOS')" 
               class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
@@ -203,36 +592,21 @@
         </span>
       </button>
 
-      <button @click="cambiarVista('PROVEEDORES')" 
+            <button @click="cambiarVista('PROV_CONTRA')" 
               class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'PROVEEDORES' 
+              :class="vistaActiva === 'PROV_CONTRA' 
                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
                 : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-boxes-stacked"></i>
-        <span>PROVEEDORES</span>
-        <span v-if="colaProveedores.length > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-          {{ colaProveedores.length }} en cola
+        <i class="fa-solid fa-address-card"></i>
+        <span>PROVEEDORES & CONTRATISTAS</span>
+        <span v-if="provContraEnRevisionCount > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+          {{ provContraEnRevisionCount }} por revisar
         </span>
         <span v-else class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
-          {{ proveedoresRegistrados.length }}
+          {{ provContraRegistros.length }}
         </span>
       </button>
 
-      <button @click="cambiarVista('CONTRATISTAS')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'CONTRATISTAS' 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-id-badge"></i>
-        <span>CONTRATISTAS</span>
-        <span v-if="colaContratistas.length > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-          {{ colaContratistas.length }} en fila
-        </span>
-        <span v-else class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
-          {{ contratistasDB.length }} en DBA
-        </span>
-      </button>
-    
       <button @click="cambiarVista('OBRAS')" 
               class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
               :class="vistaActiva === 'OBRAS' 
@@ -243,6 +617,18 @@
         <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
           {{ metricasObras.total_obras || obrasCatalogo.length }}
         </span>
+      </button>
+
+          <!-- BOTÓN SWITCH MODO CLARO / OSCURO (CON PERSISTENCIA LOCALSTORAGE) -->
+      <button @click="toggleTema" 
+              type="button"
+              class="ml-auto px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 border shadow-sm cursor-pointer select-none"
+              :class="temaActual === 'claro' 
+                ? 'bg-amber-500/20 text-amber-800 border-amber-400 hover:bg-amber-500/30 shadow-amber-500/10' 
+                : 'bg-slate-800 text-amber-400 border-slate-700 hover:bg-slate-750 hover:text-amber-300'"
+              title="Cambiar entre Modo Claro y Modo Oscuro (Persistente)">
+        <i class="fa-solid" :class="temaActual === 'claro' ? 'fa-sun text-amber-600 text-sm' : 'fa-moon text-indigo-400 text-sm'"></i>
+        <span>{{ temaActual === 'claro' ? 'Modo Claro' : 'Modo Oscuro' }}</span>
       </button>
 
     </nav>
@@ -369,7 +755,7 @@
               <span class="text-[11px] font-bold font-mono block truncate" :class="proyecto.desactualizado ? 'text-amber-400' : 'text-emerald-400'">
                 {{ proyecto.tiempo_transcurrido || '-' }}
               </span>
-              <span class="text-[9px] text-slate-500 block font-mono truncate" :title="proyecto.ultima_publicacion">{{ proyecto.commit ? 'Git ' + proyecto.commit : 'Firebase' }}</span>
+              <span class="text-[9px] text-slate-500 block font-mono truncate" :title="proyecto.ultima_publicacion">{{ proyecto.commit ? 'Git ' + proyecto.commit : 'Autónomo' }}</span>
             </div>
           </div>
 
@@ -875,659 +1261,447 @@
 
     </div>
 
+    
     <!-- ======================================================== -->
-    <!-- VISTA 3: PROVEEDORES (COLA Y EJECUCIÓN EN ARYVE)         -->
+    <!-- VISTA: PROVEEDORES & CONTRATISTAS (ALTA & ENROLAMIENTO)  -->
     <!-- ======================================================== -->
-    <div v-show="vistaActiva === 'PROVEEDORES'" class="flex flex-col flex-1">
-      
-      <!-- SUB-HEADER DE PROVEEDORES -->
+    <div v-show="vistaActiva === 'PROV_CONTRA'" class="flex flex-col flex-1">
+
+      <!-- SUB-HEADER DE PROVEEDORES & CONTRATISTAS -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <div>
           <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-boxes-stacked text-indigo-400"></i>
-            <span>Gestión y Creación de Proveedores</span>
+            <i class="fa-solid fa-address-card text-indigo-400"></i>
+            <span>Centro Unificado de Proveedores & Contratistas (EK10 / Aryve)</span>
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">
-            Captura los datos del proveedor para agregarlos a la cola y ejecútalos en Aryve en orden.
-          </p>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="text-xs font-medium text-slate-400">
-            <i class="fa-solid fa-file-csv text-indigo-400 mr-1"></i> <code class="font-mono text-slate-300">datos.csv</code> + <code class="font-mono text-slate-300">registro_proveedores.json</code>
-          </span>
-        </div>
-      </div>
-
-      <!-- WORKSPACE DE PROVEEDORES (FORMULARIO Y LISTA EN COLA) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
-        
-        <!-- PANEL DE CAPTURA (5 COLS) -->
-        <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm space-y-4">
-          <div class="flex items-center justify-between pb-2 border-b border-slate-700/60">
-            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-id-card text-indigo-400"></i> Datos del Proveedor
-            </h3>
-            <span class="text-[10px] text-slate-500 font-mono">FORMULARIO</span>
-          </div>
-
-          <!-- Selector Segmentado: Tipo de Persona -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-              Tipo de Persona:
-            </label>
-            <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl border border-slate-700">
-              <button type="button"
-                      @click="cambiarTipoPersona('MORAL')"
-                      class="py-1.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer"
-                      :class="formProveedor.tipo_persona === 'MORAL' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'">
-                <i class="fa-solid fa-building"></i> MORAL
-              </button>
-              <button type="button"
-                      @click="cambiarTipoPersona('FÍSICA')"
-                      class="py-1.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer"
-                      :class="formProveedor.tipo_persona === 'FÍSICA' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'">
-                <i class="fa-solid fa-user"></i> FÍSICA
-              </button>
-            </div>
-          </div>
-
-          <!-- Nombre / Razón Social -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-              {{ formProveedor.tipo_persona === 'MORAL' ? 'Nombre completo / Razón Social:' : 'Nombre(s):' }}
-            </label>
-            <input type="text"
-                   v-model="formProveedor.nombre"
-                   @input="calcularClavesProveedor"
-                   :placeholder="formProveedor.tipo_persona === 'MORAL' ? 'Ej. EDIFICACIONES GOODWIN SA DE CV' : 'Ej. SALVADOR'"
-                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
-          </div>
-
-          <!-- Apellidos para Persona Física -->
-          <div v-if="formProveedor.tipo_persona === 'FÍSICA'" class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Apellido Paterno:</label>
-              <input type="text"
-                     v-model="formProveedor.paterno"
-                     @input="calcularClavesProveedor"
-                     placeholder="Ej. PEREZ"
-                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Apellido Materno:</label>
-              <input type="text"
-                     v-model="formProveedor.materno"
-                     placeholder="Ej. LOPEZ"
-                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-medium">
-            </div>
-          </div>
-
-          <!-- RFC y Domicilio -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">RFC:</label>
-            <input type="text"
-                   v-model="formProveedor.rfc"
-                   placeholder="Ej. EGO123456ABC"
-                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Calle / Domicilio:</label>
-            <input type="text"
-                   v-model="formProveedor.calle"
-                   placeholder="Ej. AV. HIDALGO"
-                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase">
-          </div>
-
-          <!-- Exterior y CP -->
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">No. Exterior:</label>
-              <input type="text"
-                     v-model="formProveedor.ext"
-                     placeholder="Ej. 102"
-                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">Código Postal (CP):</label>
-              <input type="text"
-                     v-model="formProveedor.cp"
-                     placeholder="Ej. 89326"
-                     class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase font-mono">
-            </div>
-          </div>
-
-          <!-- Colonia -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Colonia / Asentamiento:</label>
-            <input type="text"
-                   v-model="formProveedor.colonia"
-                   placeholder="Ej. LAS FLORES"
-                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 uppercase">
-          </div>
-
-          <!-- Resumen de Claves Calculadas en Vivo -->
-          <div class="p-3 bg-slate-900/90 border border-slate-700 rounded-xl space-y-1">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-slate-400 font-semibold">Clave Calculada:</span>
-              <code class="text-indigo-400 font-mono font-bold">{{ formProveedor.clave || 'EK-PROV-...' }}</code>
-            </div>
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-slate-400 font-semibold">Nombre Corto:</span>
-              <code class="text-slate-300 font-mono">{{ formProveedor.nombre_corto || '...' }}</code>
-            </div>
-          </div>
-
-          <!-- Botón Guardar en Lista -->
-          <button @click="guardarEnListaProveedor"
-                  class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer">
-            <i class="fa-solid fa-floppy-disk"></i>
-            <span>Guardar en Lista</span>
-          </button>
-        </div>
-
-        <!-- LISTA DE PROVEEDORES EN COLA (7 COLS) -->
-        <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm flex flex-col">
-          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700">
-            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-list-ol text-indigo-400"></i>
-              <span>Lista de Proveedores en Cola</span>
-            </h3>
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full"
-                  :class="colaProveedores.length > 0 ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30' : 'bg-slate-700 text-slate-400'">
-              {{ colaProveedores.length }} en espera
-            </span>
-          </div>
-
-          <!-- Mensaje cuando está vacía -->
-          <div v-if="colaProveedores.length === 0" 
-               class="bg-slate-900/60 border border-slate-700/60 rounded-xl p-8 text-center my-auto space-y-2">
-            <i class="fa-solid fa-inbox text-3xl text-slate-600"></i>
-            <p class="text-xs text-slate-400 font-medium">
-              No hay proveedores en la lista actualmente.
-            </p>
-            <p class="text-[11px] text-slate-500">
-              Llena el formulario de la izquierda y haz clic en <b class="text-indigo-400">'Guardar en Lista'</b>.
-            </p>
-          </div>
-
-          <!-- Lista de Tarjetas de Proveedores -->
-          <div v-else class="space-y-2.5 h-[340px] max-h-[340px] overflow-y-auto custom-scrollbar pr-1">
-            <div v-for="(p, idx) in colaProveedores" :key="'cola-prov-' + idx"
-                 class="bg-slate-900/90 border border-slate-700 rounded-xl p-3.5 shadow-sm space-y-2 hover:border-slate-600 transition">
-              <div class="flex items-start justify-between gap-3">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="text-xs font-extrabold text-indigo-400 font-mono">#{{ idx + 1 }}</span>
-                  <span class="text-xs sm:text-sm font-bold text-slate-100 truncate">{{ p.NOMBRE }}</span>
-                </div>
-                <div class="flex items-center gap-2 shrink-0">
-                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold"
-                        :class="p['TIPO PERSONA'] === 'MORAL' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'">
-                    {{ p['TIPO PERSONA'] }}
-                  </span>
-                  <button @click="eliminarDeColaProveedor(idx)" 
-                          class="text-slate-500 hover:text-rose-400 transition p-1" 
-                          title="Quitar de la cola">
-                    <i class="fa-solid fa-trash-can text-xs"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1 border-t border-slate-800 text-slate-400">
-                <div><span class="text-slate-500">Clave:</span> <code class="font-mono text-slate-200">{{ p.CLAVE }}</code></div>
-                <div><span class="text-slate-500">RFC:</span> <span class="font-mono text-slate-200">{{ p.RFC }}</span></div>
-                <div><span class="text-slate-500">CP:</span> <span class="font-mono text-slate-200">{{ p.CP }}</span></div>
-              </div>
-
-              <div class="text-[11px] text-slate-400 truncate">
-                <i class="fa-solid fa-location-dot text-slate-600 mr-1"></i>
-                {{ p.CALLE }} Ext. {{ p.EXT }}, Col. {{ p.COLONIA }}
-              </div>
-            </div>
-          </div>
-
-          <!-- Acciones de Cola -->
-          <div v-if="colaProveedores.length > 0" class="pt-4 border-t border-slate-700/80 mt-4 flex items-center justify-between gap-3">
-            <button @click="vaciarColaProveedor" 
-                    class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-rose-400 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer">
-              <i class="fa-solid fa-trash-can"></i>
-              <span>Vaciar Lista</span>
-            </button>
-
-            <button @click="iniciarProcesamientoProveedores"
-                    :disabled="ejecutandoProveedores"
-                    class="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition cursor-pointer">
-              <i v-if="ejecutandoProveedores" class="fa-solid fa-circle-notch fa-spin"></i>
-              <i v-else class="fa-solid fa-play"></i>
-              <span>{{ ejecutandoProveedores ? 'Procesando en Aryve...' : 'INICIAR LLENADO DE PROVEEDORES' }}</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- SEGUNDA FILA: CONSOLA EN TIEMPO REAL Y BASE DE DATOS REGISTRADA -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Consola Selenium Stream -->
-        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
-          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
-            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full" :class="ejecutandoProveedores ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'"></span>
-              <span>Consola en Tiempo Real</span>
-            </h4>
-            <span class="text-[10px] font-mono text-slate-500">SELENIUM STREAM</span>
-          </div>
-          <pre id="terminal-prov" class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-indigo-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ terminalProveedoresContenido || '[Esperando inicio de tareas Selenium...]' }}</pre>
-        </div>
-
-        <!-- Base de Datos de Proveedores (ID y Clave) -->
-        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
-          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700 flex-wrap gap-2">
-            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-database text-slate-400"></i>
-              <span>Proveedores Registrados ({{ proveedoresRegistrados.length }})</span>
-            </h4>
-            <div class="flex items-center gap-2">
-              <button @click="exportarCSVProveedores" 
-                      :disabled="proveedoresRegistrados.length === 0"
-                      class="text-[10px] bg-slate-900 border border-slate-700 hover:border-slate-600 disabled:opacity-40 text-slate-300 px-2.5 py-1 rounded-lg transition flex items-center gap-1 cursor-pointer">
-                <i class="fa-solid fa-file-csv text-indigo-400"></i> Exportar CSV
-              </button>
-              <button @click="cargarProveedores" class="text-[10px] text-slate-400 hover:text-white transition">
-                <i class="fa-solid fa-rotate-right"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Filtro rápido de búsqueda -->
-          <div class="mb-2">
-            <input type="text"
-                   v-model="busquedaProveedores"
-                   placeholder="Buscar por ID o Clave..."
-                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono">
-          </div>
-
-          <!-- Tabla con Scroll Interno -->
-          <div class="h-36 max-h-36 overflow-y-auto custom-scrollbar bg-slate-950 border border-slate-800 rounded-xl">
-            <table class="w-full text-left text-xs text-slate-300">
-              <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold">
-                <tr>
-                  <th class="py-2 px-3">ID Enkontrol / Aryve</th>
-                  <th class="py-2 px-3">Clave Proveedor</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800/60 font-mono">
-                <tr v-for="pr in proveedoresFiltrados" :key="'prv-' + pr.clave" class="hover:bg-slate-900/50 transition">
-                  <td class="py-2 px-3 text-emerald-400 font-bold">#{{ pr.id }}</td>
-                  <td class="py-2 px-3 text-slate-200">{{ pr.clave }}</td>
-                </tr>
-                <tr v-if="proveedoresFiltrados.length === 0">
-                  <td colspan="2" class="py-6 text-center text-slate-500 text-xs font-sans">
-                    No se encontraron proveedores registrados.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-        <!-- ======================================================== -->
-    <!-- VISTA 4: CONTRATISTAS (DBA ENKONTROL VS EN FILA + RPA)   -->
-    <!-- ======================================================== -->
-    <div v-show="vistaActiva === 'CONTRATISTAS'" class="flex flex-col flex-1">
-      
-      <!-- SUB-HEADER DE CONTRATISTAS -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-id-badge text-indigo-400"></i>
-            <span>Módulo de Contratistas</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">
-            Selecciona los contratistas en fila para generar su imagen de perfil y automatizar su asignación en el sistema.
+            Alta inteligente por base de datos (sp_proveedores) o capturas EK9, validación y sincronización en Aryve.
           </p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-indigo-500/10 border border-indigo-500/20 text-indigo-300">
-            <i class="fa-solid fa-users text-xs"></i>
-            {{ contratistasDB.length }} Contratistas
+            <i class="fa-solid fa-boxes-stacked text-xs"></i>
+            {{ provContraRegistros.length }} Registros Totales
+          </span>
+          <span v-if="provContraEnRevisionCount > 0" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-amber-500/10 border border-amber-500/20 text-amber-300">
+            <i class="fa-solid fa-clock text-xs"></i>
+            {{ provContraEnRevisionCount }} Por Revisar
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+            <i class="fa-solid fa-circle-check text-xs"></i>
+            {{ provContraMetricas.con_id_proveedor || 0 }} Proveedores EK10
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-blue-500/10 border border-blue-500/20 text-blue-300">
+            <i class="fa-solid fa-id-badge text-xs"></i>
+            {{ provContraMetricas.con_id_contratista || 0 }} Contratistas EK10
           </span>
         </div>
       </div>
 
-      <!-- GRID DE LAS 2 TABLAS (CONTRATISTAS VS EN FILA) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        
+      <!-- WORKSPACE EN 2 COLUMNAS (5 / 7): INGESTA VS PRE-REGISTRO -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch mb-6">
+
         <!-- ==================================================== -->
-        <!-- TABLA IZQUIERDA: CONTRATISTAS (DBA ENKONTROL)        -->
+        <!-- COLUMNA IZQUIERDA: INGESTA INTELIGENTE (5 COLS)     -->
         <!-- ==================================================== -->
-        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-          
-          <div>
-            <!-- Header de la Tarjeta Izquierda -->
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/80 flex-wrap gap-2">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                  <i class="fa-solid fa-hard-hat text-sm"></i>
-                </div>
-                <div>
-                  <h3 class="text-sm font-bold text-white tracking-wide uppercase">Contratistas</h3>
-                  <p class="text-[11px] text-slate-400">{{ contratistasFiltrados.length }} mostrados de {{ contratistasDB.length }}</p>
-                </div>
-              </div>
+        <div class="xl:col-span-5 flex flex-col gap-5">
 
-              <!-- Acciones Rápidas -->
-              <div class="flex items-center gap-2">
-                <button @click="sincronizarContratistasDB"
-                        :disabled="cargandoContratistas"
-                        class="text-xs bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-                        title="Sincronizar todo desde Enkontrol (DBA.SU_CONTRATISTAS)">
-                  <i class="fa-solid fa-cloud-arrow-down text-[11px]" :class="{'fa-bounce': cargandoContratistas}"></i>
-                  <span>{{ cargandoContratistas ? 'Sincronizando...' : 'Sincronizar DB' }}</span>
-                </button>
-
-                <button @click="seleccionarTodosSinFoto"
-                        class="text-xs bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer"
-                        title="Seleccionar todos los contratistas sin foto de perfil">
-                  <i class="fa-solid fa-check-double text-[11px]"></i>
-                  <span>Marcar Sin Foto</span>
-                </button>
-
-                <button @click="cargarContratistas(true)"
-                        class="p-2 bg-slate-900 hover:bg-slate-700 border border-slate-700 rounded-lg text-slate-300 hover:text-white transition cursor-pointer"
-                        title="Actualizar listado">
-                  <i class="fa-solid fa-rotate text-xs" :class="{'fa-spin': cargandoContratistas}"></i>
-                </button>
-              </div>
+          <!-- VÍA 1: CONSULTA DIRECTA POR NÚMERO (ENKONTROL DB) -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-database text-emerald-400"></i>
+                <span>Consulta Directa en Enkontrol</span>
+              </h3>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                Exacto (Sin OCR)
+              </span>
             </div>
-
-            <!-- Filtros de Búsqueda y Estatus -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
-              <div class="sm:col-span-2 relative">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Ingresa el número de proveedor (numpro). El sistema consulta <code class="font-mono text-slate-300">sp_proveedores</code> en SQL Anywhere y genera el expediente oficial instantáneamente.
+            </p>
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <i class="fa-solid fa-hashtag absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                 <input type="text"
-                       v-model="busquedaContratistas"
-                       placeholder="Buscar por ID, Clave, Nombre, RFC..."
-                       class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-sans">
+                       v-model="provContraInputNumpro"
+                       @keyup.enter="consultarProvContraPorNumpro"
+                       placeholder="Ej. 10705, 11580, 10234..."
+                       class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-mono transition">
               </div>
-
-              <div>
-                <select v-model="filtroEstatusContratistas"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 cursor-pointer">
-                  <option value="TODOS">Todos ({{ contratistasDB.length }})</option>
-                  <option value="SIN_FOTO">Sin Foto</option>
-                  <option value="COMPLETO">Con Foto</option>
-                </select>
-              </div>
+              <button @click="consultarProvContraPorNumpro"
+                      :disabled="provContraConsultandoDb || !provContraInputNumpro.trim()"
+                      class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer shadow-md shadow-emerald-600/20">
+                <i v-if="provContraConsultandoDb" class="fa-solid fa-circle-notch fa-spin"></i>
+                <i v-else class="fa-solid fa-magnifying-glass"></i>
+                <span>{{ provContraConsultandoDb ? 'Buscando...' : 'Consultar BD' }}</span>
+              </button>
             </div>
-
-            <!-- Contenedor con Scroll Doble (Horizontal y Vertical) -->
-            <div class="overflow-x-auto overflow-y-auto max-h-[460px] custom-scrollbar border border-slate-700/80 rounded-xl bg-slate-950">
-              <table class="w-full text-left text-xs text-slate-300 whitespace-nowrap">
-                <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold z-10">
-                  <tr>
-                    <th class="py-2.5 px-3 text-center w-10">
-                      <span title="Seleccionar">Sel</span>
-                    </th>
-                    <th class="py-2.5 px-3 text-center w-16">ID</th>
-                    <th class="py-2.5 px-3">Clave</th>
-                    <th class="py-2.5 px-3">Nombre / Razón Social</th>
-                    <th class="py-2.5 px-3">RFC</th>
-                    <th class="py-2.5 px-3 text-center">Foto</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800/60 font-sans">
-                  <tr v-for="c in contratistasFiltrados" :key="'c-row-' + (c.id || c.clave || c.numpro)"
-                      class="hover:bg-slate-900/60 transition cursor-pointer"
-                      :class="{'bg-indigo-950/20': estaEnFila(c)}"
-                      @click="toggleContratistaFila(c)">
-                    
-                    <!-- Checkbox de Selección -->
-                    <td class="py-2.5 px-3 text-center" @click.stop>
-                      <input type="checkbox"
-                             :checked="estaEnFila(c)"
-                             @change="toggleContratistaFila(c)"
-                             class="w-4 h-4 rounded border-slate-600 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
-                    </td>
-
-                    <!-- ID -->
-                    <td class="py-2.5 px-3 text-center font-mono font-extrabold text-emerald-400 text-xs">
-                      #{{ c.id || '-' }}
-                    </td>
-
-                    <!-- Clave (numpro / clave) -->
-                    <td class="py-2.5 px-3 font-mono font-bold text-slate-200">
-                      {{ c.clave || c.numpro }}
-                    </td>
-
-                    <!-- Nombre -->
-                    <td class="py-2.5 px-3 font-medium text-slate-100 max-w-xs truncate" :title="c.nombre">
-                      {{ c.nombre }}
-                    </td>
-
-                    <!-- RFC -->
-                    <td class="py-2.5 px-3 font-mono text-slate-400">
-                      {{ c.rfc || '-' }}
-                    </td>
-
-                    <!-- Estatus Foto -->
-                    <td class="py-2.5 px-3 text-center">
-                      <span v-if="!c.tiene_foto"
-                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                        <i class="fa-solid fa-circle-exclamation text-[9px]"></i>
-                        Sin Foto
-                      </span>
-                      <span v-else
-                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        <i class="fa-solid fa-check text-[9px]"></i>
-                        Con Foto
-                      </span>
-                    </td>
-
-                  </tr>
-
-                  <tr v-if="contratistasFiltrados.length === 0">
-                    <td colspan="6" class="py-8 text-center text-slate-500 text-xs">
-                      <i class="fa-solid fa-inbox text-xl block mb-2 opacity-50"></i>
-                      No se encontraron contratistas con los filtros especificados.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
           </div>
 
-          <div class="pt-3 text-[11px] text-slate-500 flex justify-between items-center">
-            <span>Haz clic en cualquier fila o marca su casilla para agregarla a <strong>EN FILA</strong>.</span>
-            <span class="font-mono">{{ contratistasDB.length }} contratistas en total</span>
+          <!-- VÍA 2: DROPZONE DE CAPTURAS EK9 (IMÁGENES) -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col gap-4 flex-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-file-image text-indigo-400"></i>
+                <span>Carga de Capturas "Datos Generales"</span>
+              </h3>
+              <select v-model="provContraLector"
+                      class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-slate-300 focus:outline-none focus:border-indigo-500">
+                <option value="db">Lector: Enkontrol DB + OCR (Recomendado)</option>
+                <option value="gemini">Lector: Gemini AI Vision</option>
+                <option value="ocr">Lector: OCR Local Windows</option>
+              </select>
+            </div>
+            
+            <div class="border-2 border-dashed border-slate-700/80 hover:border-indigo-500/80 rounded-xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center gap-2 bg-slate-900/40"
+                 @dragover.prevent
+                 @drop.prevent="manejarDropCapturaProvContra"
+                 @click="$refs.inputCapturaProvContra.click()">
+              <input type="file"
+                     ref="inputCapturaProvContra"
+                     accept=".png,.jpg,.jpeg,.webp"
+                     class="hidden"
+                     @change="manejarSeleccionCapturaProvContra">
+              <div class="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-1">
+                <i v-if="provContraSubiendoImagen" class="fa-solid fa-circle-notch fa-spin text-xl"></i>
+                <i v-else class="fa-solid fa-cloud-arrow-up text-xl"></i>
+              </div>
+              <p class="text-xs font-semibold text-slate-200">
+                {{ provContraSubiendoImagen ? 'Procesando y extrayendo campos...' : 'Arrastra una captura EK9 o haz clic aquí' }}
+              </p>
+              <p class="text-[11px] text-slate-400">
+                Formatos compatibles: PNG, JPG, JPEG, WEBP.
+              </p>
+            </div>
+            <div class="text-[11px] text-slate-400 bg-slate-900/60 rounded-xl p-3 border border-slate-800 leading-relaxed">
+              <i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i>
+              <span>Consejo: captura únicamente la pestaña <b>Datos Generales</b> de EK9, retira el cursor de los campos y verifica que el número o RFC sea legible.</span>
+            </div>
           </div>
 
         </div>
 
+        <!-- ==================================================== -->
+        <!-- COLUMNA DERECHA: TARJETAS EN REVISIÓN (7 COLS)      -->
+        <!-- ==================================================== -->
+        <div class="xl:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col min-h-[500px]">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-700/60 mb-4">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-amber-400"></i>
+                <span>Pre-registro: Tarjetas por Revisar</span>
+              </h3>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                {{ provContraEnRevision.length }} en espera
+              </span>
+            </div>
+            <button v-if="provContraEnRevision.length > 0"
+                    @click="enviarTodosAHistorial"
+                    class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+              <i class="fa-solid fa-check-double"></i>
+              <span>Pasar Todos a Cola</span>
+            </button>
+          </div>
 
-        <!-- ==================================================== -->
-        <!-- TABLA DERECHA: EN FILA (SELECCIONADOS)               -->
-        <!-- ==================================================== -->
-        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-          
-          <div>
-            <!-- Header de la Tarjeta Derecha -->
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/80 flex-wrap gap-2">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                  <i class="fa-solid fa-list-check text-sm"></i>
+          <!-- Empty State si no hay tarjetas en revisión -->
+          <div v-if="provContraEnRevision.length === 0"
+               class="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-500">
+            <div class="w-16 h-16 rounded-2xl bg-slate-900/60 flex items-center justify-center text-slate-600 mb-3 border border-slate-800">
+              <i class="fa-solid fa-inbox text-2xl"></i>
+            </div>
+            <p class="text-sm font-semibold text-slate-300">No hay capturas pendientes de revisión</p>
+            <p class="text-xs text-slate-500 mt-1 max-w-sm">
+              Realiza una consulta rápida en Enkontrol o arrastra una captura de pantalla en el panel izquierdo para previsualizar sus datos.
+            </p>
+          </div>
+
+          <!-- Grid de Tarjetas en Revisión -->
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-[560px] custom-scrollbar pr-1">
+            <div v-for="item in provContraEnRevision"
+                 :key="'rev-' + item.id"
+                 class="bg-slate-900/80 border border-slate-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-indigo-500/50 transition shadow-md">
+              <div>
+                <!-- Cabecera de tarjeta con miniatura/badge -->
+                <div class="flex items-start gap-3 mb-2.5">
+                  <div v-if="item.tiene_imagen"
+                       @click="abrirVisorImagenProvContra(item.id)"
+                       class="w-16 h-14 rounded-lg overflow-hidden border border-slate-700/80 cursor-zoom-in relative group flex-shrink-0 bg-slate-950">
+                    <img :src="'/api/prov-contra/imagen/' + item.id" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white text-xs">
+                      <i class="fa-solid fa-expand"></i>
+                    </div>
+                  </div>
+                  <div v-else class="w-16 h-14 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex flex-col items-center justify-center text-emerald-400 flex-shrink-0">
+                    <i class="fa-solid fa-database text-lg mb-0.5"></i>
+                    <span class="text-[9px] font-bold">EK DB</span>
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-1.5 mb-0.5">
+                      <span class="text-xs font-mono font-bold text-indigo-400">#{{ item.proveedor || item.id }}</span>
+                      <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
+                        {{ item.tipo_persona || 'MORAL' }}
+                      </span>
+                    </div>
+                    <h4 class="text-xs font-bold text-white truncate" :title="item.nombre">
+                      {{ item.nombre || '(Sin Nombre)' }}
+                    </h4>
+                    <p class="text-[11px] font-mono text-slate-400 mt-0.5">
+                      RFC: <span class="text-slate-200">{{ item.rfc || '-' }}</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 class="text-sm font-bold text-white tracking-wide uppercase">En Fila</h3>
-                  <p class="text-[11px] text-slate-400">Contratistas seleccionados listos para procesar</p>
+
+                <!-- Dudas o Alertas si existen -->
+                <div v-if="(item.dudas || []).length > 0" class="mb-3 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2 text-[10px] text-amber-300">
+                  <p v-for="(d, dIdx) in item.dudas.slice(0, 2)" :key="dIdx" class="truncate">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> {{ d }}
+                  </p>
+                </div>
+
+                <!-- Casillas de Destino de Alta -->
+                <div class="flex items-center gap-4 py-2 border-y border-slate-800/80 mb-3 text-xs">
+                  <label class="flex items-center gap-1.5 cursor-pointer font-semibold" :class="item.quiere_proveedor ? 'text-emerald-400' : 'text-slate-500'">
+                    <input type="checkbox"
+                           :checked="item.quiere_proveedor"
+                           @change="toggleCasillaRegistro(item.id, 'quiere_proveedor', $event.target.checked)"
+                           class="accent-emerald-500 w-3.5 h-3.5">
+                    <span>Proveedor</span>
+                  </label>
+                  <label class="flex items-center gap-1.5 cursor-pointer font-semibold" :class="item.quiere_contratista ? 'text-blue-400' : 'text-slate-500'">
+                    <input type="checkbox"
+                           :checked="item.quiere_contratista"
+                           @change="toggleCasillaRegistro(item.id, 'quiere_contratista', $event.target.checked)"
+                           class="accent-blue-500 w-3.5 h-3.5">
+                    <span>Contratista</span>
+                  </label>
                 </div>
               </div>
 
-              <!-- Acciones de Cola -->
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">
-                  {{ colaContratistas.length }} en fila
-                </span>
-
-                <button v-if="colaContratistas.length > 0"
-                        @click="vaciarFila"
-                        class="text-xs bg-slate-900 hover:bg-rose-500/20 border border-slate-700 hover:border-rose-500/30 text-slate-400 hover:text-rose-400 px-3 py-1.5 rounded-lg transition font-medium flex items-center gap-1.5 cursor-pointer">
-                  <i class="fa-solid fa-trash-can text-[11px]"></i>
-                  <span>Vaciar</span>
+              <!-- Botones de Acción de Tarjeta -->
+              <div class="flex items-center gap-2 pt-1">
+                <button @click="abrirEditorProvContra(item)"
+                        class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
+                  <i class="fa-solid fa-pen text-[10px]"></i>
+                  <span>Editar</span>
+                </button>
+                <button @click="enviarRegistroAHistorial(item.id)"
+                        class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition shadow-sm">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Añadir a Cola</span>
+                </button>
+                <button @click="eliminarRegistroProvContra(item.id)"
+                        class="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg transition"
+                        title="Descartar">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
                 </button>
               </div>
             </div>
-
-            <!-- Contenedor con Scroll de la Cola -->
-            <div class="overflow-x-auto overflow-y-auto max-h-[460px] custom-scrollbar border border-slate-700/80 rounded-xl bg-slate-950">
-              <table class="w-full text-left text-xs text-slate-300 whitespace-nowrap">
-                <thead class="bg-slate-900/90 text-slate-400 sticky top-0 border-b border-slate-800 text-[11px] uppercase tracking-wider font-semibold z-10">
-                  <tr>
-                    <th class="py-2.5 px-3 w-8 text-center">#</th>
-                    <th class="py-2.5 px-3 text-center w-16">ID</th>
-                    <th class="py-2.5 px-3">Clave</th>
-                    <th class="py-2.5 px-3">Nombre</th>
-                    <th class="py-2.5 px-3 text-center w-12">Acción</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800/60 font-sans">
-                  <tr v-for="(item, idx) in colaContratistas" :key="'fila-' + (item.id || item.clave || item.numpro)"
-                      class="hover:bg-slate-900/50 transition">
-                    
-                    <td class="py-2.5 px-3 text-center font-mono text-slate-500 text-[11px]">
-                      {{ idx + 1 }}
-                    </td>
-
-                    <td class="py-2.5 px-3 text-center font-mono font-extrabold text-emerald-400 text-xs">
-                      #{{ item.id || item.id_aryve || '-' }}
-                    </td>
-
-                    <td class="py-2.5 px-3 font-mono font-bold text-slate-200">
-                      {{ item.clave || item.numpro }}
-                    </td>
-
-                    <td class="py-2.5 px-3 font-medium text-slate-100 max-w-xs truncate" :title="item.nombre">
-                      {{ item.nombre }}
-                    </td>
-
-                    <td class="py-2.5 px-3 text-center">
-                      <button @click="quitarDeFila(item)"
-                              class="text-slate-500 hover:text-rose-400 transition p-1 cursor-pointer"
-                              title="Quitar de la fila">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                      </button>
-                    </td>
-
-                  </tr>
-
-                  <tr v-if="colaContratistas.length === 0">
-                    <td colspan="5" class="py-12 text-center text-slate-500 text-xs">
-                      <i class="fa-solid fa-arrow-left text-2xl block mb-2 opacity-40 animate-pulse"></i>
-                      <span>No hay contratistas en fila.</span>
-                      <p class="text-[11px] text-slate-600 mt-1">Marca las casillas en la tabla de la izquierda para encolar.</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
           </div>
-
-          <div class="pt-3 text-[11px] text-slate-500 flex justify-between items-center">
-            <span>Al iniciar, el bot generará las fotos y las asignará en el sistema automáticamente.</span>
-            <span class="font-mono text-emerald-400 font-bold">{{ colaContratistas.length }} seleccionados</span>
-          </div>
-
         </div>
 
       </div>
 
-
-      <!-- ==================================================== -->
-      <!-- BARRA DE ACCIÓN: BOTONES INICIAR Y DETENER          -->
-      <!-- ==================================================== -->
-      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-lg mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- ======================================================== -->
+      <!-- TABLA PRINCIPAL: HISTORIAL Y COLA DE EJECUCIÓN (PASO 2)  -->
+      <!-- ======================================================== -->
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col mb-6">
         
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-indigo-400 text-lg shadow-inner">
-            <i class="fa-solid fa-robot"></i>
+        <!-- Barra de Herramientas y Filtros -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pb-4 border-b border-slate-700/60 mb-4">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 mr-2">
+              <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i>
+              <span>Cola de Ejecución e Historial</span>
+            </h3>
+
+            <!-- Filtros de Estado -->
+            <button v-for="f in ['TODOS', 'PENDIENTES', 'PROVEEDORES', 'CONTRATISTAS']"
+                    :key="f"
+                    @click="provContraFiltro = f"
+                    class="px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    :class="provContraFiltro === f ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border border-slate-700/60'">
+              {{ f }}
+            </button>
           </div>
-          <div>
-            <h4 class="text-sm font-bold text-white">Centro de Control de Automatización</h4>
-            <p class="text-xs text-slate-400">Genera gafetes 762x686 px, los sube al perfil de Aryve y purga el disco.</p>
-          </div>
-        </div>
 
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <!-- BOTÓN DETENER -->
-          <button @click="detenerProcesamientoContratistas"
-                  :disabled="!ejecutandoContratistas"
-                  class="flex-1 sm:flex-initial bg-rose-600 hover:bg-rose-500 disabled:bg-slate-800 disabled:text-slate-600 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition cursor-pointer">
-            <i class="fa-solid fa-stop"></i>
-            <span>Detener</span>
-          </button>
-
-          <!-- BOTÓN INICIAR -->
-          <button @click="iniciarProcesamientoContratistas"
-                  :disabled="ejecutandoContratistas || colaContratistas.length === 0"
-                  class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-600/30 transition cursor-pointer">
-            <i v-if="ejecutandoContratistas" class="fa-solid fa-circle-notch fa-spin text-sm"></i>
-            <i v-else class="fa-solid fa-play text-sm"></i>
-            <span>{{ ejecutandoContratistas ? 'Procesando en Aryve...' : 'Iniciar Proceso' }}</span>
-          </button>
-        </div>
-
-      </div>
-
-
-      <!-- ==================================================== -->
-      <!-- CONSOLA / TERMINAL EN VIVO ABAJO                    -->
-      <!-- ==================================================== -->
-      <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-5 shadow-2xl flex flex-col">
-        
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 flex-wrap gap-2">
-          <div class="flex items-center gap-3">
-            <!-- Puntos luminosos tipo terminal -->
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <!-- Buscador -->
+            <div class="relative min-w-[240px]">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text"
+                     v-model="provContraBusqueda"
+                     placeholder="Buscar por nombre, RFC o ID..."
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
             </div>
-            <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full" :class="ejecutandoContratistas ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'"></span>
-              <span>Consola de Ejecución en Vivo • RPA Selenium & Gafetes</span>
-            </h4>
-          </div>
 
-          <div class="flex items-center gap-3">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400">
-              {{ ejecutandoContratistas ? 'STATUS: EJECUTANDO' : 'STATUS: LISTO' }}
-            </span>
-            <button @click="limpiarTerminalContratistas"
-                    class="text-[11px] text-slate-400 hover:text-white transition flex items-center gap-1 cursor-pointer">
-              <i class="fa-solid fa-broom"></i>
-              <span>Limpiar</span>
+            <!-- Seleccionar todos -->
+            <button @click="toggleSeleccionarTodosProvContra"
+                    class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition">
+              {{ provContraSeleccionados.length === provContraFiltrados.length && provContraFiltrados.length > 0 ? 'Deseleccionar Todos' : 'Marcar Todos (' + provContraFiltrados.length + ')' }}
             </button>
           </div>
         </div>
 
-        <pre id="terminal-contratistas" 
-             class="h-56 max-h-56 bg-slate-950 border border-slate-800/90 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text shadow-inner">{{ terminalContratistasContenido }}</pre>
+        <!-- Tabla de Registros -->
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left text-xs text-slate-300 whitespace-nowrap">
+            <thead>
+              <tr class="border-b border-slate-700 text-slate-400 font-bold uppercase tracking-wider text-[11px] bg-slate-900/50">
+                <th class="py-2.5 px-3 w-10 text-center">
+                  <input type="checkbox"
+                         :checked="provContraSeleccionados.length > 0 && provContraSeleccionados.length === provContraFiltrados.length"
+                         @change="toggleSeleccionarTodosProvContra"
+                         class="accent-indigo-500 w-3.5 h-3.5">
+                </th>
+                <th class="py-2.5 px-3">Núm / Expediente</th>
+                <th class="py-2.5 px-3">Razón Social / Proveedor</th>
+                <th class="py-2.5 px-3">RFC / Tipo</th>
+                <th class="py-2.5 px-3">Clave Generada</th>
+                <th class="py-2.5 px-3">Alta Proveedor</th>
+                <th class="py-2.5 px-3">Alta Contratista</th>
+                <th class="py-2.5 px-3 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80">
+              <tr v-for="r in provContraFiltrados"
+                  :key="'row-pc-' + r.id"
+                  class="hover:bg-slate-750/40 transition"
+                  :class="{'bg-indigo-950/20': provContraSeleccionados.includes(r.id)}">
+                
+                <!-- Checkbox -->
+                <td class="py-2 px-3 text-center">
+                  <input type="checkbox"
+                         :checked="provContraSeleccionados.includes(r.id)"
+                         @change="toggleSeleccionProvContra(r.id)"
+                         class="accent-indigo-500 w-3.5 h-3.5 cursor-pointer">
+                </td>
 
+                <!-- ID / Miniatura -->
+                <td class="py-2 px-3">
+                  <div class="flex items-center gap-2">
+                    <img v-if="r.tiene_imagen"
+                         :src="'/api/prov-contra/imagen/' + r.id"
+                         @click="abrirVisorImagenProvContra(r.id)"
+                         class="w-8 h-8 rounded object-cover border border-slate-700 cursor-zoom-in"
+                         title="Clic para ampliar">
+                    <div v-else class="w-8 h-8 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                      <i class="fa-solid fa-database text-xs"></i>
+                    </div>
+                    <div>
+                      <span class="font-mono font-bold text-white text-xs">#{{ r.proveedor || r.id }}</span>
+                      <span class="block text-[10px] text-slate-500">{{ r.creado ? r.creado.split(' ')[0] : '' }}</span>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Nombre -->
+                <td class="py-2 px-3">
+                  <span class="font-semibold text-slate-100 block max-w-xs truncate" :title="r.nombre">{{ r.nombre || '-' }}</span>
+                  <span class="text-[10px] text-slate-500 block truncate" :title="r.calle">{{ r.calle || '-' }} {{ r.colonia ? '(' + r.colonia + ')' : '' }}</span>
+                </td>
+
+                <!-- RFC y Tipo -->
+                <td class="py-2 px-3">
+                  <code class="font-mono text-indigo-300 font-bold text-[11px]">{{ r.rfc || 'SIN RFC' }}</code>
+                  <span class="block text-[10px] text-slate-400">{{ r.tipo_persona || 'MORAL' }}</span>
+                </td>
+
+                <!-- Clave Generada -->
+                <td class="py-2 px-3">
+                  <span class="font-mono text-xs text-slate-300 font-semibold bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                    {{ r.clave_proveedor || '-' }}
+                  </span>
+                </td>
+
+                <!-- Estatus Proveedor -->
+                <td class="py-2 px-3">
+                  <div v-if="r.id_ek10" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <i class="fa-solid fa-circle-check text-xs"></i>
+                    <span>ID: {{ r.id_ek10 }}</span>
+                  </div>
+                  <div v-else-if="r.quiere_proveedor" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                    <span>En cola</span>
+                  </div>
+                  <span v-else class="text-slate-600 text-[11px] font-semibold">Omitido</span>
+                </td>
+
+                <!-- Estatus Contratista -->
+                <td class="py-2 px-3">
+                  <div v-if="r.id_contratista" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                    <i class="fa-solid fa-id-badge text-xs"></i>
+                    <span>ID: {{ r.id_contratista }}</span>
+                  </div>
+                  <div v-else-if="r.quiere_contratista" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                    <span>En cola</span>
+                  </div>
+                  <span v-else class="text-slate-600 text-[11px] font-semibold">Omitido</span>
+                </td>
+
+                <!-- Acciones -->
+                <td class="py-2 px-3 text-right">
+                  <div class="inline-flex items-center gap-1">
+                    <button @click="abrirEditorProvContra(r)"
+                            class="p-1.5 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition"
+                            title="Editar expediente">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <a :href="'/api/prov-contra/csv/' + r.id"
+                       class="p-1.5 text-slate-400 hover:text-indigo-300 rounded hover:bg-slate-800 transition"
+                       title="Descargar archivo CSV">
+                      <i class="fa-solid fa-file-arrow-down"></i>
+                    </a>
+                    <button @click="eliminarRegistroProvContra(r.id)"
+                            class="p-1.5 text-slate-500 hover:text-rose-400 rounded hover:bg-slate-800 transition"
+                            title="Eliminar de historial">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr v-if="provContraFiltrados.length === 0">
+                <td colspan="8" class="text-center py-8 text-slate-500 text-xs">
+                  No se encontraron registros en el historial con los filtros actuales.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- TERMINAL DE TELEMETRÍA SELENIUM EN VIVO                  -->
+      <!-- ======================================================== -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-800 text-xs font-mono">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full"
+                  :class="provContraEjecutando ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'"></span>
+            <span class="text-slate-400 uppercase font-bold tracking-wider">Consola Selenium:</span>
+            <span :class="provContraEjecutando ? 'text-emerald-400 font-bold' : 'text-slate-400'">
+              {{ provContraEjecutando ? 'STATUS: EJECUTANDO EN ARYVE' : 'STATUS: LISTO' }}
+            </span>
+          </div>
+          <button @click="limpiarTerminalProvContra"
+                  class="text-[11px] text-slate-500 hover:text-slate-300 flex items-center gap-1 transition">
+            <i class="fa-solid fa-eraser"></i>
+            <span>Limpiar Consola</span>
+          </button>
+        </div>
+        <pre id="terminal-prov-contra"
+             class="h-44 max-h-44 bg-slate-950 border border-slate-900 rounded-xl p-3 font-mono text-xs text-emerald-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text shadow-inner">{{ provContraTerminalLogs }}</pre>
       </div>
 
     </div>
 
 
     <!-- ======================================================== -->
-    <!-- VISTA 5: OBRAS & WBS (ALTO RENDIMIENTO O(1))             -->
+    <!-- VISTA 3: OBRAS & WBS (ALTO RENDIMIENTO O(1))             -->
     <!-- ======================================================== -->
     <div v-show="vistaActiva === 'OBRAS'" class="flex flex-col flex-1">
       
@@ -1552,12 +1726,12 @@
       </div>
 
       <!-- WORKSPACE EN 2 COLUMNAS (4 / 8) -->
-      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start flex-1 mb-6">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch flex-1 mb-6">
         
         <!-- ==================================================== -->
         <!-- TABLA IZQUIERDA: LISTA Y BÚSQUEDA DE OBRAS          -->
         <!-- ==================================================== -->
-        <div class="xl:col-span-4 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[750px] shadow-lg">
+        <div class="xl:col-span-4 min-w-0 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[820px] shadow-lg">
           
           <!-- Buscador Reactivo -->
           <div class="relative w-full mb-3">
@@ -1629,7 +1803,7 @@
         <!-- ==================================================== -->
         <!-- TABLA DERECHA: MOTOR DE INSUMOS & ÓRDENES DE COMPRA   -->
         <!-- ==================================================== -->
-        <div class="xl:col-span-8 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[850px] shadow-lg">
+        <div class="xl:col-span-8 min-w-0 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[820px] shadow-lg">
           
           <div v-if="obraSeleccionada" class="flex flex-col h-full">
             
@@ -1644,6 +1818,12 @@
                     <h3 class="text-sm sm:text-base font-bold text-white truncate" :title="obraSeleccionada.nombre">
                       {{ obraSeleccionada.nombre }}
                     </h3>
+                    <button @click="abrirModalIrAObra(obraSeleccionada.clave)"
+                            title="Navegar a esta obra en Aryve (Buscar -> Aplicar Configuración -> Ir a Obra)"
+                            class="ml-auto sm:ml-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/30 flex items-center gap-1.5 border border-blue-400/40 transition-all hover:scale-105 active:scale-95 shrink-0 cursor-pointer">
+                      <i class="fa-solid fa-arrow-up-right-from-square text-cyan-200 text-xs"></i>
+                      <span>Ir a Obra en Aryve</span>
+                    </button>
                   </div>
                   <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-2 font-mono flex-wrap">
                     <span>ID: #{{ obraSeleccionada.id_obra }}</span>
@@ -2006,6 +2186,296 @@
 
       </div>
 
+      <!-- ======================================================== -->
+      <!-- SECCIÓN: OPTIMIZACIÓN Y ALTA DE GRUPOS DE INSUMOS (EK10) -->
+      <!-- ======================================================== -->
+      <section class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 mb-8 shadow-xl">
+        
+        <!-- Header de la sección de Optimización -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 mb-5 border-b border-slate-700/80 gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg shadow-inner shrink-0">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <h3 class="text-base font-bold text-white tracking-wide">
+                  Optimización de Insumos • EK10
+                </h3>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+                  <i class="fa-solid fa-shield-halved mr-1"></i>Previene error de material en EK10
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Asigna los grupos de insumos autorizados a la obra en Aryve para evitar que los materiales aparezcan como inexistentes o sin presupuesto en Enkontrol 10.
+              </p>
+            </div>
+          </div>
+
+          <!-- Badges de estatus -->
+          <div class="flex items-center gap-2 flex-wrap shrink-0">
+            <span class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300">
+              <i class="fa-solid fa-cubes text-[11px] mr-1"></i>{{ totalGruposInsumosSeleccionados }} marcados
+            </span>
+            <span class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-indigo-300">
+              <i class="fa-solid fa-list-ol text-[11px] mr-1"></i>{{ colaObrasOptimizacion.length }} en cola
+            </span>
+          </div>
+        </div>
+
+        <!-- CONTENEDOR EN DOS RECUADROS: IZQUIERDA (GRUPOS E HIJOS) / DERECHA (COLA DE OBRAS) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- ==================================================== -->
+          <!-- RECUADRO IZQUIERDO: TIPOS E HIJOS DE INSUMOS         -->
+          <!-- ==================================================== -->
+          <div class="lg:col-span-6 min-w-0 bg-slate-900/80 border border-slate-700/70 rounded-xl p-4 flex flex-col h-[680px]">
+            
+            <!-- Barra superior del recuadro izquierdo -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-2.5">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-tags text-cyan-400 text-sm"></i>
+                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Grupos de Insumos por Tipo (GRUPO_INSUMOS_TIPO)
+                </h4>
+              </div>
+              
+              <!-- Botones de selección masiva -->
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button @click="marcarTodosGruposInsumos" 
+                        class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white transition cursor-pointer"
+                        title="Marcar todos los grupos">
+                  <i class="fa-solid fa-check-double mr-1 text-emerald-400"></i>Todos
+                </button>
+                <button @click="seleccionarSoloMateriales" 
+                        class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 transition cursor-pointer"
+                        title="Seleccionar únicamente materiales">
+                  <i class="fa-solid fa-boxes-packing mr-1 text-indigo-400"></i>Solo Materiales
+                </button>
+                <button @click="desmarcarTodosGruposInsumos" 
+                        class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-rose-300 transition cursor-pointer"
+                        title="Desmarcar todos">
+                  <i class="fa-solid fa-xmark mr-1"></i>Ninguno
+                </button>
+              </div>
+            </div>
+
+            <!-- Buscador interno de grupos -->
+            <div class="relative w-full mb-3">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input type="text" 
+                     v-model="filtroGruposInsumos" 
+                     placeholder="Filtrar por grupo o tipo (ej. Acero, Block, Concretos, Pintura)..." 
+                     class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-8 pr-7 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+              <button v-if="filtroGruposInsumos" @click="filtroGruposInsumos = ''" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                <i class="fa-solid fa-xmark text-xs"></i>
+              </button>
+            </div>
+
+            <!-- Lista jerárquica de Tipos y sus Hijos (Scrollable) -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 space-y-2.5">
+              <div v-for="(tipo, tIdx) in gruposInsumosFiltrados" 
+                   :key="tipo.tipo" 
+                   class="border border-slate-800/90 rounded-xl overflow-hidden bg-slate-950/60 transition">
+                
+                <!-- Encabezado del Tipo (Acordeón con Checkbox Maestro) -->
+                <div class="p-2.5 bg-slate-900/90 hover:bg-slate-850 flex items-center justify-between gap-2.5 select-none transition">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <!-- Checkbox de Tipo -->
+                    <input type="checkbox" 
+                           :checked="esTipoTotalmenteSeleccionado(tipo)"
+                           @change="toggleTodosHijosDeTipo(tipo)"
+                           class="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500 bg-slate-950 border-slate-700 cursor-pointer">
+                    
+                    <span @click="toggleTipoOptimizacion(tipo.tipo)" class="text-xs font-bold text-white cursor-pointer hover:text-cyan-300 transition flex items-center gap-1.5 truncate">
+                      <i class="fa-solid text-[10px] text-slate-400" :class="tiposExpandidosOptimizacion[tipo.tipo] ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                      <span>{{ tipo.tipo }}</span>
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full"
+                          :class="contarHijosSeleccionadosTipo(tipo) > 0 ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'bg-slate-800 text-slate-500'">
+                      {{ contarHijosSeleccionadosTipo(tipo) }} / {{ (tipo.datos || []).length }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Cuadrícula de Hijos (Se muestran los checks) -->
+                <div v-show="tiposExpandidosOptimizacion[tipo.tipo]" class="p-3 bg-slate-950/40 border-t border-slate-900">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <label v-for="hijo in (tipo.datos || [])" 
+                           :key="tipo.tipo + '::' + hijo"
+                           :class="hijo.toLowerCase().includes('disponible') || hijo.toLowerCase().includes('no usar')
+                             ? 'opacity-40 border-slate-800 bg-slate-900/20 cursor-not-allowed'
+                             : (esHijoSeleccionado(tipo.tipo, hijo) 
+                                 ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-200' 
+                                 : 'bg-slate-900/40 hover:bg-slate-800/60 border-slate-800 text-slate-400')"
+                           class="flex items-center gap-2 p-2 rounded-lg border text-xs cursor-pointer transition select-none">
+                      <input type="checkbox" 
+                             :disabled="hijo.toLowerCase().includes('disponible') || hijo.toLowerCase().includes('no usar')"
+                             :checked="esHijoSeleccionado(tipo.tipo, hijo)"
+                             @change="toggleHijoInsumo(tipo.tipo, hijo)"
+                             class="rounded text-cyan-600 focus:ring-cyan-500 bg-slate-950 border-slate-700 cursor-pointer">
+                      <span class="truncate font-medium text-[11px]" :title="hijo">{{ hijo }}</span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+              <div v-if="gruposInsumosFiltrados.length === 0" class="text-center py-16 text-slate-500 text-xs">
+                <i class="fa-solid fa-filter-circle-xmark text-2xl mb-1 text-slate-600"></i>
+                <p>No se encontraron grupos con ese filtro.</p>
+              </div>
+            </div>
+
+            <!-- Footer informativo del recuadro izquierdo -->
+            <div class="pt-2.5 mt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+              <span>Los grupos marcados se usarán; los desmarcados se ignoran.</span>
+              <span class="font-mono text-cyan-400 font-bold">{{ totalGruposInsumosSeleccionados }} activos</span>
+            </div>
+
+          </div>
+
+
+          <!-- ==================================================== -->
+          <!-- RECUADRO DERECHO: COLA SECUENCIAL DE OBRAS           -->
+          <!-- ==================================================== -->
+          <div class="lg:col-span-6 min-w-0 bg-slate-900/80 border border-slate-700/70 rounded-xl p-4 flex flex-col h-[680px]">
+            
+            <!-- Barra superior del recuadro derecho -->
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-list-ol text-indigo-400 text-sm"></i>
+                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  Lista de Obras a Optimizar
+                </h4>
+              </div>
+              <button v-if="colaObrasOptimizacion.length > 0" 
+                      @click="limpiarColaObras" 
+                      class="text-[11px] text-rose-400 hover:text-rose-300 transition flex items-center gap-1 cursor-pointer">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+                <span>Vaciar</span>
+              </button>
+            </div>
+
+            <!-- Formulario de incorporación a la lista -->
+            <div class="space-y-2.5 mb-3 bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+              
+              <!-- Input para escribir cualquier obra -->
+              <div class="flex items-center gap-2">
+                <div class="relative flex-1">
+                  <input type="text" 
+                         v-model="inputNuevaObraOptimizacion"
+                         @keyup.enter="agregarObraPorInputManual"
+                         placeholder="Escribe la clave de cualquier obra (ej. KB5, HH4, 295, AT1)..." 
+                         class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white uppercase placeholder-slate-500 font-mono focus:outline-none focus:border-indigo-500 transition">
+                </div>
+                <button @click="agregarObraPorInputManual"
+                        title="Agregar obra a la lista de optimización"
+                        class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20 cursor-pointer shrink-0">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                  <span>+ Añadir</span>
+                </button>
+              </div>
+
+              <!-- Selector del catálogo de 275 obras -->
+              <div class="flex items-center gap-2">
+                <select v-model="obraSelectOptimizacion" 
+                        @change="agregarObraPorSelect"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500 transition cursor-pointer">
+                  <option value="">-- O selecciona una obra del catálogo oficial --</option>
+                  <option v-for="o in obrasCatalogo" :key="'opt-'+o.id_obra+o.clave" :value="o.clave">
+                    {{ o.clave }} - {{ o.nombre }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Atajo opcional si hay una obra seleccionada en el visor superior -->
+              <div v-if="obraSeleccionada" class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+                <span class="text-[10px] text-slate-400">Atajo de obra en pantalla:</span>
+                <button @click="agregarObraActualACola" 
+                        type="button"
+                        class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-slate-800 hover:bg-slate-750 text-indigo-300 border border-indigo-500/30 transition flex items-center gap-1 cursor-pointer">
+                  <i class="fa-solid fa-bolt text-[9px] text-amber-400"></i>
+                  <span>Añadir obra actual: {{ obraSeleccionada.clave }}</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Lista Dinámica y Secuencial de Obras (Scrollable) -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 space-y-2">
+              <div v-for="(item, idx) in colaObrasOptimizacion" 
+                   :key="item.id" 
+                   class="p-3 bg-slate-950/80 border border-slate-800/90 rounded-xl flex items-center justify-between gap-3 hover:border-slate-700 transition">
+                
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <!-- Número secuencial -->
+                  <span class="w-6 h-6 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 font-mono font-bold text-xs flex items-center justify-center shrink-0">
+                    {{ idx + 1 }}
+                  </span>
+                  
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-mono font-bold text-xs text-white">{{ item.clave }}</span>
+                      <span class="text-[10px] px-1.5 py-0.2 rounded font-semibold font-mono"
+                            :class="item.estatus === 'COMPLETADO' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : (item.estatus === 'PROCESANDO' ? 'bg-blue-500/20 text-blue-300 animate-pulse border border-blue-500/30' : 'bg-slate-850 text-slate-400 border border-slate-700')">
+                        {{ item.estatus }}
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 truncate mt-0.5" :title="item.nombre">
+                      {{ item.nombre }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                  <button @click="eliminarObraDeCola(idx)" 
+                          class="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-850 rounded-lg transition cursor-pointer"
+                          title="Eliminar de la lista">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Empty state de la cola -->
+              <div v-if="colaObrasOptimizacion.length === 0" class="text-center py-20 text-slate-500 text-xs">
+                <i class="fa-solid fa-layer-group text-3xl mb-2 text-slate-600"></i>
+                <p class="font-semibold text-slate-300">Lista vacía</p>
+                <p class="text-slate-500 text-[11px] mt-1">
+                  Agrega una o varias obras para procesarlas una tras otra de forma consecutiva.
+                </p>
+              </div>
+            </div>
+
+            <!-- Panel de Control y Ejecución de la Cola -->
+            <div class="pt-3 mt-3 border-t border-slate-800 flex flex-col gap-2">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Obras a procesar:</span>
+                <span class="text-indigo-400 font-bold">{{ colaObrasOptimizacion.length }} obra(s)</span>
+              </div>
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Grupos a inyectar:</span>
+                <span class="text-cyan-400 font-bold">{{ totalGruposInsumosSeleccionados }} grupo(s)</span>
+              </div>
+
+              <button @click="iniciarOptimizacionObras" 
+                      :disabled="colaObrasOptimizacion.length === 0 || totalGruposInsumosSeleccionados === 0 || ejecutandoOptimizacion"
+                      class="mt-1 w-full py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 disabled:opacity-40 disabled:cursor-not-allowed text-white transition flex items-center justify-center gap-2 shadow-lg shadow-orange-900/20 cursor-pointer">
+                <i class="fa-solid" :class="ejecutandoOptimizacion ? 'fa-circle-notch fa-spin' : 'fa-play'"></i>
+                <span>{{ ejecutandoOptimizacion ? 'Procesando Lista de Obras...' : 'Iniciar Llenado de Optimización' }}</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
     </div>
 
 
@@ -2124,7 +2594,7 @@
           <div class="md:col-span-5 flex flex-col">
             <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Credencial / Vista Previa</span>
             
-            <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden">
+            <div class="credencial-digital-card bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden">
               <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
               <div>
@@ -2641,6 +3111,153 @@
     <!-- ======================================================== -->
     <!-- MODAL REPARAR PRESUPUESTO KONTROL (BOT ANTI-BLOQUEO OC)  -->
     <!-- ======================================================== -->
+    <!-- ======================================================== -->
+    <!-- MODAL: NAVEGACIÓN AUTOMATIZADA ARYVE · IR A OBRA         -->
+    <!-- ======================================================== -->
+    <div v-if="modalIrAObraVisible" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl p-6 max-h-[92vh] overflow-y-auto custom-scrollbar flex flex-col">
+        
+        <!-- Header del Modal -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg shadow-indigo-500/30">
+              <i class="fa-solid fa-robot text-lg"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-bold text-white tracking-wide">
+                  Navegación Automatizada Aryve
+                </h3>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                  Ir a Obra
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  CDP 9222 / Auto-Login
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Busca en <code class="text-cyan-300">/scco/Obra</code>, despliega el panel de configuración, presiona <strong class="text-amber-300">APLICAR CONFIGURACIÓN</strong> y entra mediante <strong class="text-indigo-300">IR A OBRA</strong>.
+              </p>
+            </div>
+          </div>
+          <button @click="modalIrAObraVisible = false" 
+                  class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Formulario Obra Destino -->
+        <div class="py-4 border-b border-slate-800/80">
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+            Obra a Navegar en Aryve
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3 items-stretch">
+            <div class="relative flex-1">
+              <input type="text" 
+                     v-model="obraDestinoAryve" 
+                     placeholder="Ej. KB5, AT1, 117..." 
+                     :disabled="ejecutandoIrAObra"
+                     class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white font-mono font-bold text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 placeholder-slate-600 disabled:opacity-50 uppercase">
+              <span class="absolute right-3 top-3 text-[10px] text-slate-500 font-mono">
+                Clave de Obra
+              </span>
+            </div>
+            
+            <button @click="ejecutarIrAObraEnAryve(obraDestinoAryve)"
+                    :disabled="ejecutandoIrAObra || !obraDestinoAryve"
+                    class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 border border-blue-400/30 transition-all active:scale-95 shrink-0 cursor-pointer">
+              <i v-if="ejecutandoIrAObra" class="fa-solid fa-circle-notch fa-spin"></i>
+              <i v-else class="fa-solid fa-bolt text-amber-300"></i>
+              <span>{{ ejecutandoIrAObra ? 'Ejecutando en Aryve...' : 'Iniciar Bot Ir a Obra' }}</span>
+            </button>
+          </div>
+
+          <!-- Pasos de la Automatización -->
+          <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[11px]">
+            <div class="bg-slate-950/70 border border-slate-800 p-2 rounded-xl">
+              <span class="text-indigo-400 font-bold block">1. Sesión</span>
+              <span class="text-slate-400 text-[10px]">CDP 9222 o Login .env</span>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-2 rounded-xl">
+              <span class="text-cyan-400 font-bold block">2. Filtrar</span>
+              <span class="text-slate-400 text-[10px]">Búsqueda en tabla Obra</span>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-2 rounded-xl">
+              <span class="text-amber-400 font-bold block">3. Configuración</span>
+              <span class="text-slate-400 text-[10px]">Aplicar Configuración</span>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-2 rounded-xl">
+              <span class="text-emerald-400 font-bold block">4. Ir a Obra</span>
+              <span class="text-slate-400 text-[10px]">Navegación al Contexto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Consola de Logs en Vivo -->
+        <div class="mt-4 flex-1 flex flex-col min-h-[220px]">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-terminal text-cyan-400"></i>
+              Consola de Automatización (Selenium)
+            </span>
+            <span v-if="ejecutandoIrAObra" class="text-[10px] font-bold text-indigo-400 flex items-center gap-1.5 animate-pulse">
+              <i class="fa-solid fa-circle text-[7px] text-indigo-400"></i> Ejecutando en tiempo real
+            </span>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] h-48 overflow-y-auto custom-scrollbar space-y-1.5 flex-1">
+            <div v-if="logsIrAObra.length === 0" class="text-slate-600 text-center py-10 italic">
+              Haz clic en "Iniciar Bot Ir a Obra" para ver el streaming de logs de Selenium...
+            </div>
+            <div v-for="(log, idx) in logsIrAObra" :key="idx" class="flex items-start gap-2 text-slate-300">
+              <span class="text-cyan-500 shrink-0">[{{ log.hora }}]</span>
+              <span class="flex-1 break-words" :class="log.texto.includes('Error') ? 'text-rose-400' : (log.texto.includes('✅') || log.texto.includes('éxito')) ? 'text-emerald-400' : 'text-slate-300'">
+                {{ log.texto }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Veredicto / Alerta de Resultado -->
+        <div v-if="resultadoIrAObra" class="mt-4">
+          <div v-if="resultadoIrAObra.ok" 
+               class="p-3 bg-emerald-950/50 border border-emerald-500/40 rounded-xl flex items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2 text-emerald-300 font-semibold">
+              <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+              <span>¡Obra {{ resultadoIrAObra.obra }} seleccionada y abierta exitosamente en Aryve!</span>
+            </div>
+            <a v-if="resultadoIrAObra.url_final" 
+               :href="resultadoIrAObra.url_final" 
+               target="_blank"
+               class="px-3 py-1 bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-400/40 text-emerald-200 rounded-lg font-mono text-[11px] flex items-center gap-1 transition">
+              <span>Abrir URL</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+          </div>
+
+          <div v-else 
+               class="p-3 bg-rose-950/50 border border-rose-500/40 rounded-xl flex items-center gap-2 text-xs text-rose-300">
+            <i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i>
+            <span>{{ resultadoIrAObra.error }}</span>
+          </div>
+        </div>
+
+        <!-- Footer del Modal -->
+        <div class="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+          <p class="text-[11px] text-slate-500 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-info text-cyan-400"></i>
+            <span>Si Chrome 9222 está activo se acopla inmediatamente; de lo contrario inicia sesión automáticamente con .env</span>
+          </p>
+          <button @click="modalIrAObraVisible = false" 
+                  class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-semibold transition cursor-pointer">
+            Cerrar
+          </button>
+        </div>
+
+      </div>
+    </div>
+
     <div v-if="modalRepararVisible" 
          class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 max-h-[92vh] overflow-y-auto custom-scrollbar flex flex-col">
@@ -2769,8 +3386,71 @@
       </div>
     </div>
 
-  </div>
+  
 
-<script src="/static/js/app.js"></script>
+<!-- ======================================================== -->
+    <!-- MODAL: EDITOR DE CAMPOS (PROVEEDORES & CONTRATISTAS)     -->
+    <!-- ======================================================== -->
+    <div v-if="provContraModalEditor"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full p-6 shadow-2xl flex flex-col max-h-[85vh]">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-700/80 mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-indigo-400"></i>
+            <h3 class="text-sm font-bold text-white">Editar Expediente Proveedor / Contratista</h3>
+          </div>
+          <button @click="provContraModalEditor = false" class="text-slate-400 hover:text-white transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div v-if="provContraRegistroEditando" class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-3">
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div v-for="(campo, idx) in provContraRegistroEditando.campos" :key="idx" class="flex flex-col gap-1">
+              <label class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{{ campo[0] }}</label>
+              <input type="text"
+                     v-model="campo[1]"
+                     class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-4 border-t border-slate-700/80 mt-4">
+          <button @click="provContraModalEditor = false"
+                  class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition cursor-pointer">
+            Cancelar
+          </button>
+          <button @click="guardarEdicionProvContra"
+                  class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition cursor-pointer shadow-lg shadow-indigo-600/30">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL: VISOR DE CAPTURA EK9 (AMPLIAR IMAGEN)             -->
+    <!-- ======================================================== -->
+    <div v-if="provContraModalVisor"
+         @click.self="provContraModalVisor = false"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in">
+      <div class="relative max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between px-4 py-2.5 bg-slate-800 border-b border-slate-700">
+          <span class="text-xs font-bold text-slate-200">Captura Original "Datos Generales" EK9</span>
+          <button @click="provContraModalVisor = false" class="text-slate-400 hover:text-white transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+        <div class="p-2 overflow-auto max-h-[80vh] flex items-center justify-center bg-black/40">
+          <img :src="provContraImagenVisorUrl" class="max-w-full max-h-[75vh] object-contain rounded-lg">
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+<script src="/static/js/app.js?v=20261102_1638"></script>
+
 </body>
 </html>

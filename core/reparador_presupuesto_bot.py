@@ -15,7 +15,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CATALOGO_OBRAS_PATH = os.path.join(BASE_DIR, "OBRAS", "catalogo_obras.json")
 OBRAS_DIR = os.path.join(BASE_DIR, "OBRAS")
 CDP_URL = "http://127.0.0.1:9222"
-URL_ARYVE_BASE = "#/scco/PptoKontrol/Obra/"
+URL_ARYVE_BASE = "https://suite.ekloud.net:1445/Aryve/#/scco/PptoKontrol/Obra/"
 
 class ReparadorPresupuestoBot:
 
@@ -58,21 +58,49 @@ class ReparadorPresupuestoBot:
             with open(obra_json_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            # Términos de búsqueda por si el insumo es varilla / acero / cemento / armex
+            # 1. Obtener información oficial del insumo y sus partidas en Aryve
+            partidas_codigos_aryve = set()
+            nombre_insumo_oficial = ""
+            try:
+                from core.insumos_service import InsumosService
+                rep = InsumosService.consultar_reporte(obra=clave_clean, insumo=insumo_clean if insumo_clean.isdigit() else None, nombre=insumo_clean if not insumo_clean.isdigit() else None)
+                if rep and rep.get("ok"):
+                    for item in rep.get("resumen", []):
+                        if str(item.get("clave", "")) == insumo_clean or insumo_clean.lower() in str(item.get("nombre", "")).lower():
+                            nombre_insumo_oficial = str(item.get("nombre", ""))
+                            break
+                    for p in rep.get("partidas", []):
+                        cod_p = p.get("codigo", "")
+                        if cod_p:
+                            partidas_codigos_aryve.add(str(cod_p).strip())
+            except Exception as e_rep:
+                print(f"[ReparadorBot] Error obteniendo reporte de insumos: {e_rep}")
+
+            # 2. Construir lista inteligente de términos
             terminos = []
             if insumo_clean:
                 terminos.append(insumo_clean.lower())
-                # Mapeo de insumos comunes de catálogo
-                if "1040025" in insumo_clean or "varilla" in insumo_clean.lower():
-                    terminos.extend(["vs#3", "varilla", "acero", "armex", "cimentacion", "losa"])
-                elif "1040004" in insumo_clean or "armex" in insumo_clean.lower():
-                    terminos.extend(["armex", "cadena"])
+            if nombre_insumo_oficial:
+                palabras = [w.lower().strip('",.()') for w in nombre_insumo_oficial.split() if len(w.strip('",.()')) >= 4]
+                terminos.extend(palabras)
+
+            # Mapeo de insumos comunes de catálogo
+            if "1040025" in insumo_clean or "varilla" in insumo_clean.lower():
+                terminos.extend(["vs#3", "varilla", "acero", "armex", "cimentacion", "losa"])
+            elif "1040004" in insumo_clean or "armex" in insumo_clean.lower():
+                terminos.extend(["armex", "cadena"])
+            elif "1330179" in insumo_clean or "celotex" in insumo_clean.lower():
+                terminos.extend(["celotex", "junta constructiva"])
 
             frentes = data.get("frentes", [])
             for f in frentes:
                 nom_frente = f.get("nombre", "") or ""
                 for p in f.get("partidas", []):
                     nom_partida = p.get("nombre", "") or ""
+                    cod_partida = str(p.get("codigo", "")).strip()
+
+                    partida_en_aryve = cod_partida in partidas_codigos_aryve if partidas_codigos_aryve else True
+
                     for t in p.get("tarjetas", []):
                         clave_t = str(t.get("clave_tarjeta", ""))
                         nom_t = str(t.get("nombre", ""))
@@ -80,11 +108,13 @@ class ReparadorPresupuestoBot:
 
                         coincide = False
                         if not terminos:
-                            # Si no se pasó insumo, traer las tarjetas principales de cimentación/estructura
                             coincide = True
                         else:
                             for term in terminos:
-                                if term in nom_t.lower() or term == clave_t or term in nom_partida.lower():
+                                if term in nom_t.lower() or term == clave_t:
+                                    coincide = True
+                                    break
+                                if partida_en_aryve and term in nom_partida.lower():
                                     coincide = True
                                     break
 

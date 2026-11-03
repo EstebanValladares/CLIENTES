@@ -14,7 +14,7 @@ FALLOS_CLASIFICADORES_JSONL = LOGGER_DIR / "fallos_clasificadores.jsonl"
 REGISTRO_USUARIOS_JSONL = LOGGER_DIR / "registro_usuarios.jsonl"
 
 # --- URLs OFICIALES DE ARYVE ---
-ARYVE_BASE_URL = os.getenv("ARYVE_BASE_URL", "")
+ARYVE_BASE_URL = os.getenv("ARYVE_BASE_URL", "https://suite.ekloud.net:1445/Aryve/")
 ARYVE_NUEVO_USUARIO_URL = f"{ARYVE_BASE_URL.rstrip('/')}/#/kontrol/usuarios/id?nuevo"
 
 def obtener_url_perfil_usuario(id_usuario: str | int) -> str:

@@ -1,0 +1,209 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "HCS",
+    "nombre": "HCS - L150, COTO 2 ARTEMISA 1V MAGNOLIA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 78.0,
+    "requisitado_total": 78.0,
+    "comprado_total": 78.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "LOTE 150 PROTOTIPO MAGNOLIA",
+      "partidas": [
+        {
+          "id": "1.1.4",
+          "codigo": "1.1.4",
+          "nombre": "LOSA DE ENTREPISO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 58,
+              "importe_ppto": 1247,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 58,
+              "vigente_tarjetas": 58,
+              "diferencia": 0,
+              "requisitado": 58,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 58,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "LOSA DE AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 20,
+              "importe_ppto": 430,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 20,
+              "vigente_tarjetas": 20,
+              "diferencia": 0,
+              "requisitado": 20,
+              "cancelado": 0,
+              "req_sin_autorizar": 20,
+              "comprado": 20,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.4",
+      "codigo": "1.1.4",
+      "nombre": "LOSA DE ENTREPISO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 58,
+          "importe_ppto": 1247,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 58,
+          "vigente_tarjetas": 58,
+          "diferencia": 0,
+          "requisitado": 58,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 58,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "LOSA DE AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 20,
+          "importe_ppto": 430,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 20,
+          "vigente_tarjetas": 20,
+          "diferencia": 0,
+          "requisitado": 20,
+          "cancelado": 0,
+          "req_sin_autorizar": 20,
+          "comprado": 20,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040001",
+      "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 78,
+      "importe_ppto": 1677,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 78,
+      "vigente_tarjetas": 78,
+      "diferencia": 0,
+      "requisitado": 78,
+      "cancelado": 0,
+      "req_sin_autorizar": 20,
+      "comprado": 78,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "HCS",
+    "insumo": "1040001",
+    "nombre": ""
+  }
+}

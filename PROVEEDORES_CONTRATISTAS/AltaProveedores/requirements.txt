@@ -1,0 +1,34 @@
+# AltaProveedores EK10 - dependencias (Python 3.11-3.14, Windows)
+# Instalar con:  pip install -r requirements.txt
+
+# --- Portal web ---
+flask
+
+# --- Bot de automatizacion (necesita Google Chrome instalado) ---
+selenium
+
+# --- Modo base de datos (lector "db") ---
+pyodbc                 # + driver ODBC "SQL Anywhere 11" instalado en el equipo
+
+# --- OCR de Windows (lector "ocr", y numero de proveedor en modo "db") ---
+opencv-python
+numpy
+pillow
+winrt-runtime
+winrt-Windows.Media.Ocr
+winrt-Windows.Graphics.Imaging
+winrt-Windows.Storage
+winrt-Windows.Storage.Streams
+winrt-Windows.Foundation
+winrt-Windows.Foundation.Collections
+winrt-Windows.Globalization
+
+# --- Lectores opcionales ---
+google-genai           # lector "gemini"  (requiere GEMINI_API_KEY)
+anthropic              # lector "claude"  (requiere ANTHROPIC_API_KEY)
+pydantic               # usado por extraer_imagen (lector "claude")
+
+# El lector "local" usa el proyecto aparte ExtraerInputsImagen (Ollama + PaddleOCR); no se lista aqui.
+
+# --- Solo para compilar los .exe ---
+# pyinstaller

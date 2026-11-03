@@ -4,6 +4,8 @@ Lectura y navegación ultrarrápida con Tablas de Hash en memoria RAM.
 Integración con Microservicios de Insumos, Requisiciones y Órdenes de Compra (OCs).
 """
 
+import os
+import json
 from fastapi import APIRouter, HTTPException, Query, Body
 from typing import Dict, Any, List, Optional
 from core.obras_service import ObrasCoreService
@@ -24,6 +26,24 @@ def obtener_catalogo(q: Optional[str] = Query(None)):
     Tiempo de respuesta estimado: < 1ms.
     """
     return ObrasCoreService.obtener_catalogo(busqueda=q)
+
+@router.get("/grupos-insumos-tipo")
+def obtener_grupos_insumos_tipo():
+    """
+    Devuelve la estructura de tipos e hijos de insumos desde GRUPO_INSUMOS_TIPO.json
+    para la optimización y alta masiva en obras (evita error de material no disponible en EK10).
+    """
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    ruta_json = os.path.join(base_dir, "OBRAS", "GRUPO_INSUMOS_TIPO.json")
+    if not os.path.exists(ruta_json):
+        ruta_json = os.path.join("OBRAS", "GRUPO_INSUMOS_TIPO.json")
+    if os.path.exists(ruta_json):
+        try:
+            with open(ruta_json, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error leyendo GRUPO_INSUMOS_TIPO.json: {e}")
+    raise HTTPException(status_code=404, detail="Archivo GRUPO_INSUMOS_TIPO.json no encontrado.")
 
 @router.get("/reporte-insumos")
 def obtener_reporte_insumos(
@@ -92,21 +112,6 @@ def ejecutar_suministro(payload: Dict[str, Any] = Body(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/sincronizar-firestore-obra")
-def sincronizar_firestore_obra(payload: Dict[str, Any] = Body(...)):
-    """
-    Guarda el reporte de la obra en Firebase Firestore para que CLIENTES lo use.
-    """
-    obra = payload.get("obra", "")
-    if not obra:
-        raise HTTPException(status_code=400, detail="Debe especificar la obra.")
-    try:
-        reporte = InsumosService.consultar_reporte(obra=obra)
-        ok = InsumosService.sincronizar_firestore(obra=obra, datos_reporte=reporte)
-        return {"ok": ok, "obra": obra, "mensaje": "Sincronizado en Firestore con éxito"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
 @router.get("/{clave_o_id}/arbol")
 def obtener_arbol(clave_o_id: str):
     """
@@ -127,8 +132,7 @@ def recargar_cache():
 def sincronizar_obras_aryve():
     """
     Conecta en vivo a la API de Aryve con la Llave Maestra, extrae los árboles
-    de todas las obras, actualiza obras.json local y sincroniza automáticamente
-    en la colección 'OBRAS' de Firebase Firestore.
+    de todas las obras y actualiza obras.json local.
     """
     # Versión cliente - lectura directa de Firebase
     try:
@@ -138,11 +142,10 @@ def sincronizar_obras_aryve():
             "ok": True,
             "total_obras": len(resultado.get("obras", [])),
             "total_frentes": resultado.get("metadata", {}).get("total_frentes", 0),
-            "firebase_sync": True
+            "sincronizado_local": True
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en sincronización: {e}")
-
 
 @router.post("/reparar-presupuesto/diagnostico")
 def diagnosticar_reparacion_presupuesto(payload: Dict[str, Any] = Body(...)):
@@ -174,3 +177,41 @@ def ejecutar_reparacion_presupuesto(payload: Dict[str, Any] = Body(...)):
     if not res.get("ok"):
         raise HTTPException(status_code=400, detail=res.get("error", "Error ejecutando reparación"))
     return res
+
+@router.post("/ir-a-obra")
+def automatizar_ir_a_obra(payload: Dict[str, Any] = Body(...)):
+    """
+    Automatiza la búsqueda de la obra en Aryve, despliegue del panel lateral,
+    clic en 'APLICAR CONFIGURACIÓN' y posterior clic en 'IR A OBRA'.
+    Soporta acoplamiento en vivo a Chrome 9222 o inicio de sesión automático.
+    """
+    from core.obras_bot_service import ObrasBotService
+    obra = payload.get("obra", "")
+    if not obra:
+        raise HTTPException(status_code=400, detail="Debe especificar la clave de la obra.")
+    res = ObrasBotService.ir_a_obra(clave_obra=obra)
+    if not res.get("ok"):
+        raise HTTPException(status_code=500, detail=res.get("error", "Error ejecutando navegación de obra"))
+    return res
+
+@router.post("/optimizar-insumos/ejecutar")
+def ejecutar_optimizacion_insumos(payload: Dict[str, Any] = Body(...)):
+    """
+    Automatiza el llenado de COMPAÑIA GRUPO DE INSUMOS en las obras indicadas:
+    1. Se logea en Aryve (o conecta a Chrome 9222).
+    2. Entra a la obra y activa modo Edición (Alt+E).
+    3. Abre la sección 'COMPAÑIA GRUPO DE INSUMOS'.
+    4. Abre el panel '+' y agrega los grupos seleccionados (omitiendo los ya existentes).
+    5. Termina y DEJA LA PANTALLA ABIERTA SIN GUARDAR (sin Alt+G) para revisión visual del usuario.
+    """
+    from core.obras_bot_service import ObrasBotService
+    obras = payload.get("obras", [])
+    grupos = payload.get("grupos", [])
+    if not obras:
+        raise HTTPException(status_code=400, detail="Debe especificar al menos una obra en la cola.")
+
+    res = ObrasBotService.ejecutar_llenado_optimizacion(obras=obras, grupos=grupos)
+    if not res.get("ok"):
+        raise HTTPException(status_code=500, detail=res.get("error", "Error ejecutando optimización"))
+    return res
+

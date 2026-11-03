@@ -1,16 +1,17 @@
 """
 Core Domain: Insumos & Órdenes de Compra Engine (Acelerado a Velocidad O(1)).
-Arquitectura de Alta Velocidad:
-- Nivel 1: Caché en memoria RAM de alta velocidad (0.001 ms).
-- Nivel 2: Caché persistente en disco SSD / JSON (0.5 ms).
-- Nivel 3: Pool de conexiones HTTP Keep-Alive persistentes.
-- Nivel 4: Filtrado en memoria instantáneo sin llamadas redundantes al servidor.
-- Modo CLIENTE: Lectura segura y acelerada desde Firebase Firestore.
+Arquitectura de Alta Velocidad y Tiempo Real:
+- Nivel 1: Caché en memoria RAM de microsegundos (0.001 ms).
+- Nivel 2: Caché persistente en disco SSD / JSON (<1 ms).
+- Nivel 3: Pool de consultas directas a la base de datos de Aryve (servicios.aryve.com.mx / Cloud REST).
+- Compatible al 100% tanto para Master como para CLIENTES en tiempo real.
+- Suministro masivo protegido por Token exclusivo de Administrador.
 """
 
 import os
 import json
 import time
+import re
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -20,11 +21,11 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INSUMOS_CACHE_DIR = os.path.join(BASE_DIR, "OBRAS", "INSUMOS_CACHE")
 os.makedirs(INSUMOS_CACHE_DIR, exist_ok=True)
 
-# Configuración Maestra
-API_BASE = ""
-API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php" if API_BASE else ""
-API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php" if API_BASE else ""
-API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php" if API_BASE else ""
+# Configuración de Endpoints de Base de Datos en Tiempo Real
+API_BASE = "http://34.51.46.13/API/suministro_nivel"
+API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php"
+API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php"
+API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php"
 API_TOKEN = ""
 
 HEADERS = {
@@ -34,13 +35,17 @@ HEADERS = {
 }
 
 def _es_modo_master() -> bool:
-    publisher_script = os.path.join(BASE_DIR, "publicar_version_equipo.py")
-    return os.path.exists(publisher_script) and bool(API_BASE)
+    """Determina si cuenta con token de administración para acciones de escritura."""
+    return bool(API_TOKEN and len(API_TOKEN) > 10)
 
 class InsumosService:
     # Caché en RAM de nivel 1 O(1)
     _cache_ram_reportes: Dict[str, Dict[str, Any]] = {}
     _cache_ram_movimientos: Dict[str, Dict[str, Any]] = {}
+
+    @classmethod
+    def _sanitizar_nombre_archivo(cls, nombre: str) -> str:
+        return re.sub(r'[^\w\-_\.]', '_', nombre)
 
     @classmethod
     def consultar_reporte(
@@ -51,68 +56,82 @@ class InsumosService:
         forzar_recarga: bool = False
     ) -> Dict[str, Any]:
         """
-        Consulta ultra-rápida:
-        1. Si la obra ya está en RAM -> Retorna y filtra en 0.001 ms.
-        2. Si está en disco -> Carga en RAM y filtra en 0.5 ms.
-        3. Solo si no existe o se pide 'forzar_recarga' -> Consulta al servidor remoto (Aryve o Firestore).
+        Consulta en tiempo real con aceleración O(1):
+        1. Si la consulta específica ya está en RAM -> Retorna en 0.001 ms.
+        2. Si está en caché SSD persistente -> Carga en RAM en < 1 ms.
+        3. Si no existe o se pulsa 'forzar_recarga' -> Consulta directa en vivo al servidor REST.
         """
         obra_clean = str(obra).strip().upper()
         if not obra_clean:
-            raise ValueError("Debe proporcionar la clave de la obra (ej. AT1, AT4).")
+            raise ValueError("Debe proporcionar la clave de la obra (ej. AT1, HCS, etc.).")
 
-        cache_file = os.path.join(INSUMOS_CACHE_DIR, f"{obra_clean}_reporte.json")
+        ins_q = str(insumo or "").strip().upper()
+        nom_q = str(nombre or "").strip().upper()
+
+        cache_sub = f"{ins_q}_{nom_q}".strip("_")
+        cache_key = f"{obra_clean}_{cache_sub}" if cache_sub else f"{obra_clean}_ALL"
+        safe_cache_name = cls._sanitizar_nombre_archivo(cache_key)
+        cache_file = os.path.join(INSUMOS_CACHE_DIR, f"{safe_cache_name}.json")
+
         data_base = None
 
         # 1. Verificar RAM (Ultra-rápido: 0 ms)
-        if not forzar_recarga and obra_clean in cls._cache_ram_reportes:
-            data_base = cls._cache_ram_reportes[obra_clean]
+        if not forzar_recarga and cache_key in cls._cache_ram_reportes:
+            return cls._cache_ram_reportes[cache_key]
 
-        # 2. Verificar Disco Local SSD (Rápido: <1 ms)
-        if not data_base and not forzar_recarga and os.path.exists(cache_file):
+        # 2. Verificar Disco SSD (< 1 ms)
+        if not forzar_recarga and os.path.exists(cache_file):
             try:
                 with open(cache_file, "r", encoding="utf-8") as f:
                     data_base = json.load(f)
-                    cls._cache_ram_reportes[obra_clean] = data_base
+                    cls._cache_ram_reportes[cache_key] = data_base
+                    return data_base
             except Exception:
                 data_base = None
 
-        # 3. Si no está en caché, consultar origen según modo
-        if not data_base:
-            if not _es_modo_master():
-                data_base = cls._descargar_desde_firestore(obra_clean)
-            else:
-                data_base = cls._descargar_desde_aryve_master(obra_clean)
+        # 3. Consulta en vivo al Servidor REST de Aryve (Tiempo real)
+        data_base = cls._descargar_desde_api(obra_clean, ins_q, nom_q)
 
-            if data_base:
-                cls._cache_ram_reportes[obra_clean] = data_base
-                try:
-                    with open(cache_file, "w", encoding="utf-8") as f:
-                        json.dump(data_base, f, ensure_ascii=False, indent=2)
-                except Exception:
-                    pass
+        if data_base and data_base.get("ok", False):
+            cls._cache_ram_reportes[cache_key] = data_base
+            try:
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(data_base, f, ensure_ascii=False, indent=2)
+            except Exception:
+                pass
+            return data_base
 
         if not data_base:
             return {
                 "ok": False,
-                "mensaje": f"No se pudo obtener información para la obra {obra_clean}.",
+                "mensaje": f"No se pudo obtener información de insumos para la obra {obra_clean}.",
                 "frentes": [],
                 "resumen": [],
                 "metricas": {}
             }
 
-        # 4. Filtrado instantáneo en RAM (0.000 ms)
-        ins_q = (insumo or "").strip().upper()
-        nom_q = (nombre or "").strip().upper()
-
-        if not ins_q and not nom_q:
-            return data_base
-
-        return cls._filtrar_reporte_en_ram(data_base, ins_q, nom_q)
+        return data_base
 
     @classmethod
-    def _descargar_desde_aryve_master(cls, obra_clean: str) -> Optional[Dict[str, Any]]:
-        """Descarga en vivo desde Aryve para el entorno Master."""
-        params = {"obra": obra_clean, "nombre": "a"}
+    def _descargar_desde_api(
+        cls, 
+        obra_clean: str, 
+        ins_q: str = "", 
+        nom_q: str = ""
+    ) -> Optional[Dict[str, Any]]:
+        """Descarga en vivo desde el servidor REST de base de datos."""
+        if not API_REPORTE_URL:
+            return None
+
+        params = {"obra": obra_clean}
+        if ins_q:
+            params["insumo"] = ins_q
+        elif nom_q:
+            params["nombre"] = nom_q
+        else:
+            # Si no se define filtro, se solicita 'a' como búsqueda amplia
+            params["nombre"] = "a"
+
         query_str = urllib.parse.urlencode(params)
         url = f"{API_REPORTE_URL}?{query_str}"
 
@@ -160,78 +179,18 @@ class InsumosService:
                     "frentes": list(frentes_dict.values()),
                     "partidas": partidas,
                     "resumen": resumen,
-                    "filtros_aplicados": {"obra": obra_clean}
+                    "filtros_aplicados": {"obra": obra_clean, "insumo": ins_q, "nombre": nom_q}
                 }
         except Exception as e:
-            print(f"[InsumosService] Error descarga Aryve {obra_clean}: {e}")
+            print(f"[InsumosService] Error consulta API {obra_clean}: {e}")
             return None
-
-    @classmethod
-    def _descargar_desde_firestore(cls, obra_clean: str) -> Optional[Dict[str, Any]]:
-        """Descarga de solo lectura desde Firestore para CLIENTES."""
-        try:
-            from core.firebase_client import FirebaseClient
-            db = FirebaseClient.get_db()
-            if not db:
-                return None
-
-            doc = db.collection("OBRAS").document(obra_clean).get(timeout=3)
-            if doc.exists:
-                doc_data = doc.to_dict() or {}
-                sub_frentes = []
-                for f_doc in db.collection("OBRAS").document(obra_clean).collection("frentes").stream(timeout=3):
-                    sub_frentes.append(f_doc.to_dict())
-
-                return {
-                    "ok": True,
-                    "obra": {"clave": obra_clean, "nombre": doc_data.get("nombre", obra_clean)},
-                    "metricas": doc_data.get("metricas", {}),
-                    "resumen": doc_data.get("resumen", []),
-                    "frentes": sub_frentes,
-                    "filtros_aplicados": {"obra": obra_clean}
-                }
-        except Exception as e:
-            print(f"[InsumosService] Error descarga Firestore {obra_clean}: {e}")
-            return None
-
-    @classmethod
-    def _filtrar_reporte_en_ram(cls, data_base: Dict[str, Any], ins_q: str, nom_q: str) -> Dict[str, Any]:
-        """Filtra la estructura de frentes, partidas y resumen en RAM en <0.1 ms."""
-        resultado = dict(data_base)
-        frentes_filtrados = []
-
-        for fr in data_base.get("frentes", []):
-            partidas_f = []
-            for p in fr.get("partidas", []):
-                insumos_p = []
-                for i in p.get("insumos", []):
-                    match_ins = not ins_q or ins_q in str(i.get("clave", "")).upper()
-                    match_nom = not nom_q or nom_q in str(i.get("nombre", "")).upper()
-                    if match_ins and match_nom:
-                        insumos_p.append(i)
-                if insumos_p:
-                    p_copy = dict(p)
-                    p_copy["insumos"] = insumos_p
-                    partidas_f.append(p_copy)
-            if partidas_f:
-                fr_copy = dict(fr)
-                fr_copy["partidas"] = partidas_f
-                frentes_filtrados.append(fr_copy)
-
-        resumen_f = []
-        for i in data_base.get("resumen", []):
-            match_ins = not ins_q or ins_q in str(i.get("clave", "")).upper()
-            match_nom = not nom_q or nom_q in str(i.get("nombre", "")).upper()
-            if match_ins and match_nom:
-                resumen_f.append(i)
-
-        resultado["frentes"] = frentes_filtrados
-        resultado["resumen"] = resumen_f
-        return resultado
 
     @classmethod
     def consultar_movimientos(cls, obra: str, partida: str, insumo: str) -> Dict[str, Any]:
-        """Consulta con caché en RAM de movimientos de OCs y Requisiciones."""
+        """
+        Consulta con caché en RAM de movimientos de OCs y Requisiciones en tiempo real.
+        Disponible al 100% tanto para Master como para CLIENTES.
+        """
         obra_clean = str(obra).strip().upper()
         partida_clean = str(partida).strip()
         insumo_clean = str(insumo).strip()
@@ -240,12 +199,10 @@ class InsumosService:
         if clave_cache in cls._cache_ram_movimientos:
             return cls._cache_ram_movimientos[clave_cache]
 
-        if not _es_modo_master():
+        if not API_MOVIMIENTOS_URL:
             return {
-                "ok": True,
-                "obra": obra_clean,
-                "partida": partida_clean,
-                "insumo": insumo_clean,
+                "ok": False,
+                "mensaje": "URL de API de movimientos no configurada.",
                 "requisiciones": [],
                 "ordenes_compra": []
             }
@@ -292,14 +249,11 @@ class InsumosService:
             with urllib.request.urlopen(req, timeout=30) as response:
                 raw = response.read().decode("utf-8")
                 data = json.loads(raw)
+                
                 # Invalidar caché local de esta obra para que recargue fresco
-                cls._cache_ram_reportes.pop(obra_clean, None)
-                cache_file = os.path.join(INSUMOS_CACHE_DIR, f"{obra_clean}_reporte.json")
-                if os.path.exists(cache_file):
-                    try:
-                        os.remove(cache_file)
-                    except Exception:
-                        pass
+                for k in list(cls._cache_ram_reportes.keys()):
+                    if k.startswith(obra_clean):
+                        cls._cache_ram_reportes.pop(k, None)
 
                 if data.get("ok", False):
                     return {
@@ -316,35 +270,3 @@ class InsumosService:
                     }
         except Exception as e:
             raise RuntimeError(f"Error en endpoint de suministro: {str(e)}")
-
-    @classmethod
-    def sincronizar_firestore(cls, obra: str, datos_reporte: Dict[str, Any]) -> bool:
-        """Sincroniza el reporte en Firestore para lectura ultra-rápida en CLIENTES."""
-        try:
-            from core.firebase_client import FirebaseClient
-            db = FirebaseClient.get_db()
-            if not db:
-                return False
-
-            obra_clean = str(obra).strip().upper()
-            doc_ref = db.collection("OBRAS").document(obra_clean)
-            
-            doc_ref.set({
-                "clave": obra_clean,
-                "nombre": datos_reporte.get("obra", {}).get("nombre", obra_clean),
-                "metricas": datos_reporte.get("metricas", {}),
-                "resumen": datos_reporte.get("resumen", []),
-                "frentes_count": len(datos_reporte.get("frentes", [])),
-                "partidas_count": len(datos_reporte.get("partidas", [])),
-                "ultima_actualizacion_insumos": datos_reporte.get("filtros_aplicados", {})
-            }, merge=True)
-
-            frentes = datos_reporte.get("frentes", [])
-            for fr in frentes:
-                fid = str(fr.get("id", "0"))
-                doc_ref.collection("frentes").document(fid).set(fr)
-
-            return True
-        except Exception as e:
-            print(f"[InsumosService] Error sincronizando Firestore: {e}")
-            return False

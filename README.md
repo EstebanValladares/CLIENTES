@@ -3,7 +3,6 @@
 Dashboard ejecutivo y operativo para gestión centralizada de:
 - **OBRAS & WBS:** Consulta de presupuestos, frentes, partidas y tarjetas conectadas en tiempo real a Google Firebase Firestore.
 - **USUARIOS:** Alta, consulta de puestos y asignación de estructuras operativas.
-- **CONTRATISTAS:** Validación de expedientes y registros.
 
 ---
 

@@ -1,6 +1,6 @@
 """
 Servicio de Alto Rendimiento para Gestión y Consulta de Obras, Frentes, Partidas y Tarjetas.
-Optimizado con Tablas de Hash en memoria O(1) y sincronización con Firebase Firestore.
+Optimizado con Tablas de Hash en memoria O(1) leyendo el catálogo unificado tipo lista (obras.json).
 """
 
 import os
@@ -15,8 +15,9 @@ class ObrasCoreService:
     _lock = threading.Lock()
     _cargado: bool = False
     _metadata: Dict[str, Any] = {}
-    _obras_map: Dict[str, Any] = {}      # Hash Table O(1) por Clave e ID
     _catalogo_ligero: List[Dict[str, Any]] = []
+    _obras_map_id: Dict[str, Any] = {}
+    _obras_map_clave: Dict[str, Any] = {}
 
     @classmethod
     def _cargar_en_memoria(cls):
@@ -27,21 +28,36 @@ class ObrasCoreService:
             if cls._cargado:
                 return
 
-            # 1. Intentar cargar desde archivo local si existe
             if os.path.exists(OBRAS_JSON_PATH):
                 try:
                     with open(OBRAS_JSON_PATH, "r", encoding="utf-8") as f:
                         data = json.load(f)
 
-                    cls._metadata = data.get("metadata", {})
-                    obras = data.get("obras", [])
+                    # Si es lista directa [ {...}, {...} ] estilo Usuarios.json
+                    if isinstance(data, list):
+                        lista_obras = data
+                    else:
+                        lista_obras = data.get("catalogo") or data.get("obras", [])
 
                     catalogo = []
-                    mapa = {}
+                    mapa_id = {}
+                    mapa_clave = {}
 
-                    for o in obras:
+                    total_frentes = 0
+                    total_partidas = 0
+                    total_tarjetas = 0
+
+                    for o in lista_obras:
                         clave = str(o.get("clave", "")).strip().upper()
                         id_obra = str(o.get("id_obra", "")).strip()
+
+                        tf = o.get("total_frentes", len(o.get("frentes", [])))
+                        tp = o.get("total_partidas", 0)
+                        tt = o.get("total_tarjetas", 0)
+
+                        total_frentes += tf
+                        total_partidas += tp
+                        total_tarjetas += tt
 
                         resumen = {
                             "id_obra": o.get("id_obra"),
@@ -49,63 +65,47 @@ class ObrasCoreService:
                             "nombre": o.get("nombre", ""),
                             "clave_presupuesto": o.get("clave_presupuesto", ""),
                             "tipo_wbs": o.get("tipo_wbs", ""),
-                            "total_frentes": o.get("total_frentes", 0),
-                            "total_partidas": o.get("total_partidas", 0),
-                            "total_tarjetas": o.get("total_tarjetas", 0),
+                            "total_frentes": tf,
+                            "total_partidas": tp,
+                            "total_tarjetas": tt,
                             "importe_total": o.get("importe_total", 0.0),
                             "precio_total": o.get("precio_total", 0.0)
                         }
                         catalogo.append(resumen)
 
-                        if clave:
-                            mapa[clave] = o
                         if id_obra:
-                            mapa[id_obra] = o
+                            mapa_id[id_obra] = o
+                        if clave and clave != "NONE":
+                            mapa_clave[clave] = o
 
+                    cls._metadata = {
+                        "total_obras": len(catalogo),
+                        "total_frentes": total_frentes,
+                        "total_partidas": total_partidas,
+                        "total_tarjetas": total_tarjetas
+                    }
                     cls._catalogo_ligero = catalogo
-                    cls._obras_map = mapa
+                    cls._obras_map_id = mapa_id
+                    cls._obras_map_clave = mapa_clave
                     cls._cargado = True
                     return
                 except Exception as e:
-                    print(f"[ObrasCoreService] Error al cargar obras.json local: {e}")
+                    print(f"[ObrasCoreService] Error al cargar obras.json: {e}")
 
-            # 1b. Intentar cargar desde catalogo_obras.json local si existe
+            # 1b. Intentar cargar desde catalogo_obras.json si no se cargó obras.json
             cat_local = os.path.join(BASE_DIR, "OBRAS", "catalogo_obras.json")
             if not cls._cargado and os.path.exists(cat_local):
                 try:
                     with open(cat_local, "r", encoding="utf-8") as f:
                         data = json.load(f)
-                    catalogo = []
-                    mapa = {}
-                    for o in data:
-                        clave = str(o.get("clave", "")).strip().upper()
-                        id_obra = str(o.get("id", o.get("id_obra", ""))).strip()
-                        resumen = {
-                            "id_obra": id_obra,
-                            "clave": clave,
-                            "nombre": o.get("nombre", ""),
-                            "clave_presupuesto": o.get("presupuesto_clave", ""),
-                            "tipo_wbs": o.get("tipo_wbs", ""),
-                            "total_frentes": o.get("total_frentes", 0),
-                            "total_partidas": o.get("total_partidas", 0),
-                            "total_tarjetas": o.get("total_tarjetas", 0),
-                            "importe_total": o.get("importe_total", 0.0),
-                            "precio_total": o.get("precio_total", 0.0)
-                        }
-                        catalogo.append(resumen)
-                        if clave:
-                            mapa[clave] = resumen
-                        if id_obra:
-                            mapa[id_obra] = resumen
-
-                    cls._catalogo_ligero = catalogo
-                    cls._obras_map = mapa
+                    cls._catalogo_ligero = data
+                    cls._obras_map_clave = {str(o.get("clave", "")).strip().upper(): o for o in data if o.get("clave")}
+                    cls._obras_map_id = {str(o.get("id_obra", "")).strip(): o for o in data if o.get("id_obra")}
                     cls._metadata = {
-                        "total_obras": len(catalogo),
-                        "total_frentes": sum(o.get("total_frentes", 0) for o in catalogo),
-                        "total_partidas": sum(o.get("total_partidas", 0) for o in catalogo),
-                        "total_tarjetas": sum(o.get("total_tarjetas", 0) for o in catalogo),
-                        "fecha_extraccion": None
+                        "total_obras": len(data),
+                        "total_frentes": sum(o.get("total_frentes", 0) for o in data),
+                        "total_partidas": sum(o.get("total_partidas", 0) for o in data),
+                        "total_tarjetas": sum(o.get("total_tarjetas", 0) for o in data)
                     }
                     cls._cargado = True
                     return
@@ -127,22 +127,20 @@ class ObrasCoreService:
                         return
             except Exception as e_fb:
                 print(f"[ObrasCoreService] Error cargando desde Firebase: {e_fb}")
-
-            # 3. Fallback vacío
             cls._metadata = {
                 "total_obras": 0,
                 "total_frentes": 0,
                 "total_partidas": 0,
-                "total_tarjetas": 0,
-                "fecha_extraccion": None
+                "total_tarjetas": 0
             }
             cls._catalogo_ligero = []
-            cls._obras_map = {}
+            cls._obras_map_id = {}
+            cls._obras_map_clave = {}
             cls._cargado = True
 
     @classmethod
     def recargar(cls):
-        """Fuerza la recarga de obras a la memoria RAM."""
+        """Fuerza la recarga del archivo obras.json en la memoria RAM."""
         with cls._lock:
             cls._cargado = False
         cls._cargar_en_memoria()
@@ -150,14 +148,18 @@ class ObrasCoreService:
 
     @classmethod
     def obtener_metricas(cls) -> Dict[str, Any]:
+        """Devuelve las métricas consolidadas del catálogo de obras."""
         cls._cargar_en_memoria()
-        return dict(cls._metadata)
+        return {
+            **cls._metadata,
+            "ultima_sincronizacion": "Local Autónoma"
+        }
 
     @classmethod
-    def obtener_catalogo(cls, busqueda: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Devuelve el catálogo de obras con filtrado rápido."""
+    def obtener_catalogo(cls, busqueda: str = "") -> List[Dict[str, Any]]:
+        """Devuelve el catálogo de obras con filtrado rápido O(N)."""
         cls._cargar_en_memoria()
-        if not busqueda:
+        if not busqueda or not isinstance(busqueda, str):
             return cls._catalogo_ligero
 
         q = busqueda.strip().lower()
@@ -170,43 +172,29 @@ class ObrasCoreService:
     def obtener_arbol(cls, clave_o_id: str) -> Optional[Dict[str, Any]]:
         """
         Devuelve el árbol completo (Frentes -> Partidas -> Tarjetas) en O(1)
-        usando la tabla de hash en memoria RAM o consultando Firebase Firestore bajo demanda.
+        inmediato desde las tablas de hash en memoria RAM.
         """
         cls._cargar_en_memoria()
-        clave_limpia = str(clave_o_id).strip().upper()
+        ref = str(clave_o_id).strip().upper()
 
-        if clave_limpia in cls._obras_map and "frentes" in cls._obras_map[clave_limpia]:
-            return cls._obras_map[clave_limpia]
+        # 1. Búsqueda directa por Clave en RAM
+        if ref in cls._obras_map_clave:
+            return cls._obras_map_clave[ref]
 
-        # 1. Buscar árbol en archivo local OBRAS/{clave}.json
-        ruta_arbol_local = os.path.join(BASE_DIR, "OBRAS", f"{clave_limpia}.json")
-        if os.path.exists(ruta_arbol_local):
-            try:
-                with open(ruta_arbol_local, "r", encoding="utf-8") as f:
-                    arbol = json.load(f)
-                with cls._lock:
-                    cls._obras_map[clave_limpia] = arbol
-                return arbol
-            except Exception as e_arbol:
-                print(f"[ObrasCoreService] Error leyendo {ruta_arbol_local}: {e_arbol}")
+        # 2. Búsqueda directa por ID en RAM
+        if ref in cls._obras_map_id:
+            return cls._obras_map_id[ref]
 
-        # 2. Si no está en disco local, consultar Firebase Firestore
+        # 3. Fallback a Firebase Firestore bajo demanda
         try:
             from core.firebase_client import FirebaseClient
             db = FirebaseClient.get_db()
             if db is not None:
-                doc = db.collection("OBRAS").document("arboles").collection("items").document(clave_limpia).get(timeout=3)
+                doc = db.collection("OBRAS").document(ref).get(timeout=3)
                 if doc.exists:
                     arbol = doc.to_dict()
-                    # Reensamblar obras particionadas (>850 KB como AUS)
-                    if arbol.get("particionado"):
-                        p2_doc = db.collection("OBRAS").document("arboles").collection("items").document(f"{clave_limpia}_PARTE2").get()
-                        if p2_doc.exists:
-                            f2 = p2_doc.to_dict().get("frentes", [])
-                            arbol["frentes"] = arbol.get("frentes", []) + f2
-
                     with cls._lock:
-                        cls._obras_map[clave_limpia] = arbol
+                        cls._obras_map_clave[ref] = arbol
                     return arbol
         except Exception as e_fb:
             print(f"[ObrasCoreService] Error consultando árbol en Firestore: {e_fb}")

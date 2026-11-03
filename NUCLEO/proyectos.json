@@ -18,22 +18,6 @@
         "ENKONTROL.TXT"
       ],
       "usa_portal": true
-    },
-    "PROVEEDORES": {
-      "descripcion": "Gestión, creación y registro de proveedores en Aryve",
-      "script": "ejecutor_proveedores.py",
-      "requiere_archivos": [
-        "datos.csv"
-      ],
-      "usa_portal": true
-    },
-    "CONTRATISTAS": {
-      "descripcion": "Gestión, generación de gafetes y carga de fotos de perfil para contratistas en Aryve (EK10)",
-      "script": "main.py",
-      "requiere_archivos": [
-        "contratista_mapeado.json"
-      ],
-      "usa_portal": true
     }
   }
 }
