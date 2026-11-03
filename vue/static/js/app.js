@@ -159,6 +159,8 @@ createApp({
     const provContraBusqueda = ref('');
     const provContraFiltro = ref('TODOS');
     const provContraSeleccionados = ref([]);
+    const provContraColumnaOrden = ref('proveedor');
+    const provContraOrdenAsc = ref(true);
     const provContraTerminalLogs = ref('[Sistema preparado. Ingrese un número de proveedor o arrastre una captura EK9.]');
     const provContraModalEditor = ref(false);
     const provContraRegistroEditando = ref(null);
@@ -288,27 +290,55 @@ createApp({
       return provContraEnRevision.value.length;
     });
 
+    const provContraMarcadosProveedorCount = computed(() => {
+      return provContraRegistros.value.filter(r => r.en_historial && r.quiere_proveedor && !r.id_ek10).length;
+    });
+
+    const provContraMarcadosContratistaCount = computed(() => {
+      return provContraRegistros.value.filter(r => r.en_historial && r.quiere_contratista && !r.id_contratista).length;
+    });
+
+    const toggleOrdenProvContra = (col) => {
+      if (provContraColumnaOrden.value === col) {
+        provContraOrdenAsc.value = !provContraOrdenAsc.value;
+      } else {
+        provContraColumnaOrden.value = col;
+        provContraOrdenAsc.value = true;
+      }
+    };
+
     const provContraFiltrados = computed(() => {
       let list = provContraRegistros.value.filter(r => r.en_historial);
       if (provContraFiltro.value === 'PENDIENTES') {
-        list = list.filter(r => !r.id_ek10 || (r.quiere_contratista && !r.id_contratista));
-      } else if (provContraFiltro.value === 'PROVEEDORES') {
-        list = list.filter(r => r.id_ek10);
-      } else if (provContraFiltro.value === 'CONTRATISTAS') {
-        list = list.filter(r => r.id_contratista);
+        list = list.filter(r => (!r.id_ek10 && r.quiere_proveedor) || (!r.id_contratista && r.quiere_contratista));
+      } else if (provContraFiltro.value === 'MARCADOS') {
+        list = list.filter(r => (r.quiere_proveedor && !r.id_ek10) || (r.quiere_contratista && !r.id_contratista));
+      } else if (provContraFiltro.value === 'REGISTRADOS') {
+        list = list.filter(r => Boolean(r.id_ek10 || r.id_contratista));
       }
 
       const q = provContraBusqueda.value.trim().toUpperCase();
-      if (!q) return list;
+      if (q) {
+        list = list.filter(r => {
+          const nom = (r.nombre || '').toUpperCase();
+          const rfc = (r.rfc || '').toUpperCase();
+          const num = String(r.proveedor || r.id || '').toUpperCase();
+          const cve = (r.clave_proveedor || '').toUpperCase();
+          const idek = String(r.id_ek10 || '').toUpperCase();
+          const idct = String(r.id_contratista || '').toUpperCase();
+          return nom.includes(q) || rfc.includes(q) || num.includes(q) || cve.includes(q) || idek.includes(q) || idct.includes(q);
+        });
+      }
 
-      return list.filter(r => {
-        const nom = (r.nombre || '').toUpperCase();
-        const rfc = (r.rfc || '').toUpperCase();
-        const num = String(r.proveedor || r.id || '').toUpperCase();
-        const cve = (r.clave_proveedor || '').toUpperCase();
-        const idek = String(r.id_ek10 || '').toUpperCase();
-        const idct = String(r.id_contratista || '').toUpperCase();
-        return nom.includes(q) || rfc.includes(q) || num.includes(q) || cve.includes(q) || idek.includes(q) || idct.includes(q);
+      const col = provContraColumnaOrden.value;
+      const asc = provContraOrdenAsc.value ? 1 : -1;
+      return [...list].sort((a, b) => {
+        let valA = a[col] ?? '';
+        let valB = b[col] ?? '';
+        if (col === 'proveedor') {
+          return ((Number(valA) || 0) - (Number(valB) || 0)) * asc;
+        }
+        return String(valA).localeCompare(String(valB)) * asc;
       });
     });
 
@@ -600,41 +630,138 @@ createApp({
     };
 
     const consultarProvContraPorNumpro = async () => {
-      const num = provContraInputNumpro.value.trim();
-      if (!num) return;
+      const numeros = [...new Set((provContraInputNumpro.value.match(/\d+/g) || []))];
+      if (!numeros.length) {
+        alert('Escriba el número de proveedor (ej. 11569 o varios: 11569, 11570).');
+        return;
+      }
       provContraConsultandoDb.value = true;
+      provContraInputNumpro.value = '';
       try {
-        const res = await fetch('/api/prov-contra/consultar-db', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ numpro: num })
-        });
-        const data = await res.json();
-        if (res.ok && data.ok) {
-          provContraInputNumpro.value = '';
-          await cargarProvContraRegistros();
-          provContraTerminalLogs.value += `\n[OK]: Proveedor #${num} consultado desde Enkontrol y añadido a la cola.`;
-        } else {
-          alert(data.detail || 'No se pudo consultar el proveedor en Enkontrol.');
+        for (const num of numeros) {
+          const res = await fetch('/api/prov-contra/consultar-db', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ numpro: num })
+          });
+          const data = await res.json();
+          if (res.ok && data.ok) {
+            provContraTerminalLogs.value += `\n[OK]: Proveedor #${num} consultado desde Enkontrol.`;
+          } else {
+            provContraTerminalLogs.value += `\n[AVISO]: Proveedor #${num} no encontrado o error: ${data.detail || 'Error'}`;
+          }
         }
+        await cargarProvContraRegistros();
       } catch (e) {
-        alert('Error de conexión con el servidor al consultar Enkontrol.');
+        alert('Error de conexión con el servidor al consultar Enkontrol: ' + e.message);
       } finally {
         provContraConsultandoDb.value = false;
       }
     };
 
-    const manejarDropCapturaProvContra = (e) => {
-      const files = e.dataTransfer.files;
-      if (files && files.length > 0) {
-        subirArchivoCapturaProvContra(files[0]);
+    const manejarDropCapturaProvContra = async (e) => {
+      const files = [...(e.dataTransfer.files || [])];
+      for (const file of files) {
+        await subirArchivoCapturaProvContra(file);
       }
     };
 
-    const manejarSeleccionCapturaProvContra = (e) => {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        subirArchivoCapturaProvContra(files[0]);
+    const manejarSeleccionCapturaProvContra = async (e) => {
+      const files = [...(e.target.files || [])];
+      for (const file of files) {
+        await subirArchivoCapturaProvContra(file);
+      }
+      e.target.value = '';
+    };
+
+    const verificarRegistroProvContra = async (r) => {
+      if (!confirm(`¿Verificar en EK10 el proveedor ${r.proveedor} ${r.nombre}?\nSe busca su RFC; si ya existe se anota su ID EK10. No se crea nada.`)) return;
+      provContraEjecutando.value = true;
+      try {
+        const res = await fetch('/api/prov-contra/ejecutar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ verificar: [r.id], proveedor: [], contratista: [], guardar: false })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          alert('Error: ' + (data.detail || data.mensaje || 'Error al verificar'));
+          provContraEjecutando.value = false;
+          return;
+        }
+        provContraTerminalLogs.value = `[${new Date().toLocaleTimeString()}] Verificando proveedor #${r.proveedor} en EK10...`;
+        if (provContraIntervaloTrabajo) clearInterval(provContraIntervaloTrabajo);
+        provContraIntervaloTrabajo = setInterval(async () => {
+          try {
+            const resp = await fetch('/api/prov-contra/trabajo');
+            if (resp.ok) {
+              const est = await resp.json();
+              provContraTerminalLogs.value = est.lineas.join('\n');
+              const el = document.getElementById('terminal-prov-contra');
+              if (el) el.scrollTop = el.scrollHeight;
+              if (!est.activo) {
+                clearInterval(provContraIntervaloTrabajo);
+                provContraEjecutando.value = false;
+                await cargarProvContraRegistros();
+              }
+            }
+          } catch (e) {
+            console.error('Error obteniendo estado del trabajo:', e);
+          }
+        }, 1200);
+      } catch (e) {
+        alert('Fallo de conexión al verificar: ' + e.message);
+        provContraEjecutando.value = false;
+      }
+    };
+
+    const ejecutarMarcadosProvContra = async () => {
+      const provs = provContraRegistros.value.filter(r => r.en_historial && r.quiere_proveedor && !r.id_ek10).map(r => r.id);
+      const contras = provContraRegistros.value.filter(r => r.en_historial && r.quiere_contratista && !r.id_contratista).map(r => r.id);
+      if (!provs.length && !contras.length) {
+        alert('No hay registros marcados en el historial. Asegúrese de marcar la casilla "Generar" de Proveedor o Contratista.');
+        return;
+      }
+      const esReal = provContraModoReal.value;
+      const texto = `${esReal ? '⚡ ALTA REAL' : '🔍 PRUEBA (no guarda)'}\n${provs.length} proveedor(es) y ${contras.length} contratista(s).\n¿Continuar con la ejecución?`;
+      if (!confirm(texto)) return;
+
+      provContraEjecutando.value = true;
+      try {
+        const res = await fetch('/api/prov-contra/ejecutar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ proveedor: provs, contratista: contras, guardar: esReal })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          alert('Error: ' + (data.detail || data.mensaje || 'Error al iniciar'));
+          provContraEjecutando.value = false;
+          return;
+        }
+        provContraTerminalLogs.value = `[${new Date().toLocaleTimeString()}] Iniciando ejecución (${esReal ? 'REAL' : 'PRUEBA'})...`;
+        if (provContraIntervaloTrabajo) clearInterval(provContraIntervaloTrabajo);
+        provContraIntervaloTrabajo = setInterval(async () => {
+          try {
+            const resp = await fetch('/api/prov-contra/trabajo');
+            if (resp.ok) {
+              const est = await resp.json();
+              provContraTerminalLogs.value = est.lineas.join('\n');
+              const el = document.getElementById('terminal-prov-contra');
+              if (el) el.scrollTop = el.scrollHeight;
+              if (!est.activo) {
+                clearInterval(provContraIntervaloTrabajo);
+                provContraEjecutando.value = false;
+                await cargarProvContraRegistros();
+              }
+            }
+          } catch (e) {
+            console.error('Error obteniendo estado del trabajo:', e);
+          }
+        }, 1200);
+      } catch (e) {
+        alert('Fallo de conexión al ejecutar: ' + e.message);
+        provContraEjecutando.value = false;
       }
     };
 
@@ -2120,6 +2247,13 @@ createApp({
       provContraEnRevision,
       provContraEnRevisionCount,
       provContraFiltrados,
+      provContraColumnaOrden,
+      provContraOrdenAsc,
+      provContraMarcadosProveedorCount,
+      provContraMarcadosContratistaCount,
+      toggleOrdenProvContra,
+      verificarRegistroProvContra,
+      ejecutarMarcadosProvContra,
       cargarProvContraRegistros,
       consultarProvContraPorNumpro,
       manejarDropCapturaProvContra,
