@@ -206,6 +206,143 @@ createApp({
     });
     let intervalAsignacionClasificadores = null;
 
+    // CREACION DE POSICIONES (AUTO-INCREMENTAL POS-XXXX & BOTON DE CALCULO)
+    const metaPosiciones = ref({
+      ultima_clave: 'POS-1077',
+      siguiente_clave: 'POS-1078',
+      puestos: [],
+      categorias: []
+    });
+    const formCreacionPosicion = ref({
+      clave: 'POS-1078',
+      nombre: '',
+      categoria: '',
+      padre: '',
+      estatus: 'Activo'
+    });
+    const guardandoPosicionSimple = ref(false);
+    const resultadoCreacionPosicion = ref(null);
+    const calculandoClave = ref(false);
+
+    // Dropdowns reactivos sutiles y ligeros (sin datalist tosco a pantalla completa)
+    const dropdownNombreAbierto = ref(false);
+    const filtroNombre = computed(() => {
+      const q = (formCreacionPosicion.value.nombre || '').trim().toLowerCase();
+      const lista = metaPosiciones.value.puestos && metaPosiciones.value.puestos.length 
+        ? metaPosiciones.value.puestos 
+        : (catalogoPuestos.value || []);
+      if (!q) return lista.slice(0, 30);
+      return lista.filter(p => String(p).toLowerCase().includes(q)).slice(0, 30);
+    });
+    const seleccionarNombrePosicion = (p) => {
+      formCreacionPosicion.value.nombre = p;
+      dropdownNombreAbierto.value = false;
+      if (catalogoPuestosDetalle.value && catalogoPuestosDetalle.value[p]) {
+        const info = catalogoPuestosDetalle.value[p];
+        if (!formCreacionPosicion.value.categoria && info.categoria) {
+          formCreacionPosicion.value.categoria = info.categoria;
+        }
+        if (!formCreacionPosicion.value.padre && info.puesto_origen) {
+          formCreacionPosicion.value.padre = info.puesto_origen;
+        }
+      }
+    };
+
+    const dropdownCategoriaAbierto = ref(false);
+    const filtroCategoria = computed(() => {
+      const q = (formCreacionPosicion.value.categoria || '').trim().toLowerCase();
+      const lista = metaPosiciones.value.categorias && metaPosiciones.value.categorias.length 
+        ? metaPosiciones.value.categorias 
+        : [];
+      if (!q) return lista.slice(0, 25);
+      return lista.filter(c => String(c).toLowerCase().includes(q)).slice(0, 25);
+    });
+    const seleccionarCategoriaPosicion = (c) => {
+      formCreacionPosicion.value.categoria = c;
+      dropdownCategoriaAbierto.value = false;
+    };
+
+    const cargarMetaPosiciones = async () => {
+      try {
+        const res = await fetch('/api/usuarios/posiciones/meta');
+        if (res.ok) {
+          const data = await res.json();
+          metaPosiciones.value = data;
+          if (!formCreacionPosicion.value.clave || formCreacionPosicion.value.clave === 'POS-1052' || formCreacionPosicion.value.clave === 'POS-1067') {
+            formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1078';
+          }
+        }
+      } catch (e) {
+        console.error('Error cargando meta posiciones:', e);
+      }
+    };
+
+    const calcularSiguienteClave = async () => {
+      calculandoClave.value = true;
+      try {
+        const res = await fetch('/api/usuarios/posiciones/meta');
+        if (res.ok) {
+          const data = await res.json();
+          metaPosiciones.value = data;
+          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1078';
+        } else {
+          let num = 1077;
+          const m = formCreacionPosicion.value.clave.match(/POS-(\d+)/);
+          if (m) num = Math.max(num, parseInt(m[1], 10));
+          formCreacionPosicion.value.clave = `POS-${String(num + 1).padStart(4, '0')}`;
+        }
+      } catch (e) {
+        console.error('Error al calcular siguiente clave:', e);
+      } finally {
+        setTimeout(() => { calculandoClave.value = false; }, 350);
+      }
+    };
+
+    const guardarPosicionSimple = async () => {
+      const nom = formCreacionPosicion.value.nombre.trim();
+      if (!nom) {
+        alert('Por favor escribe o selecciona el NOMBRE de la posición.');
+        return;
+      }
+      guardandoPosicionSimple.value = true;
+      resultadoCreacionPosicion.value = null;
+      try {
+        const res = await fetch('/api/usuarios/posiciones/crear-simple', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formCreacionPosicion.value)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || data.error || 'Error al guardar');
+        resultadoCreacionPosicion.value = { ok: true, mensaje: data.mensaje };
+        if (data.meta) {
+          metaPosiciones.value = data.meta;
+          formCreacionPosicion.value.clave = data.meta.siguiente_clave;
+        }
+        formCreacionPosicion.value.nombre = '';
+        formCreacionPosicion.value.padre = '';
+        await cargarPuestos();
+        await cargarMetaPosiciones();
+      } catch (e) {
+        resultadoCreacionPosicion.value = { ok: false, error: e.message };
+      } finally {
+        guardandoPosicionSimple.value = false;
+      }
+    };
+
+    const limpiarFormPosicionSimple = () => {
+      formCreacionPosicion.value = {
+        clave: metaPosiciones.value.siguiente_clave || 'POS-1078',
+        nombre: '',
+        categoria: '',
+        padre: '',
+        estatus: 'Activo'
+      };
+      resultadoCreacionPosicion.value = null;
+      dropdownNombreAbierto.value = false;
+      dropdownCategoriaAbierto.value = false;
+    };
+
     // MODAL POSICIÓN
     const modalPosicionAbierto = ref(false);
     const formPosicion = ref({
@@ -455,6 +592,7 @@ createApp({
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         usuarios.value = data.usuarios || [];
+        cargarMetaPosiciones();
 
         if (usuarios.value.length && (!usuarioSeleccionado.value || !usuarios.value.some(u => u.id === usuarioSeleccionado.value.id))) {
           usuarioSeleccionado.value = usuarios.value[0];
@@ -1176,6 +1314,7 @@ createApp({
         if (res.ok) {
           alert(data.mensaje);
           await cargarPuestos();
+        await cargarMetaPosiciones();
           cerrarModalPosicion();
         } else {
           alert(data.detail || 'Error al guardar la posición.');
@@ -2294,6 +2433,23 @@ createApp({
       limpiarFormularioUsuario,
       iniciarCreacionSelenium,
       reiniciarCreacionSelenium,
+      // Creacion de Posiciones
+      metaPosiciones,
+      formCreacionPosicion,
+      calculandoClave,
+      calcularSiguienteClave,
+      dropdownNombreAbierto,
+      filtroNombre,
+      seleccionarNombrePosicion,
+      dropdownCategoriaAbierto,
+      filtroCategoria,
+      seleccionarCategoriaPosicion,
+      formCreacionPosicion,
+      guardandoPosicionSimple,
+      resultadoCreacionPosicion,
+      cargarMetaPosiciones,
+      guardarPosicionSimple,
+      limpiarFormPosicionSimple,
       // Modal Posición
       modalPosicionAbierto,
       formPosicion,

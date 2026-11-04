@@ -106,3 +106,38 @@
 {"fecha": "2026-11-03 13:06:50", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EtapasVentas.ID", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-03 13:07:06", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-03 13:07:13", "usuario": "BROKER QUERETARO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:36:51", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:36:54", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:36:57", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:12", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "PLAZAS", "nombre_clasificador": "TAM", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:20", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "AVA-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:22", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "AVA-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:25", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "AVA-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:28", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "AVA-004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:31", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:33", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:36", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:38", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:40", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:43", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:46", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-007", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:49", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-008", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:52", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-009", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:55", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-010", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:37:57", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-011", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:00", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-012", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:02", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "TAM-013", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:17", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "CI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:21", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "V-EDICIONCONPP", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:25", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "GI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:36", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:48", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:55", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "EXPEDIENTE INCOMPLETO", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:38:58", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "AUTORIZACIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:00", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:03", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:14", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Autorizaciones", "nombre_clasificador": "BTN-REENVIO-AUTORIZACION", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:25", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Estatus.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:29", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Ubicacion.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:32", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EntregaServicioCliente.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-04 13:39:39", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}

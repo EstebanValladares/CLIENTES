@@ -5,7 +5,11 @@ Mantiene consultas O(1) con tablas Hash y Tries en RAM, desacoplado de la UI.
 import os
 import json
 import datetime
+import re
+import logging
 from typing import List, Dict, Any, Optional
+
+logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DIR_USUARIOS_DATA = os.path.join(BASE_DIR, "USUARIOS", "data")
@@ -34,6 +38,7 @@ class UserService:
 
         usuarios: List[Dict[str, Any]] = []
         ids_vistos = set()
+        puestos_catalogo = cls.obtener_puestos()
 
         if os.path.exists(RUTA_USUARIOS_JSON):
             try:
@@ -47,6 +52,18 @@ class UserService:
                         puesto = str(u.get("Posicion", "No especificado")).strip()
                         email = str(u.get("Email", "")).strip() or str(u.get("Clave", "")).strip()
 
+                        # Clave alfanumerica de posicion oficial (ej. POS-0283)
+                        id_pos = str(u.get("IdPosicion", "")).strip()
+                        info_puesto = puestos_catalogo.get(puesto) or puestos_catalogo.get(puesto.upper().strip()) or {}
+                        clave_pos = str(info_puesto.get("clave_posicion_cloud", "")).strip()
+                        if not clave_pos:
+                            if puesto.upper().strip() == "LIDER DE VENTAS TAMPICO":
+                                clave_pos = "POS-0283"
+                            elif id_pos and id_pos.isdigit():
+                                clave_pos = f"POS-{int(id_pos):04d}"
+                            elif id_pos:
+                                clave_pos = f"POS-{id_pos}"
+
                         user_dict = {
                             "id": uid,
                             "nombre": nom,
@@ -55,6 +72,8 @@ class UserService:
                             "clave": str(u.get("Clave", "")).strip(),
                             "correo": email,
                             "puesto": puesto,
+                            "id_posicion": id_pos,
+                            "clave_posicion": clave_pos,
                             "area_organizacion": str(u.get("AreaOrganizacion", "No especificada")).strip(),
                             "estatus": str(u.get("Estatus", "Activo")).strip(),
                             "vigencia_inicio": str(u.get("VigenciaInicio", "")).strip(),
@@ -165,7 +184,7 @@ class UserService:
 
         def coincide(u: Dict[str, Any]) -> bool:
             if q:
-                cadena_busqueda = f"{u['id']} {u['nombre_completo']} {u['correo']} {u['puesto']} {u['area_organizacion']}".upper()
+                cadena_busqueda = f"{u['id']} {u['nombre_completo']} {u['correo']} {u['puesto']} {u.get('clave_posicion', '')} {u['area_organizacion']}".upper()
                 if q not in cadena_busqueda:
                     return False
 
@@ -235,7 +254,231 @@ class UserService:
         return FirebaseClient.obtener_estado_sincronizacion_puestos()
 
     @classmethod
+    def obtener_meta_posiciones(cls) -> Dict[str, Any]:
+        """
+        Calcula la ultima clave POS-XXXX registrada, la siguiente clave consecutiva (POS-XXXX + 1),
+        y las listas unicas de puestos y categorias existentes para la creacion en tiempo real.
+        """
+        import re
+        puestos = cls.obtener_puestos()
+        max_num = 0
+        ultima_clave = "POS-0000"
+        categorias_set = set()
+        puestos_nombres = sorted(list(puestos.keys()))
+
+        for nom, info in puestos.items():
+            if isinstance(info, dict):
+                cve = str(info.get("clave_posicion_cloud", "")).strip()
+                m = re.search(r"POS-(\d+)", cve)
+                if m:
+                    num = int(m.group(1))
+                    if num > max_num:
+                        max_num = num
+                        ultima_clave = cve
+                
+                cat = str(info.get("categoria", "") or info.get("area_organizacion", "")).strip()
+                if cat:
+                    categorias_set.add(cat)
+                p_orig = str(info.get("puesto_origen", "")).strip()
+                if p_orig:
+                    categorias_set.add(p_orig)
+
+        # Baseline oficial Aryve Enkontrol (ultima posicion POS-1077)
+        if max_num < 1077:
+            max_num = 1077
+            ultima_clave = "POS-1077"
+
+        siguiente_num = max_num + 1
+        siguiente_clave = f"POS-{siguiente_num:04d}"
+
+        return {
+            "ultima_clave": ultima_clave,
+            "siguiente_clave": siguiente_clave,
+            "puestos": puestos_nombres,
+            "categorias": sorted(list(categorias_set))
+        }
+
+    @classmethod
+    def crear_posicion_simple(cls, clave: str, nombre: str, categoria: str, padre: str) -> Dict[str, Any]:
+        nombre = nombre.strip().upper()
+        if not nombre:
+            return {"ok": False, "error": "El nombre de la posicion es obligatorio."}
+        clave = clave.strip().upper()
+        if not clave:
+            meta = cls.obtener_meta_posiciones()
+            clave = meta["siguiente_clave"]
+        
+        try:
+            if os.path.exists(PUESTOS_PATH):
+                with open(PUESTOS_PATH, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            else:
+                data = {"puestos": {}}
+            
+            puestos = data.setdefault("puestos", {})
+            puestos[nombre] = {
+                "categoria": categoria or nombre,
+                "puesto_origen": padre or categoria or nombre,
+                "area_organizacion": categoria or "GENERAL",
+                "clave_posicion_cloud": clave,
+                "clasificadores": {},
+                "total_clasificadores": 0
+            }
+            data["total_posiciones"] = len(puestos)
+            data["ultima_actualizacion"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(PUESTOS_PATH, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            
+            cls._cache_puestos = None
+            return {
+                "ok": True,
+                "mensaje": f"Posicion {nombre} ({clave}) guardada exitosamente.",
+                "clave": clave,
+                "meta": cls.obtener_meta_posiciones()
+            }
+        except Exception as e:
+            return {"ok": False, "error": f"Error guardando posicion: {str(e)}"}
+
+    @classmethod
     def sincronizar_desde_aryve(cls) -> Dict[str, Any]:
         """En versión del equipo, recarga los datos del catálogo local de Usuarios.json"""
         cls.recargar()
         return {"ok": True, "mensaje": "Catálogo de usuarios recargado localmente con éxito."}
+    @classmethod
+    def obtener_meta_posiciones(cls) -> Dict[str, Any]:
+        """
+        Retorna la clave máxima encontrada (ej. POS-1051),
+        la siguiente clave consecutiva (ej. POS-1052),
+        y la lista de nombres de puestos y categorías disponibles.
+        """
+        ruta_puestos = os.path.join(DIR_USUARIOS_DATA, "puestos.json")
+        max_num = 0
+        puestos_nombres = set()
+        categorias = set()
+
+        if os.path.exists(ruta_puestos):
+            try:
+                with open(ruta_puestos, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    puestos_dict = data.get("puestos", {})
+                    for nom_puesto, info in puestos_dict.items():
+                        if nom_puesto:
+                            puestos_nombres.add(str(nom_puesto).strip())
+                        if isinstance(info, dict):
+                            cat = info.get("categoria")
+                            if cat:
+                                categorias.add(str(cat).strip())
+                            clave = str(info.get("clave_posicion_cloud") or "")
+                            m = re.search(r"POS-(\d+)", clave, re.IGNORECASE)
+                            if m:
+                                num = int(m.group(1))
+                                if num > max_num:
+                                    max_num = num
+            except Exception as e:
+                logger.error(f"Error analizando puestos.json para meta posiciones: {e}")
+
+        ruta_usuarios = os.path.join(DIR_USUARIOS_DATA, "Usuarios.json")
+        if os.path.exists(ruta_usuarios):
+            try:
+                with open(ruta_usuarios, "r", encoding="utf-8") as f:
+                    raw_u = json.load(f)
+                    for u in raw_u:
+                        pos = u.get("Posicion")
+                        if pos:
+                            puestos_nombres.add(str(pos).strip())
+                        area = u.get("AreaOrganizacion")
+                        if area:
+                            categorias.add(str(area).strip())
+            except Exception:
+                pass
+
+        # Baseline oficial Aryve Enkontrol (ultima posicion en vivo es POS-1077)
+        if max_num < 1077:
+            max_num = 1077
+
+        sig_num = max_num + 1
+        ultima_clave = f"POS-{max_num:04d}" if max_num < 10000 else f"POS-{max_num}"
+        siguiente_clave = f"POS-{sig_num:04d}" if sig_num < 10000 else f"POS-{sig_num}"
+
+        return {
+            "ok": True,
+            "ultima_clave": ultima_clave,
+            "siguiente_clave": siguiente_clave,
+            "max_numero": max_num,
+            "siguiente_numero": sig_num,
+            "puestos": sorted(list(puestos_nombres)),
+            "categorias": sorted(list(categorias))
+        }
+
+    @classmethod
+    def crear_posicion_simple(cls, clave: str, nombre: str, categoria: str = "", padre: str = "") -> Dict[str, Any]:
+        """
+        Crea/registra una nueva posición en puestos.json y actualiza el catálogo.
+        """
+        nombre = (nombre or "").strip().upper()
+        clave = (clave or "").strip().upper()
+        categoria = (categoria or "").strip().upper()
+        padre = (padre or "").strip()
+
+        if not nombre:
+            return {"ok": False, "error": "El nombre de la posición es obligatorio."}
+        if not clave:
+            meta = cls.obtener_meta_posiciones()
+            clave = meta.get("siguiente_clave", "POS-1052")
+
+        ruta_puestos = os.path.join(DIR_USUARIOS_DATA, "puestos.json")
+        data = {"puestos": {}}
+        if os.path.exists(ruta_puestos):
+            try:
+                with open(ruta_puestos, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except Exception as e:
+                logger.error(f"Error cargando puestos.json: {e}")
+
+        puestos_dict = data.setdefault("puestos", {})
+        
+        puestos_dict[nombre] = {
+            "categoria": categoria or nombre,
+            "clasificadores": {},
+            "puesto_origen": padre or nombre,
+            "time_zone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+            "id_posicion_cloud": None,
+            "total_clasificadores": 0,
+            "area_organizacion": categoria or "GENERAL",
+            "clave_posicion_cloud": clave,
+            "padre": padre
+        }
+
+        data["total_posiciones"] = len(puestos_dict)
+        data["ultima_actualizacion"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        try:
+            with open(ruta_puestos, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            logger.error(f"Error guardando nueva posición en puestos.json: {e}")
+            return {"ok": False, "error": str(e)}
+
+        return {
+            "ok": True,
+            "mensaje": f"Posición {clave} - {nombre} guardada exitosamente.",
+            "posicion": {
+                "clave": clave,
+                "nombre": nombre,
+                "categoria": categoria,
+                "padre": padre
+            }
+        }
+
+    @staticmethod
+    def _parse_fecha(fecha_str: str) -> Optional[datetime.datetime]:
+        if not fecha_str:
+            return None
+        clean = str(fecha_str).strip().split(' ')[0]
+        for fmt in ('%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y'):
+            try:
+                return datetime.datetime.strptime(clean, fmt)
+            except Exception:
+                pass
+        return None

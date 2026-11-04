@@ -88,6 +88,22 @@ def estado_sincronizacion_puestos():
     """Consulta el estado de conectividad y si hay puestos locales pendientes por subir"""
     return UserService.obtener_estado_sincronizacion()
 
+@router.get("/posiciones/meta")
+def obtener_meta_posiciones():
+    """Devuelve la ultima clave, siguiente clave consecutiva y listas de puestos y categorias"""
+    return UserService.obtener_meta_posiciones()
+
+@router.post("/posiciones/crear-simple")
+def crear_posicion_simple(payload: Dict[str, Any] = Body(...)):
+    clave = payload.get("clave", "").strip()
+    nombre = payload.get("nombre", "").strip()
+    categoria = payload.get("categoria", "").strip()
+    padre = payload.get("padre", "").strip()
+    resultado = UserService.crear_posicion_simple(clave, nombre, categoria, padre)
+    if not resultado.get("ok"):
+        raise HTTPException(status_code=400, detail=resultado.get("error", "Error guardando posicion"))
+    return resultado
+
 # ==============================================================================
 # GESTIÓN Y ASIGNACIÓN DE CLASIFICADORES
 # ==============================================================================
@@ -141,3 +157,25 @@ def iniciar_asignacion_clasificadores(payload: Dict[str, Any] = Body(...)):
 def estado_asignacion_clasificadores():
     """Consulta el progreso y logs de Selenium de la asignación de clasificadores"""
     return UserClassifierService.obtener_estado()
+
+@router.get("/posiciones/meta")
+def obtener_meta_posiciones():
+    """Retorna la última clave de posición, la siguiente incremental y catálogos de nombres y categorías."""
+    return UserService.obtener_meta_posiciones()
+
+@router.post("/posiciones/crear-simple")
+def crear_posicion_simple(payload: dict):
+    """Crea una nueva posición con autoincremental en puestos.json."""
+    clave = payload.get("clave", "")
+    nombre = payload.get("nombre", "")
+    categoria = payload.get("categoria", "")
+    padre = payload.get("padre", "")
+    res = UserService.crear_posicion_simple(
+        clave=clave,
+        nombre=nombre,
+        categoria=categoria,
+        padre=padre
+    )
+    if not res.get("ok"):
+        raise HTTPException(status_code=400, detail=res.get("error", "Error al crear posición"))
+    return res
