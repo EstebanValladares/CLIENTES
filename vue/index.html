@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Módulo de Gestión Operativa - Grupo Velas</title>
+  <title>TORRE DE CONTROL - Grupo Velas</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Vue 3 CDN -->
@@ -806,7 +806,7 @@
       <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start flex-1">
         
         <!-- COLUMNA IZQUIERDA: LISTADO -->
-        <div class="xl:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[700px]">
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[460px]">
           
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4">
             <div class="relative flex-1">
@@ -887,10 +887,10 @@
 
         </div>
 
-        <!-- COLUMNA DERECHA: FICHA EJECUTIVA -->
-        <div class="xl:col-span-5 flex flex-col gap-6">
-          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
-            <div v-if="usuarioSeleccionado">
+        <!-- 2. FICHA EJECUTIVA DEL USUARIO (MISMO TAMAÑO 50% / H-460PX) -->
+
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+            <div v-if="usuarioSeleccionado" class="flex flex-col h-full justify-between">
               
               <div class="flex items-start justify-between pb-4 border-b border-slate-700/70">
                 <div class="flex items-center gap-3">
@@ -961,9 +961,16 @@
             </div>
           </div>
 
-          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Permisos y Clasificadores</h4>
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+
+        <div>
+          <div class="flex items-center justify-between mb-3.5">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                  <i class="fa-solid fa-shield-halved text-[11px]"></i>
+                </div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Permisos y Clasificadores</h4>
+              </div>
               <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
                 <i class="fa-solid fa-check text-[9px]"></i> Verificado
               </span>
@@ -978,11 +985,43 @@
                 Todos los clasificadores, niveles de compañía y grupos asignados corresponden a la matriz oficial centralizada en <code class="text-emerald-400 font-mono">Firebase Firestore</code>.
               </p>
             </div>
+
+            <!-- ESPACIO VISUAL PREPARADO PARA RECIBIR NUEVAS PETICIONES -->
+            <div class="mt-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/40">
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="font-bold text-slate-300 flex items-center gap-1.5">
+                  <i class="fa-solid fa-layer-group text-indigo-400 text-xs"></i>
+                  <span>Nuevas Peticiones & Mapeo</span>
+                </span>
+                <span class="text-[10px] font-mono text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">
+                  Receptor Activo
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-relaxed">
+                Área preparada para recepcionar nuevas peticiones automáticas de permisos y asignaciones organizacionales.
+              </p>
+            </div>
           </div>
 
-          <!-- RECUADRO 3: CLASIFICADORES -->
-          <div v-if="usuarioSeleccionado" class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm mt-5">
-            <div class="flex items-center justify-between mb-3">
+          <div class="pt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-nodes text-indigo-400"></i>
+              <span>Matriz de Puestos y Permisos</span>
+            </span>
+            <span class="font-mono text-[10px] text-slate-500">Listo para peticiones</span>
+          </div>
+        </div>
+        <!-- UNUSED_TAGS:
+              </p>
+            </div>
+          </div>
+
+        --> <!-- 4. RECUADRO INFERIOR DERECHO: CLASIFICADORES (A LA PAR DE PERMISOS) -->
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+          <div v-if="usuarioSeleccionado" class="flex flex-col h-full justify-between">
+
+        <div>
+          <div class="flex items-center justify-between mb-3.5">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
                   <i class="fa-solid fa-tags text-[11px]"></i>
@@ -1058,7 +1097,9 @@
               </button>
             </div>
 
-            <!-- VISOR DE ESTADO / LOGS DE SELENIUM -->
+          </div>
+
+          <!-- VISOR DE ESTADO / LOGS DE SELENIUM -->
             <div v-if="estadoAsignacionClasificadores.ejecutando || estadoAsignacionClasificadores.mensaje" class="mt-3.5 p-3 rounded-xl border bg-slate-950/70 border-slate-800 text-[11px]">
               <div class="flex items-center justify-between mb-1">
                 <div class="flex items-center gap-1.5 font-semibold" 
@@ -1076,6 +1117,22 @@
               </div>
             </div>
           </div>
+
+          <!-- ESTADO VACÍO CUANDO NO HAY USUARIO SELECCIONADO -->
+          <div v-else class="flex flex-col items-center justify-center text-center text-slate-500 h-full py-10">
+            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/60 flex items-center justify-center text-slate-500 mb-2.5">
+              <i class="fa-solid fa-tags text-lg"></i>
+            </div>
+            <p class="font-semibold text-slate-400 text-xs">Clasificadores</p>
+            <p class="text-[11px] text-slate-500 mt-1 max-w-xs leading-relaxed">Selecciona un usuario del listado para gestionar o asignar su estructura oficial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- OLD_CLOSING_DIVS:
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1083,7 +1140,7 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- VISTA 2: PROYECTOS (PERMISOS POR PROYECTO / OBRAS)       -->
+    --> <!-- VISTA 2: PROYECTOS (PERMISOS POR PROYECTO / OBRAS)       -->
     <!-- ======================================================== -->
     <div v-show="vistaActiva === 'PROYECTOS'" class="flex flex-col flex-1">
       
@@ -1279,7 +1336,9 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-4">
           <!-- TARJETA 1 (IZQUIERDA): CAPTURA DE EK9 -->
           <div class="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-3">
+
+        <div>
+          <div class="flex items-center justify-between mb-3.5">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                   <i class="fa-regular fa-image"></i>
