@@ -108,3 +108,4 @@ def iniciar_auto_publisher(intervalo_segundos: int = 30):
         daemon=True
     )
     _hilo_auto_publisher.start()
+
