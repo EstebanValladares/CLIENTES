@@ -361,18 +361,6 @@ createApp({
         const res = await fetch('/api/torre/sync-oc', { method: 'POST' });
         if (res.ok) {
           await cargarProyectosTorre();
-          const cargarEntorno = async () => {
-      try {
-        const res = await fetch('/api/entorno');
-        if (res.ok) {
-          const data = await res.json();
-          esMaster.value = !!data.es_master;
-        }
-      } catch (e) {
-        esMaster.value = false;
-      }
-    };
-    cargarEntorno();
         }
       } catch (e) {
         console.error('Error forzando sync OC:', e);
@@ -380,6 +368,63 @@ createApp({
         sincronizandoOC.value = false;
       }
     };
+
+    // ==========================================
+    // SISTEMA DE ACTUALIZACIÓN CLIENTES (EQUIPO)
+    // ==========================================
+    const actualizacionDisponibleCliente = ref(false);
+    const actualizandoSistema = ref(false);
+
+    const verificarActualizacionCliente = async () => {
+      if (esMaster.value) return;
+      try {
+        const res = await fetch('/api/sistema/verificar-actualizacion');
+        if (res.ok) {
+          const data = await res.json();
+          actualizacionDisponibleCliente.value = !!data.hay_actualizacion;
+        }
+      } catch (e) {}
+    };
+
+    const ejecutarActualizacionCliente = async () => {
+      if (actualizandoSistema.value) return;
+      if (!confirm('¿Deseas descargar la última versión del Dashboard publicada por la Torre? La página se recargará automáticamente al terminar.')) {
+        return;
+      }
+      actualizandoSistema.value = true;
+      try {
+        const res = await fetch('/api/sistema/actualizar', { method: 'POST' });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          alert('✅ ' + (data.mensaje || '¡Dashboard actualizado con éxito!'));
+          window.location.reload();
+        } else {
+          alert('⚠️ Aviso: ' + (data.mensaje || 'No se pudo completar la actualización.'));
+        }
+      } catch (e) {
+        alert('Error de conexión al actualizar: ' + e.message);
+      } finally {
+        actualizandoSistema.value = false;
+      }
+    };
+
+    const cargarEntorno = async () => {
+      try {
+        const res = await fetch('/api/entorno');
+        if (res.ok) {
+          const data = await res.json();
+          esMaster.value = !!data.es_master;
+          if (!esMaster.value) {
+            verificarActualizacionCliente();
+            // Polling periódico para detectar nuevas versiones en clientes cada 45 segundos
+            setInterval(verificarActualizacionCliente, 45000);
+          }
+        }
+      } catch (e) {
+        esMaster.value = false;
+      }
+    };
+    cargarEntorno();
 
     const publicandoCliente = ref(false);
     const publicarVersionCliente = async () => {
@@ -2242,11 +2287,11 @@ createApp({
 
     // Perfil del usuario local (con resolución automática desde /api/chat/mi-identidad)
     const chatUsuarioActual = ref({
-      id: '1',
-      nombre: 'Esteban (Torre)',
-      puesto: 'Administrador Master',
-      area: 'Sistemas',
-      es_torre: true
+      id: '',
+      nombre: 'Cargando perfil...',
+      puesto: '',
+      area: '',
+      es_torre: false
     });
 
     const listaUsuariosParaPerfil = computed(() => {
@@ -2268,22 +2313,22 @@ createApp({
           const data = await res.json();
           if (data && data.ok) {
             if (data.es_master && data.usuario) {
-              // Master siempre es Esteban
+              // En Torre de Control (Master) siempre es Esteban
               chatUsuarioActual.value = data.usuario;
               try { localStorage.setItem('chat_perfil_usuario', JSON.stringify(data.usuario)); } catch (e) {}
               return;
             } else if (!data.es_master && data.encontrado && data.usuario) {
-              // Cliente reconocido automáticamente por su .env (ej. Claudia)
+              // Cliente reconocido automáticamente por su .env o usuario Windows (ej. Claudia)
               chatUsuarioActual.value = data.usuario;
               try { localStorage.setItem('chat_perfil_usuario', JSON.stringify(data.usuario)); } catch (e) {}
               return;
             } else if (!data.es_master) {
-              // Cliente cuyo correo no está en .env o no se encontró
+              // Cliente cuyo correo no está en .env o aún no se ha identificado
               const guardado = localStorage.getItem('chat_perfil_usuario');
               if (guardado) {
                 try {
                   const p = JSON.parse(guardado);
-                  if (p && p.id && p.id !== '1' && p.nombre !== 'Esteban (Torre)') {
+                  if (p && p.id && p.id !== '1' && p.nombre && !p.nombre.includes('Esteban')) {
                     chatUsuarioActual.value = p;
                     return;
                   }
@@ -2299,7 +2344,7 @@ createApp({
         console.warn('Error resolviendo mi identidad:', e);
       }
 
-      // Fallback localStorage
+      // Fallback localStorage seguro (evitando que un cliente se quede como Esteban)
       try {
         const guardado = localStorage.getItem('chat_perfil_usuario');
         if (guardado) {
@@ -2892,6 +2937,13 @@ createApp({
       puestosFiltradosClasificador,
       seleccionarPuestoModalClasificador,
       limpiarPuestoModalClasificador,
+      // Sistema de Actualización Cliente (Equipo) y Modo Master
+      esMaster,
+      actualizacionDisponibleCliente,
+      actualizandoSistema,
+      verificarActualizacionCliente,
+      ejecutarActualizacionCliente,
+
       // Modal Usuario
       modalUsuarioAbierto,
       formUsuario,

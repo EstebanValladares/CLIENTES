@@ -77,11 +77,12 @@ exit /b 1
 :python_ok
 :: 2. Sincronizacion con Git (Blindaje automatico contra caidas)
 if exist ".git" (
-    echo [1/4] Sincronizando y actualizando automaticamente con GitHub...
-    git fetch origin main >nul 2>&1
-    git reset --hard origin/main >nul 2>&1
+    echo [1/4] Descargando ultimas actualizaciones desde GitHub...
+    git fetch origin main
+    git reset --hard origin/main
     git pull origin main
-    echo [OK] Sistema blindado y actualizado al ultimo commit.
+    for /f "tokens=*" %%H in ('git rev-parse --short HEAD 2^>nul') do set "GIT_COMMIT=%%H"
+    echo [OK] Sistema sincronizado al ultimo commit de GitHub: Git %GIT_COMMIT%
 ) else (
     echo [1/4] Repositorio local preparado.
 )
@@ -146,7 +147,7 @@ echo [3/4] Iniciando servidor del Dashboard en http://127.0.0.1:8000 ...
 echo [INFO] Para apagar el servidor, simplemente cierra esta ventana o presiona CTRL+C.
 echo.
 start "" "http://127.0.0.1:8000"
-"%PY_CMD%" -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+"%PY_CMD%" -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 if %errorlevel% neq 0 (
     color 0C
     echo.

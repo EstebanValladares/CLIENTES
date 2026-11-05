@@ -1,0 +1,13 @@
+{
+  "ip_torre": "10.10.200.31",
+  "hostname_torre": "Esteban",
+  "puerto": 8000,
+  "ips_conocidas": [
+    "10.10.200.31",
+    "Esteban",
+    "10.10.200.31",
+    "Esteban",
+    "10.10.200.147"
+  ],
+  "publicado_el": "2026-11-05 16:23:21"
+}

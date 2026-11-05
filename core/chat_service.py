@@ -25,14 +25,136 @@ def _es_modo_master() -> bool:
     publisher_script = os.path.join(BASE_DIR, "publicar_version_equipo.py")
     return os.path.exists(publisher_script)
 
-# Dirección de la Torre de Control central en la red interna de Grupo Velas
-TORRE_CHAT_HOST = os.getenv("TORRE_CHAT_HOST", "10.10.200.147")
-TORRE_CHAT_PORT = os.getenv("TORRE_CHAT_PORT", "8000")
-TORRE_URL = os.getenv("TORRE_CHAT_URL", f"http://{TORRE_CHAT_HOST}:{TORRE_CHAT_PORT}").rstrip("/")
+# ==============================================================================
+# CONFIGURACIÓN DINÁMICA DE CONEXIÓN CON LA TORRE DE CONTROL MASTER
+# ==============================================================================
+import socket
+
+def _detectar_ip_local_master() -> str:
+    """Detecta la IP local activa en la tarjeta de red de esta máquina"""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        try:
+            return socket.gethostbyname(socket.gethostname())
+        except Exception:
+            return "10.10.200.31"
+
+def _actualizar_archivo_conexion_master():
+    """En Master, actualiza conexion_torre.json para que los clientes se conecten sin fallos"""
+    if not _es_modo_master():
+        return
+    ip_actual = _detectar_ip_local_master()
+    hostname = socket.gethostname()
+    config = {
+        "ip_torre": ip_actual,
+        "hostname_torre": hostname,
+        "puerto": 8000,
+        "ips_conocidas": [ip_actual, hostname, "10.10.200.31", "Esteban", "10.10.200.147"],
+        "actualizado": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+    for p in [os.path.join(BASE_DIR, "conexion_torre.json"), os.path.join(DATA_DIR, "conexion_torre.json")]:
+        try:
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            with open(p, "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2)
+        except Exception:
+            pass
+
+_actualizar_archivo_conexion_master()
 
 class ChatService:
     _lock = threading.Lock()
     _initialized = False
+    _servidor_activo: Optional[str] = None
+    _ultimo_reintento_servidor: float = 0
+
+    @classmethod
+    def _obtener_candidatos_torre(cls) -> List[str]:
+        """Obtiene la lista priorizada de URLs candidatas para alcanzar la Torre Master"""
+        candidatos = []
+        
+        # 1. Variable de entorno explícita
+        env_url = os.getenv("TORRE_CHAT_URL")
+        if env_url:
+            candidatos.append(env_url.rstrip("/"))
+            
+        env_host = os.getenv("TORRE_CHAT_HOST")
+        env_port = os.getenv("TORRE_CHAT_PORT", "8000")
+        if env_host:
+            candidatos.append(f"http://{env_host}:{env_port}")
+
+        # 2. Archivo conexion_torre.json (auto-distribuido a los clientes)
+        for p in [os.path.join(BASE_DIR, "conexion_torre.json"), os.path.join(DATA_DIR, "conexion_torre.json")]:
+            if os.path.exists(p):
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        cfg = json.load(f)
+                    puerto = cfg.get("puerto", 8000)
+                    if cfg.get("ip_torre"):
+                        candidatos.append(f"http://{cfg['ip_torre']}:{puerto}")
+                    if cfg.get("hostname_torre"):
+                        candidatos.append(f"http://{cfg['hostname_torre']}:{puerto}")
+                    for ip in cfg.get("ips_conocidas", []):
+                        candidatos.append(f"http://{ip}:{puerto}")
+                except Exception:
+                    pass
+
+        # 3. Fallbacks conocidos de la red interna de Grupo Velas
+        candidatos.extend([
+            "http://10.10.200.31:8000",
+            "http://Esteban:8000",
+            "http://10.10.200.147:8000",
+            "http://127.0.0.1:8000"
+        ])
+
+        # Eliminar duplicados preservando orden
+        vistos = set()
+        unicos = []
+        for c in candidatos:
+            c_clean = c.rstrip("/")
+            if c_clean not in vistos:
+                vistos.add(c_clean)
+                unicos.append(c_clean)
+        return unicos
+
+    @classmethod
+    def _probar_servidor(cls, base_url: str) -> bool:
+        """Verifica rápidamente (< 1.2s) si una URL candidata de la Torre está viva"""
+        test_url = f"{base_url}/api/entorno"
+        try:
+            req = urllib.request.Request(test_url, headers={"User-Agent": "Dashboard-Client/2.0"})
+            with urllib.request.urlopen(req, timeout=1.2) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    # Asegurar que responde la Torre Master
+                    return data.get("ok") is True
+        except Exception:
+            pass
+        return False
+
+    @classmethod
+    def _resolver_url_torre(cls) -> Optional[str]:
+        """Encuentra y cachea la URL activa de la Torre Master de manera resiliente"""
+        if _es_modo_master():
+            return None
+
+        # Si ya teníamos un servidor activo verificado recientemente, usarlo directamente
+        if cls._servidor_activo:
+            return cls._servidor_activo
+
+        candidatos = cls._obtener_candidatos_torre()
+        for cand in candidatos:
+            if cls._probar_servidor(cand):
+                cls._servidor_activo = cand
+                print(f"[ChatService] Conectado exitosamente con Torre Master en {cand}")
+                return cand
+
+        return None
 
     @classmethod
     def proxy_torre_get(cls, path: str, params: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
@@ -42,7 +164,12 @@ class ChatService:
         """
         if _es_modo_master():
             return None
-        url = f"{TORRE_URL}{path}"
+        
+        base_url = cls._resolver_url_torre()
+        if not base_url:
+            return None
+
+        url = f"{base_url}{path}"
         if params:
             query_str = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None})
             url = f"{url}?{query_str}"
@@ -53,7 +180,8 @@ class ChatService:
                     data = resp.read().decode("utf-8")
                     return json.loads(data)
         except Exception:
-            pass
+            # Si falló la petición, invalidar el cache del servidor activo para volver a sondear
+            cls._servidor_activo = None
         return None
 
     @classmethod
@@ -64,7 +192,12 @@ class ChatService:
         """
         if _es_modo_master():
             return None
-        url = f"{TORRE_URL}{path}"
+        
+        base_url = cls._resolver_url_torre()
+        if not base_url:
+            return None
+
+        url = f"{base_url}{path}"
         try:
             payload = json.dumps(json_data or {}).encode("utf-8")
             req = urllib.request.Request(
@@ -77,7 +210,7 @@ class ChatService:
                     data = resp.read().decode("utf-8")
                     return json.loads(data)
         except Exception:
-            pass
+            cls._servidor_activo = None
         return None
 
     @classmethod
@@ -157,6 +290,34 @@ class ChatService:
                     }
             except Exception as e:
                 print(f"[ChatService] Error resolviendo identidad desde Usuarios.json: {e}")
+
+        # Fallback 2: Intentar resolver por el nombre de usuario de Windows del compañero
+        win_user = (os.getenv("USERNAME") or os.getenv("USER") or "").strip().lower()
+        if win_user and win_user not in ("esteb", "esteban", "administrador", "admin", "system"):
+            try:
+                from core.user_service import UserService
+                catalogo = UserService.obtener_usuarios()
+                for u in catalogo:
+                    u_mail = str(u.get("correo") or u.get("email") or "").strip().lower()
+                    u_cve = str(u.get("clave") or "").strip().lower()
+                    u_nom = str(u.get("nombre") or "").strip().lower()
+                    u_comp = str(u.get("nombre_completo") or "").strip().lower()
+                    if win_user in u_mail or win_user in u_cve or win_user in u_nom or win_user in u_comp:
+                        return {
+                            "ok": True,
+                            "es_master": False,
+                            "encontrado": True,
+                            "usuario": {
+                                "id": str(u.get("id")),
+                                "nombre": u.get("nombre_completo") or u.get("nombre"),
+                                "puesto": u.get("puesto") or "Colaborador",
+                                "area": u.get("area_organizacion") or "General",
+                                "correo": u_mail or win_user,
+                                "es_torre": False
+                            }
+                        }
+            except Exception:
+                pass
 
         return {
             "ok": True,

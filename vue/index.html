@@ -498,6 +498,25 @@
 
   <div id="app" v-cloak class="p-6 max-w-[1700px] mx-auto min-h-screen flex flex-col">
 
+    <!-- BANNER DE ACTUALIZACIÓN AUTOMÁTICA PARA COMPAÑEROS (CLIENTES) -->
+    <div v-if="actualizacionDisponibleCliente" 
+         class="mb-4 p-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-between shadow-xl animate-fade-in border border-cyan-400/30">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white text-base shrink-0">
+          <i class="fa-solid fa-cloud-arrow-down fa-bounce"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-bold leading-tight">¡Nueva versión del Dashboard disponible en GitHub!</h4>
+          <p class="text-[11px] text-cyan-100 truncate mt-0.5">La Torre ha publicado mejoras en el sistema y en el chat. Haz clic para actualizar sin reiniciar.</p>
+        </div>
+      </div>
+      <button @click="ejecutarActualizacionCliente" :disabled="actualizandoSistema"
+              class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-indigo-700 font-extrabold text-xs shadow-md flex items-center gap-2 cursor-pointer transition shrink-0 ml-3">
+        <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': actualizandoSistema}"></i>
+        <span>{{ actualizandoSistema ? 'Actualizando...' : 'Actualizar Ahora' }}</span>
+      </button>
+    </div>
+
     <!-- HEADER EJECUTIVO -->
     <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center pb-6 border-b border-slate-700 gap-4">
       <div>
@@ -516,6 +535,16 @@
             <p class="text-sm text-slate-400 mt-0.5">Grupo Velas • Aryve & Enkontrol Solutions</p>
           </div>
         </div>
+      </div>
+
+      <!-- BOTÓN RÁPIDO DE ACTUALIZAR PARA EQUIPO/CLIENTE -->
+      <div v-if="!esMaster" class="flex items-center gap-2.5">
+        <button @click="ejecutarActualizacionCliente" :disabled="actualizandoSistema"
+                class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer"
+                title="Descargar la versión más reciente publicada en GitHub">
+          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': actualizandoSistema}"></i>
+          <span>{{ actualizandoSistema ? 'Actualizando...' : 'Actualizar Dashboard' }}</span>
+        </button>
       </div>
 
       <!-- BOTONES DE ACCIÓN EXCLUSIVOS DE LA VISTA USUARIOS -->
