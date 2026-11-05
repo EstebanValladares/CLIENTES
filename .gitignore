@@ -8,6 +8,12 @@ __pycache__/
 .env.*
 *.env
 
+# Bases de datos y almacenamiento local del usuario (intocables por Git)
+data/
+*.db
+*.sqlite
+*.sqlite3
+
 # Logs y capturas
 *.log
 capturas/

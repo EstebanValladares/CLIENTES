@@ -18,6 +18,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas, chat
 from core.user_service import UserService
 from core.daemon_oc_service import iniciar_demonio_oc, forzar_sincronizacion_ahora
+from core.auto_publisher import iniciar_auto_publisher
 
 app = FastAPI(
     title="Dashboard Intelligence Solutions - VELAS",
@@ -254,6 +255,7 @@ def startup_event():
     # Solo ejecutar demonio de OC y sondeo si estamos en el entorno MASTER
     if _es_modo_master():
         iniciar_demonio_oc(intervalo_segundos=60)
+        iniciar_auto_publisher(intervalo_segundos=25)
         def _bucle_torre():
             while True:
                 _sondear_telemetria_oc()

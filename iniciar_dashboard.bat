@@ -75,17 +75,13 @@ pause
 exit /b 1
 
 :python_ok
-:: 2. Sincronizacion con Git (si esta enlazado al repositorio remoto)
+:: 2. Sincronizacion con Git (Blindaje automatico contra caidas)
 if exist ".git" (
-    echo [1/4] Verificando actualizaciones en GitHub...
+    echo [1/4] Sincronizando y actualizando automaticamente con GitHub...
+    git fetch origin main >nul 2>&1
+    git reset --hard origin/main >nul 2>&1
     git pull origin main
-    if errorlevel 1 (
-        echo [AVISO] Se detectaron cambios locales que impiden la actualizacion.
-        echo Restaurando archivos oficiales del repositorio...
-        git reset --hard origin/main 2>nul
-        git pull origin main
-    )
-    echo [OK] Sistema al dia con la nube.
+    echo [OK] Sistema blindado y actualizado al ultimo commit.
 ) else (
     echo [1/4] Repositorio local preparado.
 )
