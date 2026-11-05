@@ -10,6 +10,7 @@ import time
 import threading
 import urllib.request
 import urllib.error
+import subprocess
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -230,7 +231,9 @@ def _obtener_estado_cliente() -> dict:
                     c_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=client_dir, capture_output=True, text=True)
                     if c_res.returncode == 0 and c_res.stdout.strip():
                         commit_hash = c_res.stdout.strip()
-        except Exception:
+                desactualizado = len(archivos_modificados) > 0
+        except Exception as e:
+            print("[_obtener_estado_cliente ERROR]:", e)
             desactualizado = True
     else:
         desactualizado = True if es_master else False
