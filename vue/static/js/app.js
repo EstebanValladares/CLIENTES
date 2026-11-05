@@ -2618,8 +2618,12 @@ createApp({
       chatAbierto.value = !chatAbierto.value;
       if (chatAbierto.value) {
         chatMinimizado.value = false;
+        cargarChatsIniciadosLocal();
+        cargarConversaciones();
         cargarPresenciaYResumen();
-        cargarMensajesCanal(true);
+        if (conversacionAbierta.value) {
+          cargarMensajesCanal(true);
+        }
       }
     };
 
@@ -2637,6 +2641,7 @@ createApp({
       } catch (e) {}
       chatPerfilModalAbierto.value = false;
       cargarPresenciaYResumen();
+      cargarConversaciones();
       if (contactoActivo.value) {
         canalActivo.value = canalDirectoId(chatUsuarioActual.value.id, contactoActivo.value.usuario_id);
         cargarMensajesCanal(true);
@@ -2646,16 +2651,18 @@ createApp({
     // Polling periodico ligero
     setInterval(() => {
       cargarPresenciaYResumen();
-      if (chatAbierto.value && !chatMinimizado.value && chatPestanaActiva.value === 'chat') {
+      cargarConversaciones();
+      if (chatAbierto.value && !chatMinimizado.value && conversacionAbierta.value) {
         cargarMensajesCanal(false);
       }
     }, 3000);
 
     return {
-      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
+      // CHAT DE EQUIPO Y PRIVADOS 1 A 1 ESTILO WHATSAPP
       chatAbierto,
       chatMinimizado,
       chatPestanaActiva,
+      conversacionAbierta,
       canalActivo,
       contactoActivo,
       chatMensajes,
@@ -2663,6 +2670,9 @@ createApp({
       chatEnviando,
       chatUsuariosPresencia,
       chatResumen,
+      chatConversaciones,
+      filtroBusquedaChats,
+      listaConversacionesUnificadas,
       chatTotalNoLeidos,
       chatPerfilModalAbierto,
       chatUsuarioActual,
@@ -2673,6 +2683,10 @@ createApp({
       toggleChat,
       seleccionarCanalGeneral,
       seleccionarContactoDirecto,
+      abrirConversacionDirecta,
+      iniciarChatDesdeDirectorio,
+      abrirGrupoGeneral,
+      volverALista,
       enviarMensajeChat,
       guardarPerfilChat,
       cargarMensajesCanal,
