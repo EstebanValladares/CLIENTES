@@ -10,7 +10,6 @@ import time
 import threading
 import urllib.request
 import urllib.error
-import subprocess
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -231,9 +230,7 @@ def _obtener_estado_cliente() -> dict:
                     c_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=client_dir, capture_output=True, text=True)
                     if c_res.returncode == 0 and c_res.stdout.strip():
                         commit_hash = c_res.stdout.strip()
-                desactualizado = len(archivos_modificados) > 0
-        except Exception as e:
-            print("[_obtener_estado_cliente ERROR]:", e)
+        except Exception:
             desactualizado = True
     else:
         desactualizado = True if es_master else False
@@ -302,8 +299,7 @@ def verificar_actualizacion():
         c_local = c_local_res.stdout.strip() if c_local_res.returncode == 0 else ""
         
         # Consultar la última versión publicada registrada en Torre
-        from core.chat_service import ChatService
-        torre_url = ChatService._resolver_url_torre() or "http://10.10.200.31:8000"
+        torre_url = os.getenv("TORRE_CHAT_URL", "http://10.10.200.147:8000")
         try:
             req = urllib.request.Request(f"{torre_url}/api/sistema/version", headers={"User-Agent": "Client/2.0"})
             with urllib.request.urlopen(req, timeout=2.0) as resp:

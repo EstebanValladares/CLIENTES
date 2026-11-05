@@ -147,7 +147,7 @@ echo [3/4] Iniciando servidor del Dashboard en http://127.0.0.1:8000 ...
 echo [INFO] Para apagar el servidor, simplemente cierra esta ventana o presiona CTRL+C.
 echo.
 start "" "http://127.0.0.1:8000"
-"%PY_CMD%" -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
+"%PY_CMD%" -m uvicorn api.main:app --host 127.0.0.1 --port 8000
 if %errorlevel% neq 0 (
     color 0C
     echo.
