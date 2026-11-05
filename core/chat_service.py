@@ -10,8 +10,11 @@ import os
 import sqlite3
 import datetime
 import threading
+import json
+import urllib.request
+import urllib.parse
+import urllib.error
 from typing import List, Dict, Any, Optional
-import requests
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -40,10 +43,15 @@ class ChatService:
         if _es_modo_master():
             return None
         url = f"{TORRE_URL}{path}"
+        if params:
+            query_str = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None})
+            url = f"{url}?{query_str}"
         try:
-            r = requests.get(url, params=params, timeout=2.5)
-            if r.status_code == 200:
-                return r.json()
+            req = urllib.request.Request(url, headers={"User-Agent": "Dashboard-Client/2.0"})
+            with urllib.request.urlopen(req, timeout=2.5) as resp:
+                if resp.status == 200:
+                    data = resp.read().decode("utf-8")
+                    return json.loads(data)
         except Exception:
             pass
         return None
@@ -58,9 +66,16 @@ class ChatService:
             return None
         url = f"{TORRE_URL}{path}"
         try:
-            r = requests.post(url, json=json_data, timeout=2.5)
-            if r.status_code == 200:
-                return r.json()
+            payload = json.dumps(json_data or {}).encode("utf-8")
+            req = urllib.request.Request(
+                url, 
+                data=payload, 
+                headers={"Content-Type": "application/json", "User-Agent": "Dashboard-Client/2.0"}
+            )
+            with urllib.request.urlopen(req, timeout=2.5) as resp:
+                if resp.status == 200:
+                    data = resp.read().decode("utf-8")
+                    return json.loads(data)
         except Exception:
             pass
         return None
