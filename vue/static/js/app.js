@@ -2220,21 +2220,25 @@ createApp({
 
 
     // ==========================================
-    // SISTEMA DE CHAT DE EQUIPO Y MENSAJERÍA 1 A 1
+    // SISTEMA DE CHAT DE EQUIPO ESTILO WHATSAPP
     // ==========================================
     const chatAbierto = ref(false);
     const chatMinimizado = ref(false);
-    const chatPestanaActiva = ref('chat'); // 'chat' o 'contactos'
+    const chatPestanaActiva = ref('mensajes'); // 'mensajes', 'grupos', 'contactos'
+    const conversacionAbierta = ref(null); // null = lista de chats/grupos; objeto = chat abierto
     const canalActivo = ref('general');
     const contactoActivo = ref(null); // null si es canal general
     const chatMensajes = ref([]);
     const chatNuevoTexto = ref('');
     const chatEnviando = ref(false);
     const chatUsuariosPresencia = ref([]);
-    const chatResumen = ref({ general: { no_leidos: 0 }, dms_no_leidos: {} });
-    const chatPerfilModalAbierto = ref(false);
+    const chatResumen = ref({ general: { no_leidos: 0, ultimo_mensaje: null }, dms_no_leidos: {} });
+    const chatConversaciones = ref([]); // Lista de chats activos desde el backend
+    const chatsIniciadosLocal = ref([]); // Chats guardados localmente
+    const filtroBusquedaChats = ref('');
     const filtroContactoChat = ref('');
     const filtroBuscarMiPerfil = ref('');
+    const chatPerfilModalAbierto = ref(false);
 
     // Perfil del usuario local (con resolución automática desde /api/chat/mi-identidad)
     const chatUsuarioActual = ref({
@@ -2356,6 +2360,118 @@ createApp({
       );
     });
 
+    const cargarChatsIniciadosLocal = () => {
+      try {
+        const key = 'chats_iniciados_' + (chatUsuarioActual.value?.id || '1');
+        const guardado = localStorage.getItem(key);
+        if (guardado) {
+          chatsIniciadosLocal.value = JSON.parse(guardado) || [];
+        }
+      } catch (e) {}
+    };
+
+    const guardarChatIniciado = (contacto) => {
+      if (!contacto) return;
+      const cid = String(contacto.usuario_id || contacto.contacto_id);
+      const existe = chatsIniciadosLocal.value.some(c => String(c.contacto_id || c.usuario_id) === cid);
+      if (!existe) {
+        chatsIniciadosLocal.value.unshift({
+          canal: canalDirectoId(chatUsuarioActual.value.id, cid),
+          contacto_id: cid,
+          contacto_nombre: contacto.nombre || contacto.contacto_nombre,
+          contacto_puesto: contacto.puesto || contacto.contacto_puesto || 'Colaborador',
+          contacto_area: contacto.area || contacto.contacto_area || '',
+          ultimo_texto: 'Chat iniciado...',
+          es_mio: true,
+          hora_corta: 'Reciente',
+          no_leidos: 0,
+          en_linea: !!contacto.en_linea
+        });
+        try {
+          const key = 'chats_iniciados_' + (chatUsuarioActual.value?.id || '1');
+          localStorage.setItem(key, JSON.stringify(chatsIniciadosLocal.value));
+        } catch (e) {}
+      }
+    };
+
+    const cargarConversaciones = async () => {
+      if (!chatUsuarioActual.value?.id) return;
+      try {
+        const res = await fetch(`/api/chat/conversaciones?usuario_id=${chatUsuarioActual.value.id}`);
+        if (res.ok) {
+          const d = await res.json();
+          chatConversaciones.value = d.conversaciones || [];
+        }
+      } catch (e) {}
+    };
+
+    const listaConversacionesUnificadas = computed(() => {
+      const mapa = new Map();
+      (chatConversaciones.value || []).forEach(c => {
+        mapa.set(String(c.contacto_id), { ...c });
+      });
+      (chatsIniciadosLocal.value || []).forEach(c => {
+        const cid = String(c.contacto_id || c.usuario_id);
+        if (!mapa.has(cid)) {
+          mapa.set(cid, { ...c });
+        }
+      });
+      const arr = Array.from(mapa.values());
+      const q = (filtroBusquedaChats.value || '').trim().toLowerCase();
+      if (!q) return arr;
+      return arr.filter(c => 
+        (c.contacto_nombre && c.contacto_nombre.toLowerCase().includes(q)) ||
+        (c.ultimo_texto && c.ultimo_texto.toLowerCase().includes(q)) ||
+        (c.contacto_puesto && c.contacto_puesto.toLowerCase().includes(q))
+      );
+    });
+
+    const abrirConversacionDirecta = (c) => {
+      const cid = String(c.contacto_id || c.usuario_id);
+      contactoActivo.value = {
+        usuario_id: cid,
+        nombre: c.contacto_nombre || c.nombre,
+        puesto: c.contacto_puesto || c.puesto || '',
+        area: c.contacto_area || c.area || '',
+        en_linea: !!c.en_linea
+      };
+      canalActivo.value = c.canal || canalDirectoId(chatUsuarioActual.value.id, cid);
+      conversacionAbierta.value = {
+        tipo: 'dm',
+        id: cid,
+        nombre: contactoActivo.value.nombre,
+        puesto: contactoActivo.value.puesto,
+        en_linea: contactoActivo.value.en_linea
+      };
+      guardarChatIniciado(contactoActivo.value);
+      chatPestanaActiva.value = 'mensajes';
+      cargarMensajesCanal(true);
+    };
+
+    const iniciarChatDesdeDirectorio = (contacto) => {
+      guardarChatIniciado(contacto);
+      abrirConversacionDirecta(contacto);
+    };
+
+    const abrirGrupoGeneral = () => {
+      canalActivo.value = 'general';
+      contactoActivo.value = null;
+      conversacionAbierta.value = {
+        tipo: 'grupo',
+        id: 'general',
+        nombre: '📢 Sala General (Todo el Equipo)'
+      };
+      chatPestanaActiva.value = 'grupos';
+      cargarMensajesCanal(true);
+    };
+
+    const volverALista = () => {
+      conversacionAbierta.value = null;
+      contactoActivo.value = null;
+      cargarConversaciones();
+      cargarPresenciaYResumen();
+    };
+
     const scrollChatAlFinal = () => {
       setTimeout(() => {
         const box = document.getElementById('chat-mensajes-container');
@@ -2426,6 +2542,9 @@ createApp({
           }
           ultimoConteoNoLeidos = tot;
         }
+
+        // Actualizar lista de conversaciones activas estilo WhatsApp
+        cargarConversaciones();
       } catch (e) {}
     };
 
