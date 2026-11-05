@@ -1336,6 +1336,28 @@ createApp({
         if (res.ok) {
           const d = await res.json();
           return {
+      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
+      chatAbierto,
+      chatMinimizado,
+      chatPestanaActiva,
+      canalActivo,
+      contactoActivo,
+      chatMensajes,
+      chatNuevoTexto,
+      chatEnviando,
+      chatUsuariosPresencia,
+      chatResumen,
+      chatTotalNoLeidos,
+      chatPerfilModalAbierto,
+      chatUsuarioActual,
+      filtroContactoChat,
+      listaContactosFiltrada,
+      toggleChat,
+      seleccionarCanalGeneral,
+      seleccionarContactoDirecto,
+      enviarMensajeChat,
+      guardarPerfilChat,
+      cargarMensajesCanal,
             total: d.total_clasificadores || 0,
             area: d.area || '',
             categorias: d.categorias || [],
@@ -2051,6 +2073,28 @@ createApp({
         }
         if (hijosFiltrados.length > 0) {
           return {
+      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
+      chatAbierto,
+      chatMinimizado,
+      chatPestanaActiva,
+      canalActivo,
+      contactoActivo,
+      chatMensajes,
+      chatNuevoTexto,
+      chatEnviando,
+      chatUsuariosPresencia,
+      chatResumen,
+      chatTotalNoLeidos,
+      chatPerfilModalAbierto,
+      chatUsuarioActual,
+      filtroContactoChat,
+      listaContactosFiltrada,
+      toggleChat,
+      seleccionarCanalGeneral,
+      seleccionarContactoDirecto,
+      enviarMensajeChat,
+      guardarPerfilChat,
+      cargarMensajesCanal,
             ...tipo,
             datos: hijosFiltrados
           };
@@ -2218,7 +2262,245 @@ createApp({
       });
     });
 
+
+    // ==========================================
+    // SISTEMA DE CHAT DE EQUIPO Y MENSAJERÍA 1 A 1
+    // ==========================================
+    const chatAbierto = ref(false);
+    const chatMinimizado = ref(false);
+    const chatPestanaActiva = ref('chat'); // 'chat' o 'contactos'
+    const canalActivo = ref('general');
+    const contactoActivo = ref(null); // null si es canal general
+    const chatMensajes = ref([]);
+    const chatNuevoTexto = ref('');
+    const chatEnviando = ref(false);
+    const chatUsuariosPresencia = ref([]);
+    const chatResumen = ref({ general: { no_leidos: 0 }, dms_no_leidos: {} });
+    const chatPerfilModalAbierto = ref(false);
+    const filtroContactoChat = ref('');
+
+    // Perfil del usuario local (con persistencia en localStorage para distinguir clones)
+    const chatUsuarioActual = ref({
+      id: '1',
+      nombre: 'Esteban (Torre)',
+      puesto: 'Administrador Master',
+      area: 'Sistemas',
+      es_torre: true
+    });
+
+    try {
+      const guardado = localStorage.getItem('chat_perfil_usuario');
+      if (guardado) {
+        chatUsuarioActual.value = JSON.parse(guardado);
+      }
+    } catch (e) {}
+
+    const chatTotalNoLeidos = computed(() => {
+      let tot = (chatResumen.value.general && chatResumen.value.general.no_leidos) || 0;
+      if (chatResumen.value.dms_no_leidos) {
+        for (const k in chatResumen.value.dms_no_leidos) {
+          tot += chatResumen.value.dms_no_leidos[k] || 0;
+        }
+      }
+      return tot;
+    });
+
+    const listaContactosFiltrada = computed(() => {
+      const q = (filtroContactoChat.value || '').trim().toLowerCase();
+      const mapa = new Map();
+      (chatUsuariosPresencia.value || []).forEach(u => {
+        if (String(u.usuario_id) !== String(chatUsuarioActual.value.id)) {
+          mapa.set(String(u.usuario_id), { ...u });
+        }
+      });
+      (usuarios.value || []).slice(0, 60).forEach(u => {
+        const uid = String(u.id);
+        if (uid !== String(chatUsuarioActual.value.id) && !mapa.has(uid)) {
+          mapa.set(uid, {
+            usuario_id: uid,
+            nombre: u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`.trim() || 'Colaborador',
+            puesto: u.puesto || 'Puesto no esp.',
+            area: u.area_organizacion || '',
+            es_torre: false,
+            en_linea: false
+          });
+        }
+      });
+      const arr = Array.from(mapa.values());
+      if (!q) return arr;
+      return arr.filter(c => 
+        c.nombre.toLowerCase().includes(q) || 
+        (c.puesto && c.puesto.toLowerCase().includes(q))
+      );
+    });
+
+    const scrollChatAlFinal = () => {
+      setTimeout(() => {
+        const box = document.getElementById('chat-mensajes-container');
+        if (box) box.scrollTop = box.scrollHeight;
+      }, 50);
+    };
+
+    const canalDirectoId = (u1, u2) => {
+      const a = String(u1).trim().toLowerCase();
+      const b = String(u2).trim().toLowerCase();
+      return `dm_${a < b ? a : b}__${a < b ? b : a}`;
+    };
+
+    const cargarPresenciaYResumen = async () => {
+      try {
+        await fetch('/api/chat/presencia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            usuario_id: String(chatUsuarioActual.value.id),
+            nombre: chatUsuarioActual.value.nombre,
+            puesto: chatUsuarioActual.value.puesto || '',
+            area: chatUsuarioActual.value.area || '',
+            es_torre: !!chatUsuarioActual.value.es_torre
+          })
+        });
+
+        const resUsers = await fetch(`/api/chat/usuarios?usuario_actual=${chatUsuarioActual.value.id}`);
+        if (resUsers.ok) {
+          const d = await resUsers.json();
+          chatUsuariosPresencia.value = d.usuarios || [];
+        }
+
+        const resResumen = await fetch(`/api/chat/resumen?usuario_id=${chatUsuarioActual.value.id}`);
+        if (resResumen.ok) {
+          const d = await resResumen.json();
+          chatResumen.value = d.resumen || { general: { no_leidos: 0 }, dms_no_leidos: {} };
+        }
+      } catch (e) {}
+    };
+
+    const cargarMensajesCanal = async (autoScroll = false) => {
+      try {
+        const res = await fetch(`/api/chat/mensajes?canal=${canalActivo.value}&limite=80`);
+        if (res.ok) {
+          const d = await res.json();
+          const anteriores = chatMensajes.value.length;
+          chatMensajes.value = d.mensajes || [];
+          if (autoScroll || chatMensajes.value.length !== anteriores) {
+            scrollChatAlFinal();
+          }
+          await fetch('/api/chat/leido', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              canal: canalActivo.value,
+              usuario_id: String(chatUsuarioActual.value.id)
+            })
+          });
+        }
+      } catch (e) {}
+    };
+
+    const seleccionarCanalGeneral = () => {
+      canalActivo.value = 'general';
+      contactoActivo.value = null;
+      chatPestanaActiva.value = 'chat';
+      cargarMensajesCanal(true);
+    };
+
+    const seleccionarContactoDirecto = (contacto) => {
+      contactoActivo.value = contacto;
+      canalActivo.value = canalDirectoId(chatUsuarioActual.value.id, contacto.usuario_id);
+      chatPestanaActiva.value = 'chat';
+      cargarMensajesCanal(true);
+    };
+
+    const enviarMensajeChat = async () => {
+      const txt = chatNuevoTexto.value.trim();
+      if (!txt || chatEnviando.value) return;
+      chatEnviando.value = true;
+      try {
+        const payload = {
+          canal: canalActivo.value,
+          remitente_id: String(chatUsuarioActual.value.id),
+          remitente_nombre: chatUsuarioActual.value.nombre,
+          remitente_rol: chatUsuarioActual.value.puesto || (chatUsuarioActual.value.es_torre ? 'Torre' : 'Colaborador'),
+          texto: txt,
+          destinatario_id: contactoActivo.value ? String(contactoActivo.value.usuario_id) : '',
+          destinatario_nombre: contactoActivo.value ? contactoActivo.value.nombre : ''
+        };
+        const res = await fetch('/api/chat/enviar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          chatNuevoTexto.value = '';
+          await cargarMensajesCanal(true);
+        }
+      } catch (e) {
+        console.error('Error enviando mensaje:', e);
+      } finally {
+        chatEnviando.value = false;
+      }
+    };
+
+    const toggleChat = () => {
+      chatAbierto.value = !chatAbierto.value;
+      if (chatAbierto.value) {
+        chatMinimizado.value = false;
+        cargarPresenciaYResumen();
+        cargarMensajesCanal(true);
+      }
+    };
+
+    const guardarPerfilChat = (usuario) => {
+      if (!usuario) return;
+      chatUsuarioActual.value = {
+        id: String(usuario.id || 'usr_' + Date.now()),
+        nombre: usuario.nombre_completo || usuario.nombre || 'Colaborador',
+        puesto: usuario.puesto || 'Colaborador',
+        area: usuario.area_organizacion || 'General',
+        es_torre: String(usuario.id) === '1' || String(usuario.nombre).toLowerCase().includes('administrador')
+      };
+      try {
+        localStorage.setItem('chat_perfil_usuario', JSON.stringify(chatUsuarioActual.value));
+      } catch (e) {}
+      chatPerfilModalAbierto.value = false;
+      cargarPresenciaYResumen();
+      if (contactoActivo.value) {
+        canalActivo.value = canalDirectoId(chatUsuarioActual.value.id, contactoActivo.value.usuario_id);
+        cargarMensajesCanal(true);
+      }
+    };
+
+    // Polling periodico ligero
+    setInterval(() => {
+      cargarPresenciaYResumen();
+      if (chatAbierto.value && !chatMinimizado.value && chatPestanaActiva.value === 'chat') {
+        cargarMensajesCanal(false);
+      }
+    }, 3000);
+
     return {
+      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
+      chatAbierto,
+      chatMinimizado,
+      chatPestanaActiva,
+      canalActivo,
+      contactoActivo,
+      chatMensajes,
+      chatNuevoTexto,
+      chatEnviando,
+      chatUsuariosPresencia,
+      chatResumen,
+      chatTotalNoLeidos,
+      chatPerfilModalAbierto,
+      chatUsuarioActual,
+      filtroContactoChat,
+      listaContactosFiltrada,
+      toggleChat,
+      seleccionarCanalGeneral,
+      seleccionarContactoDirecto,
+      enviarMensajeChat,
+      guardarPerfilChat,
+      cargarMensajesCanal,
       // Tema Claro / Oscuro (Persistente)
       temaActual,
       toggleTema,

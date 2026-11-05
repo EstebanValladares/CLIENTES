@@ -3746,9 +3746,346 @@
       </div>
     </div>
 
+
+    <!-- ======================================================== -->
+    <!-- WIDGET DE CHAT DE EQUIPO (GRUPAL Y PRIVADOS 1 A 1)       -->
+    <!-- ======================================================== -->
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 select-none">
+      
+      <!-- VENTANA FLOTANTE DEL CHAT -->
+      <div v-if="chatAbierto"
+           class="w-[440px] max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-200 mb-2 border-t-2"
+           :class="chatMinimizado ? 'h-[60px]' : 'h-[580px] max-h-[calc(100vh-6rem)]'">
+        
+        <!-- BARRA SUPERIOR DE ACENTO CON GRADIENTE -->
+        <div class="h-[3px] bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 shrink-0"></div>
+
+        <!-- HEADER DEL CHAT -->
+        <div class="px-4 py-3 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
+          
+          <!-- INFO DEL CANAL O CONTACTO ACTIVO -->
+          <div class="flex items-center gap-2.5 min-w-0">
+            <!-- Icono si es General -->
+            <div v-if="canalActivo === 'general'" 
+                 class="w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-cyan-100 text-xs shadow-md shadow-indigo-600/25 shrink-0">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <!-- Avatar si es 1 a 1 -->
+            <div v-else 
+                 class="w-8 h-8 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 flex items-center justify-center text-white font-bold text-xs shadow-md shrink-0">
+              {{ (contactoActivo?.nombre || 'DM').substring(0, 2).toUpperCase() }}
+            </div>
+
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">
+                  {{ canalActivo === 'general' ? '📢 Equipo General' : contactoActivo?.nombre }}
+                </h4>
+                <span v-if="canalActivo === 'general'" class="text-[9px] font-bold text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-200 dark:border-cyan-800/40 shrink-0">
+                  Grupal
+                </span>
+                <span v-else class="text-[9px] font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 rounded border border-indigo-200 dark:border-indigo-800/40 shrink-0">
+                  1 a 1
+                </span>
+              </div>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">
+                <span v-if="canalActivo === 'general'">Todos los miembros del equipo</span>
+                <span v-else class="flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full" :class="contactoActivo?.en_linea ? 'bg-emerald-500' : 'bg-slate-400'"></span>
+                  <span>{{ contactoActivo?.en_linea ? 'En línea' : 'Desconectado' }}</span>
+                  <span v-if="contactoActivo?.puesto">• {{ contactoActivo.puesto }}</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <!-- CONTROLES: PERFIL DE USUARIO, MINIMIZAR Y CERRAR -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <!-- Botón de Identidad / Quién soy -->
+            <button @click="chatPerfilModalAbierto = true"
+                    type="button"
+                    title="Cambiar mi identidad de usuario en este equipo"
+                    class="px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center gap-1 transition cursor-pointer border border-slate-300 dark:border-slate-700">
+              <i class="fa-solid fa-user-circle text-indigo-500"></i>
+              <span class="max-w-[70px] truncate">{{ chatUsuarioActual.nombre.split(' ')[0] }}</span>
+              <i class="fa-solid fa-pen text-[8px] opacity-60"></i>
+            </button>
+
+            <!-- Minimizar -->
+            <button @click="chatMinimizado = !chatMinimizado"
+                    type="button"
+                    class="w-6 h-6 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+              <i class="fa-solid" :class="chatMinimizado ? 'fa-chevron-up text-xs' : 'fa-minus text-xs'"></i>
+            </button>
+
+            <!-- Cerrar -->
+            <button @click="chatAbierto = false"
+                    type="button"
+                    class="w-6 h-6 rounded-lg text-slate-400 hover:text-rose-500 flex items-center justify-center transition cursor-pointer">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CUERPO DEL CHAT (SI NO ESTA MINIMIZADO) -->
+        <div v-show="!chatMinimizado" class="flex flex-col flex-1 min-h-0 bg-white dark:bg-slate-900">
+          
+          <!-- PESTAÑAS: CONVERSACION vs COMPAÑEROS 1 A 1 -->
+          <div class="px-3 pt-2 pb-1.5 bg-slate-50/70 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-1">
+              <button @click="chatPestanaActiva = 'chat'"
+                      type="button"
+                      class="px-3 py-1 rounded-xl font-bold transition flex items-center gap-1.5 cursor-pointer"
+                      :class="chatPestanaActiva === 'chat' 
+                        ? 'bg-indigo-600 text-white shadow-sm' 
+                        : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300'">
+                <i class="fa-solid fa-message text-[10px]"></i>
+                <span>Mensajes</span>
+              </button>
+
+              <button @click="chatPestanaActiva = 'contactos'"
+                      type="button"
+                      class="px-3 py-1 rounded-xl font-bold transition flex items-center gap-1.5 cursor-pointer relative"
+                      :class="chatPestanaActiva === 'contactos' 
+                        ? 'bg-indigo-600 text-white shadow-sm' 
+                        : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300'">
+                <i class="fa-solid fa-address-book text-[10px]"></i>
+                <span>Compañeros (1 a 1)</span>
+                <span v-if="chatResumen?.dms_no_leidos && Object.keys(chatResumen.dms_no_leidos).length > 0"
+                      class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+              </button>
+            </div>
+
+            <!-- Boton directo a General -->
+            <button v-if="canalActivo !== 'general'"
+                    @click="seleccionarCanalGeneral"
+                    type="button"
+                    class="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-arrow-left text-[9px]"></i>
+              <span>Ir a General</span>
+            </button>
+          </div>
+
+          <!-- VISTA 1: ÁREA DE MENSAJES -->
+          <div v-show="chatPestanaActiva === 'chat'" class="flex flex-col flex-1 min-h-0">
+            
+            <!-- CONTENEDOR DE MENSAJES CON SCROLL -->
+            <div id="chat-mensajes-container" class="flex-1 p-3 overflow-y-auto space-y-2.5 custom-scrollbar bg-slate-50/40 dark:bg-slate-950/40 text-xs">
+              
+              <!-- MENSAJE DE BIENVENIDA SI ESTÁ VACÍO -->
+              <div v-if="!chatMensajes || chatMensajes.length === 0" 
+                   class="flex flex-col items-center justify-center h-full text-center p-6 text-slate-400">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/40 flex items-center justify-center text-indigo-500 mb-2">
+                  <i class="fa-regular fa-comments text-xl"></i>
+                </div>
+                <p class="font-bold text-slate-700 dark:text-slate-300">¡Comienza la conversación!</p>
+                <p class="text-[11px] text-slate-500 mt-1">
+                  {{ canalActivo === 'general' ? 'Escribe un mensaje para que todos tus compañeros del equipo lo vean.' : 'Este es un chat privado directo de 1 a 1.' }}
+                </p>
+              </div>
+
+              <!-- BURBUJAS DE MENSAJES -->
+              <div v-for="m in chatMensajes" :key="m.id"
+                   class="flex flex-col"
+                   :class="String(m.remitente_id) === String(chatUsuarioActual.id) ? 'items-end' : 'items-start'">
+                
+                <!-- Nombre y Rol del remitente (si no soy yo) -->
+                <div v-if="String(m.remitente_id) !== String(chatUsuarioActual.id)" 
+                     class="flex items-center gap-1.5 mb-0.5 px-1 text-[10px]">
+                  <span class="font-bold text-slate-800 dark:text-slate-200">{{ m.remitente_nombre }}</span>
+                  <span class="text-slate-400 font-mono text-[9px]">({{ m.remitente_rol || 'Colaborador' }})</span>
+                </div>
+
+                <!-- Burbuja del Mensaje -->
+                <div class="max-w-[85%] rounded-2xl px-3.5 py-2 shadow-sm text-xs leading-relaxed break-words"
+                     :class="String(m.remitente_id) === String(chatUsuarioActual.id) 
+                       ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-medium rounded-tr-none' 
+                       : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-tl-none'">
+                  <p class="whitespace-pre-wrap">{{ m.texto }}</p>
+                  <div class="text-[9px] mt-1 text-right font-mono flex items-center justify-end gap-1 opacity-75"
+                       :class="String(m.remitente_id) === String(chatUsuarioActual.id) ? 'text-cyan-100' : 'text-slate-400'">
+                    <span>{{ m.hora_corta }}</span>
+                    <i v-if="String(m.remitente_id) === String(chatUsuarioActual.id)" class="fa-solid fa-check-double text-[8px]"></i>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- BARRA DE ENTRADA DE TEXTO -->
+            <div class="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2 shrink-0">
+              <input type="text"
+                     v-model="chatNuevoTexto"
+                     @keydown.enter.prevent="enviarMensajeChat"
+                     :placeholder="canalActivo === 'general' ? 'Mensaje a @Equipo General...' : 'Mensaje privado a ' + (contactoActivo?.nombre || 'compañero') + '...'"
+                     maxlength="500"
+                     class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+              
+              <!-- BOTON ENVIAR -->
+              <button @click="enviarMensajeChat"
+                      type="button"
+                      :disabled="!chatNuevoTexto.trim() || chatEnviando"
+                      class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+                <i v-if="chatEnviando" class="fa-solid fa-spinner fa-spin"></i>
+                <i v-else class="fa-solid fa-paper-plane text-xs"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- VISTA 2: LISTA DE COMPAÑEROS PARA CHATS 1 A 1 -->
+          <div v-show="chatPestanaActiva === 'contactos'" class="flex flex-col flex-1 min-h-0 p-3 overflow-y-auto custom-scrollbar">
+            
+            <!-- BUSCADOR DE COMPAÑEROS -->
+            <div class="mb-2.5">
+              <input type="text"
+                     v-model="filtroContactoChat"
+                     placeholder="Buscar compañero por nombre o puesto..."
+                     class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <!-- OPCIÓN CANAL GENERAL -->
+            <div @click="seleccionarCanalGeneral"
+                 class="p-2.5 rounded-xl border border-blue-200 dark:border-blue-900/40 bg-blue-50/60 dark:bg-blue-950/30 hover:bg-blue-100/60 dark:hover:bg-blue-900/40 cursor-pointer flex items-center justify-between transition mb-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white flex items-center justify-center text-xs shadow-sm">
+                  <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100">📢 Sala General (Todo el Equipo)</h4>
+                  <p class="text-[10px] text-slate-500 dark:text-slate-400">Canal público común</p>
+                </div>
+              </div>
+              <span v-if="chatResumen?.general?.no_leidos > 0" 
+                    class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white">
+                {{ chatResumen.general.no_leidos }}
+              </span>
+            </div>
+
+            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5 px-1">Compañeros para Mensaje Directo (1 a 1)</p>
+
+            <!-- LISTA DE CONTACTOS -->
+            <div class="space-y-1">
+              <div v-for="contacto in listaContactosFiltrada" :key="contacto.usuario_id"
+                   @click="seleccionarContactoDirecto(contacto)"
+                   class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="relative w-8 h-8 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center font-bold text-xs text-indigo-600 dark:text-cyan-300 shrink-0">
+                    {{ contacto.nombre.substring(0, 2).toUpperCase() }}
+                    <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-slate-900"
+                          :class="contacto.en_linea ? 'bg-emerald-500' : 'bg-slate-400'"></span>
+                  </div>
+                  <div class="min-w-0">
+                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{{ contacto.nombre }}</h5>
+                    <p class="text-[10px] text-slate-400 truncate">{{ contacto.puesto || contacto.area || 'Colaborador' }}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                  <span v-if="contacto.en_linea" class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.2 rounded border border-emerald-300 dark:border-emerald-800/40">
+                    En línea
+                  </span>
+                  <span v-if="chatResumen?.dms_no_leidos?.[contacto.usuario_id] > 0" 
+                        class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white">
+                    {{ chatResumen.dms_no_leidos[contacto.usuario_id] }}
+                  </span>
+                  <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- BOTÓN LANZADOR FLOTANTE (PILL ELEGANTE) -->
+      <button @click="toggleChat"
+              type="button"
+              class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-400 text-white font-bold text-xs shadow-xl shadow-indigo-600/35 border border-blue-400/40 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <div class="relative flex items-center justify-center">
+          <i class="fa-solid fa-comments text-cyan-100 text-sm"></i>
+          <span v-if="chatTotalNoLeidos > 0" 
+                class="absolute -top-2.5 -right-2.5 min-w-[18px] h-[18px] bg-rose-500 text-white rounded-full text-[9px] font-black flex items-center justify-center shadow-md animate-bounce px-1">
+            {{ chatTotalNoLeidos }}
+          </span>
+        </div>
+        <span>Chat de Equipo</span>
+        <span class="text-[9px] font-mono text-cyan-200 bg-white/10 px-1.5 py-0.5 rounded">
+          {{ canalActivo === 'general' ? 'Grupal' : '1 a 1' }}
+        </span>
+      </button>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL: SELECCIÓN DE IDENTIDAD PARA CLONES Y USUARIOS     -->
+    <!-- ======================================================== -->
+    <div v-if="chatPerfilModalAbierto"
+         @click.self="chatPerfilModalAbierto = false"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in select-none">
+      <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-4">
+        
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs shadow-sm">
+              <i class="fa-solid fa-id-card"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100">¿Quién eres en este Dashboard?</h3>
+              <p class="text-[11px] text-slate-500">Selecciona tu usuario para que tus compañeros vean tu nombre al chatear</p>
+            </div>
+          </div>
+          <button @click="chatPerfilModalAbierto = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- PERFIL ACTUAL SELECCIONADO -->
+        <div class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/40 rounded-2xl p-3 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+              {{ chatUsuarioActual.nombre.substring(0, 2).toUpperCase() }}
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-100">{{ chatUsuarioActual.nombre }}</p>
+              <p class="text-[10px] text-indigo-600 dark:text-cyan-300 font-mono">{{ chatUsuarioActual.puesto }}</p>
+            </div>
+          </div>
+          <span class="text-[9px] font-bold bg-indigo-600 text-white px-2 py-0.5 rounded-full">Activo</span>
+        </div>
+
+        <!-- BUSCAR EN CATÁLOGO EXISTENTE DE COMPAÑEROS -->
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 block mb-1.5">
+            Elige tu perfil del catálogo de usuarios:
+          </label>
+          <div class="max-h-48 overflow-y-auto space-y-1.5 custom-scrollbar pr-1">
+            <div v-for="u in (usuarios || []).slice(0, 30)" :key="u.id"
+                 @click="guardarPerfilChat(u)"
+                 class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 bg-slate-50 dark:bg-slate-950/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 cursor-pointer flex items-center justify-between transition">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-slate-800 dark:text-slate-200">{{ u.nombre_completo || u.nombre }}</span>
+                <span class="text-[10px] text-slate-400">({{ u.puesto || 'General' }})</span>
+              </div>
+              <i class="fa-solid fa-check text-xs text-indigo-500 opacity-60"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+          <button @click="chatPerfilModalAbierto = false" 
+                  class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
+            Cerrar
+          </button>
+        </div>
+
+      </div>
+    </div>
+
 </div>
-
-
 <script src="/static/js/app.js?v=20261103_1725"></script>
 
 </body>

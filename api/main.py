@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 
-from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas
+from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas, chat
 from core.user_service import UserService
 from core.daemon_oc_service import iniciar_demonio_oc, forzar_sincronizacion_ahora
 
@@ -40,6 +40,7 @@ app.include_router(bots.router)
 app.include_router(operaciones.router)
 app.include_router(obras.router)
 app.include_router(proveedores_contratistas.router)
+app.include_router(chat.router)
 
 @app.get("/api/metricas")
 def metricas_globales():
