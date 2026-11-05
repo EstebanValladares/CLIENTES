@@ -2363,6 +2363,26 @@ createApp({
       }, 50);
     };
 
+    let ultimoConteoNoLeidos = 0;
+    const reproducirSonidoNotificacion = () => {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // Nota D5
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12); // Nota A5
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch (e) {}
+    };
+
     const canalDirectoId = (u1, u2) => {
       const a = String(u1).trim().toLowerCase();
       const b = String(u2).trim().toLowerCase();
@@ -2393,6 +2413,18 @@ createApp({
         if (resResumen.ok) {
           const d = await resResumen.json();
           chatResumen.value = d.resumen || { general: { no_leidos: 0 }, dms_no_leidos: {} };
+
+          // Notificación visual en pestaña del navegador estilo WhatsApp Web
+          const tot = chatTotalNoLeidos.value;
+          if (tot > 0) {
+            document.title = `💬 (${tot}) Mensaje nuevo | Dashboard`;
+            if (tot > ultimoConteoNoLeidos) {
+              reproducirSonidoNotificacion();
+            }
+          } else {
+            document.title = 'Dashboard Intelligence Solutions - VELAS';
+          }
+          ultimoConteoNoLeidos = tot;
         }
       } catch (e) {}
     };
