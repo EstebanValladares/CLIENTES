@@ -1351,6 +1351,8 @@ createApp({
       chatPerfilModalAbierto,
       chatUsuarioActual,
       filtroContactoChat,
+      filtroBuscarMiPerfil,
+      listaUsuariosParaPerfil,
       listaContactosFiltrada,
       toggleChat,
       seleccionarCanalGeneral,
@@ -2088,6 +2090,8 @@ createApp({
       chatPerfilModalAbierto,
       chatUsuarioActual,
       filtroContactoChat,
+      filtroBuscarMiPerfil,
+      listaUsuariosParaPerfil,
       listaContactosFiltrada,
       toggleChat,
       seleccionarCanalGeneral,
@@ -2278,8 +2282,9 @@ createApp({
     const chatResumen = ref({ general: { no_leidos: 0 }, dms_no_leidos: {} });
     const chatPerfilModalAbierto = ref(false);
     const filtroContactoChat = ref('');
+    const filtroBuscarMiPerfil = ref('');
 
-    // Perfil del usuario local (con persistencia en localStorage para distinguir clones)
+    // Perfil del usuario local (con resolución automática desde /api/chat/mi-identidad)
     const chatUsuarioActual = ref({
       id: '1',
       nombre: 'Esteban (Torre)',
@@ -2288,12 +2293,69 @@ createApp({
       es_torre: true
     });
 
-    try {
-      const guardado = localStorage.getItem('chat_perfil_usuario');
-      if (guardado) {
-        chatUsuarioActual.value = JSON.parse(guardado);
+    const listaUsuariosParaPerfil = computed(() => {
+      const q = (filtroBuscarMiPerfil.value || '').trim().toLowerCase();
+      const todos = usuarios.value || [];
+      if (!q) return todos.slice(0, 40);
+      return todos.filter(u => {
+        const nom = (u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`).toLowerCase();
+        const pto = (u.puesto || '').toLowerCase();
+        const mail = (u.correo || u.email || u.clave || '').toLowerCase();
+        return nom.includes(q) || pto.includes(q) || mail.includes(q);
+      }).slice(0, 50);
+    });
+
+    const inicializarIdentidadChat = async () => {
+      try {
+        const res = await fetch('/api/chat/mi-identidad');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.ok) {
+            if (data.es_master && data.usuario) {
+              // Master siempre es Esteban
+              chatUsuarioActual.value = data.usuario;
+              try { localStorage.setItem('chat_perfil_usuario', JSON.stringify(data.usuario)); } catch (e) {}
+              return;
+            } else if (!data.es_master && data.encontrado && data.usuario) {
+              // Cliente reconocido automáticamente por su .env (ej. Claudia)
+              chatUsuarioActual.value = data.usuario;
+              try { localStorage.setItem('chat_perfil_usuario', JSON.stringify(data.usuario)); } catch (e) {}
+              return;
+            } else if (!data.es_master) {
+              // Cliente cuyo correo no está en .env o no se encontró
+              const guardado = localStorage.getItem('chat_perfil_usuario');
+              if (guardado) {
+                try {
+                  const p = JSON.parse(guardado);
+                  if (p && p.id && p.id !== '1' && p.nombre !== 'Esteban (Torre)') {
+                    chatUsuarioActual.value = p;
+                    return;
+                  }
+                } catch (e) {}
+              }
+              // Si no tiene perfil válido de compañero, abrir modal para que elija su nombre
+              chatPerfilModalAbierto.value = true;
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Error resolviendo mi identidad:', e);
       }
-    } catch (e) {}
+
+      // Fallback localStorage
+      try {
+        const guardado = localStorage.getItem('chat_perfil_usuario');
+        if (guardado) {
+          const p = JSON.parse(guardado);
+          if (p && p.id) {
+            chatUsuarioActual.value = p;
+          }
+        }
+      } catch (e) {}
+    };
+
+    inicializarIdentidadChat();
 
     const chatTotalNoLeidos = computed(() => {
       let tot = (chatResumen.value.general && chatResumen.value.general.no_leidos) || 0;
@@ -2313,7 +2375,15 @@ createApp({
           mapa.set(String(u.usuario_id), { ...u });
         }
       });
-      (usuarios.value || []).slice(0, 60).forEach(u => {
+
+      const todos = usuarios.value || [];
+      const fuente = q ? todos.filter(u => {
+        const nom = (u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`).toLowerCase();
+        const pto = (u.puesto || '').toLowerCase();
+        return nom.includes(q) || pto.includes(q);
+      }).slice(0, 50) : todos.slice(0, 60);
+
+      fuente.forEach(u => {
         const uid = String(u.id);
         if (uid !== String(chatUsuarioActual.value.id) && !mapa.has(uid)) {
           mapa.set(uid, {
@@ -2494,6 +2564,8 @@ createApp({
       chatPerfilModalAbierto,
       chatUsuarioActual,
       filtroContactoChat,
+      filtroBuscarMiPerfil,
+      listaUsuariosParaPerfil,
       listaContactosFiltrada,
       toggleChat,
       seleccionarCanalGeneral,

@@ -11,14 +11,144 @@ import sqlite3
 import datetime
 import threading
 from typing import List, Dict, Any, Optional
+import requests
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "chat_equipo.db")
 
+def _es_modo_master() -> bool:
+    """Verifica si este proceso se ejecuta en la Torre de Control (Master)"""
+    publisher_script = os.path.join(BASE_DIR, "publicar_version_equipo.py")
+    return os.path.exists(publisher_script)
+
+# Dirección de la Torre de Control central en la red interna de Grupo Velas
+TORRE_CHAT_HOST = os.getenv("TORRE_CHAT_HOST", "10.10.200.147")
+TORRE_CHAT_PORT = os.getenv("TORRE_CHAT_PORT", "8000")
+TORRE_URL = os.getenv("TORRE_CHAT_URL", f"http://{TORRE_CHAT_HOST}:{TORRE_CHAT_PORT}").rstrip("/")
+
 class ChatService:
     _lock = threading.Lock()
     _initialized = False
+
+    @classmethod
+    def proxy_torre_get(cls, path: str, params: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+        """
+        En versión Cliente (clon de compañero), consulta a la Torre central de Esteban en la red.
+        Si la Torre no responde o timeout (>2.5s), retorna None para fallback a SQLite local.
+        """
+        if _es_modo_master():
+            return None
+        url = f"{TORRE_URL}{path}"
+        try:
+            r = requests.get(url, params=params, timeout=2.5)
+            if r.status_code == 200:
+                return r.json()
+        except Exception:
+            pass
+        return None
+
+    @classmethod
+    def proxy_torre_post(cls, path: str, json_data: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+        """
+        En versión Cliente, envía el mensaje/presencia/leído a la Torre central en la red.
+        Si la Torre no responde o timeout (>2.5s), retorna None para fallback local.
+        """
+        if _es_modo_master():
+            return None
+        url = f"{TORRE_URL}{path}"
+        try:
+            r = requests.post(url, json=json_data, timeout=2.5)
+            if r.status_code == 200:
+                return r.json()
+        except Exception:
+            pass
+        return None
+
+    @classmethod
+    def obtener_identidad_local(cls) -> Dict[str, Any]:
+        """
+        Determina de forma automática quién es el usuario de esta computadora:
+        1. En Master: Siempre Esteban (Torre).
+        2. En Cliente: Lee .env (EK10_USER) y resuelve automáticamente el ID y Nombre oficial de Usuarios.json.
+        """
+        if _es_modo_master():
+            return {
+                "ok": True,
+                "es_master": True,
+                "encontrado": True,
+                "usuario": {
+                    "id": "1",
+                    "nombre": "Esteban (Torre)",
+                    "puesto": "Administrador Master",
+                    "area": "Sistemas",
+                    "correo": os.getenv("EK10_USER", "esteban@torre"),
+                    "es_torre": True
+                }
+            }
+
+        # Modo Cliente: buscar correo en .env
+        correo_env = (os.getenv("EK10_USER") or os.getenv("EK9_USER") or "").strip().lower()
+        if not correo_env:
+            env_file = os.path.join(BASE_DIR, ".env")
+            if os.path.exists(env_file):
+                try:
+                    with open(env_file, "r", encoding="utf-8") as f:
+                        for line in f:
+                            if line.startswith("EK10_USER=") or line.startswith("EK9_USER="):
+                                correo_env = line.split("=", 1)[1].strip().lower()
+                                if correo_env:
+                                    break
+                except Exception:
+                    pass
+
+        if correo_env:
+            try:
+                from core.user_service import UserService
+                catalogo = UserService.obtener_usuarios()
+                user_match = None
+
+                # 1. Búsqueda exacta por email o clave
+                for u in catalogo:
+                    u_mail = str(u.get("correo") or u.get("email") or "").strip().lower()
+                    u_cve = str(u.get("clave") or "").strip().lower()
+                    if correo_env in (u_mail, u_cve):
+                        user_match = u
+                        break
+
+                # 2. Búsqueda por prefijo antes del @
+                if not user_match and "@" in correo_env:
+                    prefix = correo_env.split("@")[0].strip().lower()
+                    for u in catalogo:
+                        u_mail = str(u.get("correo") or u.get("email") or "").strip().lower()
+                        u_cve = str(u.get("clave") or "").strip().lower()
+                        if prefix == u_mail.split("@")[0] or prefix == u_cve.split("@")[0]:
+                            user_match = u
+                            break
+
+                if user_match:
+                    return {
+                        "ok": True,
+                        "es_master": False,
+                        "encontrado": True,
+                        "usuario": {
+                            "id": str(user_match.get("id")),
+                            "nombre": user_match.get("nombre_completo") or user_match.get("nombre"),
+                            "puesto": user_match.get("puesto") or "Colaborador",
+                            "area": user_match.get("area_organizacion") or "General",
+                            "correo": correo_env,
+                            "es_torre": False
+                        }
+                    }
+            except Exception as e:
+                print(f"[ChatService] Error resolviendo identidad desde Usuarios.json: {e}")
+
+        return {
+            "ok": True,
+            "es_master": False,
+            "encontrado": False,
+            "usuario": None
+        }
 
     @classmethod
     def _init_db(cls):
