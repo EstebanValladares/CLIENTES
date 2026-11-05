@@ -71,7 +71,7 @@ class ChatService:
     _lock = threading.Lock()
     _initialized = False
     _servidor_activo: Optional[str] = None
-    _ultimo_reintento_servidor: float = 0
+    _ultimo_fallo_busqueda: float = 0
 
     @classmethod
     def _obtener_candidatos_torre(cls) -> List[str]:
@@ -124,15 +124,15 @@ class ChatService:
 
     @classmethod
     def _probar_servidor(cls, base_url: str) -> bool:
-        """Verifica rápidamente (< 1.2s) si una URL candidata de la Torre está viva"""
+        """Verifica rápidamente (< 1.2s) si una URL candidata de la Torre está viva y es Master"""
         test_url = f"{base_url}/api/entorno"
         try:
             req = urllib.request.Request(test_url, headers={"User-Agent": "Dashboard-Client/2.0"})
             with urllib.request.urlopen(req, timeout=1.2) as resp:
                 if resp.status == 200:
                     data = json.loads(resp.read().decode("utf-8"))
-                    # Asegurar que responde la Torre Master
-                    return data.get("ok") is True
+                    # Asegurar que responde la Torre Master (es_master es True)
+                    return data.get("es_master") is True or data.get("ok") is True
         except Exception:
             pass
         return False
@@ -143,17 +143,25 @@ class ChatService:
         if _es_modo_master():
             return None
 
-        # Si ya teníamos un servidor activo verificado recientemente, usarlo directamente
+        # Si ya teníamos un servidor activo verificado, usarlo directamente sin repetir pruebas
         if cls._servidor_activo:
             return cls._servidor_activo
+
+        # Throttling: si falló la búsqueda recientemente, esperar 10 segundos antes de volver a sondear
+        import time as _t
+        ahora = _t.time()
+        if cls._ultimo_fallo_busqueda and (ahora - cls._ultimo_fallo_busqueda) < 10.0:
+            return None
 
         candidatos = cls._obtener_candidatos_torre()
         for cand in candidatos:
             if cls._probar_servidor(cand):
                 cls._servidor_activo = cand
+                cls._ultimo_fallo_busqueda = 0
                 print(f"[ChatService] Conectado exitosamente con Torre Master en {cand}")
                 return cand
 
+        cls._ultimo_fallo_busqueda = ahora
         return None
 
     @classmethod

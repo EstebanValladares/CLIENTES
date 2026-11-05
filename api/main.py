@@ -373,7 +373,7 @@ def obtener_version_sistema():
 @app.get("/api/entorno")
 def obtener_entorno():
     """Indica si el Dashboard se ejecuta en Modo Master o en Modo Cliente (Equipo)."""
-    return {"es_master": _es_modo_master()}
+    return {"ok": True, "es_master": _es_modo_master()}
 
 @app.get("/api/torre/proyectos")
 def obtener_proyectos_torre():
