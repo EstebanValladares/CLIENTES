@@ -1,0 +1,958 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AT4",
+    "nombre": "AT4 - 16 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-D)"
+  },
+  "metricas": {
+    "total_partidas": 11,
+    "total_frentes": 7,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 438.3233,
+    "requisitado_total": 360.538,
+    "comprado_total": 355.5,
+    "por_comprar_total": 5.038
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "CIMENTACION",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "CIMENTACION"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 53.8471,
+              "importe_ppto": 15615.659,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 53.8471,
+              "vigente_tarjetas": 107.6942,
+              "diferencia": -53.8471,
+              "requisitado": 53.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 53.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.3471,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "ESTRUCTURA N°1",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "MUROS N1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ESTRUCTURA N°1"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 65.538,
+              "importe_ppto": 19006.02,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 65.538,
+              "vigente_tarjetas": 67.968,
+              "diferencia": -2.43,
+              "requisitado": 1,
+              "cancelado": 0,
+              "req_sin_autorizar": 65,
+              "comprado": 1,
+              "en_proceso_compra": 64.5,
+              "recibido": 0,
+              "por_requisitar": 64.538,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.2",
+          "codigo": "1.2.2",
+          "nombre": "ESTRUCTURA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "ESTRUCTURA N°1"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 19.7215,
+              "importe_ppto": 5719.2338,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 19.7215,
+              "vigente_tarjetas": 45.0724,
+              "diferencia": -25.3509,
+              "requisitado": 15.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 15.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.2215,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "ESTRUCTURA N°2",
+      "partidas": [
+        {
+          "id": "1.3.1",
+          "codigo": "1.3.1",
+          "nombre": "MUROS N2",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "ESTRUCTURA N°2"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 65.538,
+              "importe_ppto": 19006.02,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 65.538,
+              "vigente_tarjetas": 67.972,
+              "diferencia": -2.434,
+              "requisitado": 65.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 65.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.038,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.2",
+          "codigo": "1.3.2",
+          "nombre": "ESTRUCTURA NIVEL 2",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "ESTRUCTURA N°2"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 34.0627,
+              "importe_ppto": 9878.1913,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 34.0627,
+              "vigente_tarjetas": 34.0627,
+              "diferencia": 0,
+              "requisitado": 34,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 34,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.0627,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "ESTRUCTURA N°3",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "MUROS N3",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "ESTRUCTURA N°3"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 65.538,
+              "importe_ppto": 19006.02,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 65.538,
+              "vigente_tarjetas": 66.168,
+              "diferencia": -0.63,
+              "requisitado": 65.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 65.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.038,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.2",
+          "codigo": "1.4.2",
+          "nombre": "ESTRUCTURA NIVEL 3",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "ESTRUCTURA N°3"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 34.0627,
+              "importe_ppto": 9878.1913,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 34.0627,
+              "vigente_tarjetas": 34.0627,
+              "diferencia": 0,
+              "requisitado": 34,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 34,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.0627,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "ESTRUCTURA N°4",
+      "partidas": [
+        {
+          "id": "1.5.1",
+          "codigo": "1.5.1",
+          "nombre": "MUROS N4",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "ESTRUCTURA N°4"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 65.538,
+              "importe_ppto": 19006.02,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 65.538,
+              "vigente_tarjetas": 65.538,
+              "diferencia": 0,
+              "requisitado": 65.538,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 64,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 1.538,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.2",
+          "codigo": "1.5.2",
+          "nombre": "ESTRUCTURA NIVEL 4",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "ESTRUCTURA N°4"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 30.6642,
+              "importe_ppto": 8892.6197,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 30.6642,
+              "vigente_tarjetas": 30.6642,
+              "diferencia": 0,
+              "requisitado": 26,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 22.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.6642,
+              "por_comprar": 3.5,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.11",
+      "codigo": "1.11",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "partidas": [
+        {
+          "id": "1.11.1",
+          "codigo": "1.11.1",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.11",
+            "codigo": "1.11",
+            "nombre": "ALBAÑILERIA AZOTEA"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.693,
+              "importe_ppto": 200.9703,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.693,
+              "vigente_tarjetas": 0.693,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.693,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.17",
+      "codigo": "1.17",
+      "nombre": "TINACOS",
+      "partidas": [
+        {
+          "id": "1.17.1",
+          "codigo": "1.17.1",
+          "nombre": "BASE P/TINACOS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.17",
+            "codigo": "1.17",
+            "nombre": "TINACOS"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3.12,
+              "importe_ppto": 904.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3.12,
+              "vigente_tarjetas": 3.12,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 3.12,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "CIMENTACION"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 53.8471,
+          "importe_ppto": 15615.659,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 53.8471,
+          "vigente_tarjetas": 107.6942,
+          "diferencia": -53.8471,
+          "requisitado": 53.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 53.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.3471,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "MUROS N1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ESTRUCTURA N°1"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 65.538,
+          "importe_ppto": 19006.02,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 65.538,
+          "vigente_tarjetas": 67.968,
+          "diferencia": -2.43,
+          "requisitado": 1,
+          "cancelado": 0,
+          "req_sin_autorizar": 65,
+          "comprado": 1,
+          "en_proceso_compra": 64.5,
+          "recibido": 0,
+          "por_requisitar": 64.538,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.2",
+      "codigo": "1.2.2",
+      "nombre": "ESTRUCTURA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "ESTRUCTURA N°1"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 19.7215,
+          "importe_ppto": 5719.2338,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 19.7215,
+          "vigente_tarjetas": 45.0724,
+          "diferencia": -25.3509,
+          "requisitado": 15.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 15.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.2215,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.1",
+      "codigo": "1.3.1",
+      "nombre": "MUROS N2",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "ESTRUCTURA N°2"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 65.538,
+          "importe_ppto": 19006.02,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 65.538,
+          "vigente_tarjetas": 67.972,
+          "diferencia": -2.434,
+          "requisitado": 65.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 65.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.038,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.2",
+      "codigo": "1.3.2",
+      "nombre": "ESTRUCTURA NIVEL 2",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "ESTRUCTURA N°2"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 34.0627,
+          "importe_ppto": 9878.1913,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 34.0627,
+          "vigente_tarjetas": 34.0627,
+          "diferencia": 0,
+          "requisitado": 34,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 34,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.0627,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "MUROS N3",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "ESTRUCTURA N°3"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 65.538,
+          "importe_ppto": 19006.02,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 65.538,
+          "vigente_tarjetas": 66.168,
+          "diferencia": -0.63,
+          "requisitado": 65.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 65.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.038,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.2",
+      "codigo": "1.4.2",
+      "nombre": "ESTRUCTURA NIVEL 3",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "ESTRUCTURA N°3"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 34.0627,
+          "importe_ppto": 9878.1913,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 34.0627,
+          "vigente_tarjetas": 34.0627,
+          "diferencia": 0,
+          "requisitado": 34,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 34,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.0627,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.1",
+      "codigo": "1.5.1",
+      "nombre": "MUROS N4",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "ESTRUCTURA N°4"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 65.538,
+          "importe_ppto": 19006.02,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 65.538,
+          "vigente_tarjetas": 65.538,
+          "diferencia": 0,
+          "requisitado": 65.538,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 64,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 1.538,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.2",
+      "codigo": "1.5.2",
+      "nombre": "ESTRUCTURA NIVEL 4",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "ESTRUCTURA N°4"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 30.6642,
+          "importe_ppto": 8892.6197,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 30.6642,
+          "vigente_tarjetas": 30.6642,
+          "diferencia": 0,
+          "requisitado": 26,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 22.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.6642,
+          "por_comprar": 3.5,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.11.1",
+      "codigo": "1.11.1",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.11",
+        "codigo": "1.11",
+        "nombre": "ALBAÑILERIA AZOTEA"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.693,
+          "importe_ppto": 200.9703,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.693,
+          "vigente_tarjetas": 0.693,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.693,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.17.1",
+      "codigo": "1.17.1",
+      "nombre": "BASE P/TINACOS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.17",
+        "codigo": "1.17",
+        "nombre": "TINACOS"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3.12,
+          "importe_ppto": 904.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3.12,
+          "vigente_tarjetas": 3.12,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 3.12,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1100006",
+      "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 438.3233,
+      "importe_ppto": 127113.7454,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 438.3233,
+      "vigente_tarjetas": 523.0153,
+      "diferencia": -84.692,
+      "requisitado": 360.538,
+      "cancelado": 0,
+      "req_sin_autorizar": 65,
+      "comprado": 355.5,
+      "en_proceso_compra": 64.5,
+      "recibido": 0,
+      "por_requisitar": 77.7853,
+      "por_comprar": 5.038,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AT4",
+    "insumo": "1100006",
+    "nombre": ""
+  }
+}

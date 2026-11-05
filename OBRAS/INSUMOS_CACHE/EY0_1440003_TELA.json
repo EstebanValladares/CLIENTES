@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 1,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 165.77,
+    "requisitado_total": 165.77,
+    "comprado_total": 165.77,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.31",
+          "codigo": "1.1.31",
+          "nombre": "MOBILIARIO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1440003",
+              "nombre": "TELA SUNBRELLA 8351 SILVER LINEN",
+              "unidad": "M",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 165.77,
+              "importe_ppto": 74294.7986,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 165.77,
+              "vigente_tarjetas": 165.77,
+              "diferencia": 0,
+              "requisitado": 165.77,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 165.77,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.31",
+      "codigo": "1.1.31",
+      "nombre": "MOBILIARIO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1440003",
+          "nombre": "TELA SUNBRELLA 8351 SILVER LINEN",
+          "unidad": "M",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 165.77,
+          "importe_ppto": 74294.7986,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 165.77,
+          "vigente_tarjetas": 165.77,
+          "diferencia": 0,
+          "requisitado": 165.77,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 165.77,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1440003",
+      "nombre": "TELA SUNBRELLA 8351 SILVER LINEN",
+      "unidad": "M",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 165.77,
+      "importe_ppto": 74294.7986,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 165.77,
+      "vigente_tarjetas": 165.77,
+      "diferencia": 0,
+      "requisitado": 165.77,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 165.77,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1440003",
+    "nombre": "TELA"
+  }
+}
