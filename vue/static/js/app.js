@@ -1336,30 +1336,6 @@ createApp({
         if (res.ok) {
           const d = await res.json();
           return {
-      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
-      chatAbierto,
-      chatMinimizado,
-      chatPestanaActiva,
-      canalActivo,
-      contactoActivo,
-      chatMensajes,
-      chatNuevoTexto,
-      chatEnviando,
-      chatUsuariosPresencia,
-      chatResumen,
-      chatTotalNoLeidos,
-      chatPerfilModalAbierto,
-      chatUsuarioActual,
-      filtroContactoChat,
-      filtroBuscarMiPerfil,
-      listaUsuariosParaPerfil,
-      listaContactosFiltrada,
-      toggleChat,
-      seleccionarCanalGeneral,
-      seleccionarContactoDirecto,
-      enviarMensajeChat,
-      guardarPerfilChat,
-      cargarMensajesCanal,
             total: d.total_clasificadores || 0,
             area: d.area || '',
             categorias: d.categorias || [],
@@ -2075,30 +2051,6 @@ createApp({
         }
         if (hijosFiltrados.length > 0) {
           return {
-      // CHAT DE EQUIPO Y PRIVADOS 1 A 1
-      chatAbierto,
-      chatMinimizado,
-      chatPestanaActiva,
-      canalActivo,
-      contactoActivo,
-      chatMensajes,
-      chatNuevoTexto,
-      chatEnviando,
-      chatUsuariosPresencia,
-      chatResumen,
-      chatTotalNoLeidos,
-      chatPerfilModalAbierto,
-      chatUsuarioActual,
-      filtroContactoChat,
-      filtroBuscarMiPerfil,
-      listaUsuariosParaPerfil,
-      listaContactosFiltrada,
-      toggleChat,
-      seleccionarCanalGeneral,
-      seleccionarContactoDirecto,
-      enviarMensajeChat,
-      guardarPerfilChat,
-      cargarMensajesCanal,
             ...tipo,
             datos: hijosFiltrados
           };
