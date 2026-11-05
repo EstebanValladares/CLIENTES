@@ -106,3 +106,12 @@ def obtener_resumen_canales(usuario_id: str = Query(...)):
     resumen = ChatService.obtener_resumen_canales(usuario_id)
     return {"ok": True, "resumen": resumen}
 
+@router.get("/conversaciones")
+def obtener_conversaciones(usuario_id: str = Query(...)):
+    """Retorna las conversaciones activas estilo WhatsApp para el usuario."""
+    res_proxy = ChatService.proxy_torre_get("/api/chat/conversaciones", params={"usuario_id": usuario_id})
+    if res_proxy is not None:
+        return res_proxy
+    conversaciones = ChatService.obtener_conversaciones(usuario_id)
+    return {"ok": True, "conversaciones": conversaciones}
+

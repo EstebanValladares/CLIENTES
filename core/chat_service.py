@@ -476,3 +476,80 @@ class ChatService:
                 print(f"[ChatService] Error en resumen de canales: {e}")
                 return {"general": {"no_leidos": 0, "ultimo_mensaje": None}, "dms_no_leidos": {}}
 
+    @classmethod
+    def obtener_conversaciones(cls, usuario_id: str) -> List[Dict[str, Any]]:
+        """
+        Retorna la lista de chats activos (1 a 1) para un usuario estilo WhatsApp:
+        Último mensaje, fecha/hora, no leídos y estado de conexión del contacto.
+        """
+        cls._init_db()
+        uid = str(usuario_id).strip()
+        with cls._lock:
+            try:
+                conn = sqlite3.connect(DB_PATH)
+                conn.row_factory = sqlite3.Row
+                cur = conn.cursor()
+
+                # 1. Obtener el último mensaje de cada canal dm en el que participe este usuario
+                cur.execute("""
+                SELECT m.* FROM mensajes m
+                INNER JOIN (
+                    SELECT canal, MAX(id) as max_id
+                    FROM mensajes
+                    WHERE canal LIKE 'dm_%' AND (remitente_id = ? OR destinatario_id = ?)
+                    GROUP BY canal
+                ) ultimo ON m.id = ultimo.max_id
+                ORDER BY m.timestamp DESC
+                """, (uid, uid))
+                filas = cur.fetchall()
+
+                # 2. Presencia actual
+                cur.execute("SELECT usuario_id, ultima_actividad, puesto, area FROM usuarios_presencia")
+                presencias = {r["usuario_id"]: dict(r) for r in cur.fetchall()}
+                ahora_ts = datetime.datetime.now().timestamp()
+                umbral_online = ahora_ts - 120
+
+                # 3. No leídos por canal
+                cur.execute("""
+                SELECT canal, COUNT(*) as no_leidos
+                FROM mensajes
+                WHERE destinatario_id = ? AND leido = 0
+                GROUP BY canal
+                """, (uid,))
+                no_leidos_map = {r["canal"]: r["no_leidos"] for r in cur.fetchall()}
+
+                conn.close()
+
+                conversaciones = []
+                for f in filas:
+                    es_remitente = (str(f["remitente_id"]) == uid)
+                    otro_id = str(f["destinatario_id"] if es_remitente else f["remitente_id"])
+                    otro_nombre = f["destinatario_nombre"] if es_remitente else f["remitente_nombre"]
+                    
+                    info_pres = presencias.get(otro_id, {})
+                    en_linea = info_pres.get("ultima_actividad", 0) >= umbral_online
+                    otro_puesto = info_pres.get("puesto") or (f["remitente_rol"] if not es_remitente else "Colaborador")
+                    otro_area = info_pres.get("area") or ""
+
+                    dt = datetime.datetime.fromtimestamp(f["timestamp"])
+                    hora_corta = dt.strftime("%I:%M %p").lstrip("0")
+
+                    conversaciones.append({
+                        "canal": f["canal"],
+                        "contacto_id": otro_id,
+                        "contacto_nombre": otro_nombre or f"Usuario {otro_id}",
+                        "contacto_puesto": otro_puesto,
+                        "contacto_area": otro_area,
+                        "ultimo_texto": f["texto"],
+                        "es_mio": es_remitente,
+                        "ultimo_remitente_id": str(f["remitente_id"]),
+                        "ultimo_timestamp": f["timestamp"],
+                        "hora_corta": hora_corta,
+                        "no_leidos": no_leidos_map.get(f["canal"], 0),
+                        "en_linea": en_linea
+                    })
+                return conversaciones
+            except Exception as e:
+                print(f"[ChatService] Error en obtener_conversaciones: {e}")
+                return []
+
