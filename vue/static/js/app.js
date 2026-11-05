@@ -2568,6 +2568,18 @@ createApp({
         if (resUsers.ok) {
           const d = await resUsers.json();
           chatUsuariosPresencia.value = d.usuarios || [];
+          
+          // Actualizar estado 'En línea' / 'Desconectado' del contacto que tenemos abierto en pantalla
+          if (contactoActivo.value) {
+            const cid = String(contactoActivo.value.usuario_id);
+            const pres = (chatUsuariosPresencia.value || []).find(u => String(u.usuario_id) === cid);
+            if (pres) {
+              contactoActivo.value.en_linea = !!pres.en_linea;
+              if (conversacionAbierta.value) {
+                conversacionAbierta.value.en_linea = !!pres.en_linea;
+              }
+            }
+          }
         }
 
         const resResumen = await fetch(`/api/chat/resumen?usuario_id=${chatUsuarioActual.value.id}`);
