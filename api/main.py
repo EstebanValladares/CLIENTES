@@ -11,10 +11,11 @@ import threading
 import urllib.request
 import urllib.error
 import subprocess
+import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 
 from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas, chat, mapeo
 from core.user_service import UserService
@@ -428,6 +429,23 @@ def servir_frontend(full_path: str = ""):
     if full_path.startswith("api/"):
         return JSONResponse(status_code=404, content={"detail": "Ruta de API no encontrada"})
     index_file = os.path.join(STATIC_DIR, "index.html")
-    if os.path.exists(index_file):
+    if not os.path.exists(index_file):
+        return JSONResponse(status_code=404, content={"mensaje": "Frontend no encontrado"})
+
+    try:
+        with open(index_file, "r", encoding="utf-8") as f:
+            html = f.read()
+
+        # Ensamblador de Vistas Modulares: <!-- INCLUDE: views/archivo.html -->
+        def _resolver_include(match):
+            rel_path = match.group(1).strip()
+            target_file = os.path.join(STATIC_DIR, rel_path.replace("/", os.sep))
+            if os.path.exists(target_file):
+                with open(target_file, "r", encoding="utf-8") as inc_f:
+                    return inc_f.read()
+            return match.group(0)
+
+        html_ensamblado = re.sub(r'<!--\s*INCLUDE:\s*([^\s>]+)\s*-->', _resolver_include, html)
+        return HTMLResponse(content=html_ensamblado, media_type="text/html")
+    except Exception:
         return FileResponse(index_file)
-    return JSONResponse(status_code=404, content={"mensaje": "Frontend no encontrado"})
