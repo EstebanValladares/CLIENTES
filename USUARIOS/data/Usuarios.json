@@ -22065,7 +22065,7 @@
     "Comisionable": "False",
     "ID_1": "533",
     "hasLicense": "True",
-    "Version": "91229859"
+    "Version": "91291911"
   },
   {
     "ID": "615",
@@ -23721,7 +23721,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "91181393"
+    "Version": "91291433"
   },
   {
     "ID": "661",
@@ -24513,7 +24513,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "90908225"
+    "Version": "91291451"
   },
   {
     "ID": "683",
@@ -37005,7 +37005,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "91291191"
+    "Version": "91291913"
   },
   {
     "ID": "1053",
@@ -39490,5 +39490,41 @@
     "ID_1": "747",
     "hasLicense": "True",
     "Version": "90288837"
+  },
+  {
+    "ID": "1122",
+    "Clave": "joel.berman@iest.edu.mx",
+    "Email": "joel.berman@iest.edu.mx",
+    "Nombre": "JOEL ARTURO",
+    "Apellidos": "BERMAN MUÑOZ",
+    "Telefono": "0101010101",
+    "VigenciaInicio": "06/11/2026 06:00:00",
+    "VigenciaFin": "04/02/2027 06:00:00",
+    "InicioOperaciones": "",
+    "IdCliente": "",
+    "UUID": "9821114b-e465-4cf1-8ea6-2057a647f87c",
+    "IdAgente": "",
+    "Creado": "06/11/2026 20:00:56",
+    "IdDashBoard": "",
+    "IdCreadoPor": "1052",
+    "CreadoPor": "YEUDIEL ESTEBAN",
+    "Modificado": "06/11/2026 20:00:56",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "IdPosicion": "",
+    "Posicion": "",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
+    "IdTimeZone": "172",
+    "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+    "IdIdioma": "384",
+    "Idioma": "Español (México)",
+    "IdAreaOrganizacion": "792",
+    "AreaOrganizacion": "ABASTECIMIENTOS",
+    "Bloqueado": "0",
+    "Comisionable": "",
+    "ID_1": "",
+    "hasLicense": "False",
+    "Version": "91291846"
   }
 ]
