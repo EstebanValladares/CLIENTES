@@ -530,9 +530,19 @@ class ChatService:
                 return {"ok": False, "error": f"Error guardando mensaje: {str(e)}"}
 
     @classmethod
-    def obtener_mensajes(cls, canal: str, limite: int = 80, desde_id: int = 0) -> List[Dict[str, Any]]:
+    def obtener_mensajes(cls, canal: str, limite: int = 80, desde_id: int = 0, usuario_solicitante: Optional[str] = None) -> List[Dict[str, Any]]:
         cls._init_db()
         canal_limpio = canal.strip().lower() or "general"
+        
+        # Blindaje de privacidad para chats privados (1 a 1):
+        # Si es canal privado 'dm_A__B', SOLO los dos participantes tienen permiso de ver los mensajes.
+        if canal_limpio.startswith("dm_") and usuario_solicitante:
+            partes = canal_limpio[3:].split("__")
+            u_sol = str(usuario_solicitante).strip().lower()
+            if len(partes) == 2 and u_sol not in [partes[0].lower(), partes[1].lower()]:
+                # Usuario no autorizado para ver esta conversación privada
+                return []
+        
         with cls._lock:
             try:
                 conn = sqlite3.connect(DB_PATH)

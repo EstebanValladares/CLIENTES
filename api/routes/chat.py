@@ -44,12 +44,12 @@ def obtener_usuarios_chat(usuario_actual: str = Query("")):
     return {"ok": True, "usuarios": ChatService.obtener_usuarios_presencia(usuario_actual)}
 
 @router.get("/mensajes")
-def obtener_mensajes_canal(canal: str = Query("general"), desde_id: int = Query(0), limite: int = Query(80)):
+def obtener_mensajes_canal(canal: str = Query("general"), desde_id: int = Query(0), limite: int = Query(80), usuario_id: Optional[str] = Query(None)):
     """Obtiene el historial o nuevos mensajes de un canal o chat privado 1 a 1."""
-    res_proxy = ChatService.proxy_torre_get("/api/chat/mensajes", params={"canal": canal, "desde_id": desde_id, "limite": limite})
+    res_proxy = ChatService.proxy_torre_get("/api/chat/mensajes", params={"canal": canal, "desde_id": desde_id, "limite": limite, "usuario_id": usuario_id})
     if res_proxy is not None:
         return res_proxy
-    mensajes = ChatService.obtener_mensajes(canal=canal, limite=limite, desde_id=desde_id)
+    mensajes = ChatService.obtener_mensajes(canal=canal, limite=limite, desde_id=desde_id, usuario_solicitante=usuario_id)
     return {"ok": True, "canal": canal, "mensajes": mensajes}
 
 @router.post("/enviar")

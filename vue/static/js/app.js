@@ -2783,7 +2783,8 @@ createApp({
 
     const cargarMensajesCanal = async (autoScroll = false) => {
       try {
-        const res = await fetch(`/api/chat/mensajes?canal=${canalActivo.value}&limite=80`);
+        const uId = encodeURIComponent(String(chatUsuarioActual.value.id || ''));
+        const res = await fetch(`/api/chat/mensajes?canal=${canalActivo.value}&limite=80&usuario_id=${uId}`);
         if (res.ok) {
           const d = await res.json();
           const anteriores = chatMensajes.value.length;
