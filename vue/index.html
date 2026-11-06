@@ -1077,187 +1077,10 @@
     <!-- INCLUDE: views/usuarios.html -->
 
 
-    <!-- ======================================================== -->
-    <!-- VISTA 2: PROYECTOS (PERMISOS POR PROYECTO / OBRAS)       -->
-    <!-- ======================================================== -->
-    <div v-show="vistaActiva === 'PROYECTOS'" class="flex flex-col flex-1">
-      
-      <!-- SUB-HEADER DE PROYECTOS -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-indigo-400"></i>
-            <span>Gestión y Depuración de Permisos por Proyecto</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">
-            Administra los usuarios protegidos y las obras antes de iniciar la depuración automática en Enkontrol.
-          </p>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="text-xs font-medium text-slate-400">
-            <i class="fa-solid fa-file-code text-indigo-400 mr-1"></i> <code class="font-mono text-slate-300">ENKONTROL.TXT</code> + <code class="font-mono text-slate-300">obras_permisos.json</code>
-          </span>
-        </div>
-      </div>
+<!-- INCLUDE: views/proyectos.html -->
 
-      <!-- WORKSPACE DE PROYECTOS (FORMULARIO Y LISTAS EN PARALELO) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
-        
-        <!-- PANEL DE CAPTURA (5 COLS) -->
-        <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm space-y-4">
-          <div class="flex items-center justify-between pb-2 border-b border-slate-700/60">
-            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-plus-circle text-indigo-400"></i> Captura de Parámetros
-            </h3>
-            <span class="text-[10px] text-slate-500 font-mono">SELENIUM CONFIG</span>
-          </div>
 
-          <!-- Form Usuario Protegido -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-              Usuario Protegido (No se le quitarán permisos):
-            </label>
-            <div class="flex gap-2">
-              <input type="text" 
-                     v-model="nuevoUsuarioProtegido" 
-                     @keyup.enter="agregarUsuarioProtegido"
-                     placeholder="Ej. JUAN PEREZ LOPEZ" 
-                     class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-              <button @click="agregarUsuarioProtegido" 
-                      class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
-                Guardar
-              </button>
-            </div>
-          </div>
-
-          <!-- Form Obra -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-              Código de Obra a Procesar:
-            </label>
-            <div class="flex gap-2">
-              <input type="text" 
-                     v-model="nuevaObra" 
-                     @keyup.enter="agregarObra"
-                     placeholder="Ej. BI3" 
-                     class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-              <button @click="agregarObra" 
-                      class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
-                Guardar
-              </button>
-            </div>
-          </div>
-
-          <!-- Carga Masiva JSON -->
-          <div class="pt-3 border-t border-slate-700/60">
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-              Cargar Obras desde archivo JSON:
-            </label>
-            <input type="file" 
-                   accept=".json" 
-                   @change="cargarObrasDesdeJSON"
-                   class="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-indigo-400 hover:file:bg-slate-700 cursor-pointer">
-            <p class="text-[10px] text-slate-500 mt-1">Formato admitido: lista simple ej. ["BI3", "BI2"]</p>
-          </div>
-
-          <!-- Botón de Ejecución Directa en el Workspace -->
-          <div class="pt-2">
-            <button @click="iniciarDepuracionPermisos" 
-                    :disabled="ejecutandoDepuracion || permisosObras.length === 0"
-                    class="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition cursor-pointer">
-              <i v-if="ejecutandoDepuracion" class="fa-solid fa-circle-notch fa-spin"></i>
-              <i v-else class="fa-solid fa-play"></i>
-              <span>{{ ejecutandoDepuracion ? 'Depuración en Curso...' : 'Comenzar Depuración de Permisos' }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- LISTAS CONFIGURADAS (7 COLS) -->
-        <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            
-            <!-- Lista Usuarios Protegidos -->
-            <div class="flex flex-col h-[270px]">
-              <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
-                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-user-shield text-emerald-400"></i> Usuarios ({{ permisosUsuarios.length }})
-                </span>
-              </div>
-              <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
-                <div v-for="(u, idx) in permisosUsuarios" :key="'usr-prot-' + idx"
-                     class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex items-center justify-between text-xs">
-                  <span class="font-semibold text-slate-200 truncate">{{ u }}</span>
-                  <button @click="eliminarUsuarioProtegido(idx)" class="text-slate-500 hover:text-rose-400 transition p-1" title="Eliminar">
-                    <i class="fa-solid fa-trash-can text-xs"></i>
-                  </button>
-                </div>
-                <div v-if="permisosUsuarios.length === 0" class="text-center py-12 text-slate-500 text-xs">
-                  Sin usuarios configurados.
-                </div>
-              </div>
-            </div>
-
-            <!-- Lista Obras -->
-            <div class="flex flex-col h-[270px]">
-              <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
-                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <i class="fa-solid fa-city text-indigo-400"></i> Obras ({{ permisosObras.length }})
-                </span>
-              </div>
-              <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
-                <div v-for="(o, idx) in permisosObras" :key="'obra-' + idx"
-                     class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex items-center justify-between text-xs">
-                  <span class="font-mono font-bold text-indigo-300">{{ o }}</span>
-                  <button @click="eliminarObra(idx)" class="text-slate-500 hover:text-rose-400 transition p-1" title="Eliminar">
-                    <i class="fa-solid fa-trash-can text-xs"></i>
-                  </button>
-                </div>
-                <div v-if="permisosObras.length === 0" class="text-center py-12 text-slate-500 text-xs">
-                  Sin obras configuradas.
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- DOBLE CONSOLA COMPACTA CON SCROLL INTERNO (NO EXTIENDE PANTALLA) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Consola en Tiempo Real -->
-        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
-          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
-            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Consola en Tiempo Real</span>
-            </h4>
-            <span class="text-[10px] font-mono text-slate-500">SELENIUM STREAM</span>
-          </div>
-          <pre id="terminal-live" class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-indigo-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ terminalLiveContenido }}</pre>
-        </div>
-
-        <!-- Historial Acumulado -->
-        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
-          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-700">
-            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
-              <span>Historial Acumulado (log_depuracion.txt)</span>
-            </h4>
-            <button @click="cargarPermisos" class="text-[10px] text-slate-400 hover:text-white transition">
-              <i class="fa-solid fa-rotate-right mr-1"></i> Refrescar
-            </button>
-          </div>
-          <pre class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-slate-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ historialPermisosContenido || '(Historial vacío)' }}</pre>
-        </div>
-
-      </div>
-
-    </div>
-
-    
-    <!-- INCLUDE: views/proveedores_contratistas.html -->
+        <!-- INCLUDE: views/proveedores_contratistas.html -->
 
 
     <!-- INCLUDE: views/obras.html -->
@@ -1755,7 +1578,8 @@
 
 </div>
 <!-- Módulos de Vistas -->
-<script src="/static/js/modules/usuarios.js?v=20261106_1500"></script>
+<script src="/static/js/modules/proyectos.js?v=20261106_1500"></script>
+  <script src="/static/js/modules/usuarios.js?v=20261106_1500"></script>
 <script src="/static/js/modules/obras.js?v=20261106_1500"></script>
     <script src="/static/js/modules/mapeo.js?v=20261106_1500"></script>
 <script src="/static/js/modules/proveedores_contratistas.js?v=20261106_1500"></script>
