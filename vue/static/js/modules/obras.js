@@ -39,19 +39,14 @@
     const reporteInsumos = ref(null);
     const cargandoReporteInsumos = ref(false);
     const suministrandoObra = ref(false);
-    const esMaster = ref(false);
+    // esMaster provisto globalmente
         const modalMovimientosVisible = ref(false);
     const cargandoMovimientos = ref(false);
     const tabMovimientos = ref('OC');
     const movimientosActuales = ref({ requisiciones: [], ordenes_compra: [] });
     const insumoMovimientoSeleccionado = ref(null);
 
-    const metricas = ref({
-      total_usuarios: 0,
-      total_bots: 0,
-      total_ejecuciones: 0,
-      tasa_exito: 100
-    });
+
 
 
 
@@ -763,85 +758,155 @@
 
 
 
-    return {
-      metricasObras,
-      obrasCatalogo,
-      cargandoObras,
-      cargandoArbolObra,
-      sincronizandoObras,
-      filtroBusquedaObra,
-      obraSeleccionada,
+    
+    const obrasFiltradas = computed(() => {
+      const q = (filtroBusquedaObra.value || '').trim().toUpperCase();
+      if (!q) return obrasCatalogo.value || [];
+      return (obrasCatalogo.value || []).filter(o => {
+        const cve = String(o.clave || '').toUpperCase();
+        const nom = String(o.nombre || '').toUpperCase();
+        const id = String(o.id_obra || '').toUpperCase();
+        return cve.includes(q) || nom.includes(q) || id.includes(q);
+      });
+    });
+
+    const sincronizandoFirestoreObra = ref(false);
+    const sincronizarFirestoreObraActual = async () => {};
+
+        
+    const arbolFiltrado = computed(() => {
+      if (!arbolObraActual.value || !arbolObraActual.value.frentes) return [];
+      const q = (filtroArbolObra.value || '').trim().toUpperCase();
+      if (!q) return arbolObraActual.value.frentes;
+
+      const frentesFiltrados = [];
+      for (const f of arbolObraActual.value.frentes) {
+        const frenteMatch = (f.codigo && f.codigo.toUpperCase().includes(q)) || (f.nombre && f.nombre.toUpperCase().includes(q));
+        const partidasFiltradas = [];
+
+        for (const p of (f.partidas || [])) {
+          const partidaMatch = (p.codigo && p.codigo.toUpperCase().includes(q)) || (p.nombre && p.nombre.toUpperCase().includes(q));
+          const tarjetasFiltradas = (p.tarjetas || []).filter(t => 
+            (t.codigo && t.codigo.toUpperCase().includes(q)) ||
+            (t.clave_tarjeta && String(t.clave_tarjeta).toUpperCase().includes(q)) ||
+            (t.nombre && t.nombre.toUpperCase().includes(q))
+          );
+
+          if (partidaMatch || tarjetasFiltradas.length > 0) {
+            partidasFiltradas.push({
+              ...p,
+              tarjetas: (tarjetasFiltradas.length > 0 || !partidaMatch) ? tarjetasFiltradas : p.tarjetas
+            });
+          }
+        }
+
+        if (frenteMatch || partidasFiltradas.length > 0) {
+          frentesFiltrados.push({
+            ...f,
+            partidas: (partidasFiltradas.length > 0 || !frenteMatch) ? partidasFiltradas : f.partidas
+          });
+        }
+      }
+      return frentesFiltrados;
+    });
+
+            return {
+      abrirModalIrAObra,
+      abrirModalRepararPresupuesto,
+      agregarObraACola,
+      agregarObraActualACola,
+      agregarObraPorInputManual,
+      agregarObraPorSelect,
+      alCambiarFolioOC,
+      arbolFiltrado,
       arbolObraActual,
-      filtroArbolObra,
+      buscarReporteObra,
+      busquedaFolioEjecutada,
       cacheArbolesObras,
-      frentesExpandidos,
-      partidasExpandidas,
+      cargandoArbolObra,
+      cargandoGruposInsumos,
+      cargandoMovimientos,
+      cargandoObras,
+      cargandoReporteInsumos,
+      cargarCatalogoObras,
+      cargarGruposInsumosTipo,
+      cargarReporteInsumos,
+      cerrarModalMovimientos,
+      colaObrasOptimizacion,
+      colapsarTodoArbol,
+      contarHijosSeleccionadosTipo,
+      desmarcarTodosGruposInsumos,
+      diagnosticandoPresupuesto,
+      diagnosticarTarjetas,
+      diagnosticoEjecutado,
+      diagnosticoTarjetas,
+      ejecutandoIrAObra,
+      ejecutandoOptimizacion,
+      ejecutarIrAObraEnAryve,
+      ejecutarReparacionPresupuestoBot,
+      eliminarObraDeCola,
+      errorBusquedaFolioOC,
+      esHijoSeleccionado,
+      esTipoTotalmenteSeleccionado,
+      expandirFrenteInicial,
+      expandirTodoArbol,
+      filtrarPorTagInsumo,
+      filtroArbolObra,
+      filtroBusquedaObra,
+      filtroFolioOC,
+      filtroGruposInsumos,
       filtroInsumoClave,
       filtroInsumoNombre,
-      filtroFolioOC,
-      modoBusquedaFolioOC,
-      busquedaFolioEjecutada,
-      ordenesCompraPorFolio,
-      errorBusquedaFolioOC,
-      reporteInsumos,
-      cargandoReporteInsumos,
-      suministrandoObra,
-      modalMovimientosVisible,
-      cargandoMovimientos,
-      tabMovimientos,
-      movimientosActuales,
-      insumoMovimientoSeleccionado,
-      modalIrAObraVisible,
-      obraDestinoAryve,
-      ejecutandoIrAObra,
-      resultadoIrAObra,
-      colaObrasOptimizacion,
-      ejecutandoOptimizacion,
-      modalRepararVisible,
-      reparandoPresupuesto,
-      diagnosticandoPresupuesto,
-      diagnosticoEjecutado,
       formReparar,
-      diagnosticoTarjetas,
-      tarjetasSeleccionadasParaReparar,
-      terminalLogsReparar,
-      catalogoGruposInsumos,
-      catalogoGruposInsumosDetalle,
-      cargandoGruposInsumos,
-      filtroGrupoInsumo,
-      filtroTagInsumo,
-      filtroTipoInsumo,
-      filtroEstatusSuministro,
-      obrasFiltradas,
-      arbolFiltrado,
-      insumosFiltrados,
-      metricasReporte,
-      catalogoGruposInsumosFiltrados,
-      cargarCatalogoObras,
-      cargarReporteInsumos,
-      buscarReporteObra,
-      alCambiarFolioOC,
+      frentesExpandidos,
+      gruposInsumosFiltrados,
+      gruposInsumosTipo,
+      iniciarOptimizacionObras,
+      inputNuevaObraOptimizacion,
+      insumoMovimientoSeleccionado,
+      limpiarColaObras,
       limpiarFiltrosInsumos,
-      filtrarPorTagInsumo,
-      verMovimientos,
-      cerrarModalMovimientos,
-      suministrarInsumosObra,
-      cargarArbolObra,
-      seleccionarObra,
-      toggleFrente,
-      togglePartida,
-      expandirTodoElArbol,
-      contraerTodoElArbol,
-      limpiarBusquedaArbol,
-      diagnosticarTarjetas,
-      seleccionarTodasTarjetas,
-      ejecutarReparacionPresupuestoBot,
-      abrirModalIrAObra,
-      ejecutarIrAObraEnAryve,
+      logsIrAObra,
+      logsReparacion,
+      marcarTodosGruposInsumos,
+      metricasObras,
+      modalIrAObraVisible,
+      modalMovimientosVisible,
+      modalRepararVisible,
+      modoBusquedaFolioOC,
+      movimientosActuales,
+      obraDestinoAryve,
+      obraSeleccionada,
+      obraSelectOptimizacion,
+      obrasCatalogo,
+      obrasFiltradas,
+      ordenesCompraPorFolio,
+      partidasExpandidas,
       recargarObras,
+      reparandoPresupuesto,
+      reporteInsumos,
+      resultadoIrAObra,
+      resultadoReparacion,
+      seleccionGruposInsumos,
+      seleccionarObra,
+      seleccionarSoloMateriales,
+      seleccionarTodasTarjetas,
+      sincronizandoFirestoreObra,
+      sincronizandoObras,
+      sincronizarFirestoreObraActual,
       sincronizarObrasAryve,
-      cargarGruposInsumosTipo,
-      ejecutarOptimizacionEnCola
+      suministrandoObra,
+      suministrarInsumosObra,
+      tabMovimientos,
+      tarjetasSeleccionadasParaReparar,
+      tiposExpandidosOptimizacion,
+      toggleFrente,
+      toggleHijoInsumo,
+      togglePartida,
+      toggleTipoOptimizacion,
+      toggleTodosHijosDeTipo,
+      totalGruposInsumosSeleccionados,
+      verMovimientos
     };
   };
 })();
