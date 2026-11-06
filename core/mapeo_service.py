@@ -152,7 +152,7 @@ class MapeoService:
                     estatus
                 FROM lotes_mapeo
                 {where_sql}
-                ORDER BY cc ASC, manzana ASC, lote ASC
+                ORDER BY (CASE WHEN cc IS NULL OR TRIM(cc) = '' THEN 1 ELSE 0 END) ASC, cc ASC, manzana ASC, lote ASC
                 LIMIT ? OFFSET ?
             """
             cur.execute(query_sql, params + [min(limite, 500), max(offset, 0)])
