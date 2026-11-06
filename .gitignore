@@ -8,9 +8,9 @@ __pycache__/
 .env.*
 *.env
 
-# Bases de datos y almacenamiento local del usuario (intocables por Git)
-data/
-*.db
+# Bases de datos y almacenamiento local del usuario (intocables por Git excepto mapeo maestro)
+data/*
+!data/mapeo_lotes.db
 *.sqlite
 *.sqlite3
 
