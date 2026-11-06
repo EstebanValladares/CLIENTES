@@ -301,29 +301,56 @@ def verificar_actualizacion():
         c_local_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=base_dir, capture_output=True, text=True, timeout=5)
         c_local = c_local_res.stdout.strip() if c_local_res.returncode == 0 else ""
         
-        # Consultar la última versión publicada registrada en Torre
-        torre_url = os.getenv("TORRE_CHAT_URL", "http://10.10.200.147:8000")
+        # 1. Consultar directamente en GitHub (infalible en cualquier red con internet)
         try:
-            req = urllib.request.Request(f"{torre_url}/api/sistema/version", headers={"User-Agent": "Client/2.0"})
-            with urllib.request.urlopen(req, timeout=2.0) as resp:
-                if resp.status == 200:
-                    data = json.loads(resp.read().decode())
-                    c_torre = data.get("commit", "")
-                    if c_torre and c_local and c_torre != c_local:
+            req_gh = urllib.request.Request(
+                "https://raw.githubusercontent.com/EstebanValladares/CLIENTES/main/.ultima_publicacion.json",
+                headers={"User-Agent": "Dashboard-Client/2.0", "Cache-Control": "no-cache"}
+            )
+            with urllib.request.urlopen(req_gh, timeout=3.0) as resp_gh:
+                if resp_gh.status == 200:
+                    data_gh = json.loads(resp_gh.read().decode("utf-8"))
+                    c_gh = data_gh.get("commit", "")
+                    if c_gh and c_local and c_gh != c_local:
                         return {
                             "es_master": False,
                             "hay_actualizacion": True,
                             "commit_local": c_local,
-                            "commit_remoto": c_torre
+                            "commit_remoto": c_gh,
+                            "fuente": "github"
                         }
         except Exception:
             pass
+
+        # 2. Consultar la última versión publicada registrada en Torre local
+        candidatos_torre = [
+            os.getenv("TORRE_CHAT_URL", "http://10.10.200.147:8000"),
+            "http://10.10.200.31:8000",
+            "http://Esteban:8000"
+        ]
+        for t_url in candidatos_torre:
+            try:
+                req = urllib.request.Request(f"{t_url.rstrip('/')}/api/sistema/version", headers={"User-Agent": "Client/2.0"})
+                with urllib.request.urlopen(req, timeout=1.5) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode())
+                        c_torre = data.get("commit", "")
+                        if c_torre and c_local and c_torre != c_local:
+                            return {
+                                "es_master": False,
+                                "hay_actualizacion": True,
+                                "commit_local": c_local,
+                                "commit_remoto": c_torre,
+                                "fuente": "torre"
+                            }
+            except Exception:
+                continue
             
         return {"es_master": False, "hay_actualizacion": False, "commit_local": c_local}
     except Exception:
         return {"es_master": False, "hay_actualizacion": False}
 
-@app.post("/api/sistema/actualizar")
+@app.api_route("/api/sistema/actualizar", methods=["GET", "POST"])
 def ejecutar_actualizacion_cliente():
     """
     En clientes (compañeros), descarga inmediatamente la última versión de GitHub
@@ -335,11 +362,11 @@ def ejecutar_actualizacion_cliente():
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     try:
         # 1. Fetch de GitHub
-        subprocess.run(["git", "fetch", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=15)
+        subprocess.run(["git", "fetch", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=20)
         # 2. Reset hard para garantizar sincronización limpia
-        subprocess.run(["git", "reset", "--hard", "origin/main"], cwd=base_dir, capture_output=True, timeout=15)
+        subprocess.run(["git", "reset", "--hard", "origin/main"], cwd=base_dir, capture_output=True, timeout=20)
         # 3. Pull
-        pull_res = subprocess.run(["git", "pull", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=15)
+        pull_res = subprocess.run(["git", "pull", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=20)
         
         # 4. Commit resultante
         c_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=base_dir, capture_output=True, text=True, timeout=5)
@@ -348,7 +375,7 @@ def ejecutar_actualizacion_cliente():
         return {
             "ok": True,
             "commit": nuevo_commit,
-            "mensaje": f"¡Sistema actualizado con éxito al commit {nuevo_commit}!"
+            "mensaje": f"¡Dashboard actualizado con éxito al commit {nuevo_commit}!"
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "mensaje": f"Error actualizando: {str(e)}"})
