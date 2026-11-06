@@ -416,8 +416,11 @@ createApp({
           esMaster.value = !!data.es_master;
           if (!esMaster.value) {
             verificarActualizacionCliente();
-            // Polling periódico para detectar nuevas versiones en clientes cada 45 segundos
-            setInterval(verificarActualizacionCliente, 45000);
+            // Polling periódico para detectar nuevas versiones en clientes cada 30 segundos
+            setInterval(verificarActualizacionCliente, 30000);
+            window.addEventListener('focus', () => {
+              verificarActualizacionCliente();
+            });
           }
         }
       } catch (e) {

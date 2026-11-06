@@ -185,11 +185,15 @@ class ChatService:
             req = urllib.request.Request(url, headers={"User-Agent": "Dashboard-Client/2.0"})
             with urllib.request.urlopen(req, timeout=2.5) as resp:
                 if resp.status == 200:
+                    cls._contador_fallos_torre = 0
                     data = resp.read().decode("utf-8")
                     return json.loads(data)
         except Exception:
-            # Si falló la petición, invalidar el cache del servidor activo para volver a sondear
-            cls._servidor_activo = None
+            # Reintentar antes de invalidar bruscamente para no saturar la consola con /api/entorno
+            cls._contador_fallos_torre = getattr(cls, "_contador_fallos_torre", 0) + 1
+            if cls._contador_fallos_torre >= 3:
+                cls._servidor_activo = None
+                cls._contador_fallos_torre = 0
         return None
 
     @classmethod
