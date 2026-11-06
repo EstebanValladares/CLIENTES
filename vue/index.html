@@ -3002,18 +3002,15 @@
         <div>
           <h2 class="text-lg font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-map-location-dot text-cyan-400"></i>
-            <span>Mapeo de Lotes & Consecutivo Maestro Enkontrol</span>
-            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-              O(1) Ultra-Rápido
-            </span>
+            <span>Mapeo de Lotes & Consecutivo Maestro</span>
           </h2>
           <p class="text-xs text-slate-400 mt-1">
-            Buscador instantáneo de <b>CC, Manzana, Lote, No. Interior</b> e <b>ID Lote EK</b> (60,742 registros sincronizados de Enkontrol).
+            Buscador de <b>CC, Manzana, Lote, No. Interior</b> e <b>ID Lote EK</b> (60,742 lotes registrados).
           </p>
         </div>
 
         <!-- Tarjetas KPIs Rápidos -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full lg:w-auto">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 w-full lg:w-auto">
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Total Lotes</span>
             <span class="text-sm font-bold font-mono text-cyan-400">{{ (metricasMapeo.total_lotes || 60742).toLocaleString() }}</span>
@@ -3025,13 +3022,6 @@
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Filtrados</span>
             <span class="text-sm font-bold font-mono text-emerald-400">{{ totalLotesMapeoFiltrados.toLocaleString() }}</span>
-          </div>
-          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold block">Servidor EK</span>
-            <span class="text-[11px] font-mono text-slate-300 flex items-center gap-1.5 mt-0.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>10.10.202.244</span>
-            </span>
           </div>
         </div>
       </div>
@@ -3325,13 +3315,13 @@
         </div>
 
         <!-- Footer con resumen -->
-        <div class="px-4 py-2.5 border-t border-slate-800 bg-slate-950/60 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="px-4 py-2 border-t border-slate-800 bg-slate-950/60 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div class="flex items-center gap-2">
-            <i class="fa-solid fa-database text-cyan-400 text-xs"></i>
-            <span>Base de Datos: <b class="text-slate-300">Enkontrol EK_ADM01_11</b> &bull; Tabla: <b class="text-slate-300 font-mono">DBA.sm_fraccionamiento_lote</b></span>
+            <i class="fa-solid fa-layer-group text-cyan-400 text-xs"></i>
+            <span>Catálogo Consecutivo Maestro de Lotes</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-slate-500">Índices activos en memoria O(1)</span>
+            <span class="text-slate-500">Búsqueda rápida por CC, Manzana, Lote e ID Lote EK</span>
           </div>
         </div>
 
