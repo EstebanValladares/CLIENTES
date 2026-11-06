@@ -1,0 +1,983 @@
+    <!-- ======================================================== -->
+    <!-- VISTA MODULAR: USUARIOS (RETÍCULA 2X2 & CLASIFICADORES)  -->
+    <!-- Archivo: vue/views/usuarios.html                         -->
+    <!-- ======================================================== -->
+<!-- ======================================================== -->
+    <!-- VISTA 1: USUARIOS (RETÍCULA 2X2 EQUILIBRADA)              -->
+    <!-- ======================================================== -->
+    <div v-show="vistaActiva === 'USUARIOS'" class="flex flex-col flex-1">
+      
+      <!-- GRID 2x2: 4 CUADRANTES DE xl:col-span-6 CON ALTURA UNIFORME h-[460px] -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start flex-1">
+        
+        <!-- 1. FILA 1 IZQUIERDA: LISTADO DE USUARIOS (h-[460px]) -->
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 flex flex-col h-[460px] shadow-sm">
+          
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text" 
+                     v-model="filtroBusqueda" 
+                     @input="alBuscar"
+                     placeholder="Buscar por ID, nombre, correo, puesto o área..." 
+                     class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div class="w-full sm:w-48">
+              <select v-model="filtroVigencia" 
+                      @change="cargarUsuarios" 
+                      class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                <option value="TODOS">Todos los Estados</option>
+                <option value="ACTIVOS">Solo Activos</option>
+                <option value="ESTE_MES">Vencen este mes</option>
+                <option value="PROX_MES">Vencen próx. mes</option>
+                <option value="VENCIDOS">Vigencia vencida</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center px-1">
+            <span>Mostrando {{ usuarios.length }} usuarios</span>
+            <span v-if="cargando" class="text-indigo-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Actualizando
+            </span>
+          </div>
+
+          <!-- LISTA SCROLLABLE -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 space-y-2">
+            <div v-for="u in usuarios" 
+                 :key="u.id + (u.correo || '')" 
+                 @click="seleccionarUsuario(u)"
+                 :class="usuarioSeleccionado && usuarioSeleccionado.id === u.id 
+                   ? 'bg-slate-700/80 border-indigo-500 ring-1 ring-indigo-500/50 shadow-md' 
+                   : 'bg-slate-900/60 hover:bg-slate-800/80 border-slate-700/60'"
+                 class="p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3">
+              
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0"
+                     :class="u.estatus === 'Activo' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/10 text-rose-400 border border-rose-500/30'">
+                  #{{ u.id }}
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h4 class="text-xs font-semibold text-white truncate">{{ u.nombre_completo }}</h4>
+                    <span v-if="u.estatus === 'Activo'" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span v-else class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 truncate mt-0.5">
+                    <i class="fa-solid fa-briefcase text-[10px] mr-1 text-slate-500"></i>
+                    <span>{{ u.puesto || 'No especificado' }}</span>
+                    <span class="mx-1 text-slate-600">•</span>
+                    <span class="text-slate-400">{{ u.area_organizacion || 'General' }}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="text-right shrink-0">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded border"
+                      :class="u.estatus === 'Activo' ? 'bg-emerald-950/40 text-emerald-300 border-emerald-700/50' : 'bg-rose-950/40 text-rose-300 border-rose-700/50'">
+                  {{ u.estatus }}
+                </span>
+                <p v-if="u.vigencia_fin" class="text-[10px] text-slate-500 font-mono mt-0.5">
+                  {{ u.vigencia_fin }}
+                </p>
+              </div>
+
+            </div>
+
+            <div v-if="usuarios.length === 0 && !cargando" class="text-center py-16 text-slate-500 text-xs">
+              <i class="fa-solid fa-user-slash text-3xl mb-2 text-slate-600"></i>
+              <p>No se encontraron registros que coincidan con la búsqueda.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. FILA 1 DERECHA: INFORMACIÓN DEL USUARIO (FICHA EJECUTIVA h-[460px]) -->
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+          <div v-if="usuarioSeleccionado" class="flex flex-col h-full justify-between">
+            <div>
+              <div class="flex items-start justify-between pb-3 border-b border-slate-700/70">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-lg font-bold">
+                    {{ (usuarioSeleccionado.nombre || 'U')[0] }}
+                  </div>
+                  <div>
+                    <h3 class="text-base font-bold text-white">{{ usuarioSeleccionado.nombre_completo }}</h3>
+                    <p class="text-xs text-slate-400 mt-0.5 font-mono">ID Aryve / Enkontrol: #{{ usuarioSeleccionado.id }}</p>
+                  </div>
+                </div>
+
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wider"
+                      :class="usuarioSeleccionado.estatus === 'Activo' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/10 text-rose-400 border-rose-500/30'">
+                  {{ usuarioSeleccionado.estatus }}
+                </span>
+              </div>
+
+              <!-- FICHA GRID -->
+              <div class="grid grid-cols-2 gap-3 my-3 text-xs">
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Posición / Puesto</span>
+                  <div class="flex items-center gap-1.5 mt-1 truncate" :title="usuarioSeleccionado.puesto">
+                    <span v-if="usuarioSeleccionado.clave_posicion || usuarioSeleccionado.puesto === 'LIDER DE VENTAS TAMPICO'" 
+                          class="bg-blue-500/20 text-blue-400 border border-blue-500/30 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded shrink-0">
+                      [ {{ usuarioSeleccionado.clave_posicion || 'POS-0283' }} ]
+                    </span>
+                    <span class="font-medium text-slate-200 truncate">
+                      {{ usuarioSeleccionado.puesto || 'No especificado' }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Área Organizacional</span>
+                  <span class="font-medium text-slate-200 mt-1 block truncate" :title="usuarioSeleccionado.area_organizacion">{{ usuarioSeleccionado.area_organizacion || 'No especificada' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Correo Electrónico</span>
+                  <span class="font-mono text-indigo-300 mt-1 block truncate" :title="usuarioSeleccionado.correo">{{ usuarioSeleccionado.correo || '-' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Clave de Usuario</span>
+                  <span class="font-mono text-slate-200 mt-1 block">{{ usuarioSeleccionado.clave || '-' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Vigencia Fin</span>
+                  <span class="font-mono text-amber-300 font-semibold mt-1 block">{{ usuarioSeleccionado.vigencia_fin || 'Indefinida' }}</span>
+                </div>
+
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
+                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Teléfono / Celular</span>
+                  <span class="text-slate-200 mt-1 block">{{ usuarioSeleccionado.telefono || 'No registrado' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTÓN ABRIR EN ARYVE -->
+            <div class="pt-2">
+              <a v-if="usuarioSeleccionado.url_aryve" 
+                 :href="usuarioSeleccionado.url_aryve" 
+                 target="_blank" 
+                 class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-400 hover:text-indigo-300 py-2 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer">
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                <span>Abrir Perfil en Portal Aryve</span>
+              </a>
+            </div>
+          </div>
+          
+          <div v-else class="flex flex-col items-center justify-center text-center py-12 text-slate-500 text-xs h-full">
+            <i class="fa-regular fa-id-badge text-3xl mb-2 text-slate-600"></i>
+            <p>Selecciona un usuario del listado para ver su ficha completa.</p>
+          </div>
+        </div>
+
+        <!-- 3. FILA 2 IZQUIERDA: CREACIÓN DE POSICIONES (Altura compacta auto) -->
+        <div class="card-creacion-posicion relative xl:col-span-6 bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm overflow-hidden flex flex-col gap-3 transition-all">
+          <!-- Barra superior de acento con la paleta de colores azul/índigo/cian -->
+          <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500"></div>
+
+          <!-- HEADER: TÍTULO Y BADGES -->
+          <div class="flex items-center justify-between pt-0.5">
+            <div class="flex items-center gap-2.5">
+              <div class="btn-gradient-pos w-7 h-7 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 border border-blue-400/40 flex items-center justify-center shadow-md shadow-indigo-600/25">
+                <i class="fa-solid fa-folder-plus text-cyan-200 text-xs"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-100 flex items-center gap-2">
+                  <span>Creación de Posiciones</span>
+                  <span class="badge-aryve-enkontrol text-[9px] font-bold font-mono px-2 py-0.5 rounded-full border bg-indigo-950/70 border-indigo-700/60 text-cyan-300">
+                    Aryve Enkontrol
+                  </span>
+                </h4>
+              </div>
+            </div>
+            
+            <!-- BADGE ÚLTIMA CLAVE -->
+            <span class="badge-ultima-pos text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-hashtag text-[8px] text-cyan-400"></i> Última: {{ metaPosiciones.ultima_clave || 'POS-1077' }}
+            </span>
+          </div>
+
+          <!-- FORMULARIO COMPACTO Y NÍTIDO -->
+          <div class="space-y-3">
+            
+            <!-- FILA 1: CLAVE, NOMBRE -->
+            <div class="grid grid-cols-12 gap-3 items-start">
+              
+              <!-- CLAVE ! * -->
+              <div class="col-span-12 sm:col-span-4">
+                <div class="flex items-center justify-between mb-1">
+                  <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1">
+                    <span>CLAVE</span>
+                    <span class="text-rose-500 font-extrabold text-xs" title="Campo Obligatorio">! *</span>
+                  </label>
+                  <span class="counter-pos-field text-[9px] font-mono text-slate-400">{{ (formCreacionPosicion.clave || '').length }}/50</span>
+                </div>
+                <div class="relative flex items-center">
+                  <input type="text"
+                         v-model="formCreacionPosicion.clave"
+                         placeholder="POS-1078"
+                         maxlength="50"
+                         class="input-pos-clave w-full bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-24 py-2 text-xs font-mono font-black text-cyan-400 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                  
+                  <!-- BOTÓN PARA CALCULAR LA SIGUIENTE CLAVE (Estilo Azul/Índigo/Cian con texto blanco nítido) -->
+                  <button @click="calcularSiguienteClave"
+                          type="button"
+                          :disabled="calculandoClave"
+                          title="Calcular la siguiente clave consecutiva disponible"
+                          class="btn-gradient-pos absolute right-1 px-2.5 py-1 rounded-lg text-[10px] font-bold font-mono transition-all flex items-center gap-1.5 cursor-pointer select-none bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 text-white shadow-sm shadow-indigo-600/30 border border-blue-400/40 hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-arrows-rotate text-cyan-200 text-[9px]" :class="{'fa-spin': calculandoClave}"></i>
+                    <span class="text-white font-bold">{{ calculandoClave ? '...' : 'Siguiente' }}</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- NOMBRE ! * (Dropdown sutil y ligero sin datalist) -->
+              <div class="col-span-12 sm:col-span-8">
+                <div class="flex items-center justify-between mb-1">
+                  <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1">
+                    <span>NOMBRE</span>
+                    <span class="text-rose-500 font-extrabold text-xs" title="Campo Obligatorio">! *</span>
+                  </label>
+                  <span class="counter-pos-field text-[9px] font-mono text-slate-400">{{ (formCreacionPosicion.nombre || '').length }}/150</span>
+                </div>
+                <div class="relative">
+                  <input type="text"
+                         v-model="formCreacionPosicion.nombre"
+                         @focus="dropdownNombreAbierto = true"
+                         @input="dropdownNombreAbierto = true"
+                         @blur="setTimeout(() => { dropdownNombreAbierto = false }, 200)"
+                         placeholder="Selecciona una posición o escribe una nueva..."
+                         maxlength="150"
+                         class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition uppercase shadow-inner">
+                  
+                  <!-- DROPDOWN SUTIL Y LIGERO (Anclado bajo el input, máx 176px) -->
+                  <div v-if="dropdownNombreAbierto && filtroNombre.length > 0"
+                       class="absolute left-0 right-0 top-full mt-1 z-50 max-h-44 overflow-y-auto bg-slate-900 border border-slate-700 rounded-xl shadow-2xl py-1 text-xs divide-y divide-slate-800">
+                    <div v-for="item in filtroNombre" :key="item"
+                         @mousedown.prevent="seleccionarNombrePosicion(item)"
+                         class="px-3 py-1.5 hover:bg-slate-800 hover:text-cyan-300 cursor-pointer text-slate-200 flex items-center justify-between transition-colors">
+                      <span class="font-medium truncate">{{ item }}</span>
+                      <span class="text-[9px] font-mono text-cyan-400 uppercase font-semibold">Existente</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- FILA 2: PADRE, CATEGORIA, ESTATUS -->
+            <div class="grid grid-cols-12 gap-3 items-start">
+              
+              <!-- PADRE (Texto Libre) -->
+              <div class="col-span-12 sm:col-span-5">
+                <div class="flex items-center justify-between mb-1">
+                  <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200">
+                    PADRE
+                  </label>
+                  <span class="counter-pos-field text-[9px] text-slate-400 font-mono">Texto libre</span>
+                </div>
+                <input type="text"
+                       v-model="formCreacionPosicion.padre"
+                       placeholder="Escribe el puesto padre o nivel..."
+                       class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+              </div>
+
+              <!-- CATEGORIA ! * (Dropdown sutil y ligero sin datalist) -->
+              <div class="col-span-12 sm:col-span-5">
+                <div class="flex items-center justify-between mb-1">
+                  <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1">
+                    <span>CATEGORÍA</span>
+                    <span class="text-rose-500 font-extrabold text-xs" title="Campo Obligatorio">! *</span>
+                  </label>
+                  <span class="counter-pos-field text-[9px] text-slate-400 font-mono">Seleccionar</span>
+                </div>
+                <div class="relative">
+                  <input type="text"
+                         v-model="formCreacionPosicion.categoria"
+                         @focus="dropdownCategoriaAbierto = true"
+                         @input="dropdownCategoriaAbierto = true"
+                         @blur="setTimeout(() => { dropdownCategoriaAbierto = false }, 200)"
+                         placeholder="Buscar o seleccionar categoría..."
+                         class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition uppercase shadow-inner">
+                  
+                  <!-- DROPDOWN SUTIL Y LIGERO DE CATEGORÍAS -->
+                  <div v-if="dropdownCategoriaAbierto && filtroCategoria.length > 0"
+                       class="absolute left-0 right-0 top-full mt-1 z-50 max-h-44 overflow-y-auto bg-slate-900 border border-slate-700 rounded-xl shadow-2xl py-1 text-xs divide-y divide-slate-800">
+                    <div v-for="cat in filtroCategoria" :key="cat"
+                         @mousedown.prevent="seleccionarCategoriaPosicion(cat)"
+                         class="px-3 py-1.5 hover:bg-slate-800 hover:text-cyan-300 cursor-pointer text-slate-200 flex items-center justify-between transition-colors">
+                      <span class="font-medium truncate">{{ cat }}</span>
+                      <i class="fa-solid fa-check text-[9px] text-cyan-400 opacity-70"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ESTATUS -->
+              <div class="col-span-12 sm:col-span-2">
+                <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200 block mb-1">
+                  ESTATUS
+                </label>
+                <div class="badge-estatus-activo bg-emerald-950/60 border border-emerald-700/60 rounded-xl px-2 py-2 text-xs font-bold text-emerald-400 flex items-center justify-center gap-1.5 shadow-sm">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>ACTIVO</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ALERTA / RESULTADO -->
+            <div v-if="resultadoCreacionPosicion" 
+                 class="p-2.5 rounded-xl text-xs flex items-center justify-between gap-2 border font-medium transition"
+                 :class="resultadoCreacionPosicion.ok 
+                   ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' 
+                   : 'bg-rose-950/50 border-rose-500/40 text-rose-300'">
+              <div class="flex items-center gap-2">
+                <i :class="resultadoCreacionPosicion.ok ? 'fa-solid fa-circle-check text-emerald-400' : 'fa-solid fa-circle-xmark text-rose-400'"></i>
+                <span>{{ resultadoCreacionPosicion.mensaje || resultadoCreacionPosicion.error }}</span>
+              </div>
+              <button @click="resultadoCreacionPosicion = null" class="text-slate-400 hover:text-white text-xs p-1 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- FOOTER COMPACTO: INFO AUTOINCREMENTAL Y BOTONES DE ACCION -->
+          <div class="pt-2.5 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+            <div class="flex items-center gap-1.5 font-medium">
+              <i class="fa-solid fa-arrow-up-right-dots text-cyan-400 text-xs"></i>
+              <span>Siguiente: <code class="font-mono font-bold text-cyan-400">{{ metaPosiciones.siguiente_clave || 'POS-1078' }}</code></span>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <!-- BOTÓN LIMPIAR -->
+              <button @click="limpiarFormPosicionSimple" 
+                      type="button" 
+                      class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition cursor-pointer flex items-center gap-1.5 shadow-xs">
+                <i class="fa-solid fa-broom text-cyan-400 text-[10px]"></i>
+                <span>Limpiar</span>
+              </button>
+
+              <!-- BOTÓN CREAR POSICIÓN (Estilo Gradiente Azul/Índigo/Cian con texto blanco nítido garantizado) -->
+              <button @click="guardarPosicionSimple" 
+                      type="button" 
+                      :disabled="guardandoPosicionSimple || !formCreacionPosicion.nombre" 
+                      class="btn-gradient-pos px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-indigo-600/30 flex items-center gap-1.5 border border-blue-400/40 transition-all hover:scale-105 active:scale-95 shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+                <i v-if="guardandoPosicionSimple" class="fa-solid fa-spinner fa-spin text-cyan-200 text-xs"></i>
+                <i v-else class="fa-solid fa-plus text-cyan-200 text-xs"></i>
+                <span class="text-white font-bold">{{ guardandoPosicionSimple ? 'Guardando...' : 'Crear Posición' }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. FILA 2 DERECHA: CLASIFICADORES (h-[460px]) -->
+        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+          <div v-if="usuarioSeleccionado" class="flex flex-col h-full justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                    <i class="fa-solid fa-tags text-[11px]"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Clasificadores</h4>
+                  </div>
+                </div>
+                <span v-if="infoClasificadorPuesto.total > 0" class="text-[10px] font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i class="fa-solid fa-layer-group text-[9px]"></i>
+                  {{ infoClasificadorPuesto.total }} asignados
+                </span>
+                <span v-else class="text-[10px] font-semibold text-slate-500 bg-slate-800/60 border border-slate-700 px-2.5 py-0.5 rounded-full">
+                  Sin plantilla
+                </span>
+              </div>
+
+              <!-- FICHA DE PUESTO Y MATRIZ -->
+              <div class="bg-slate-900/60 rounded-xl p-3.5 border border-slate-700/50 mb-3">
+                <div class="flex items-center justify-between text-[10px] uppercase font-semibold text-slate-400 mb-1.5">
+                  <span>Puesto para Clasificadores (Firebase)</span>
+                  <span v-if="puestoClasificadorSeleccionado" class="text-emerald-400 font-mono flex items-center gap-1">
+                    <i class="fa-solid fa-check text-[9px]"></i> {{ infoClasificadorPuesto.area || 'Encontrado' }}
+                  </span>
+                  <span v-else class="text-amber-400 flex items-center gap-1">
+                    <i class="fa-solid fa-exclamation text-[9px]"></i> No asignado
+                  </span>
+                </div>
+
+                <div class="text-xs font-bold text-slate-100 flex items-center justify-between gap-2">
+                  <span class="truncate">{{ puestoClasificadorSeleccionado || 'Selecciona un puesto con "Actualizar"' }}</span>
+                </div>
+
+                <!-- Badges de Categorías extraídas de puestos.json -->
+                <div v-if="infoClasificadorPuesto.categorias && infoClasificadorPuesto.categorias.length" class="mt-2.5 pt-2 border-t border-slate-800 flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar">
+                  <span v-for="cat in infoClasificadorPuesto.categorias" :key="cat.nombre" 
+                        class="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700/70 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <span class="text-indigo-400 font-medium">{{ cat.nombre }}:</span>
+                    <span class="font-mono text-slate-400">{{ cat.total }}</span>
+                  </span>
+                </div>
+                <p v-else class="mt-2 text-[11px] text-slate-500 leading-snug">
+                  Usa el botón <strong>Actualizar</strong> para elegir un puesto y cargar su estructura de clasificadores oficial.
+                </p>
+              </div>
+
+              <!-- VISOR DE ESTADO / LOGS DE SELENIUM -->
+              <div v-if="estadoAsignacionClasificadores.ejecutando || estadoAsignacionClasificadores.mensaje" class="p-2.5 rounded-xl border bg-slate-950/70 border-slate-800 text-[11px] mb-3">
+                <div class="flex items-center justify-between mb-1">
+                  <div class="flex items-center gap-1.5 font-semibold" 
+                       :class="estadoAsignacionClasificadores.ok === true ? 'text-emerald-400' : (estadoAsignacionClasificadores.ok === false ? 'text-rose-400' : 'text-indigo-300')">
+                    <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-[10px]"></i>
+                    <i v-else-if="estadoAsignacionClasificadores.ok === true" class="fa-solid fa-check text-[10px]"></i>
+                    <i v-else-if="estadoAsignacionClasificadores.ok === false" class="fa-solid fa-triangle-exclamation text-[10px]"></i>
+                    <i v-else class="fa-solid fa-info-circle text-[10px]"></i>
+                    <span>{{ estadoAsignacionClasificadores.mensaje }}</span>
+                  </div>
+                </div>
+                <div v-if="estadoAsignacionClasificadores.logs && estadoAsignacionClasificadores.logs.length" 
+                     class="max-h-20 overflow-y-auto custom-scrollbar font-mono text-[10px] text-slate-400 mt-1.5 space-y-0.5 bg-black/40 p-2 rounded-lg border border-slate-800">
+                  <div v-for="(log, idx) in estadoAsignacionClasificadores.logs" :key="idx" class="truncate">{{ log }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTONES: ACTUALIZAR, BORRAR, INICIAR -->
+            <div class="pt-3 border-t border-slate-700/50 grid grid-cols-3 gap-2">
+              <!-- BOTÓN ACTUALIZAR -->
+              <button @click="abrirModalClasificador" 
+                      type="button"
+                      title="Seleccionar o cambiar el puesto para cargar su estructura de clasificadores"
+                      class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-indigo-400 hover:text-indigo-300 py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                <span>Actualizar</span>
+              </button>
+
+              <!-- BOTÓN BORRAR -->
+              <button @click="borrarClasificadoresSeleccion" 
+                      type="button"
+                      title="Quitar la selección de clasificadores actual"
+                      class="bg-slate-900 hover:bg-rose-950/30 border border-slate-700 hover:border-rose-900/50 text-slate-400 hover:text-rose-300 py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+                <span>Borrar</span>
+              </button>
+
+              <!-- BOTÓN INICIAR -->
+              <button @click="iniciarAsignacionClasificadores" 
+                      type="button"
+                      :disabled="!puestoClasificadorSeleccionado || estadoAsignacionClasificadores.ejecutando"
+                      title="Iniciar sesión en Aryve, abrir perfil del usuario y asignar los clasificadores"
+                      class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 border border-indigo-500/50 disabled:border-slate-700 text-white py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md shadow-indigo-600/20 disabled:shadow-none">
+                <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-xs"></i>
+                <i v-else class="fa-solid fa-play text-xs text-emerald-300"></i>
+                <span>{{ estadoAsignacionClasificadores.ejecutando ? 'Ejecutando...' : 'Iniciar' }}</span>
+              </button>
+            </div>
+          </div>
+          
+          <div v-else class="flex flex-col items-center justify-center text-center text-slate-500 h-full py-10">
+            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/60 flex items-center justify-center text-slate-500 mb-2.5">
+              <i class="fa-solid fa-tags text-lg"></i>
+            </div>
+            <p class="font-semibold text-slate-400 text-xs">Clasificadores</p>
+            <p class="text-[11px] text-slate-500 mt-1 max-w-xs leading-relaxed">Selecciona un usuario del listado para gestionar o asignar su estructura oficial.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODALES EXCLUSIVOS DE LA VISTA USUARIOS                  -->
+    <!-- ======================================================== -->
+<div v-if="modalUsuarioAbierto" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-lg font-bold text-white">Alta de Usuario</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Captura de información y ejecución mediante RPA Selenium</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+              <input type="checkbox" v-model="formUsuario.guardarEnProduccion" class="rounded text-indigo-600 focus:ring-indigo-500">
+              <span>Guardar en Producción</span>
+            </label>
+            <button @click="cerrarModalUsuario" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-6 items-stretch">
+          
+          <!-- INPUTS IZQUIERDA (7 COLS) -->
+          <div class="md:col-span-7 space-y-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nombre(s)</label>
+              <input type="text" 
+                     v-model="formUsuario.nombre" 
+                     placeholder="Ej. JUAN CARLOS" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Apellidos</label>
+              <input type="text" 
+                     v-model="formUsuario.apellidos" 
+                     placeholder="Ej. PEREZ LOPEZ" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Correo o Clave</label>
+              <input type="text" 
+                     v-model="formUsuario.correo" 
+                     placeholder="Ej. jperez@velas.com" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Posición Asignada</label>
+                <span v-if="formUsuario.puesto" class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i> Seleccionada
+                </span>
+                <span v-else class="text-[11px] text-slate-500 font-mono">
+                  {{ catalogoPuestos.length }} disponibles
+                </span>
+              </div>
+              
+              <!-- Buscador Autocomplete de Posición -->
+              <div class="relative">
+                <div class="relative">
+                  <input type="text" 
+                         v-model="busquedaPuestoNuevoUsuario" 
+                         @focus="mostrarDropdownPuestoNuevoUsuario = true" 
+                         @input="mostrarDropdownPuestoNuevoUsuario = true" 
+                         @blur="setTimeout(() => { mostrarDropdownPuestoNuevoUsuario = false }, 250)"
+                         placeholder="Buscar posición (ej. ASESOR, BROKER, RESIDENTE...)" 
+                         class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
+                  
+                  <button v-if="busquedaPuestoNuevoUsuario" 
+                          @click="limpiarPuestoNuevoUsuario" 
+                          type="button" 
+                          class="absolute right-3 top-2.5 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                          title="Limpiar búsqueda">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                  </button>
+                  <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
+                     :class="{'rotate-180': mostrarDropdownPuestoNuevoUsuario}"></i>
+                </div>
+
+                <!-- Dropdown Flotante con Resultados Filtrados -->
+                <div v-if="mostrarDropdownPuestoNuevoUsuario" 
+                     class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
+                  <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
+                    <span>Posiciones Oficiales ({{ puestosFiltradosNuevoUsuario.length }})</span>
+                    <span v-if="busquedaPuestoNuevoUsuario" class="text-indigo-400">Filtrado por: "{{ busquedaPuestoNuevoUsuario }}"</span>
+                  </div>
+                  <div v-if="puestosFiltradosNuevoUsuario.length === 0" class="p-3 text-center text-xs text-slate-400">
+                    <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
+                    No se encontró ninguna posición que coincida
+                  </div>
+                  <button v-for="p in puestosFiltradosNuevoUsuario" 
+                          :key="p" 
+                          type="button" 
+                          @mousedown.prevent 
+                          @click="seleccionarPuestoNuevoUsuario(p)" 
+                          class="w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer"
+                          :class="formUsuario.puesto === p ? 'bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'">
+                    <span class="truncate">{{ p }}</span>
+                    <i v-if="formUsuario.puesto === p" class="fa-solid fa-check text-indigo-400 text-xs ml-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CREDENCIAL DIGITAL (5 COLS - DISEÑO OSCURO ELEGANTE) -->
+          <div class="md:col-span-5 flex flex-col">
+            <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Credencial / Vista Previa</span>
+            
+            <div class="credencial-digital-card bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden">
+              <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-700/70">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold text-base shadow-inner">
+                      {{ formUsuario.nombre ? formUsuario.nombre[0].toUpperCase() : 'U' }}
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-white tracking-tight">
+                        {{ formUsuario.nombre || formUsuario.apellidos ? (formUsuario.nombre + ' ' + formUsuario.apellidos).toUpperCase() : 'Sin Nombre' }}
+                      </h4>
+                      <p class="text-[11px] text-slate-400 font-mono mt-0.5">
+                        {{ formUsuario.correo ? formUsuario.correo : 'usuario@velas.com' }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border"
+                        :class="formUsuario.guardarEnProduccion ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30'">
+                    {{ formUsuario.guardarEnProduccion ? 'PROD' : 'TEST' }}
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-2.5 mt-4">
+                  <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 block">Posición Asignada</span>
+                    <span class="text-xs font-medium text-slate-200 mt-0.5 block truncate">
+                      {{ formUsuario.puesto || 'Pendiente de asignar' }}
+                    </span>
+                  </div>
+
+                  <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+                    <span class="text-[10px] uppercase font-bold text-slate-500 block">Clave de Acceso</span>
+                    <span class="text-xs font-mono text-indigo-300 mt-0.5 block truncate">
+                      {{ formUsuario.correo || 'Pendiente de definir' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-700/60 text-[10px] text-slate-400 flex items-center justify-between mt-4">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full" :class="formUsuario.nombre && formUsuario.correo ? 'bg-emerald-400' : 'bg-slate-500'"></span>
+                  <span>{{ formUsuario.nombre && formUsuario.correo ? 'Datos completos' : 'Completando campos...' }}</span>
+                </span>
+                <span class="font-mono text-slate-500">GRUPO VELAS</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div v-if="estadoBot" 
+             class="p-3.5 rounded-xl text-xs font-semibold mb-5 flex items-center gap-2.5"
+             :class="estadoBot.ok ? 'bg-emerald-950/60 border border-emerald-500/50 text-emerald-300' : 'bg-amber-950/60 border border-amber-500/50 text-amber-300'">
+          <i :class="estadoBot.ok ? 'fa-solid fa-circle-check text-emerald-400' : 'fa-solid fa-circle-notch fa-spin text-amber-400'"></i>
+          <span>{{ estadoBot.msg }}</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-slate-700">
+          <button @click="guardarDatosEnFicha" 
+                  class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider cursor-pointer">
+            Guardar Datos
+          </button>
+          
+          <button @click="editarDatosEnFicha" 
+                  class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider cursor-pointer">
+            Editar
+          </button>
+
+          <button @click="limpiarFormularioUsuario" 
+                  :disabled="ejecutandoSelenium"
+                  title="Limpiar campos para un nuevo usuario"
+                  class="bg-slate-800 hover:bg-slate-700 disabled:opacity-50 border border-slate-700 text-slate-200 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-broom text-slate-400"></i>
+            <span>Limpiar</span>
+          </button>
+
+          <button @click="reiniciarCreacionSelenium" 
+                  title="Detiene Selenium, cierra la ventana y vuelve a iniciar"
+                  class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+            <i class="fa-solid fa-rotate" :class="{'fa-spin': ejecutandoSelenium}"></i>
+            <span>Reiniciar</span>
+          </button>
+          
+          <button @click="iniciarCreacionSelenium" 
+                  :disabled="ejecutandoSelenium"
+                  class="col-span-2 sm:col-span-1 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-3 rounded-xl text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer">
+            <i v-if="ejecutandoSelenium" class="fa-solid fa-circle-notch fa-spin"></i>
+            <span>{{ ejecutandoSelenium ? 'Ejecutando...' : 'Iniciar' }}</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 2: NUEVA POSICIÓN                                  -->
+    <!-- ======================================================== -->
+    <div v-if="modalPosicionAbierto" 
+         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-lg font-bold text-white">Alta y Configuración de Posición</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Sincroniza automáticamente en tiempo real con <code class="text-emerald-400 font-mono">Firebase Firestore</code></p>
+          </div>
+          <button @click="cerrarModalPosicion" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="space-y-5 my-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nombre de la Posición</label>
+              <input type="text" 
+                     v-model="formPosicion.nombre" 
+                     placeholder="Ej. ASESOR DE VENTA CANCUN" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Área Organizacional (Opcional)</label>
+              <input type="text" 
+                     v-model="formPosicion.area" 
+                     placeholder="Ej. VENTAS" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <!-- NIVELES ASIGNADOS -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-indigo-400"></i> Niveles Asignados
+              </span>
+              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.niveles.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Ingrese la compañía y el nivel correspondiente para esta posición.</p>
+
+            <div class="space-y-2.5">
+              <div v-for="(n, idx) in formPosicion.niveles" :key="'niv-' + idx" class="grid grid-cols-2 gap-3">
+                <input type="text" v-model="n.compania" :placeholder="'Compañía #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                <input type="text" v-model="n.nivel" :placeholder="'Nivel #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaNivel" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Nivel
+              </button>
+              <button v-if="formPosicion.niveles.length > 1" @click="quitarFilaNivel" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+          <!-- GRUPOS -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-users text-indigo-400"></i> Grupos
+              </span>
+              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.grupos.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Ingrese los grupos asignados en Aryve.</p>
+
+            <div class="space-y-2.5">
+              <div v-for="(g, idx) in formPosicion.grupos" :key="'grp-' + idx">
+                <input type="text" v-model="g.nombre" :placeholder="'Grupo #' + (idx + 1)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaGrupo" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Grupo
+              </button>
+              <button v-if="formPosicion.grupos.length > 1" @click="quitarFilaGrupo" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+          <!-- CLASIFICADORES -->
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-tags text-indigo-400"></i> Clasificadores (Opcional)
+              </span>
+              <span class="text-[11px] text-slate-400">Bloques: {{ formPosicion.clasifs.length }}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Si este puesto lleva clasificadores, ingréselos aquí. Si no aplica, déjelos vacíos.</p>
+
+            <div class="space-y-3">
+              <div v-for="(c, idx) in formPosicion.clasifs" :key="'clasif-' + idx" class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 space-y-2.5">
+                <div class="grid grid-cols-2 gap-3">
+                  <input type="text" v-model="c.abuelo" placeholder="Abuelo (Opcional)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                  <input type="text" v-model="c.padre" placeholder="Padre (Tipo de Clasificador)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
+                </div>
+                <textarea v-model="c.codigos" placeholder="Códigos (pega aquí la lista o rangos ej. TAM-001 al TAM-050)" class="w-full h-16 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 resize-none"></textarea>
+              </div>
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button @click="agregarFilaClasif" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                + Agregar Clasificador
+              </button>
+              <button v-if="formPosicion.clasifs.length > 1" @click="quitarFilaClasif" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
+                - Quitar
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+          <button @click="cerrarModalPosicion" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer">
+            Cancelar
+          </button>
+          <button @click="guardarNuevaPosicion" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition cursor-pointer">
+            Guardar Posición
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+<!-- ======================================================== -->
+    <!-- MODAL: ACTUALIZAR PUESTO Y ESTRUCTURA DE CLASIFICADORES  -->
+    <!-- ======================================================== -->
+    <div v-if="modalClasificadorAbierto" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+      <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-2xl shadow-2xl p-6 relative">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i class="fa-solid fa-arrows-rotate text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Actualizar Estructura de Clasificadores</h3>
+              <p class="text-[11px] text-slate-400">Selecciona el puesto base para extraer los clasificadores de <code class="text-emerald-400 font-mono">Firebase (Nube)</code></p>
+            </div>
+          </div>
+          <button @click="cerrarModalClasificador" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="my-5 space-y-4 text-xs">
+          <!-- Info del usuario receptor -->
+          <div v-if="usuarioSeleccionado" class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Usuario Seleccionado</span>
+              <span class="font-bold text-slate-100 text-xs">{{ usuarioSeleccionado.nombre_completo }}</span>
+              <span class="text-indigo-400 font-mono text-[11px] ml-2">ID: #{{ usuarioSeleccionado.id }}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] uppercase font-semibold text-slate-400 block">Puesto Actual</span>
+              <span class="text-slate-300 text-xs truncate max-w-[180px] block">{{ usuarioSeleccionado.puesto || 'No especificado' }}</span>
+            </div>
+          </div>
+
+          <!-- Selector de Puesto de puestos.json con Buscador -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+                Seleccionar Puesto de la Matriz Oficial
+              </label>
+              <span class="text-[11px] font-mono" :class="puestoClasificadorTemporal ? 'text-indigo-400 font-semibold' : 'text-slate-500'">
+                {{ puestosFiltradosClasificador.length }} de {{ catalogoPuestos.length }} puestos
+              </span>
+            </div>
+
+            <!-- Buscador Autocomplete de Clasificador -->
+            <div class="relative">
+              <div class="relative">
+                <input type="text" 
+                       v-model="busquedaPuestoClasificador" 
+                       @focus="mostrarDropdownPuestoClasificador = true" 
+                       @input="mostrarDropdownPuestoClasificador = true" 
+                       @blur="setTimeout(() => { mostrarDropdownPuestoClasificador = false }, 250)"
+                       placeholder="Buscar puesto o plaza (ej. REYNOSA, MATAMOROS, BROKER, RESIDENTE...)" 
+                       class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs pointer-events-none"></i>
+
+                <button v-if="busquedaPuestoClasificador" 
+                        @click="limpiarPuestoModalClasificador" 
+                        type="button" 
+                        class="absolute right-3 top-2 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                        title="Limpiar búsqueda">
+                  <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+                <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
+                   :class="{'rotate-180': mostrarDropdownPuestoClasificador}"></i>
+              </div>
+
+              <!-- Dropdown Flotante con Resultados Filtrados -->
+              <div v-if="mostrarDropdownPuestoClasificador" 
+                   class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
+                <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
+                  <span>Matriz Oficial ({{ puestosFiltradosClasificador.length }})</span>
+                  <span v-if="busquedaPuestoClasificador" class="text-indigo-400">Filtro: "{{ busquedaPuestoClasificador }}"</span>
+                </div>
+                <div v-if="puestosFiltradosClasificador.length === 0" class="p-3 text-center text-xs text-slate-400">
+                  <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
+                  No se encontró ningún puesto que coincida
+                </div>
+                <button v-for="p in puestosFiltradosClasificador" 
+                        :key="p" 
+                        type="button" 
+                        @mousedown.prevent 
+                        @click="seleccionarPuestoModalClasificador(p)" 
+                        class="w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer"
+                        :class="puestoClasificadorTemporal === p ? 'bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'">
+                  <span class="truncate">{{ p }}</span>
+                  <i v-if="puestoClasificadorTemporal === p" class="fa-solid fa-check text-indigo-400 text-xs ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen de Clasificadores que se cargarán -->
+          <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Desglose de Clasificadores</span>
+              <span class="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                {{ infoClasificadorTemporal.total }} clasificadores
+              </span>
+            </div>
+
+            <div v-if="infoClasificadorTemporal.categorias && infoClasificadorTemporal.categorias.length" 
+                 class="space-y-1.5 max-h-48 overflow-y-auto custom-scrollbar pr-1 mt-3">
+              <div v-for="cat in infoClasificadorTemporal.categorias" :key="cat.nombre" 
+                   class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-200 font-medium">{{ cat.nombre }}</span>
+                <span class="font-mono text-indigo-300 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-900/60 text-[10px]">
+                  {{ cat.total }} ítems
+                </span>
+              </div>
+            </div>
+            <div v-else class="text-center py-6 text-slate-500 text-[11px]">
+              <i class="fa-solid fa-list-check text-2xl mb-2 text-slate-600 block"></i>
+              Selecciona un puesto arriba para ver los clasificadores que se enviarán a Aryve.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+          <button @click="cerrarModalClasificador" 
+                  class="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-white transition cursor-pointer">
+            Cancelar
+          </button>
+          <div class="flex items-center gap-2">
+            <button @click="confirmarSeleccionPuestoClasificador" 
+                    :disabled="!puestoClasificadorTemporal"
+                    class="bg-slate-800 hover:bg-slate-700 disabled:opacity-50 border border-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+              <i class="fa-solid fa-check mr-1.5 text-indigo-400"></i> Aplicar Selección
+            </button>
+            <button @click="iniciarAsignacionClasificadores" 
+                    :disabled="!puestoClasificadorTemporal || estadoAsignacionClasificadores.ejecutando"
+                    class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 border border-indigo-500/50 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-lg shadow-indigo-600/20">
+              <i v-if="estadoAsignacionClasificadores.ejecutando" class="fa-solid fa-circle-notch fa-spin text-xs"></i>
+              <i v-else class="fa-solid fa-play text-xs text-emerald-300"></i>
+              <span>Iniciar en Aryve</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
