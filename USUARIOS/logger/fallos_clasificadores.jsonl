@@ -94,3 +94,8 @@
 {"fecha": "2026-11-07 19:32:46", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Estatus.ID", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-07 19:32:48", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "PorcentajeAvance.ID", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-07 19:32:56", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-07 19:48:02", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-07 19:48:05", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-07 19:48:08", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-07 19:48:10", "usuario": "ASESOR DE VENTA TAMPICO", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-REGISTRO-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-07 19:49:43", "usuario": "ASESOR DE VENTA CANCUN", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "TODOS", "detalle_error": "No se pudo seleccionar en el desplegable"}
