@@ -1,8 +1,8 @@
     <!-- ======================================================== -->
     <!-- VISTA: MAPEO DE LOTES & CONSECUTIVO EK (60,742 LOTES)     -->
-    <!-- Archivo Modular: vue/views/mapeo.html                      -->
+    <!-- Archivo Modular: vue/views/mapeo.html (Consulta Flotante)  -->
     <!-- ======================================================== -->
-    <div v-show="vistaActiva === 'MAPEO'" class="flex flex-col flex-1 pb-16">
+    <div v-show="consultaFlotanteActiva === 'MAPEO'" class="flex flex-col flex-1 pb-16">
 
       <!-- SUB-HEADER DE MAPEO -->
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
@@ -43,6 +43,13 @@
           </div>
 
           <div class="flex items-center gap-2">
+            <button @click="sincronizarMapeoEnkontrol"
+                    :disabled="sincronizandoMapeo"
+                    class="px-2.5 py-1 text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 rounded-lg transition cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                    title="Sincronizar en vivo con Enkontrol">
+              <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoMapeo}"></i>
+              <span>{{ sincronizandoMapeo ? 'Sincronizando...' : 'Sincronizar' }}</span>
+            </button>
             <button @click="limpiarFiltrosMapeo"
                     class="px-2.5 py-1 text-xs text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg border border-slate-700 transition cursor-pointer flex items-center gap-1.5"
                     title="Restablecer todos los filtros">

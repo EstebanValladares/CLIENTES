@@ -22,3 +22,6 @@ from .usuario_bot import (
     ejecutar_asignacion_clasificadores,
     guardar_usuario_general,
 )
+from .posicion_bot import (
+    ejecutar_alta_posicion,
+)

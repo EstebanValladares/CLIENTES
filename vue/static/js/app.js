@@ -37,6 +37,12 @@ createApp({
 
     // NAVEGACIÓN ENTRE VISTAS
     const cambiarVista = (vista) => {
+      if (vista === 'MAPEO') {
+        if (typeof abrirConsultaFlotante === 'function') {
+          abrirConsultaFlotante('MAPEO');
+        }
+        return;
+      }
       vistaActiva.value = vista;
       if (vista === 'PROYECTOS') {
         cargarPermisos();
@@ -46,9 +52,6 @@ createApp({
         cargarUsuarios();
       } else if (vista === 'OBRAS') {
         cargarCatalogoObras();
-      } else if (vista === 'MAPEO') {
-        cargarResumenMapeo();
-        consultarLotesMapeo();
       }
     };
 
@@ -86,8 +89,6 @@ createApp({
       filtroCategoria,
       guardandoPosicionSimple,
       resultadoCreacionPosicion,
-      modalPosicionAbierto,
-      formPosicion,
       busquedaPuestoNuevoUsuario,
       mostrarDropdownPuestoNuevoUsuario,
       busquedaPuestoClasificador,
@@ -113,15 +114,6 @@ createApp({
       seleccionarCategoriaPosicion,
       guardarPosicionSimple,
       limpiarFormPosicionSimple,
-      abrirModalPosicion,
-      cerrarModalPosicion,
-      agregarFilaNivel,
-      quitarFilaNivel,
-      agregarFilaGrupo,
-      quitarFilaGrupo,
-      agregarFilaClasif,
-      quitarFilaClasif,
-      guardarNuevaPosicion,
       cargarClasificadoresUsuario,
       abrirModalClasificador,
       cerrarModalClasificador,
@@ -131,8 +123,10 @@ createApp({
       iniciarAsignacionClasificadores,
       seleccionarPuestoNuevoUsuario,
       limpiarPuestoNuevoUsuario,
+      toggleDropdownPuestoNuevoUsuario,
       seleccionarPuestoModalClasificador,
-      limpiarPuestoModalClasificador
+      limpiarPuestoModalClasificador,
+      toggleDropdownPuestoClasificador
     } = usuariosModulo;
 
     // ==========================================
@@ -454,6 +448,60 @@ createApp({
       sincronizarMapeoEnkontrol,
       exportarMapeoCSV
     } = mapeoModulo;
+
+    // ==========================================
+    // MÓDULO: CONSULTAS FLOTANTES (vue/static/js/modules/consultas_flotantes.js)
+    // ==========================================
+    const consultasFlotantesModulo = window.createConsultasFlotantesModule ? window.createConsultasFlotantesModule(Vue, {
+      cargarResumenMapeo: () => {
+        if (typeof cargarResumenMapeo === 'function') cargarResumenMapeo();
+      },
+      consultarLotesMapeo: () => {
+        if (typeof consultarLotesMapeo === 'function') consultarLotesMapeo();
+      }
+    }) : {};
+    const {
+      menuConsultasAbierto,
+      consultaFlotanteActiva,
+      consultaMaximizada,
+      catalogoConsultas,
+      toggleMenuConsultas,
+      abrirConsultaFlotante,
+      cerrarConsultaFlotante,
+      toggleMaximizarConsulta
+    } = consultasFlotantesModulo;
+
+    // ==========================================
+    // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
+    // ==========================================
+    const catalogoVistas = computed(() => [
+      {
+        id: 'USUARIOS',
+        nombre: 'Usuarios',
+        icono: 'fa-solid fa-users',
+        badge: metricas?.value?.total_usuarios || 0
+      },
+      {
+        id: 'PROYECTOS',
+        nombre: 'Permisos Proyectos',
+        icono: 'fa-solid fa-diagram-project',
+        badge: (permisosObras?.value?.length || 0) + ' obras'
+      },
+      {
+        id: 'PROV_CONTRA',
+        nombre: 'Proveedores & Contratistas',
+        icono: 'fa-solid fa-address-card',
+        badge: (provContraEnRevisionCount?.value > 0 
+          ? (provContraEnRevisionCount.value + ' por revisar') 
+          : (provContraRegistros?.value?.length || 0))
+      },
+      {
+        id: 'OBRAS',
+        nombre: 'Obras & Orden de Compra',
+        icono: 'fa-solid fa-helmet-safety',
+        badge: metricasObras?.value?.total_obras || obrasCatalogo?.value?.length || 0
+      }
+    ]);
 
     onMounted(() => {
       // 1. Carga escalonada (Waterfall) para evitar saturación de sockets concurrentes (cuellos de botella)
@@ -1092,6 +1140,7 @@ createApp({
       // Navegación
       vistaActiva,
       cambiarVista,
+      catalogoVistas,
       cargando,
       usuarios,
       usuarioSeleccionado,
@@ -1237,18 +1286,6 @@ createApp({
       cargarMetaPosiciones,
       guardarPosicionSimple,
       limpiarFormPosicionSimple,
-      // Modal Posición
-      modalPosicionAbierto,
-      formPosicion,
-      abrirModalPosicion,
-      cerrarModalPosicion,
-      agregarFilaNivel,
-      quitarFilaNivel,
-      agregarFilaGrupo,
-      quitarFilaGrupo,
-      agregarFilaClasif,
-      quitarFilaClasif,
-      guardarNuevaPosicion,
       // Clasificadores
       modalClasificadorAbierto,
       puestoClasificadorSeleccionado,
@@ -1262,7 +1299,18 @@ createApp({
       alCambiarPuestoModalClasificador,
       confirmarSeleccionPuestoClasificador,
       borrarClasificadoresSeleccion,
-      iniciarAsignacionClasificadores
+      iniciarAsignacionClasificadores,
+      toggleDropdownPuestoNuevoUsuario,
+      toggleDropdownPuestoClasificador,
+      // Consultas Flotantes Rápidas
+      menuConsultasAbierto,
+      consultaFlotanteActiva,
+      consultaMaximizada,
+      catalogoConsultas,
+      toggleMenuConsultas,
+      abrirConsultaFlotante,
+      cerrarConsultaFlotante,
+      toggleMaximizarConsulta
     };
   }
 }).mount('#app');

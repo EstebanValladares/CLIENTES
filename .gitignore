@@ -3,27 +3,23 @@ __pycache__/
 */__pycache__/
 *.pyc
 
-# Credenciales locales del usuario (NUNCA se comparten ni se sobreescriben en Git)
+# Credenciales locales del usuario
 .env
 .env.*
 *.env
 
-# Bases de datos y almacenamiento local del usuario (intocables por Git excepto mapeo maestro)
+# Almacenamiento local del usuario
 data/*
 !data/mapeo_lotes.db
 *.sqlite
 *.sqlite3
 
-# Logs y capturas
+# Logs y temporales
 *.log
 capturas/
 reportes/
-
-# Entornos virtuales
 venv/
 .venv/
-
-# Editores
 .vscode/
 .idea/
 .DS_Store

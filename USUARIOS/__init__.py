@@ -2,6 +2,7 @@
 Módulo Principal de USUARIOS (Clean & Modular Architecture).
 """
 from USUARIOS.selectores import SELECTORES
+from USUARIOS.selectores_posiciones import SELECTORES_POSICION
 from USUARIOS.puestos_service import (
     ConfiguracionPuesto,
     es_clasificador_omitido,
@@ -15,6 +16,7 @@ from USUARIOS.automation import (
     cerrar_driver_activo,
     crear_driver_chrome,
     ejecutar_alta_usuario,
+    ejecutar_alta_posicion,
     ejecutar_asignacion_clasificadores,
     iniciar_sesion,
     obtener_driver_activo,

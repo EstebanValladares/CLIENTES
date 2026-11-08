@@ -1,0 +1,42 @@
+<!-- ======================================================== -->
+<!-- COMPONENTE: BARRA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE     -->
+<!-- Archivo: vue/views/navegacion_vistas.html                -->
+<!-- ======================================================== -->
+<div class="dock-nav-container p-1.5 rounded-full flex items-center gap-2 transition-all duration-300 select-none shadow-md"
+     :class="temaActual === 'claro' 
+       ? 'bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.06)]' 
+       : 'bg-slate-900/95 border border-slate-800 shadow-[0_4px_25px_rgba(0,0,0,0.5)] backdrop-blur-xl'">
+
+  <button v-for="vista in catalogoVistas"
+          :key="vista.id"
+          @click="cambiarVista(vista.id)"
+          type="button"
+          class="dock-item-btn"
+          :class="[
+            'dock-tab-' + vista.id.toLowerCase(),
+            vistaActiva === vista.id ? 'is-active' : 'is-inactive'
+          ]"
+          :title="vista.nombre">
+    
+    <!-- Icono de la Vista (Siempre visible y centrado en estado circular) -->
+    <i :class="vista.icono" class="text-base shrink-0 transition-transform duration-200"></i>
+
+    <!-- Nombre y Badge (Despliegue fluido en hover mediante CSS puro con paleta pastel) -->
+    <div class="dock-item-label font-bold text-xs sm:text-sm">
+      <span class="truncate">{{ vista.nombre }}</span>
+
+      <!-- Badge Contador de Registros con soporte pastel -->
+      <span v-if="vista.badge !== undefined && vista.badge !== null"
+            class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ml-2 shrink-0 transition-all font-mono"
+            :class="[
+              vistaActiva === vista.id
+                ? (temaActual === 'claro' ? 'bg-white/80 text-slate-800 shadow-xs' : 'bg-white/20 text-white')
+                : (temaActual === 'claro' ? 'bg-white/60 text-slate-700' : 'bg-slate-800/80 text-slate-300')
+            ]">
+        {{ vista.badge }}
+      </span>
+    </div>
+
+  </button>
+
+</div>

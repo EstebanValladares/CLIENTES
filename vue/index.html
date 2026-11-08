@@ -420,16 +420,19 @@
       backdrop-filter: blur(4px) !important;
     }
 
-    /* 13. AJUSTES ESPECÍFICOS DE ALTO CONTRASTE PARA MODO CLARO (CREACIÓN DE POSICIONES Y BADGES) */
+    /* 13. AJUSTES ESPECÍFICOS DE ALTO CONTRASTE PARA MODO CLARO (CREACIÓN DE POSICIONES, CLASIFICADORES Y BADGES) */
     .theme-light .card-creacion-posicion,
+    .theme-light .card-clasificadores,
     .theme-light div.card-creacion-posicion,
+    .theme-light div.card-clasificadores,
     .theme-light .bg-slate-800\/60,
     .theme-light div.bg-slate-800\/60 {
       background-color: #ffffff !important;
       border-color: #cbd5e1 !important;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
     }
-    .theme-light .card-creacion-posicion h4 {
+    .theme-light .card-creacion-posicion h4,
+    .theme-light .card-clasificadores h4 {
       color: #0f172a !important;
     }
     .theme-light .label-pos-field {
@@ -630,6 +633,264 @@
       border-left: 1.5px solid #bae6fd !important;
       border-right: 1.5px solid #bae6fd !important;
     }
+
+    /* ======================================================== */
+    /* DOCK FLOTANTE VISION-OS / GLASSMORPHISM (LAUNCHER)       */
+    /* ======================================================== */
+    @keyframes dockPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -8px) scale(0.92);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+      }
+    }
+    .animate-dock-pop {
+      animation: dockPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* MODO CLARO: LIQUID FROSTED GLASS */
+    .dock-glass-outer-light {
+      background: rgba(255, 255, 255, 0.38) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+      box-shadow: 0 20px 45px rgba(31, 38, 135, 0.16), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    }
+    .dock-glass-inner-light {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 244, 255, 0.45) 100%) !important;
+      border: 1.2px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+      backdrop-filter: blur(25px) !important;
+      -webkit-backdrop-filter: blur(25px) !important;
+    }
+    .dock-glass-sparkle-light {
+      background: rgba(255, 255, 255, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      color: #334155 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+    }
+    .dock-glass-btn-light {
+      background: rgba(255, 255, 255, 0.6) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+    }
+    .dock-glass-btn-light:hover {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border-color: rgba(255, 255, 255, 1) !important;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.2), inset 0 1px 2px #ffffff !important;
+    }
+
+    /* MODO OSCURO: OBSIDIAN VISION CAPSULE */
+    .dock-glass-outer-dark {
+      background: rgba(10, 11, 15, 0.5) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+      backdrop-filter: blur(30px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(160%) !important;
+    }
+    .dock-glass-inner-dark {
+      background: linear-gradient(180deg, rgba(28, 29, 36, 0.96) 0%, rgba(14, 15, 20, 0.96) 100%) !important;
+      border: 1.2px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(30px) !important;
+      -webkit-backdrop-filter: blur(30px) !important;
+    }
+    .dock-glass-sparkle-dark {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    }
+    .dock-glass-btn-dark {
+      background: #ffffff !important;
+      color: #09090b !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 0 24px rgba(255, 255, 255, 0.45), 0 4px 14px rgba(0, 0, 0, 0.7) !important;
+    }
+    .dock-glass-btn-dark:hover {
+      background: #f4f4f5 !important;
+      box-shadow: 0 0 32px rgba(255, 255, 255, 0.65), 0 6px 18px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    /* ======================================================== */
+    /* DOCK DE NAVEGACIÓN EXPANDIBLE ENTRE VISTAS (BUBBLE PILL) */
+    /* ======================================================== */
+    .dock-nav-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 9999px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .theme-light .dock-nav-container {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    /* Cada botón inicia estrictamente como círculo de 44px */
+    .dock-item-btn {
+      height: 44px;
+      min-width: 44px;
+      max-width: 44px;
+      padding: 0 13px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: max-width 0.32s cubic-bezier(0.16, 1, 0.3, 1), 
+                  padding 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.2s ease, 
+                  border-color 0.2s ease, 
+                  box-shadow 0.2s ease;
+      will-change: max-width, padding;
+    }
+
+    /* Al pasar el mouse por encima se expande de forma ultra fluida */
+    .dock-item-btn:hover {
+      max-width: 340px;
+      padding: 0 16px;
+      justify-content: flex-start;
+    }
+
+    /* Etiqueta y Badge: Ocultos en ancho 0, se despliegan en hover sin jitter */
+    .dock-item-label {
+      max-width: 0;
+      opacity: 0;
+      margin-left: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      transition: max-width 0.32s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.22s ease, 
+                  margin-left 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: max-width, opacity, margin-left;
+    }
+
+    .dock-item-btn:hover .dock-item-label {
+      max-width: 280px;
+      opacity: 1;
+      margin-left: 9px;
+      pointer-events: auto;
+    }
+
+    /* ======================================================== */
+    /* PALETAS PASTEL INDIVIDUALES POR VISTA (EXPANDIDA / ACTIVA) */
+    /* ======================================================== */
+    /* MODO CLARO - INACTIVO */
+    .theme-light .dock-tab-usuarios {
+      background-color: #edf5fd !important;
+      color: #3b82f6 !important;
+      border: 1px solid transparent !important;
+    }
+    .theme-light .dock-tab-proyectos {
+      background-color: #f5f3ff !important;
+      color: #8b5cf6 !important;
+      border: 1px solid transparent !important;
+    }
+    .theme-light .dock-tab-prov_contra {
+      background-color: #fffbeb !important;
+      color: #f59e0b !important;
+      border: 1px solid transparent !important;
+    }
+    .theme-light .dock-tab-obras {
+      background-color: #ecfdf5 !important;
+      color: #10b981 !important;
+      border: 1px solid transparent !important;
+    }
+
+    /* MODO CLARO - HOVER O ACTIVO (PASTEL VIBRANTE) */
+    .theme-light .dock-tab-usuarios:hover,
+    .theme-light .dock-tab-usuarios.is-active {
+      background-color: #e0eaff !important;
+      color: #1d4ed8 !important;
+      border-color: #bfdbfe !important;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.12) !important;
+    }
+    .theme-light .dock-tab-proyectos:hover,
+    .theme-light .dock-tab-proyectos.is-active {
+      background-color: #ede9fe !important;
+      color: #7c3aed !important;
+      border-color: #ddd6fe !important;
+      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.12) !important;
+    }
+    .theme-light .dock-tab-prov_contra:hover,
+    .theme-light .dock-tab-prov_contra.is-active {
+      background-color: #fef3c7 !important;
+      color: #d97706 !important;
+      border-color: #fde68a !important;
+      box-shadow: 0 2px 10px rgba(217, 119, 6, 0.12) !important;
+    }
+    .theme-light .dock-tab-obras:hover,
+    .theme-light .dock-tab-obras.is-active {
+      background-color: #d1fae5 !important;
+      color: #059669 !important;
+      border-color: #a7f3d0 !important;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.12) !important;
+    }
+
+    /* MODO OSCURO - INACTIVO */
+    .dock-tab-usuarios {
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      color: #60a5fa !important;
+      border: 1px solid rgba(51, 65, 85, 0.7) !important;
+    }
+    .dock-tab-proyectos {
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      color: #c084fc !important;
+      border: 1px solid rgba(51, 65, 85, 0.7) !important;
+    }
+    .dock-tab-prov_contra {
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      color: #fbbf24 !important;
+      border: 1px solid rgba(51, 65, 85, 0.7) !important;
+    }
+    .dock-tab-obras {
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      color: #34d399 !important;
+      border: 1px solid rgba(51, 65, 85, 0.7) !important;
+    }
+
+    /* MODO OSCURO - HOVER O ACTIVO (PASTEL GLOW) */
+    .dock-tab-usuarios:hover,
+    .dock-tab-usuarios.is-active {
+      background-color: rgba(30, 58, 138, 0.5) !important;
+      color: #93c5fd !important;
+      border-color: rgba(96, 165, 250, 0.5) !important;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25) !important;
+    }
+    .dock-tab-proyectos:hover,
+    .dock-tab-proyectos.is-active {
+      background-color: rgba(88, 28, 135, 0.5) !important;
+      color: #d8b4fe !important;
+      border-color: rgba(192, 132, 252, 0.5) !important;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.25) !important;
+    }
+    .dock-tab-prov_contra:hover,
+    .dock-tab-prov_contra.is-active {
+      background-color: rgba(120, 53, 15, 0.5) !important;
+      color: #fcd34d !important;
+      border-color: rgba(251, 191, 36, 0.5) !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25) !important;
+    }
+    .dock-tab-obras:hover,
+    .dock-tab-obras.is-active {
+      background-color: rgba(6, 78, 59, 0.5) !important;
+      color: #6ee7b7 !important;
+      border-color: rgba(52, 211, 153, 0.5) !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25) !important;
+    }
 </style>
   <script>
     (function() {
@@ -669,8 +930,16 @@
     <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center pb-6 border-b border-slate-700 gap-4">
       <div>
         <div class="flex items-center gap-3.5">
-          <div class="bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/20 text-white">
-            <i class="fa-solid fa-layer-group text-2xl"></i>
+          <!-- ICONO INTERACTIVO: DESPLEGABLE DE CONSULTAS FLOTANTES -->
+          <div class="relative launcher-consultas-wrapper">
+            <button @click.stop="toggleMenuConsultas($event)"
+                    class="bg-gradient-to-tr from-indigo-700 via-indigo-600 to-blue-600 hover:from-indigo-600 hover:to-cyan-500 p-3 rounded-xl shadow-lg shadow-indigo-500/25 text-white transition-all transform active:scale-95 cursor-pointer flex items-center justify-center group relative border border-indigo-400/30"
+                    title="Herramientas de consulta rápida (Flotantes)">
+              <i class="fa-solid fa-layer-group text-2xl group-hover:rotate-6 transition-transform"></i>
+            </button>
+
+            <!-- MENÚ / LAUNCHER DE ICONOS FLOTANTES -->
+            <!-- INCLUDE: views/consultas_flotantes/launcher.html -->
           </div>
           <div>
             <div class="flex items-center gap-2.5 flex-wrap">
@@ -701,12 +970,6 @@
                 class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer">
           <i class="fa-solid fa-user-plus"></i>
           <span>Crear Nuevo Usuario</span>
-        </button>
-
-        <button @click="abrirModalPosicion" 
-                class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer">
-          <i class="fa-solid fa-briefcase text-indigo-400"></i>
-          <span>Nueva Posición</span>
         </button>
 
         <button @click="sincronizarUsuariosAryve" 
@@ -804,102 +1067,18 @@
         </button>
       </div>
 
-      <!-- BOTONES DE ACCIÓN PARA LA VISTA MAPEO -->
-      <div v-else-if="vistaActiva === 'MAPEO'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
-        <div class="hidden md:flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 px-3 py-1.5 rounded-xl text-xs font-mono text-slate-300">
-          <span class="text-cyan-400 font-bold">{{ metricasMapeo.total_lotes ? metricasMapeo.total_lotes.toLocaleString() : '60,742' }}</span> Lotes
-          <span class="text-slate-600">•</span>
-          <span class="text-indigo-400 font-bold">{{ metricasMapeo.total_ccs || 1103 }}</span> CCs
-        </div>
-
-        <button @click="sincronizarMapeoEnkontrol" 
-                :disabled="sincronizandoMapeo"
-                class="bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-indigo-600/25 transition cursor-pointer disabled:opacity-50" 
-                title="Sincronizar en vivo con Enkontrol">
-          <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoMapeo}"></i>
-          <span>{{ sincronizandoMapeo ? 'Sincronizando...' : 'Sincronizar Enkontrol' }}</span>
-        </button>
-
-        <button @click="exportarMapeoCSV" 
-                class="bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer"
-                title="Descargar lista actual en formato CSV">
-          <i class="fa-solid fa-file-csv"></i>
-          <span>Exportar CSV</span>
-        </button>
-      </div>
-
     </header>
 
-    <!-- BARRA NAVEGADORA DE VISTAS (USUARIOS / PROYECTOS / OBRAS) -->
-    <nav class="flex items-center gap-3 my-5 border-b border-slate-700/80 pb-3 flex-wrap">
-      <button @click="cambiarVista('USUARIOS')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'USUARIOS' 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-users"></i>
-        <span>USUARIOS</span>
-        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
-          {{ metricas.total_usuarios }}
-        </span>
-      </button>
+    <!-- BARRA NAVEGADORA DE VISTAS (DOCK EXPANDIBLE ESTILO VISION / BUBBLE) -->
+    <nav class="flex items-center justify-between gap-3 my-5 border-b border-slate-700/80 pb-4 flex-wrap">
+      
+      <!-- CONTENEDOR DOCK FLOTANTE DE VISTAS -->
+      <!-- INCLUDE: views/navegacion_vistas.html -->
 
-      <button @click="cambiarVista('PROYECTOS')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'PROYECTOS' 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-diagram-project"></i>
-        <span>PERMISOS PROYECTOS</span>
-        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-400/20 text-indigo-300 border border-indigo-400/30">
-          {{ permisosObras.length }} obras
-        </span>
-      </button>
-
-            <button @click="cambiarVista('PROV_CONTRA')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'PROV_CONTRA' 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-address-card"></i>
-        <span>PROVEEDORES & CONTRATISTAS</span>
-        <span v-if="provContraEnRevisionCount > 0" class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-          {{ provContraEnRevisionCount }} por revisar
-        </span>
-        <span v-else class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
-          {{ provContraRegistros.length }}
-        </span>
-      </button>
-
-      <button @click="cambiarVista('OBRAS')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'OBRAS' 
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-helmet-safety"></i>
-        <span>OBRAS & ORDEN DE COMPRA</span>
-        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white">
-          {{ metricasObras.total_obras || obrasCatalogo.length }}
-        </span>
-      </button>
-
-      <button @click="cambiarVista('MAPEO')" 
-              class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 transition cursor-pointer"
-              :class="vistaActiva === 'MAPEO' 
-                ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-cyan-600/30' 
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700/60'">
-        <i class="fa-solid fa-map-location-dot" :class="vistaActiva === 'MAPEO' ? 'text-white' : 'text-cyan-400'"></i>
-        <span>MAPEO</span>
-        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-400/20 text-cyan-300 border border-cyan-400/30"
-              :class="{'bg-white/20 text-white border-white/30': vistaActiva === 'MAPEO'}">
-          {{ metricasMapeo.total_lotes ? metricasMapeo.total_lotes.toLocaleString() : '60,742' }} lotes
-        </span>
-      </button>
-
-          <!-- BOTÓN SWITCH MODO CLARO / OSCURO (CON PERSISTENCIA LOCALSTORAGE) -->
+      <!-- BOTÓN SWITCH MODO CLARO / OSCURO (CON PERSISTENCIA LOCALSTORAGE) -->
       <button @click="toggleTema" 
               type="button"
-              class="ml-auto px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 border shadow-sm cursor-pointer select-none"
+              class="ml-auto px-4 py-2.5 rounded-full text-xs sm:text-sm font-bold transition flex items-center gap-2 border shadow-sm cursor-pointer select-none"
               :class="temaActual === 'claro' 
                 ? 'bg-amber-500/20 text-amber-800 border-amber-400 hover:bg-amber-500/30 shadow-amber-500/10' 
                 : 'bg-slate-800 text-amber-400 border-slate-700 hover:bg-slate-750 hover:text-amber-300'"
@@ -1087,9 +1266,9 @@
 
 
     <!-- ======================================================== -->
-    <!-- VISTA MODULAR: MAPEO (views/mapeo.html)                  -->
+    <!-- COMPONENTE: VENTANA FLOTANTE DE CONSULTAS (MAPEO Y FUTURAS) -->
     <!-- ======================================================== -->
-    <!-- INCLUDE: views/mapeo.html -->
+    <!-- INCLUDE: views/consultas_flotantes/modal_flotante.html -->
     <!-- ======================================================== -->
     <!-- (Los modales de Usuarios se encuentran modularizados en views/usuarios.html) -->
 
@@ -1582,6 +1761,7 @@
   <script src="/static/js/modules/usuarios.js?v=20261106_1715"></script>
 <script src="/static/js/modules/obras.js?v=20261106_1715"></script>
     <script src="/static/js/modules/mapeo.js?v=20261106_1715"></script>
+<script src="/static/js/modules/consultas_flotantes.js?v=20261107"></script>
 <script src="/static/js/modules/proveedores_contratistas.js?v=20261106_1715"></script>
 <!-- Orquestador Principal -->
 <script src="/static/js/app.js?v=20261106_1715"></script>

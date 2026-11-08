@@ -28,6 +28,7 @@ class ConfiguracionPuesto:
     grupos: list[str] = field(default_factory=list)
     clasificadores: dict[str, Any] = field(default_factory=dict)
     area_organizacional: str = ""
+    time_zone: str = ""
 
     @property
     def total_clasificadores(self) -> int:
@@ -176,7 +177,8 @@ def obtener_configuracion_puesto(nombre_puesto: str) -> ConfiguracionPuesto:
                 niveles_asignados=cfg_cloud.get("niveles_asignados", []),
                 grupos=cfg_cloud.get("grupos", []),
                 clasificadores=cfg_cloud.get("clasificadores", {}),
-                area_organizacional=cfg_cloud.get("area_organizacional", ""),
+                area_organizacional=cfg_cloud.get("area_organizacion") or cfg_cloud.get("area_organizacional") or cfg_cloud.get("area") or "",
+                time_zone=cfg_cloud.get("time_zone") or cfg_cloud.get("timezone") or cfg_cloud.get("zona_horaria") or "",
             )
     except Exception:
         pass
@@ -199,7 +201,8 @@ def obtener_configuracion_puesto(nombre_puesto: str) -> ConfiguracionPuesto:
             niveles_asignados=config.get("niveles_asignados", []),
             grupos=config.get("grupos", []),
             clasificadores=config.get("clasificadores", {}),
-            area_organizacional=config.get("area_organizacional", ""),
+            area_organizacional=config.get("area_organizacion") or config.get("area_organizacional") or config.get("area") or "",
+            time_zone=config.get("time_zone") or config.get("timezone") or config.get("zona_horaria") or "",
         )
 
     print(f"[PuestosService] Aviso: El puesto '{puesto_limpio}' no está registrado.")
