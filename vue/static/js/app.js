@@ -400,6 +400,26 @@ createApp({
       }
     };
 
+    const publicandoOC = ref(false);
+    const publicarVersionOC = async () => {
+      if (publicandoOC.value) return;
+      publicandoOC.value = true;
+      try {
+        const res = await fetch('/api/torre/publicar-oc', { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          alert('Error al publicar CONTROL_PAGOS: ' + (data.mensaje || 'Error desconocido'));
+        } else {
+          await cargarProyectosTorre();
+        }
+      } catch (e) {
+        console.error('Error publicando CONTROL_PAGOS:', e);
+        alert('Fallo de conexión al publicar: ' + e.message);
+      } finally {
+        publicandoOC.value = false;
+      }
+    };
+
     const proyectosTorre = ref([]);
 
     const cargarProyectosTorre = async () => {
@@ -1136,6 +1156,8 @@ createApp({
       sincronizarOCAhora,
       publicandoCliente,
       publicarVersionCliente,
+      publicandoOC,
+      publicarVersionOC,
       cargarProyectosTorre,
       // Navegación
       vistaActiva,

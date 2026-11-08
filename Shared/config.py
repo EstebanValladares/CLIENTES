@@ -11,6 +11,12 @@ CLIENT_DIR = os.path.join(PARENT_DIR, "CLIENTES")
 CLIENT_REPO_URL = "https://github.com/EstebanValladares/CLIENTES.git"
 META_PATH = os.path.join(BASE_DIR, ".ultima_publicacion.json")
 
+# Configuración de Publicación: CONTROL_PAGOS_OC -> CONTROL_PAGOS (Servidor)
+OC_SRC_DIR = os.path.join(PARENT_DIR, "CONTROL_PAGOS_OC")
+OC_CLIENT_DIR = os.path.join(PARENT_DIR, "CONTROL_PAGOS")
+OC_REPO_URL = os.getenv("CONTROL_PAGOS_REPO_URL", "https://github.com/EstebanValladares/CONTROL_PAGOS.git")
+OC_META_PATH = os.path.join(BASE_DIR, ".ultima_publicacion_oc.json")
+
 def es_modo_master() -> bool:
     """
     Verifica si se está ejecutando en el entorno Torre / Master (DASHBOARD_EK10).

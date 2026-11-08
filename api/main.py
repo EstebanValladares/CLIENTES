@@ -1,4 +1,4 @@
-from Shared import es_modo_master, router as shared_router, obtener_estado_cliente
+from Shared import es_modo_master, router as shared_router, obtener_estado_cliente, obtener_estado_oc_publicacion
 
 import os
 import json
@@ -159,6 +159,23 @@ def _sondear_telemetria_oc():
                     "latencia_ms": data.get("latencia_db_ms", 0),
                     "uptime": uptime_str
                 })
+    except Exception:
+        pass
+
+    try:
+        pub_info = obtener_estado_oc_publicacion()
+        estado_oc.update({
+            "desactualizado": pub_info.get("desactualizado", False),
+            "estado_publicacion": "CAMBIOS PENDIENTES" if pub_info.get("desactualizado") else "ACTUALIZADO",
+            "archivos_pendientes": pub_info.get("archivos_pendientes", 0),
+            "ultima_publicacion": pub_info.get("ultima_publicacion", "-"),
+            "tiempo_transcurrido": pub_info.get("tiempo_transcurrido", "-"),
+            "commit": pub_info.get("commit", "-"),
+            "destino": "CONTROL_PAGOS",
+            "es_master": es_modo_master()
+        })
+        if pub_info.get("desactualizado"):
+            estado_oc["estado"] = "CAMBIOS PENDIENTES"
     except Exception:
         pass
 

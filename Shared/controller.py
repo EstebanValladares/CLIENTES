@@ -149,3 +149,16 @@ def publicar_version_cliente_api():
         return res
     except Exception as e:
         return JSONResponse(status_code=500, content={"ok": False, "mensaje": str(e)})
+
+@router.post("/api/torre/publicar-oc")
+def publicar_version_oc_api():
+    """Ejecuta la sincronización, blindaje y subida a GitHub/Servidor de CONTROL_PAGOS."""
+    if not es_modo_master():
+        return JSONResponse(status_code=403, content={"ok": False, "mensaje": "Esta acción solo está disponible en Modo Master."})
+
+    try:
+        from Shared.publisher_oc import publicar_control_pagos
+        res = publicar_control_pagos()
+        return res
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "mensaje": str(e)})
