@@ -590,6 +590,27 @@ class ChatService:
                 return []
 
     @classmethod
+    def eliminar_conversacion(cls, canal: str, usuario_id: str = "") -> Dict[str, Any]:
+        """
+        Elimina el historial de mensajes de un canal específico (DM o grupal).
+        Retorna la cantidad de mensajes borrados.
+        """
+        cls._init_db()
+        canal_limpio = canal.strip().lower()
+        with cls._lock:
+            try:
+                conn = sqlite3.connect(DB_PATH)
+                cur = conn.cursor()
+                cur.execute("DELETE FROM mensajes WHERE canal = ?", (canal_limpio,))
+                borrados = cur.rowcount
+                conn.commit()
+                conn.close()
+                return {"ok": True, "eliminados": borrados}
+            except Exception as e:
+                print(f"[ChatService] Error eliminando conversacion {canal_limpio}: {e}")
+                return {"ok": False, "error": str(e)}
+
+    @classmethod
     def marcar_como_leidos(cls, canal: str, usuario_id: str) -> bool:
         cls._init_db()
         canal_limpio = canal.strip().lower()

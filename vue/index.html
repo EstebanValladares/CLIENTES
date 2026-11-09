@@ -6,6 +6,11 @@
   <title>Módulo de Gestión Operativa - Grupo Velas</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
   <!-- Vue 3 CDN -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- FontAwesome 6 -->
@@ -891,6 +896,63 @@
       border-color: rgba(52, 211, 153, 0.5) !important;
       box-shadow: 0 0 16px rgba(16, 185, 129, 0.25) !important;
     }
+
+    /* ======================================================== */
+    /* CHAT DE EQUIPO: ADAPTABILIDAD AL MODO CLARO (WHATSAPP UI) */
+    /* ======================================================== */
+    .theme-light .chat-widget-box {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2) !important;
+    }
+    .theme-light .chat-header-bar {
+      background-color: #f8fafc !important;
+      border-bottom-color: #e2e8f0 !important;
+    }
+    .theme-light .chat-tabs-bar {
+      background-color: #f8fafc !important;
+      border-bottom-color: #e2e8f0 !important;
+    }
+    .theme-light .chat-tab-btn-inactive {
+      color: #475569 !important;
+    }
+    .theme-light .chat-tab-btn-inactive:hover {
+      background-color: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    .theme-light #chat-mensajes-container {
+      background-color: #f1f5f9 !important;
+    }
+    .theme-light .chat-bubble-received {
+      background-color: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #0f172a !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    }
+    .theme-light .chat-bubble-received p {
+      color: #0f172a !important;
+    }
+    .theme-light .chat-input-bar {
+      background-color: #ffffff !important;
+      border-top-color: #e2e8f0 !important;
+    }
+    .theme-light .chat-text-input {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    .theme-light .chat-conv-item:hover {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+    }
+    .theme-light .chat-btn-delete {
+      color: #94a3b8 !important;
+    }
+    .theme-light .chat-btn-delete:hover {
+      color: #e11d48 !important;
+      background-color: #ffe4e6 !important;
+    }
 </style>
   <script>
     (function() {
@@ -898,6 +960,10 @@
         var temaGuardado = localStorage.getItem('theme_preference');
         if (temaGuardado === 'claro') {
           document.documentElement.classList.add('theme-light');
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.remove('theme-light');
+          document.documentElement.classList.add('dark');
         }
       } catch (e) {}
     })();
@@ -1309,17 +1375,17 @@
       
       <!-- VENTANA FLOTANTE DEL CHAT ESTILO WHATSAPP -->
       <div v-if="chatAbierto"
-           class="w-[430px] max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-200 mb-2 border-t-2"
+           class="chat-widget-box w-[430px] max-w-[calc(100vw-2rem)] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-200 mb-2 border-t-2"
            :class="chatMinimizado ? 'h-[60px]' : 'h-[580px] max-h-[calc(100vh-6rem)]'">
         
         <!-- BARRA SUPERIOR DE ACENTO CON GRADIENTE -->
         <div class="h-[3px] bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 shrink-0"></div>
 
         <!-- HEADER DEL CHAT -->
-        <div class="px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
+        <div class="chat-header-bar px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
           
           <!-- CASO A: CONVERSACIÓN ABIERTA (MUESTRA BOTÓN VOLVER + INFO DEL CONTACTO O GRUPO) -->
-          <div v-if="conversacionAbierta" class="flex items-center gap-2 min-w-0">
+          <div v-if="conversacionAbierta" class="flex items-center gap-2 min-w-0 flex-1">
             <button @click="volverALista"
                     type="button"
                     title="Volver a la lista de chats"
@@ -1340,7 +1406,7 @@
                     :class="contactoActivo?.en_linea ? 'bg-emerald-500' : 'bg-slate-400'"></span>
             </div>
 
-            <div class="min-w-0">
+            <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5">
                 <h4 class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">
                   {{ conversacionAbierta.nombre }}
@@ -1361,6 +1427,14 @@
                 </span>
               </p>
             </div>
+
+            <!-- Botón Eliminar / Vaciar Chat estilo WhatsApp -->
+            <button @click="eliminarConversacionActual"
+                    type="button"
+                    :title="conversacionAbierta.tipo === 'grupo' ? 'Vaciar todos los mensajes de la Sala General' : 'Eliminar conversación con ' + conversacionAbierta.nombre"
+                    class="chat-btn-delete w-7 h-7 rounded-xl bg-slate-200/80 hover:bg-rose-100 hover:text-rose-600 dark:bg-slate-800 dark:hover:bg-rose-950/50 dark:hover:text-rose-400 text-slate-500 dark:text-slate-400 flex items-center justify-center transition cursor-pointer shrink-0 ml-1">
+              <i class="fa-regular fa-trash-can text-xs"></i>
+            </button>
           </div>
 
           <!-- CASO B: BANDEJA PRINCIPAL (TÍTULO DEL CENTRO DE MENSAJES) -->
@@ -1374,8 +1448,8 @@
             </div>
           </div>
 
-          <!-- CONTROLES: PERFIL DE USUARIO, MINIMIZAR Y CERRAR -->
-          <div class="flex items-center gap-1.5 shrink-0">
+          <!-- CONTROLES: PERFIL DE USUARIO, TEMA CLARO/OSCURO, MINIMIZAR Y CERRAR -->
+          <div class="flex items-center gap-1.5 shrink-0 ml-2">
             <!-- Botón de Identidad / Quién soy -->
             <button @click="chatPerfilModalAbierto = true"
                     type="button"
@@ -1384,6 +1458,15 @@
               <i class="fa-solid fa-user-circle text-indigo-500"></i>
               <span class="max-w-[70px] truncate">{{ chatUsuarioActual.nombre.split(' ')[0] }}</span>
               <i class="fa-solid fa-pen text-[8px] opacity-60"></i>
+            </button>
+
+            <!-- Botón Alternar Modo Claro / Oscuro -->
+            <button @click="toggleTema"
+                    type="button"
+                    :title="temaActual === 'claro' ? 'Cambiar a Modo Oscuro' : 'Cambiar a Modo Claro'"
+                    class="w-6 h-6 rounded-lg text-xs flex items-center justify-center transition cursor-pointer"
+                    :class="temaActual === 'claro' ? 'bg-amber-100 hover:bg-amber-200 text-amber-700' : 'bg-slate-800 hover:bg-slate-700 text-amber-400'">
+              <i class="fa-solid" :class="temaActual === 'claro' ? 'fa-sun text-[11px]' : 'fa-moon text-[11px]'"></i>
             </button>
 
             <!-- Minimizar -->
@@ -1406,7 +1489,7 @@
         <div v-show="!chatMinimizado" class="flex flex-col flex-1 min-h-0 bg-white dark:bg-slate-900">
           
           <!-- SUBHEADER CON 3 PESTAÑAS ESTILO WHATSAPP (SOLO VISIBLE CUANDO NO HAY CHAT ABIERTO) -->
-          <div v-show="!conversacionAbierta" class="px-2.5 pt-2 pb-1.5 bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 shrink-0">
+          <div v-show="!conversacionAbierta" class="chat-tabs-bar px-2.5 pt-2 pb-1.5 bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 shrink-0">
             <div class="grid grid-cols-3 gap-1.5 w-full">
               <!-- PESTAÑA 1: MENSAJES (CHATS ACTIVOS) -->
               <button @click="chatPestanaActiva = 'mensajes'"
@@ -1414,7 +1497,7 @@
                       class="py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer relative"
                       :class="chatPestanaActiva === 'mensajes' 
                         ? 'bg-indigo-600 text-white shadow-sm' 
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
+                        : 'chat-tab-btn-inactive text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
                 <i class="fa-solid fa-message text-[10px]"></i>
                 <span>Mensajes</span>
                 <span v-if="chatResumen?.dms_no_leidos && Object.keys(chatResumen.dms_no_leidos).length > 0"
@@ -1427,7 +1510,7 @@
                       class="py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer relative"
                       :class="chatPestanaActiva === 'grupos' 
                         ? 'bg-indigo-600 text-white shadow-sm' 
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
+                        : 'chat-tab-btn-inactive text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
                 <i class="fa-solid fa-users text-[10px]"></i>
                 <span>Grupos</span>
                 <span v-if="chatResumen?.general?.no_leidos > 0"
@@ -1442,7 +1525,7 @@
                       class="py-1.5 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
                       :class="chatPestanaActiva === 'contactos' 
                         ? 'bg-indigo-600 text-white shadow-sm' 
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
+                        : 'chat-tab-btn-inactive text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'">
                 <i class="fa-solid fa-address-book text-[10px]"></i>
                 <span>Compañeros</span>
               </button>
@@ -1484,8 +1567,8 @@
                 <!-- Burbuja del Mensaje -->
                 <div class="max-w-[85%] rounded-2xl px-3.5 py-2 shadow-sm text-xs leading-relaxed break-words"
                      :class="String(m.remitente_id) === String(chatUsuarioActual.id) 
-                       ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-medium rounded-tr-none' 
-                       : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-tl-none'">
+                       ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-medium rounded-tr-none shadow-indigo-600/20' 
+                       : 'chat-bubble-received bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 rounded-tl-none'">
                   <p class="whitespace-pre-wrap">{{ m.texto }}</p>
                   <div class="text-[9px] mt-1 text-right font-mono flex items-center justify-end gap-1 opacity-75"
                        :class="String(m.remitente_id) === String(chatUsuarioActual.id) ? 'text-cyan-100' : 'text-slate-400'">
@@ -1499,13 +1582,13 @@
             </div>
 
             <!-- BARRA DE ENTRADA DE TEXTO -->
-            <div class="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2 shrink-0">
+            <div class="chat-input-bar p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2 shrink-0">
               <input type="text"
                      v-model="chatNuevoTexto"
                      @keydown.enter.prevent="enviarMensajeChat"
                      :placeholder="canalActivo === 'general' ? 'Mensaje a @Equipo General...' : 'Mensaje privado a ' + (contactoActivo?.nombre || 'compañero') + '...'"
                      maxlength="500"
-                     class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                     class="chat-text-input flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
               
               <!-- BOTON ENVIAR -->
               <button @click="enviarMensajeChat"
@@ -1540,7 +1623,7 @@
               <div v-if="listaConversacionesUnificadas.length > 0" class="space-y-1">
                 <div v-for="c in listaConversacionesUnificadas" :key="c.contacto_id"
                      @click="abrirConversacionDirecta(c)"
-                     class="p-2.5 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700/60">
+                     class="group chat-conv-item p-2.5 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition border border-transparent hover:border-slate-200 dark:hover:border-slate-700/60">
                   
                   <div class="flex items-center gap-3 min-w-0 flex-1">
                     <!-- Avatar con indicador de presencia -->
@@ -1563,11 +1646,18 @@
                     </div>
                   </div>
 
-                  <!-- Insignia de no leídos -->
-                  <div v-if="c.no_leidos > 0" class="ml-2 shrink-0">
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white shadow-sm animate-pulse">
+                  <!-- Insignia de no leídos y Botón Eliminar Chat estilo WhatsApp -->
+                  <div class="flex items-center gap-1 ml-2 shrink-0">
+                    <span v-if="c.no_leidos > 0" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white shadow-sm animate-pulse">
                       {{ c.no_leidos }}
                     </span>
+                    <!-- Icono eliminar chat estilo WhatsApp -->
+                    <button @click.stop="eliminarChat(c, $event)"
+                            type="button"
+                            :title="'Eliminar conversación con ' + (c.contacto_nombre || 'contacto')"
+                            class="chat-btn-delete p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 opacity-70 group-hover:opacity-100 transition shrink-0 cursor-pointer">
+                      <i class="fa-regular fa-trash-can text-xs"></i>
+                    </button>
                   </div>
 
                 </div>
@@ -1616,11 +1706,18 @@
                   </div>
                 </div>
 
-                <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                <div class="flex items-center gap-2 shrink-0 ml-2">
                   <span v-if="chatResumen?.general?.no_leidos > 0" 
                         class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white shadow-sm">
                     {{ chatResumen.general.no_leidos }}
                   </span>
+                  <!-- Botón vaciar sala general -->
+                  <button @click.stop="eliminarConversacionActual"
+                          type="button"
+                          title="Vaciar mensajes de la Sala General"
+                          class="chat-btn-delete p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">
+                    <i class="fa-regular fa-trash-can text-xs"></i>
+                  </button>
                   <i class="fa-solid fa-chevron-right text-[11px] text-slate-400"></i>
                 </div>
 

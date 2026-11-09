@@ -15,10 +15,18 @@ createApp({
 
       if (modo === 'claro') {
         document.documentElement.classList.add('theme-light');
-        if (document.body) document.body.classList.add('theme-light');
+        document.documentElement.classList.remove('dark');
+        if (document.body) {
+          document.body.classList.add('theme-light');
+          document.body.classList.remove('dark');
+        }
       } else {
         document.documentElement.classList.remove('theme-light');
-        if (document.body) document.body.classList.remove('theme-light');
+        document.documentElement.classList.add('dark');
+        if (document.body) {
+          document.body.classList.remove('theme-light');
+          document.body.classList.add('dark');
+        }
       }
     };
 
@@ -811,6 +819,77 @@ createApp({
       cargarPresenciaYResumen();
     };
 
+    const eliminarChat = async (c, event) => {
+      if (event && event.stopPropagation) event.stopPropagation();
+      const nombre = c.contacto_nombre || c.nombre || 'este chat';
+      if (!confirm(`¿Eliminar la conversación con ${nombre}? Se borrarán los mensajes estilo WhatsApp.`)) {
+        return;
+      }
+      try {
+        const cid = String(c.contacto_id || c.usuario_id || c.id || '');
+        const canal = c.canal || canalDirectoId(chatUsuarioActual.value.id, cid);
+        await fetch('/api/chat/eliminar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            canal: canal,
+            usuario_id: String(chatUsuarioActual.value.id)
+          })
+        });
+
+        // Limpiar de chats locales
+        chatsIniciadosLocal.value = (chatsIniciadosLocal.value || []).filter(x => String(x.contacto_id || x.usuario_id) !== cid);
+        try {
+          const key = 'chats_iniciados_' + (chatUsuarioActual.value?.id || '1');
+          localStorage.setItem(key, JSON.stringify(chatsIniciadosLocal.value));
+        } catch (e) {}
+
+        if (conversacionAbierta.value && (String(conversacionAbierta.value.id) === cid || canalActivo.value === canal)) {
+          volverALista();
+        } else {
+          await cargarConversaciones();
+          await cargarPresenciaYResumen();
+        }
+      } catch (e) {
+        console.error('Error eliminando chat:', e);
+      }
+    };
+
+    const eliminarConversacionActual = async () => {
+      if (!conversacionAbierta.value) return;
+      const esGrupo = conversacionAbierta.value.tipo === 'grupo';
+      const nombre = conversacionAbierta.value.nombre;
+      const msgConfirm = esGrupo 
+        ? '¿Deseas vaciar todos los mensajes de la Sala General del Equipo?' 
+        : `¿Eliminar toda la conversación con ${nombre}?`;
+      if (!confirm(msgConfirm)) return;
+
+      try {
+        await fetch('/api/chat/eliminar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            canal: canalActivo.value,
+            usuario_id: String(chatUsuarioActual.value.id)
+          })
+        });
+        chatMensajes.value = [];
+        if (!esGrupo) {
+          const cid = String(conversacionAbierta.value.id);
+          chatsIniciadosLocal.value = (chatsIniciadosLocal.value || []).filter(x => String(x.contacto_id || x.usuario_id) !== cid);
+          try {
+            const key = 'chats_iniciados_' + (chatUsuarioActual.value?.id || '1');
+            localStorage.setItem(key, JSON.stringify(chatsIniciadosLocal.value));
+          } catch (e) {}
+          volverALista();
+        } else {
+          cargarMensajesCanal(true);
+        }
+      } catch (e) {
+        console.error('Error al vaciar conversación:', e);
+      }
+    };
+
     const scrollChatAlFinal = () => {
       setTimeout(() => {
         const box = document.getElementById('chat-mensajes-container');
@@ -1039,6 +1118,8 @@ createApp({
       iniciarChatDesdeDirectorio,
       abrirGrupoGeneral,
       volverALista,
+      eliminarChat,
+      eliminarConversacionActual,
       enviarMensajeChat,
       guardarPerfilChat,
       cargarMensajesCanal,

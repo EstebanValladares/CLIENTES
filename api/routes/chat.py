@@ -30,6 +30,10 @@ class LeidoInput(BaseModel):
     canal: str
     usuario_id: str
 
+class EliminarChatInput(BaseModel):
+    canal: str
+    usuario_id: Optional[str] = ""
+
 @router.get("/mi-identidad")
 def obtener_mi_identidad():
     """Detecta la identidad local del usuario en este equipo (Master o Cliente)."""
@@ -96,6 +100,14 @@ def marcar_mensajes_leidos(body: LeidoInput):
         return res_proxy
     ok = ChatService.marcar_como_leidos(body.canal, body.usuario_id)
     return {"ok": ok}
+
+@router.post("/eliminar")
+def eliminar_chat(body: EliminarChatInput):
+    """Elimina el historial completo de un chat o conversación estilo WhatsApp."""
+    res_proxy = ChatService.proxy_torre_post("/api/chat/eliminar", json_data=body.dict())
+    if res_proxy is not None:
+        return res_proxy
+    return ChatService.eliminar_conversacion(body.canal, body.usuario_id or "")
 
 @router.get("/resumen")
 def obtener_resumen_canales(usuario_id: str = Query(...)):
