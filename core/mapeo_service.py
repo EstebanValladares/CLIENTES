@@ -7,16 +7,21 @@ Permite consultas O(1) e instantáneas de:
 - NÚMERO INTERIOR (No Int)
 - ID LOTE EK (ej. 570345)
 - Metadatos: Calle, Fraccionamiento, Modelo/Prototipo, Mts Terreno, Estatus.
+- Cobertura completa: Comercial (sm_fraccionamiento_lote) + Obras (su_lotes).
 """
 
 import os
 import sqlite3
 import time
+import threading
 from typing import Dict, Any, List, Optional
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "mapeo_lotes.db")
+
+_hilo_daemon_mapeo = None
+_detener_daemon_mapeo = False
 
 
 class MapeoService:
@@ -196,7 +201,11 @@ class MapeoService:
 
     @classmethod
     def sincronizar_desde_enkontrol(cls) -> Dict[str, Any]:
-        """Extrae en vivo los 60k+ lotes desde el servidor Enkontrol (10.10.202.244)."""
+        """
+        Extrae en vivo el universo completo de lotes desde el servidor Enkontrol (10.10.202.244).
+        Combina la tabla de comercial/ventas (sm_fraccionamiento_lote) con la de obra física (su_lotes)
+        para asegurar cobertura 100% total (116k+ lotes).
+        """
         try:
             import pyodbc
             conn_ek = pyodbc.connect(
@@ -206,7 +215,7 @@ class MapeoService:
                 "CommLinks=tcpip(host=10.10.202.244:2544);"
                 "UID=user_write;"
                 "PWD=writaryb0904##;",
-                timeout=10,
+                timeout=12,
                 readonly=True
             )
             cur_ek = conn_ek.cursor()
@@ -230,7 +239,29 @@ class MapeoService:
                 ON l.id_cve_fracc = f.id_cve_fracc
             LEFT JOIN DBA.sm_prototipo p 
                 ON l.id_num_tipocasa = p.id_num_tipocasa
-            ORDER BY l.obra ASC, l.id_num_mza ASC, l.id_num_lote ASC
+
+            UNION ALL
+
+            SELECT 
+                su.obra AS cc,
+                CAST(su.lote_id AS BIGINT) AS id_lote_ek,
+                0 AS id_lote,
+                COALESCE(su.interior, '') AS no_int,
+                CAST(su.lote AS VARCHAR) AS lote,
+                CAST(su.manzana AS VARCHAR) AS manzana,
+                '' AS calle,
+                '' AS cve_fracc,
+                'OBRA / SUBCONTRATO' AS fraccionamiento,
+                COALESCE(p.nom_tipocasa, '') AS modelo_vivienda,
+                0.0 AS mts_terreno,
+                0.0 AS mts_exced,
+                'Obra' AS estatus
+            FROM DBA.su_lotes su
+            LEFT JOIN DBA.sm_fraccionamiento_lote sm ON su.lote_id = sm.lote_id
+            LEFT JOIN DBA.sm_prototipo p ON su.id_num_tipocasa_smc = p.id_num_tipocasa
+            WHERE sm.lote_id IS NULL
+
+            ORDER BY 1 ASC, 6 ASC, 5 ASC
             """
             cur_ek.execute(query)
             rows = cur_ek.fetchall()
@@ -263,6 +294,8 @@ class MapeoService:
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_ek ON lotes_mapeo(id_lote_ek)")
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_mza_lote ON lotes_mapeo(cc, manzana, lote)")
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_noint ON lotes_mapeo(cc, no_int)")
+            cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_calle ON lotes_mapeo(calle)")
+            cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_fracc ON lotes_mapeo(fraccionamiento)")
 
             insert_data = [
                 (
@@ -295,6 +328,7 @@ class MapeoService:
             conn_local.commit()
             conn_local.close()
 
+            print(f"[MAPEO SYNC] Base de lotes actualizada con éxito: {len(rows):,} registros.")
             return {
                 "ok": True,
                 "mensaje": f"Mapeo sincronizado exitosamente con {len(rows):,} lotes de Enkontrol.",
@@ -302,4 +336,79 @@ class MapeoService:
                 "fecha": fecha_now
             }
         except Exception as e:
-            return {"ok": False, "error": f"Error sincronizando con Enkontrol: {str(e)}"}
+            err_msg = f"Error sincronizando con Enkontrol: {str(e)}"
+            print(f"[MAPEO SYNC ERROR] {err_msg}")
+            return {"ok": False, "error": err_msg}
+
+    @classmethod
+    def verificar_y_actualizar_si_hay_cambios(cls) -> bool:
+        """
+        Comprobación ligera (0.2s) para verificar si Enkontrol recibió nuevos lotes.
+        Si la cantidad cambió respecto a la base local, dispara la sincronización automática.
+        """
+        try:
+            import pyodbc
+            conn_ek = pyodbc.connect(
+                "Driver={SQL Anywhere 11};"
+                "EngineName=especial_v9;"
+                "DatabaseName=EK_ADM01_11;"
+                "CommLinks=tcpip(host=10.10.202.244:2544);"
+                "UID=user_write;"
+                "PWD=writaryb0904##;",
+                timeout=5,
+                readonly=True
+            )
+            cur_ek = conn_ek.cursor()
+            cur_ek.execute("""
+                SELECT 
+                    (SELECT COUNT(*) FROM DBA.sm_fraccionamiento_lote) + 
+                    (SELECT COUNT(*) FROM DBA.su_lotes su LEFT JOIN DBA.sm_fraccionamiento_lote sm ON su.lote_id = sm.lote_id WHERE sm.lote_id IS NULL)
+            """)
+            total_remoto = cur_ek.fetchone()[0]
+            conn_ek.close()
+
+            # Comparar con local
+            if not os.path.exists(DB_PATH):
+                cls.sincronizar_desde_enkontrol()
+                return True
+
+            conn_local = sqlite3.connect(DB_PATH)
+            cur_loc = conn_local.cursor()
+            cur_loc.execute("SELECT COUNT(*) FROM lotes_mapeo")
+            total_local = cur_loc.fetchone()[0]
+            conn_local.close()
+
+            if total_remoto != total_local:
+                print(f"[MAPEO AUTO-SYNC] Se detectaron nuevos lotes en Enkontrol (Remoto: {total_remoto:,} vs Local: {total_local:,}). Actualizando...")
+                cls.sincronizar_desde_enkontrol()
+                return True
+            return False
+        except Exception as e:
+            # En caso de error de red o timeout, no interrumpir la ejecución
+            return False
+
+    @classmethod
+    def iniciar_demonio_mapeo(cls, intervalo_minutos: int = 30):
+        """Inicia un hilo daemon que revisa silenciosamente cada X minutos si hay nuevos lotes."""
+        global _hilo_daemon_mapeo, _detener_daemon_mapeo
+        if _hilo_daemon_mapeo is not None and _hilo_daemon_mapeo.is_alive():
+            return
+
+        def _bucle():
+            print(f"[DAEMON MAPEO] Auto-actualizador de lotes iniciado (revisión cada {intervalo_minutos}m)...")
+            while not _detener_daemon_mapeo:
+                try:
+                    time.sleep(intervalo_minutos * 60)
+                    if _detener_daemon_mapeo:
+                        break
+                    cls.verificar_y_actualizar_si_hay_cambios()
+                except Exception as ex:
+                    print(f"[DAEMON MAPEO ERROR] {ex}")
+
+        _detener_daemon_mapeo = False
+        _hilo_daemon_mapeo = threading.Thread(
+            target=_bucle,
+            name="DemonioMapeoLotes",
+            daemon=True
+        )
+        _hilo_daemon_mapeo.start()

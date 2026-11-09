@@ -57,6 +57,10 @@
       mostrarDropdownPuestoNuevoUsuario.value = true;
     };
 
+    const toggleDropdownPuestoNuevoUsuario = () => {
+      mostrarDropdownPuestoNuevoUsuario.value = !mostrarDropdownPuestoNuevoUsuario.value;
+    };
+
     // Autocomplete Puesto en Clasificadores
     const busquedaPuestoClasificador = ref('');
     const mostrarDropdownPuestoClasificador = ref(false);
@@ -146,16 +150,6 @@
       formCreacionPosicion.value.categoria = c;
       dropdownCategoriaAbierto.value = false;
     };
-
-    // Modal Posición Compleja
-    const modalPosicionAbierto = ref(false);
-    const formPosicion = ref({
-      nombre: '',
-      area: '',
-      niveles: [{ compania: '', nivel: '' }],
-      grupos: [{ nombre: '' }],
-      clasifs: [{ abuelo: '', padre: '', codigos: '' }]
-    });
 
     // ==========================================
     // MÉTODOS DE DATOS: USUARIOS Y PUESTOS
@@ -455,61 +449,6 @@
       }
     };
 
-    // Modal Posición
-    const abrirModalPosicion = () => { modalPosicionAbierto.value = true; };
-    const cerrarModalPosicion = () => { modalPosicionAbierto.value = false; };
-    const agregarFilaNivel = () => formPosicion.value.niveles.push({ compania: '', nivel: '' });
-    const quitarFilaNivel = () => { if (formPosicion.value.niveles.length > 1) formPosicion.value.niveles.pop(); };
-    const agregarFilaGrupo = () => formPosicion.value.grupos.push({ nombre: '' });
-    const quitarFilaGrupo = () => { if (formPosicion.value.grupos.length > 1) formPosicion.value.grupos.pop(); };
-    const agregarFilaClasif = () => formPosicion.value.clasifs.push({ abuelo: '', padre: '', codigos: '' });
-    const quitarFilaClasif = () => { if (formPosicion.value.clasifs.length > 1) formPosicion.value.clasifs.pop(); };
-
-    const guardarNuevaPosicion = async () => {
-      if (!formPosicion.value.nombre.trim()) {
-        alert('Ingrese el nombre de la posición.');
-        return;
-      }
-      const niveles = formPosicion.value.niveles.filter(n => n.compania && n.nivel);
-      const grupos = formPosicion.value.grupos.map(g => g.nombre.trim()).filter(Boolean);
-      const clasificadores = {};
-      formPosicion.value.clasifs.forEach(c => {
-        if (c.padre && c.codigos) {
-          const cods = c.codigos.split('\n').map(x => x.trim()).filter(Boolean);
-          if (c.abuelo) {
-            if (!clasificadores[c.abuelo]) clasificadores[c.abuelo] = {};
-            clasificadores[c.abuelo][c.padre] = cods;
-          } else {
-            clasificadores[c.padre] = cods;
-          }
-        }
-      });
-      try {
-        const res = await fetch('/api/usuarios/puestos', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            nombre: formPosicion.value.nombre,
-            area_organizacional: formPosicion.value.area,
-            niveles: niveles,
-            grupos: grupos,
-            clasificadores: clasificadores
-          })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          alert(data.mensaje);
-          await cargarPuestos();
-          await cargarMetaPosiciones();
-          cerrarModalPosicion();
-        } else {
-          alert(data.detail || 'Error al guardar la posición.');
-        }
-      } catch (e) {
-        alert('Error de conexión.');
-      }
-    };
-
     // Clasificadores
     const cargarInfoPuesto = async (puesto) => {
       if (!puesto) return { total: 0, area: '', categorias: [], clasificadores: {} };
@@ -667,6 +606,10 @@
       infoClasificadorTemporal.value = { total: 0, area: '', categorias: [], clasificadores: {} };
     };
 
+    const toggleDropdownPuestoClasificador = () => {
+      mostrarDropdownPuestoClasificador.value = !mostrarDropdownPuestoClasificador.value;
+    };
+
     return {
       cargando,
       usuarios,
@@ -696,8 +639,6 @@
       filtroCategoria,
       guardandoPosicionSimple,
       resultadoCreacionPosicion,
-      modalPosicionAbierto,
-      formPosicion,
       busquedaPuestoNuevoUsuario,
       mostrarDropdownPuestoNuevoUsuario,
       busquedaPuestoClasificador,
@@ -723,15 +664,6 @@
       seleccionarCategoriaPosicion,
       guardarPosicionSimple,
       limpiarFormPosicionSimple,
-      abrirModalPosicion,
-      cerrarModalPosicion,
-      agregarFilaNivel,
-      quitarFilaNivel,
-      agregarFilaGrupo,
-      quitarFilaGrupo,
-      agregarFilaClasif,
-      quitarFilaClasif,
-      guardarNuevaPosicion,
       cargarClasificadoresUsuario,
       abrirModalClasificador,
       cerrarModalClasificador,
@@ -741,8 +673,10 @@
       iniciarAsignacionClasificadores,
       seleccionarPuestoNuevoUsuario,
       limpiarPuestoNuevoUsuario,
+      toggleDropdownPuestoNuevoUsuario,
       seleccionarPuestoModalClasificador,
-      limpiarPuestoModalClasificador
+      limpiarPuestoModalClasificador,
+      toggleDropdownPuestoClasificador
     };
   };
 })();

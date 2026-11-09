@@ -20,10 +20,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "chat_equipo.db")
 
-def _es_modo_master() -> bool:
-    """Verifica si este proceso se ejecuta en la Torre de Control (Master)"""
-    publisher_script = os.path.join(BASE_DIR, "publicar_version_equipo.py")
-    return os.path.exists(publisher_script)
+from Shared.config import es_modo_master as _es_modo_master
 
 # ==============================================================================
 # CONFIGURACIÓN DINÁMICA DE CONEXIÓN CON LA TORRE DE CONTROL MASTER

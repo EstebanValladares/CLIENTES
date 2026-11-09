@@ -91,52 +91,198 @@ def seleccionar_opcion_menu(
     texto_a_elegir: str,
     nombre_seccion: str = "GENERAL",
 ) -> bool:
-    """Busca y selecciona una opción en un desplegable select2 de Aryve."""
+    """Busca y selecciona una opción en un desplegable select2 de Aryve.
+
+    Estrategia Dual:
+    1. Selección directa vía JavaScript/jQuery en el <select> subyacente (instantánea y 100% determinista).
+    2. Fallback de interacción UI con Selenium (clic en contenedor, tipado y selección de opción).
+    """
     texto_a_elegir = str(texto_a_elegir).strip()
     if not texto_a_elegir:
         return True
 
     print(f"  [{nombre_seccion}] Seleccionando '{texto_a_elegir}'...")
+
+    # 1. Determinar ID del <select> subyacente
+    select_id = ""
+    if isinstance(selector_caja, str):
+        select_id = selector_caja.replace("select2-", "").replace("-container", "")
+    else:
+        try:
+            raw_id = selector_caja.get_attribute("id") or ""
+            select_id = raw_id.replace("select2-", "").replace("-container", "")
+        except Exception:
+            pass
+
+    # 2. Estrategia Directa JS / jQuery (sin depender de animaciones de dropdown)
+    if select_id:
+        try:
+            js_script = """
+            var selectId = arguments[0];
+            var targetText = arguments[1];
+            var sel = document.getElementById(selectId);
+            if (!sel) {
+                var selects = document.getElementsByTagName('select');
+                for (var i = 0; i < selects.length; i++) {
+                    if (selects[i].id && selects[i].id.indexOf(selectId) !== -1) {
+                        sel = selects[i];
+                        break;
+                    }
+                }
+            }
+            if (!sel || !sel.options || sel.options.length === 0) {
+                return { ok: false, reason: 'no_options' };
+            }
+
+            var targetClean = targetText.toString().trim().toUpperCase();
+            var targetNorm = targetClean.replace(/[^A-Z0-9]/g, '');
+
+            var matchedIndex = -1;
+            // A. Coincidencia exacta
+            for (var i = 0; i < sel.options.length; i++) {
+                var t = (sel.options[i].text || sel.options[i].innerText || '').trim().toUpperCase();
+                if (t === targetClean) {
+                    matchedIndex = i;
+                    break;
+                }
+            }
+            // B. Coincidencia alfanumérica sin guiones ni espacios
+            if (matchedIndex === -1) {
+                for (var i = 0; i < sel.options.length; i++) {
+                    var t = (sel.options[i].text || sel.options[i].innerText || '').trim().toUpperCase();
+                    var tNorm = t.replace(/[^A-Z0-9]/g, '');
+                    if (tNorm && tNorm === targetNorm) {
+                        matchedIndex = i;
+                        break;
+                    }
+                }
+            }
+            // C. Coincidencia por contención
+            if (matchedIndex === -1) {
+                for (var i = 0; i < sel.options.length; i++) {
+                    var t = (sel.options[i].text || sel.options[i].innerText || '').trim().toUpperCase();
+                    if (t && (t.indexOf(targetClean) !== -1 || targetClean.indexOf(t) !== -1)) {
+                        matchedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (matchedIndex !== -1) {
+                sel.selectedIndex = matchedIndex;
+                var val = sel.options[matchedIndex].value;
+                var txt = sel.options[matchedIndex].text;
+
+                if (window.jQuery) {
+                    var $s = window.jQuery(sel);
+                    $s.val(val).trigger('change');
+                    if (typeof $s.select2 === 'function') {
+                        try {
+                            $s.trigger({
+                                type: 'select2:select',
+                                params: { data: { id: val, text: txt } }
+                            });
+                            $s.select2('close');
+                        } catch(e){}
+                    }
+                } else {
+                    sel.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                return { ok: true, text: txt, value: val };
+            }
+            return { ok: false, reason: 'option_not_found', count: sel.options.length };
+            """
+            res = driver.execute_script(js_script, select_id, texto_a_elegir)
+            if isinstance(res, dict) and res.get("ok"):
+                print(f"  [{nombre_seccion}] -> Opción '{res.get('text')}' seleccionada correctamente.")
+                time.sleep(0.2)
+                try:
+                    open_containers = driver.find_elements(By.XPATH, "//span[contains(@class, 'select2-container--open')]")
+                    if open_containers:
+                        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+                except Exception:
+                    pass
+                return True
+        except Exception as e_js:
+            print(f"  [{nombre_seccion}] Nota JS: {e_js}, recurriendo a interacción UI...")
+
+    # 3. Estrategia UI con Selenium
     try:
+        caja = None
         if isinstance(selector_caja, str):
-            caja = WebDriverWait(driver, TIMEOUT_CORTO).until(
-                EC.element_to_be_clickable((By.ID, selector_caja))
-            )
+            try:
+                caja = WebDriverWait(driver, TIMEOUT_CORTO).until(
+                    EC.element_to_be_clickable((By.ID, selector_caja))
+                )
+            except Exception:
+                panel = obtener_panel_seccion(driver, nombre_seccion)
+                if panel:
+                    caja = panel.find_element(By.XPATH, ".//span[contains(@class, 'select2-selection')]")
         else:
             caja = selector_caja
 
+        if not caja:
+            print(f"  [{nombre_seccion}] [ERROR]: No se pudo localizar el contenedor select2.")
+            return False
+
         driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", caja)
-        time.sleep(0.1)
+        time.sleep(0.15)
 
+        is_open = False
         try:
-            caja.click()
+            is_open = len(driver.find_elements(By.XPATH, "//span[contains(@class, 'select2-container--open')]")) > 0
         except Exception:
-            driver.execute_script("arguments[0].click();", caja)
+            pass
 
-        # Localizar el input de búsqueda select2
-        input_busqueda = None
-        for xp in ["//input[contains(@class, 'select2-search__field')]", "//input[@type='search']"]:
+        if not is_open:
             try:
-                elem = driver.find_element(By.XPATH, xp)
-                if elem.is_displayed():
-                    input_busqueda = elem
+                caja.click()
+            except Exception:
+                driver.execute_script("arguments[0].click();", caja)
+            time.sleep(0.3)
+
+        input_busqueda = None
+        for xp in [
+            "//span[contains(@class, 'select2-container--open')]//input[contains(@class, 'select2-search__field')]",
+            "//span[contains(@class, 'select2-dropdown')]//input[contains(@class, 'select2-search__field')]",
+        ]:
+            try:
+                elems = driver.find_elements(By.XPATH, xp)
+                for elem in elems:
+                    if elem.is_displayed():
+                        input_busqueda = elem
+                        break
+                if input_busqueda:
                     break
             except Exception:
                 continue
 
+        if not input_busqueda:
+            try:
+                active = driver.switch_to.active_element
+                if active and "select2-search__field" in (active.get_attribute("class") or ""):
+                    input_busqueda = active
+            except Exception:
+                pass
+
         if input_busqueda:
-            input_busqueda.clear()
+            try:
+                input_busqueda.click()
+            except Exception:
+                pass
+            input_busqueda.send_keys(Keys.CONTROL + "a")
+            input_busqueda.send_keys(Keys.BACKSPACE)
+            time.sleep(0.05)
             input_busqueda.send_keys(texto_a_elegir)
             time.sleep(0.4)
 
-        # Localizar resultado
         texto_norm = normalizar_alnum(texto_a_elegir)
         texto_limpio = texto_a_elegir.replace('-', ' ')
+        texto_upper = texto_a_elegir.upper()
         xpath_opciones = [
             f"//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and normalize-space()='{texto_a_elegir}']",
-            f"//li[contains(@class, 'select2-results__option') and contains(., '{texto_a_elegir}')]",
-            f"//li[contains(@class, 'select2-results__option') and contains(translate(., '-', ' '), '{texto_limpio}')]",
-            "//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and not(contains(@class, 'select2-results__message'))][1]",
+            f"//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), '{texto_upper}')]",
+            f"//li[contains(@class, 'select2-results__option') and not(contains(@class, 'loading')) and contains(translate(., '-', ' '), '{texto_limpio}')]",
         ]
 
         opcion = None
@@ -149,8 +295,19 @@ def seleccionar_opcion_menu(
                 continue
 
         if not opcion:
+            try:
+                hl = driver.find_element(By.XPATH, "//li[contains(@class, 'select2-results__option--highlighted')]")
+                if hl and texto_upper in (hl.text or "").upper():
+                    opcion = hl
+            except Exception:
+                pass
+
+        if not opcion:
             print(f"  [AVISO]: No se encontró opción para '{texto_a_elegir}'. Cerrando select2...")
-            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            try:
+                driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            except Exception:
+                pass
             return False
 
         try:
@@ -204,7 +361,7 @@ def abrir_panel(driver: Any, nombre_seccion: str) -> bool:
         driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", panel)
         btn_agregar = panel.find_element(
             By.XPATH,
-            ".//div[contains(@class, 'actions')]//button[@title='Agregar' or contains(@class, 'btn-ico-ek')]",
+            ".//div[contains(@class, 'actions') or contains(@class, 'tools')]//button[@title='Agregar' or contains(@class, 'btn-ico-ek') or .//i[contains(@class, 'plus') or contains(@class, 'fa-plus')]]",
         )
         try:
             btn_agregar.click()
@@ -225,7 +382,9 @@ def abrir_panel(driver: Any, nombre_seccion: str) -> bool:
 def cancelar_y_cerrar_panel(driver: Any, nombre_seccion: str) -> bool:
     """Fuerza el cierre (cancelar) de un panel para descongelar pantalla."""
     try:
-        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        if driver.find_elements(By.XPATH, "//span[contains(@class, 'select2-container--open')]"):
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            time.sleep(0.15)
     except Exception:
         pass
 
@@ -234,7 +393,7 @@ def cancelar_y_cerrar_panel(driver: Any, nombre_seccion: str) -> bool:
         try:
             btn_cancelar = panel.find_element(
                 By.XPATH,
-                ".//button[contains(@title, 'Regresar') or contains(@title, 'Cancelar') or (contains(@class, 'btn-ico-ek') and not(contains(@title, 'Guardar')))]",
+                ".//button[contains(@title, 'Regresar') or contains(@title, 'Cancelar') or .//i[contains(@class, 'arrow') or contains(@class, 'times') or contains(@class, 'undo')] or (contains(@class, 'btn-ico-ek') and not(contains(@title, 'Guardar')))]",
             )
             driver.execute_script("arguments[0].click();", btn_cancelar)
         except Exception:
@@ -245,30 +404,53 @@ def cancelar_y_cerrar_panel(driver: Any, nombre_seccion: str) -> bool:
 
 def guardar_y_cerrar_panel(driver: Any, nombre_seccion: str, id_btn_guardar: str) -> bool:
     """Presiona la palomita de guardar del panel y espera a que pase a modo vista."""
+    # Cerrar dropdown de select2 si quedó abierto, sin cancelar el panel
     try:
-        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        if driver.find_elements(By.XPATH, "//span[contains(@class, 'select2-container--open')]"):
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            time.sleep(0.15)
     except Exception:
         pass
-    time.sleep(0.2)
 
     btn_guardar = None
-    try:
-        btn_guardar = WebDriverWait(driver, 4).until(EC.presence_of_element_located((By.ID, id_btn_guardar)))
-    except Exception:
+    if id_btn_guardar:
+        try:
+            elem = driver.find_element(By.ID, id_btn_guardar)
+            if elem.is_displayed():
+                btn_guardar = elem
+        except Exception:
+            btn_guardar = None
+
+    if not btn_guardar:
         panel = obtener_panel_seccion(driver, nombre_seccion)
         if panel:
-            try:
-                btn_guardar = panel.find_element(By.XPATH, ".//button[contains(@title, 'Guardar') or contains(@id, 'saveButtonKey')]")
-            except Exception:
-                pass
+            xpaths_guardar = [
+                f".//*[@id='{id_btn_guardar}']",
+                ".//button[contains(@id, 'saveButtonKey')]",
+                ".//button[.//i[contains(@class, 'fa-check') or contains(@class, 'icon-check') or contains(@class, 'check')]]",
+                ".//div[contains(@class, 'actions') or contains(@class, 'tools')]//button[1]",
+                ".//div[contains(@class, 'panel-heading')]//button[.//i[contains(@class, 'check') or contains(@class, 'fa-check')]]",
+                ".//div[contains(@class, 'panel-heading')]//button[1]",
+                ".//button[contains(@title, 'Guardar') or contains(@title, 'Aceptar')]",
+            ]
+            for xp in xpaths_guardar:
+                try:
+                    btn = panel.find_element(By.XPATH, xp)
+                    if btn and btn.is_displayed():
+                        btn_guardar = btn
+                        break
+                except Exception:
+                    continue
 
     if btn_guardar:
+        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn_guardar)
+        time.sleep(0.1)
         try:
             btn_guardar.click()
         except Exception:
             driver.execute_script("arguments[0].click();", btn_guardar)
 
-        for _ in range(25):
+        for _ in range(35):
             time.sleep(0.1)
             p_act = obtener_panel_seccion(driver, nombre_seccion)
             if p_act:

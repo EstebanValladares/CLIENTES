@@ -1,8 +1,8 @@
     <!-- ======================================================== -->
     <!-- VISTA: MAPEO DE LOTES & CONSECUTIVO EK (60,742 LOTES)     -->
-    <!-- Archivo Modular: vue/views/mapeo.html                      -->
+    <!-- Archivo Modular: vue/views/mapeo.html (Consulta Flotante)  -->
     <!-- ======================================================== -->
-    <div v-show="vistaActiva === 'MAPEO'" class="flex flex-col flex-1 pb-16">
+    <div v-show="consultaFlotanteActiva === 'MAPEO'" class="flex flex-col flex-1 pb-16">
 
       <!-- SUB-HEADER DE MAPEO -->
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
@@ -12,7 +12,7 @@
             <span>Mapeo de Lotes & Consecutivo Maestro</span>
           </h2>
           <p class="text-xs text-slate-400 mt-1">
-            Buscador de <b>CC, Manzana, Lote, No. Interior</b> e <b>ID Lote EK</b> (60,742 lotes registrados).
+            Buscador de <b>CC, Manzana, Lote, No. Interior</b> e <b>ID Lote EK</b> ({{ (metricasMapeo.total_lotes || 116483).toLocaleString() }} lotes registrados).
           </p>
         </div>
 
@@ -20,7 +20,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 w-full lg:w-auto">
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Total Lotes</span>
-            <span class="text-sm font-bold font-mono text-cyan-400">{{ (metricasMapeo.total_lotes || 60742).toLocaleString() }}</span>
+            <span class="text-sm font-bold font-mono text-cyan-400">{{ (metricasMapeo.total_lotes || 116483).toLocaleString() }}</span>
           </div>
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Centros Costo</span>
@@ -43,6 +43,13 @@
           </div>
 
           <div class="flex items-center gap-2">
+            <button @click="sincronizarMapeoEnkontrol"
+                    :disabled="sincronizandoMapeo"
+                    class="px-2.5 py-1 text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 rounded-lg transition cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                    title="Sincronizar en vivo con Enkontrol">
+              <i class="fa-solid fa-arrows-rotate" :class="{'fa-spin': sincronizandoMapeo}"></i>
+              <span>{{ sincronizandoMapeo ? 'Sincronizando...' : 'Sincronizar' }}</span>
+            </button>
             <button @click="limpiarFiltrosMapeo"
                     class="px-2.5 py-1 text-xs text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg border border-slate-700 transition cursor-pointer flex items-center gap-1.5"
                     title="Restablecer todos los filtros">

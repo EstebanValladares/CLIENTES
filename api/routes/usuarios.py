@@ -3,6 +3,7 @@ from typing import Optional, List, Dict, Any
 from core.user_service import UserService
 from core.user_creation_service import UserCreationService
 from core.user_classifier_service import UserClassifierService
+from core.user_position_service import UserPositionService
 
 router = APIRouter(prefix="/api/usuarios", tags=["Usuarios"])
 
@@ -126,7 +127,7 @@ def obtener_info_clasificadores_puesto(puesto: str = Query(..., description="Nom
     return {
         "encontrado": True,
         "puesto": puesto,
-        "area": info.get("area_organizacional", ""),
+        "area": info.get("area_organizacion", "") or info.get("area_organizacional", "") or info.get("area", ""),
         "total_clasificadores": info.get("total_clasificadores", 0),
         "categorias": categorias,
         "clasificadores": info.get("clasificadores", {})
@@ -158,24 +159,40 @@ def estado_asignacion_clasificadores():
     """Consulta el progreso y logs de Selenium de la asignación de clasificadores"""
     return UserClassifierService.obtener_estado()
 
-@router.get("/posiciones/meta")
-def obtener_meta_posiciones():
-    """Retorna la última clave de posición, la siguiente incremental y catálogos de nombres y categorías."""
-    return UserService.obtener_meta_posiciones()
+@router.post("/posiciones/crear-selenium")
+def crear_posicion_selenium(payload: Dict[str, Any] = Body(...)):
+    """Inicia la creación automatizada de posición con Selenium en segundo plano."""
+    clave = str(payload.get("clave", "")).strip()
+    nombre = str(payload.get("nombre", "")).strip()
+    categoria = str(payload.get("categoria", "")).strip()
+    padre = str(payload.get("padre", "")).strip()
+    guardar_prod = bool(payload.get("guardar_en_produccion", False))
 
-@router.post("/posiciones/crear-simple")
-def crear_posicion_simple(payload: dict):
-    """Crea una nueva posición con autoincremental en puestos.json."""
-    clave = payload.get("clave", "")
-    nombre = payload.get("nombre", "")
-    categoria = payload.get("categoria", "")
-    padre = payload.get("padre", "")
-    res = UserService.crear_posicion_simple(
+    if not clave:
+        raise HTTPException(status_code=400, detail="La clave de la posición es obligatoria.")
+    if not nombre:
+        raise HTTPException(status_code=400, detail="El nombre de la posición es obligatorio.")
+    if not categoria:
+        raise HTTPException(status_code=400, detail="La categoría de la posición es obligatoria.")
+
+    ok, msg = UserPositionService.iniciar_alta_asincrona(
         clave=clave,
         nombre=nombre,
         categoria=categoria,
-        padre=padre
+        padre=padre,
+        guardar_en_produccion=guardar_prod
     )
-    if not res.get("ok"):
-        raise HTTPException(status_code=400, detail=res.get("error", "Error al crear posición"))
-    return res
+    if not ok:
+        raise HTTPException(status_code=400, detail=msg)
+    return {"ok": True, "mensaje": msg}
+
+@router.get("/posiciones/crear-selenium/estado")
+def estado_creacion_posicion_selenium():
+    """Consulta el progreso y logs de Selenium de la posición en curso."""
+    return UserPositionService.obtener_estado()
+
+@router.post("/posiciones/crear-selenium/detener")
+def detener_creacion_posicion_selenium():
+    """Detiene Selenium y cierra la ventana de Chrome para posiciones."""
+    ok, msg = UserPositionService.detener_proceso()
+    return {"ok": ok, "mensaje": msg}

@@ -55,12 +55,20 @@ from USUARIOS.selectores import (
 def asignar_niveles(driver: Any, compania_texto: str, nivel_texto: str) -> bool:
     """Abre panel NIVELES ASIGNADOS, selecciona compañía y nivel y guarda."""
     if not abrir_panel(driver, "NIVELES ASIGNADOS"):
+        print("  [NIVELES] [ERROR]: No se pudo abrir el panel NIVELES ASIGNADOS en modo edición.")
         return False
-    time.sleep(0.2)
+    time.sleep(0.3)
     exito_comp = seleccionar_opcion_menu(driver, SELECTORES["caja_compania"], compania_texto, "NIVELES")
     exito_niv = seleccionar_opcion_menu(driver, SELECTORES["caja_nivel"], nivel_texto, "NIVELES")
     if exito_comp and exito_niv:
-        return guardar_y_cerrar_panel(driver, "NIVELES ASIGNADOS", SELECTORES["btn_guardar_niveles"])
+        ok_save = guardar_y_cerrar_panel(driver, "NIVELES ASIGNADOS", SELECTORES["btn_guardar_niveles"])
+        if ok_save:
+            print(f"  [NIVELES] Nivel '{compania_texto}' - '{nivel_texto}' asignado y guardado correctamente.")
+            return True
+        else:
+            print(f"  [NIVELES] [AVISO]: No se pudo confirmar el guardado de '{compania_texto}' - '{nivel_texto}'.")
+            return False
+    print(f"  [NIVELES] [ERROR]: Falló selección de nivel ('{compania_texto}' / '{nivel_texto}'). Cancelando...")
     cancelar_y_cerrar_panel(driver, "NIVELES ASIGNADOS")
     return False
 
@@ -68,11 +76,19 @@ def asignar_niveles(driver: Any, compania_texto: str, nivel_texto: str) -> bool:
 def asignar_grupos(driver: Any, nombre_grupo: str) -> bool:
     """Abre panel GRUPOS, selecciona el grupo y guarda."""
     if not abrir_panel(driver, "GRUPOS"):
+        print("  [GRUPOS] [ERROR]: No se pudo abrir el panel GRUPOS en modo edición.")
         return False
-    time.sleep(0.2)
+    time.sleep(0.3)
     exito = seleccionar_opcion_menu(driver, SELECTORES["caja_grupo"], nombre_grupo, "GRUPOS")
     if exito:
-        return guardar_y_cerrar_panel(driver, "GRUPOS", SELECTORES["btn_guardar_grupos"])
+        ok_save = guardar_y_cerrar_panel(driver, "GRUPOS", SELECTORES["btn_guardar_grupos"])
+        if ok_save:
+            print(f"  [GRUPOS] Grupo '{nombre_grupo}' asignado y guardado correctamente.")
+            return True
+        else:
+            print(f"  [GRUPOS] [AVISO]: No se pudo confirmar el guardado del grupo '{nombre_grupo}'.")
+            return False
+    print(f"  [GRUPOS] [ERROR]: Falló la selección de '{nombre_grupo}'. Cancelando edición...")
     cancelar_y_cerrar_panel(driver, "GRUPOS")
     return False
 
@@ -226,19 +242,28 @@ def llenar_formulario_usuario(
     except Exception:
         pass
 
-    # 3. Posición
+    # 3. Posición en la Organización (Posición y Área Organizacional)
     if puesto_cfg.nombre_puesto:
-        seleccionar_opcion_menu(driver, SELECTORES["caja_posicion"], puesto_cfg.nombre_puesto, "POSICION")
+        seleccionar_opcion_menu(driver, SELECTORES["caja_posicion"], puesto_cfg.nombre_puesto, "POSICIÓN")
+        time.sleep(0.3)
 
-    # 4. Regional
-    tz = obtener_campo(datos, "ZonaHoraria", "zonahoraria")
-    lang = obtener_campo(datos, "Idioma", "idioma")
+    area_org = puesto_cfg.area_organizacional or obtener_campo(datos, "Area", "area", "area_organizacion", "area_organizacional")
+    if area_org:
+        seleccionar_opcion_menu(driver, SELECTORES["caja_area"], area_org, "ÁREA ORGANIZACIONAL")
+        time.sleep(0.3)
+
+    # 4. Configuración Regional (Zona Horaria e Idioma)
+    tz = obtener_campo(datos, "ZonaHoraria", "zonahoraria", "time_zone") or puesto_cfg.time_zone or "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey"
     if tz:
         seleccionar_opcion_menu(driver, SELECTORES["caja_timezone"], tz, "ZONA HORARIA")
+        time.sleep(0.3)
+
+    lang = obtener_campo(datos, "Idioma", "idioma")
     if lang:
         seleccionar_opcion_menu(driver, SELECTORES["caja_idioma"], lang, "IDIOMA")
+        time.sleep(0.3)
 
-    # 5. Niveles
+    # 5. Niveles Asignados (Compañía / Nivel)
     for n in puesto_cfg.niveles_asignados:
         cia = n.get("compania", "")
         niv = n.get("nivel", "")
@@ -246,9 +271,20 @@ def llenar_formulario_usuario(
             asignar_niveles(driver, cia, niv)
 
     # 6. Grupos
-    for g in puesto_cfg.grupos:
+    grupos_a_asignar = puesto_cfg.grupos
+    if not grupos_a_asignar:
+        g_raw = datos.get("grupos") or datos.get("Grupos") or []
+        if isinstance(g_raw, list):
+            grupos_a_asignar = g_raw
+        elif isinstance(g_raw, str) and g_raw.strip():
+            grupos_a_asignar = [x.strip() for x in g_raw.split(",") if x.strip()]
+
+    print(f"\n--- Procesando {len(grupos_a_asignar)} grupo(s) asignados ---")
+    for g in grupos_a_asignar:
         if g:
-            asignar_grupos(driver, g)
+            print(f" -> Asignando grupo: '{g}'")
+            asignar_grupos(driver, str(g).strip())
+            time.sleep(0.3)
 
     # 7. Clasificadores
     if puesto_cfg.clasificadores:

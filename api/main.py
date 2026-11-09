@@ -1,8 +1,4 @@
-def _es_modo_master() -> bool:
-    """Verifica si estamos ejecutando en el entorno Master (DASHBOARD_EK10)"""
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    publisher_script = os.path.join(base_dir, "publicar_version_equipo.py")
-    return os.path.exists(publisher_script)
+from Shared import es_modo_master, router as shared_router, obtener_estado_cliente, obtener_estado_oc_publicacion
 
 import os
 import json
@@ -45,6 +41,7 @@ app.include_router(obras.router)
 app.include_router(proveedores_contratistas.router)
 app.include_router(chat.router)
 app.include_router(mapeo.router)
+app.include_router(shared_router)
 
 @app.get("/api/metricas")
 def metricas_globales():
@@ -165,110 +162,33 @@ def _sondear_telemetria_oc():
     except Exception:
         pass
 
+    try:
+        pub_info = obtener_estado_oc_publicacion()
+        estado_oc.update({
+            "desactualizado": pub_info.get("desactualizado", False),
+            "estado_publicacion": "CAMBIOS PENDIENTES" if pub_info.get("desactualizado") else "ACTUALIZADO",
+            "archivos_pendientes": pub_info.get("archivos_pendientes", 0),
+            "ultima_publicacion": pub_info.get("ultima_publicacion", "-"),
+            "tiempo_transcurrido": pub_info.get("tiempo_transcurrido", "-"),
+            "commit": pub_info.get("commit", "-"),
+            "destino": "CONTROL_PAGOS",
+            "es_master": es_modo_master()
+        })
+        if pub_info.get("desactualizado"):
+            estado_oc["estado"] = "CAMBIOS PENDIENTES"
+    except Exception:
+        pass
+
     with _lock_torre:
         _estado_torre_cache = estado_oc
-
-def _obtener_estado_cliente() -> dict:
-    """Verifica si la versión pública/equipo (CLIENTES) está sincronizada con Master"""
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    publisher_script = os.path.join(base_dir, "publicar_version_equipo.py")
-    meta_path = os.path.join(base_dir, ".ultima_publicacion.json")
-    client_dir = os.path.join(os.path.dirname(base_dir), "CLIENTES")
-    
-    es_master = os.path.exists(publisher_script)
-    desactualizado = False
-    archivos_modificados = []
-    ultima_fecha = "Pendiente"
-    tiempo_str = "Sin publicar"
-    commit_hash = "-"
-    
-    if os.path.exists(meta_path):
-        try:
-            with open(meta_path, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-            last_pub_ts = meta.get("timestamp", 0)
-            ultima_fecha = meta.get("fecha_hora", "-")
-            commit_hash = meta.get("commit", "-")
-            
-            # Calcular tiempo transcurrido
-            delta = time.time() - last_pub_ts
-            if delta < 60:
-                tiempo_str = "Hace unos segundos"
-            elif delta < 3600:
-                tiempo_str = f"Hace {int(delta // 60)} min"
-            elif delta < 86400:
-                tiempo_str = f"Hace {int(delta // 3600)} h"
-            else:
-                tiempo_str = f"Hace {int(delta // 86400)} d"
-                
-            # Verificar si algún archivo del master fue modificado después de la última publicación
-            if es_master:
-                rutas_a_monitorear = [
-                    os.path.join(base_dir, "api", "main.py"),
-                    os.path.join(base_dir, "vue", "index.html"),
-                    os.path.join(base_dir, "vue", "static", "js", "app.js"),
-                    os.path.join(base_dir, "vue", "static", "css", "styles.css"),
-                    os.path.join(base_dir, "USUARIOS", "data", "Usuarios.json"),
-                    os.path.join(base_dir, "USUARIOS", "data", "puestos.json"),
-                    os.path.join(base_dir, "OBRAS", "catalogo_obras.json"),
-                ]
-                
-                for carpeta in ["api", "core"]:
-                    c_path = os.path.join(base_dir, carpeta)
-                    if os.path.exists(c_path):
-                        for root, _, files in os.walk(c_path):
-                            for f in files:
-                                if f.endswith(".py"):
-                                    rutas_a_monitorear.append(os.path.join(root, f))
-                                    
-                for ruta in rutas_a_monitorear:
-                    if os.path.exists(ruta):
-                        mtime = os.path.getmtime(ruta)
-                        if mtime > (last_pub_ts + 1.0):
-                            desactualizado = True
-                            archivos_modificados.append(os.path.basename(ruta))
-                            
-                # Obtener commit actual de CLIENTES
-                if os.path.exists(client_dir):
-                    c_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=client_dir, capture_output=True, text=True)
-                    if c_res.returncode == 0 and c_res.stdout.strip():
-                        commit_hash = c_res.stdout.strip()
-                desactualizado = len(archivos_modificados) > 0
-        except Exception as e:
-            desactualizado = False
-    else:
-        desactualizado = True if es_master else False
-        
-    if not os.path.exists(client_dir) and es_master:
-        desactualizado = True
-        
-    estado = "CAMBIOS PENDIENTES" if desactualizado else "ACTUALIZADO"
-    
-    return {
-        "id": "CLIENTES",
-        "nombre": "CLIENTES",
-        "descripcion": "Versión Limpia / Equipo (Autónomo)",
-        "icono": "fa-solid fa-users-gear",
-        "salud": "100%" if not desactualizado else "85%",
-        "estado": estado,
-        "activo": True,
-        "desactualizado": desactualizado,
-        "archivos_pendientes": len(archivos_modificados),
-        "es_master": es_master,
-        "servicios": "GitHub / origin main",
-        "ultima_publicacion": ultima_fecha,
-        "tiempo_transcurrido": tiempo_str,
-        "commit": commit_hash,
-        "latencia_ms": 1,
-        "uptime": tiempo_str
-    }
 
 @app.on_event("startup")
 def startup_event():
     # Solo ejecutar demonio de OC si estamos en el entorno MASTER
-    if _es_modo_master():
+    if es_modo_master():
         iniciar_demonio_oc(intervalo_segundos=60)
-        # Desactivamos el auto-publisher en background silencioso para que Esteban tenga control manual de RE-PUBLICAR
+        from core.mapeo_service import MapeoService
+        MapeoService.iniciar_demonio_mapeo(intervalo_minutos=30)
         def _bucle_torre():
             while True:
                 _sondear_telemetria_oc()
@@ -282,141 +202,17 @@ def sync_oc_manual():
     _sondear_telemetria_oc()
     return res
 
-@app.post("/api/torre/publicar-cliente")
-def publicar_version_cliente_api():
-    """Ejecuta la sincronización y blindaje de la versión del equipo/cliente."""
-    try:
-        from publicar_version_equipo import publicar_version
-        res = publicar_version()
-        return res
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"ok": False, "mensaje": str(e)})
-
-@app.get("/api/sistema/verificar-actualizacion")
-def verificar_actualizacion():
-    """Comprueba si hay una versión más nueva en GitHub para este cliente."""
-    if _es_modo_master():
-        return {"es_master": True, "hay_actualizacion": False}
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    try:
-        c_local_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=base_dir, capture_output=True, text=True, timeout=5)
-        c_local = c_local_res.stdout.strip() if c_local_res.returncode == 0 else ""
-        
-        # 1. Consultar directamente en GitHub (infalible en cualquier red con internet)
-        try:
-            req_gh = urllib.request.Request(
-                "https://raw.githubusercontent.com/EstebanValladares/CLIENTES/main/.ultima_publicacion.json",
-                headers={"User-Agent": "Dashboard-Client/2.0", "Cache-Control": "no-cache"}
-            )
-            with urllib.request.urlopen(req_gh, timeout=3.0) as resp_gh:
-                if resp_gh.status == 200:
-                    data_gh = json.loads(resp_gh.read().decode("utf-8"))
-                    c_gh = data_gh.get("commit", "")
-                    if c_gh and c_local and c_gh != c_local:
-                        return {
-                            "es_master": False,
-                            "hay_actualizacion": True,
-                            "commit_local": c_local,
-                            "commit_remoto": c_gh,
-                            "fuente": "github"
-                        }
-        except Exception:
-            pass
-
-        # 2. Consultar la última versión publicada registrada en Torre local
-        candidatos_torre = [
-            os.getenv("TORRE_CHAT_URL", "http://10.10.200.147:8000"),
-            "http://10.10.200.31:8000",
-            "http://Esteban:8000"
-        ]
-        for t_url in candidatos_torre:
-            try:
-                req = urllib.request.Request(f"{t_url.rstrip('/')}/api/sistema/version", headers={"User-Agent": "Client/2.0"})
-                with urllib.request.urlopen(req, timeout=1.5) as resp:
-                    if resp.status == 200:
-                        data = json.loads(resp.read().decode())
-                        c_torre = data.get("commit", "")
-                        if c_torre and c_local and c_torre != c_local:
-                            return {
-                                "es_master": False,
-                                "hay_actualizacion": True,
-                                "commit_local": c_local,
-                                "commit_remoto": c_torre,
-                                "fuente": "torre"
-                            }
-            except Exception:
-                continue
-            
-        return {"es_master": False, "hay_actualizacion": False, "commit_local": c_local}
-    except Exception:
-        return {"es_master": False, "hay_actualizacion": False}
-
-@app.api_route("/api/sistema/actualizar", methods=["GET", "POST"])
-def ejecutar_actualizacion_cliente():
-    """
-    En clientes (compañeros), descarga inmediatamente la última versión de GitHub
-    sin necesidad de cerrar la consola ni reiniciar el proceso.
-    """
-    if _es_modo_master():
-        return {"ok": False, "mensaje": "En modo Master se usa 'Publicar a Clientes'."}
-    
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    try:
-        # 1. Fetch de GitHub
-        subprocess.run(["git", "fetch", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=20)
-        # 2. Reset hard para garantizar sincronización limpia
-        subprocess.run(["git", "reset", "--hard", "origin/main"], cwd=base_dir, capture_output=True, timeout=20)
-        # 3. Pull
-        pull_res = subprocess.run(["git", "pull", "origin", "main"], cwd=base_dir, capture_output=True, text=True, timeout=20)
-        
-        # 4. Commit resultante
-        c_res = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=base_dir, capture_output=True, text=True, timeout=5)
-        nuevo_commit = c_res.stdout.strip() if c_res.returncode == 0 else "actualizado"
-
-        return {
-            "ok": True,
-            "commit": nuevo_commit,
-            "mensaje": f"¡Dashboard actualizado con éxito al commit {nuevo_commit}!"
-        }
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"ok": False, "mensaje": f"Error actualizando: {str(e)}"})
-
-@app.get("/api/sistema/version")
-def obtener_version_sistema():
-    """Retorna el commit actual para clientes o torre."""
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    meta_path = os.path.join(base_dir, ".ultima_publicacion.json")
-    commit_actual = "v2.0"
-    try:
-        r = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=base_dir, capture_output=True, text=True, timeout=5)
-        if r.returncode == 0:
-            commit_actual = r.stdout.strip()
-    except Exception:
-        pass
-    if os.path.exists(meta_path):
-        try:
-            with open(meta_path, "r", encoding="utf-8") as f:
-                commit_actual = json.load(f).get("commit", commit_actual)
-        except Exception:
-            pass
-    return {"ok": True, "es_master": _es_modo_master(), "commit": commit_actual}
-
-@app.get("/api/entorno")
-def obtener_entorno():
-    """Indica si el Dashboard se ejecuta en Modo Master o en Modo Cliente (Equipo)."""
-    return {"ok": True, "es_master": _es_modo_master()}
-
 @app.get("/api/torre/proyectos")
 def obtener_proyectos_torre():
     """
     Torre de Control: Devuelve al instante el estado de la telemetría
     SOLO en MODO MASTER. En la versión de CLIENTES (Equipo) retorna lista vacía [].
     """
-    if not _es_modo_master():
+    if not es_modo_master():
         return []
     with _lock_torre:
         oc = dict(_estado_torre_cache)
-    cliente = _obtener_estado_cliente()
+    cliente = obtener_estado_cliente()
     return [oc, cliente]
 
 # Servir Frontend (Vue)
@@ -445,7 +241,12 @@ def servir_frontend(full_path: str = ""):
                     return inc_f.read()
             return match.group(0)
 
-        html_ensamblado = re.sub(r'<!--\s*INCLUDE:\s*([^\s>]+)\s*-->', _resolver_include, html)
-        return HTMLResponse(content=html_ensamblado, media_type="text/html")
+        # Ensamblador recursivo de Vistas Modulares: <!-- INCLUDE: views/archivo.html -->
+        for _ in range(3):
+            if "<!-- INCLUDE:" in html:
+                html = re.sub(r'<!--\s*INCLUDE:\s*([^\s>]+)\s*-->', _resolver_include, html)
+            else:
+                break
+        return HTMLResponse(content=html, media_type="text/html")
     except Exception:
         return FileResponse(index_file)

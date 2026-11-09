@@ -174,8 +174,11 @@
           </div>
         </div>
 
-        <!-- 3. FILA 2 IZQUIERDA: CREACIÓN DE POSICIONES (Altura compacta auto) -->
-        <div class="card-creacion-posicion relative xl:col-span-6 bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm overflow-hidden flex flex-col gap-3 transition-all">
+        <!-- FILA 2: CREACIÓN DE POSICIONES Y CLASIFICADORES (MISMO TAMAÑO Y ALTURA EQUILIBRADA) -->
+        <div class="xl:col-span-12 grid grid-cols-1 xl:grid-cols-2 gap-6 items-stretch">
+
+          <!-- 3. CREACIÓN DE POSICIONES -->
+          <div class="card-creacion-posicion relative bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm overflow-hidden flex flex-col justify-between transition-all h-full">
           <!-- Barra superior de acento con la paleta de colores azul/índigo/cian -->
           <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500"></div>
 
@@ -376,36 +379,37 @@
           </div>
         </div>
 
-        <!-- 4. FILA 2 DERECHA: CLASIFICADORES (h-[460px]) -->
-        <div class="xl:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-sm h-[460px] flex flex-col justify-between">
+        <!-- 4. FILA 2 DERECHA: CLASIFICADORES (SINCRONIZADO EN TAMAÑO CON POSICIONES) -->
+        <div class="card-clasificadores relative bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm overflow-hidden flex flex-col justify-between transition-all h-full">
           <div v-if="usuarioSeleccionado" class="flex flex-col h-full justify-between">
             <div>
-              <div class="flex items-center justify-between mb-3.5">
-                <div class="flex items-center gap-2">
-                  <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-                    <i class="fa-solid fa-tags text-[11px]"></i>
+              <!-- HEADER DE CLASIFICADORES -->
+              <div class="flex items-center justify-between mb-3 pt-0.5">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shadow-sm">
+                    <i class="fa-solid fa-tags text-xs"></i>
                   </div>
                   <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Clasificadores</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-100">Clasificadores</h4>
                   </div>
                 </div>
                 <span v-if="infoClasificadorPuesto.total > 0" class="text-[10px] font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <i class="fa-solid fa-layer-group text-[9px]"></i>
                   {{ infoClasificadorPuesto.total }} asignados
                 </span>
-                <span v-else class="text-[10px] font-semibold text-slate-500 bg-slate-800/60 border border-slate-700 px-2.5 py-0.5 rounded-full">
+                <span v-else class="text-[10px] font-semibold text-slate-400 bg-slate-900/60 border border-slate-700/80 px-2.5 py-0.5 rounded-full">
                   Sin plantilla
                 </span>
               </div>
 
               <!-- FICHA DE PUESTO Y MATRIZ -->
-              <div class="bg-slate-900/60 rounded-xl p-3.5 border border-slate-700/50 mb-3">
-                <div class="flex items-center justify-between text-[10px] uppercase font-semibold text-slate-400 mb-1.5">
+              <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/50 mb-2.5">
+                <div class="flex items-center justify-between text-[10px] uppercase font-semibold text-slate-400 mb-1">
                   <span>Puesto para Clasificadores (Firebase)</span>
-                  <span v-if="puestoClasificadorSeleccionado" class="text-emerald-400 font-mono flex items-center gap-1">
+                  <span v-if="puestoClasificadorSeleccionado" class="text-emerald-400 font-mono flex items-center gap-1 font-semibold">
                     <i class="fa-solid fa-check text-[9px]"></i> {{ infoClasificadorPuesto.area || 'Encontrado' }}
                   </span>
-                  <span v-else class="text-amber-400 flex items-center gap-1">
+                  <span v-else class="text-amber-400 flex items-center gap-1 font-semibold">
                     <i class="fa-solid fa-exclamation text-[9px]"></i> No asignado
                   </span>
                 </div>
@@ -415,20 +419,20 @@
                 </div>
 
                 <!-- Badges de Categorías extraídas de puestos.json -->
-                <div v-if="infoClasificadorPuesto.categorias && infoClasificadorPuesto.categorias.length" class="mt-2.5 pt-2 border-t border-slate-800 flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scrollbar">
+                <div v-if="infoClasificadorPuesto.categorias && infoClasificadorPuesto.categorias.length" class="mt-2 pt-1.5 border-t border-slate-800 flex flex-wrap gap-1.5 max-h-20 overflow-y-auto custom-scrollbar">
                   <span v-for="cat in infoClasificadorPuesto.categorias" :key="cat.nombre" 
                         class="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700/70 px-2 py-0.5 rounded-md flex items-center gap-1">
                     <span class="text-indigo-400 font-medium">{{ cat.nombre }}:</span>
                     <span class="font-mono text-slate-400">{{ cat.total }}</span>
                   </span>
                 </div>
-                <p v-else class="mt-2 text-[11px] text-slate-500 leading-snug">
+                <p v-else class="mt-1 text-[11px] text-slate-500 leading-snug">
                   Usa el botón <strong>Actualizar</strong> para elegir un puesto y cargar su estructura de clasificadores oficial.
                 </p>
               </div>
 
               <!-- VISOR DE ESTADO / LOGS DE SELENIUM -->
-              <div v-if="estadoAsignacionClasificadores.ejecutando || estadoAsignacionClasificadores.mensaje" class="p-2.5 rounded-xl border bg-slate-950/70 border-slate-800 text-[11px] mb-3">
+              <div v-if="estadoAsignacionClasificadores.ejecutando || estadoAsignacionClasificadores.mensaje" class="p-2 rounded-xl border bg-slate-950/70 border-slate-800 text-[11px] mb-2.5">
                 <div class="flex items-center justify-between mb-1">
                   <div class="flex items-center gap-1.5 font-semibold" 
                        :class="estadoAsignacionClasificadores.ok === true ? 'text-emerald-400' : (estadoAsignacionClasificadores.ok === false ? 'text-rose-400' : 'text-indigo-300')">
@@ -440,14 +444,14 @@
                   </div>
                 </div>
                 <div v-if="estadoAsignacionClasificadores.logs && estadoAsignacionClasificadores.logs.length" 
-                     class="max-h-20 overflow-y-auto custom-scrollbar font-mono text-[10px] text-slate-400 mt-1.5 space-y-0.5 bg-black/40 p-2 rounded-lg border border-slate-800">
+                     class="max-h-16 overflow-y-auto custom-scrollbar font-mono text-[10px] text-slate-400 mt-1 space-y-0.5 bg-black/40 p-1.5 rounded-lg border border-slate-800">
                   <div v-for="(log, idx) in estadoAsignacionClasificadores.logs" :key="idx" class="truncate">{{ log }}</div>
                 </div>
               </div>
             </div>
 
-            <!-- BOTONES: ACTUALIZAR, BORRAR, INICIAR -->
-            <div class="pt-3 border-t border-slate-700/50 grid grid-cols-3 gap-2">
+            <!-- BOTONES: ACTUALIZAR, BORRAR, INICIAR (ALINEADOS AL FOOTER) -->
+            <div class="pt-2.5 mt-3 border-t border-slate-700/60 grid grid-cols-3 gap-2">
               <!-- BOTÓN ACTUALIZAR -->
               <button @click="abrirModalClasificador" 
                       type="button"
@@ -479,14 +483,16 @@
             </div>
           </div>
           
-          <div v-else class="flex flex-col items-center justify-center text-center text-slate-500 h-full py-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/60 flex items-center justify-center text-slate-500 mb-2.5">
-              <i class="fa-solid fa-tags text-lg"></i>
+          <div v-else class="flex flex-col items-center justify-center text-center text-slate-500 h-full py-8">
+            <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/60 flex items-center justify-center text-slate-500 mb-2">
+              <i class="fa-solid fa-tags text-base"></i>
             </div>
             <p class="font-semibold text-slate-400 text-xs">Clasificadores</p>
             <p class="text-[11px] text-slate-500 mt-1 max-w-xs leading-relaxed">Selecciona un usuario del listado para gestionar o asignar su estructura oficial.</p>
           </div>
         </div>
+
+      </div>
 
       </div>
 
@@ -556,33 +562,46 @@
               
               <!-- Buscador Autocomplete de Posición -->
               <div class="relative">
-                <div class="relative">
-                  <input type="text" 
-                         v-model="busquedaPuestoNuevoUsuario" 
-                         @focus="mostrarDropdownPuestoNuevoUsuario = true" 
-                         @input="mostrarDropdownPuestoNuevoUsuario = true" 
-                         @blur="setTimeout(() => { mostrarDropdownPuestoNuevoUsuario = false }, 250)"
-                         placeholder="Buscar posición (ej. ASESOR, BROKER, RESIDENTE...)" 
-                         class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
-                  <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
-                  
+                <input type="text" 
+                       v-model="busquedaPuestoNuevoUsuario" 
+                       @focus="mostrarDropdownPuestoNuevoUsuario = true" 
+                       @input="mostrarDropdownPuestoNuevoUsuario = true" 
+                       @blur="setTimeout(() => { mostrarDropdownPuestoNuevoUsuario = false }, 250)"
+                       @keydown.esc="mostrarDropdownPuestoNuevoUsuario = false"
+                       placeholder="Buscar posición (ej. ASESOR, BROKER, RESIDENTE...)" 
+                       class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-16 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
+                
+                <!-- Controles de la derecha: Limpiar y Toggle Flecha Abrir/Cerrar -->
+                <div class="absolute right-2 top-2 flex items-center gap-0.5">
                   <button v-if="busquedaPuestoNuevoUsuario" 
-                          @click="limpiarPuestoNuevoUsuario" 
+                          @mousedown.prevent="limpiarPuestoNuevoUsuario" 
                           type="button" 
-                          class="absolute right-3 top-2.5 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                          class="p-1.5 text-slate-400 hover:text-rose-400 transition cursor-pointer rounded-lg hover:bg-slate-700/60"
                           title="Limpiar búsqueda">
                     <i class="fa-solid fa-xmark text-xs"></i>
                   </button>
-                  <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
-                     :class="{'rotate-180': mostrarDropdownPuestoNuevoUsuario}"></i>
+                  <button type="button" 
+                          @mousedown.prevent="toggleDropdownPuestoNuevoUsuario" 
+                          class="p-1.5 text-slate-400 hover:text-white transition cursor-pointer rounded-lg hover:bg-slate-700/60"
+                          :title="mostrarDropdownPuestoNuevoUsuario ? 'Cerrar opciones' : 'Desplegar opciones'">
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"
+                       :class="{'rotate-180 text-indigo-400': mostrarDropdownPuestoNuevoUsuario}"></i>
+                  </button>
                 </div>
 
-                <!-- Dropdown Flotante con Resultados Filtrados -->
+                <!-- Dropdown Flotante con Resultados Filtrados (Anclado justo bajo el input) -->
                 <div v-if="mostrarDropdownPuestoNuevoUsuario" 
-                     class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
-                  <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
-                    <span>Posiciones Oficiales ({{ puestosFiltradosNuevoUsuario.length }})</span>
-                    <span v-if="busquedaPuestoNuevoUsuario" class="text-indigo-400">Filtrado por: "{{ busquedaPuestoNuevoUsuario }}"</span>
+                     @mousedown.prevent
+                     class="absolute z-50 left-0 right-0 top-full mt-1.5 bg-slate-900/98 backdrop-blur-xl border border-indigo-500/40 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in ring-1 ring-white/10">
+                  <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-400 tracking-wider border-b border-slate-800 mb-1 flex justify-between items-center bg-slate-950/60 rounded-t-lg sticky top-0 backdrop-blur-sm z-10">
+                    <span class="flex items-center gap-1.5 text-slate-300">
+                      <i class="fa-solid fa-briefcase text-[10px] text-indigo-400"></i>
+                      <span>Posiciones Oficiales ({{ puestosFiltradosNuevoUsuario.length }})</span>
+                    </span>
+                    <span v-if="busquedaPuestoNuevoUsuario" class="text-indigo-400 font-mono text-[9px] truncate max-w-[150px]">
+                      "{{ busquedaPuestoNuevoUsuario }}"
+                    </span>
                   </div>
                   <div v-if="puestosFiltradosNuevoUsuario.length === 0" class="p-3 text-center text-xs text-slate-400">
                     <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
@@ -705,139 +724,6 @@
       </div>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- MODAL 2: NUEVA POSICIÓN                                  -->
-    <!-- ======================================================== -->
-    <div v-if="modalPosicionAbierto" 
-         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl p-6 sm:p-7 max-h-[90vh] overflow-y-auto custom-scrollbar">
-        
-        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
-          <div>
-            <h3 class="text-lg font-bold text-white">Alta y Configuración de Posición</h3>
-            <p class="text-xs text-slate-400 mt-0.5">Sincroniza automáticamente en tiempo real con <code class="text-emerald-400 font-mono">Firebase Firestore</code></p>
-          </div>
-          <button @click="cerrarModalPosicion" class="text-slate-400 hover:text-white p-1 transition cursor-pointer">
-            <i class="fa-solid fa-xmark text-lg"></i>
-          </button>
-        </div>
-
-        <div class="space-y-5 my-6">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nombre de la Posición</label>
-              <input type="text" 
-                     v-model="formPosicion.nombre" 
-                     placeholder="Ej. ASESOR DE VENTA CANCUN" 
-                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Área Organizacional (Opcional)</label>
-              <input type="text" 
-                     v-model="formPosicion.area" 
-                     placeholder="Ej. VENTAS" 
-                     class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
-            </div>
-          </div>
-
-          <!-- NIVELES ASIGNADOS -->
-          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-indigo-400"></i> Niveles Asignados
-              </span>
-              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.niveles.length }}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mb-3">Ingrese la compañía y el nivel correspondiente para esta posición.</p>
-
-            <div class="space-y-2.5">
-              <div v-for="(n, idx) in formPosicion.niveles" :key="'niv-' + idx" class="grid grid-cols-2 gap-3">
-                <input type="text" v-model="n.compania" :placeholder="'Compañía #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
-                <input type="text" v-model="n.nivel" :placeholder="'Nivel #' + (idx + 1)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
-              </div>
-            </div>
-
-            <div class="flex gap-2 mt-3">
-              <button @click="agregarFilaNivel" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
-                + Agregar Nivel
-              </button>
-              <button v-if="formPosicion.niveles.length > 1" @click="quitarFilaNivel" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
-                - Quitar
-              </button>
-            </div>
-          </div>
-
-          <!-- GRUPOS -->
-          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-users text-indigo-400"></i> Grupos
-              </span>
-              <span class="text-[11px] text-slate-400">Filas: {{ formPosicion.grupos.length }}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mb-3">Ingrese los grupos asignados en Aryve.</p>
-
-            <div class="space-y-2.5">
-              <div v-for="(g, idx) in formPosicion.grupos" :key="'grp-' + idx">
-                <input type="text" v-model="g.nombre" :placeholder="'Grupo #' + (idx + 1)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
-              </div>
-            </div>
-
-            <div class="flex gap-2 mt-3">
-              <button @click="agregarFilaGrupo" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
-                + Agregar Grupo
-              </button>
-              <button v-if="formPosicion.grupos.length > 1" @click="quitarFilaGrupo" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
-                - Quitar
-              </button>
-            </div>
-          </div>
-
-          <!-- CLASIFICADORES -->
-          <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-tags text-indigo-400"></i> Clasificadores (Opcional)
-              </span>
-              <span class="text-[11px] text-slate-400">Bloques: {{ formPosicion.clasifs.length }}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mb-3">Si este puesto lleva clasificadores, ingréselos aquí. Si no aplica, déjelos vacíos.</p>
-
-            <div class="space-y-3">
-              <div v-for="(c, idx) in formPosicion.clasifs" :key="'clasif-' + idx" class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 space-y-2.5">
-                <div class="grid grid-cols-2 gap-3">
-                  <input type="text" v-model="c.abuelo" placeholder="Abuelo (Opcional)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
-                  <input type="text" v-model="c.padre" placeholder="Padre (Tipo de Clasificador)" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200">
-                </div>
-                <textarea v-model="c.codigos" placeholder="Códigos (pega aquí la lista o rangos ej. TAM-001 al TAM-050)" class="w-full h-16 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 resize-none"></textarea>
-              </div>
-            </div>
-
-            <div class="flex gap-2 mt-3">
-              <button @click="agregarFilaClasif" class="text-xs font-semibold text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
-                + Agregar Clasificador
-              </button>
-              <button v-if="formPosicion.clasifs.length > 1" @click="quitarFilaClasif" class="text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-3 py-1.5 rounded-lg transition">
-                - Quitar
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
-          <button @click="cerrarModalPosicion" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer">
-            Cancelar
-          </button>
-          <button @click="guardarNuevaPosicion" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/25 transition cursor-pointer">
-            Guardar Posición
-          </button>
-        </div>
-
-      </div>
-    </div>
-
 <!-- ======================================================== -->
     <!-- MODAL: ACTUALIZAR PUESTO Y ESTRUCTURA DE CLASIFICADORES  -->
     <!-- ======================================================== -->
@@ -886,35 +772,48 @@
 
             <!-- Buscador Autocomplete de Clasificador -->
             <div class="relative">
-              <div class="relative">
-                <input type="text" 
-                       v-model="busquedaPuestoClasificador" 
-                       @focus="mostrarDropdownPuestoClasificador = true" 
-                       @input="mostrarDropdownPuestoClasificador = true" 
-                       @blur="setTimeout(() => { mostrarDropdownPuestoClasificador = false }, 250)"
-                       placeholder="Buscar puesto o plaza (ej. REYNOSA, MATAMOROS, BROKER, RESIDENTE...)" 
-                       class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs pointer-events-none"></i>
+              <input type="text" 
+                     v-model="busquedaPuestoClasificador" 
+                     @focus="mostrarDropdownPuestoClasificador = true" 
+                     @input="mostrarDropdownPuestoClasificador = true" 
+                     @blur="setTimeout(() => { mostrarDropdownPuestoClasificador = false }, 250)"
+                     @keydown.esc="mostrarDropdownPuestoClasificador = false"
+                     placeholder="Buscar puesto o plaza (ej. REYNOSA, MATAMOROS, BROKER, RESIDENTE...)" 
+                     class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-16 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs pointer-events-none"></i>
 
+              <!-- Controles de la derecha: Limpiar y Toggle Flecha Abrir/Cerrar -->
+              <div class="absolute right-2 top-2 flex items-center gap-0.5">
                 <button v-if="busquedaPuestoClasificador" 
-                        @click="limpiarPuestoModalClasificador" 
+                        @mousedown.prevent="limpiarPuestoModalClasificador" 
                         type="button" 
-                        class="absolute right-3 top-2 p-1 text-slate-400 hover:text-white transition cursor-pointer"
+                        class="p-1.5 text-slate-400 hover:text-rose-400 transition cursor-pointer rounded-lg hover:bg-slate-700/60"
                         title="Limpiar búsqueda">
                   <i class="fa-solid fa-xmark text-xs"></i>
                 </button>
-                <i v-else class="fa-solid fa-chevron-down absolute right-3 top-3 text-slate-500 text-xs pointer-events-none transition-transform duration-200"
-                   :class="{'rotate-180': mostrarDropdownPuestoClasificador}"></i>
+                <button type="button" 
+                        @mousedown.prevent="toggleDropdownPuestoClasificador" 
+                        class="p-1.5 text-slate-400 hover:text-white transition cursor-pointer rounded-lg hover:bg-slate-700/60"
+                        :title="mostrarDropdownPuestoClasificador ? 'Cerrar opciones' : 'Desplegar opciones'">
+                  <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"
+                     :class="{'rotate-180 text-indigo-400': mostrarDropdownPuestoClasificador}"></i>
+                </button>
               </div>
 
-              <!-- Dropdown Flotante con Resultados Filtrados -->
+              <!-- Dropdown Flotante con Resultados Filtrados (Anclado justo bajo el input) -->
               <div v-if="mostrarDropdownPuestoClasificador" 
-                   class="absolute z-50 left-0 right-0 mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in">
-                <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-500 tracking-wider border-b border-slate-800 mb-1 flex justify-between">
-                  <span>Matriz Oficial ({{ puestosFiltradosClasificador.length }})</span>
-                  <span v-if="busquedaPuestoClasificador" class="text-indigo-400">Filtro: "{{ busquedaPuestoClasificador }}"</span>
+                   @mousedown.prevent
+                   class="absolute z-50 left-0 right-0 top-full mt-1.5 bg-slate-900/98 backdrop-blur-xl border border-indigo-500/40 rounded-xl shadow-2xl max-h-56 overflow-y-auto custom-scrollbar p-1.5 animate-fade-in ring-1 ring-white/10">
+                <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase text-slate-400 tracking-wider border-b border-slate-800 mb-1 flex justify-between items-center bg-slate-950/60 rounded-t-lg sticky top-0 backdrop-blur-sm z-10">
+                  <span class="flex items-center gap-1.5 text-slate-300">
+                    <i class="fa-solid fa-briefcase text-[10px] text-indigo-400"></i>
+                    <span>Matriz Oficial ({{ puestosFiltradosClasificador.length }})</span>
+                  </span>
+                  <span v-if="busquedaPuestoClasificador" class="text-indigo-400 font-mono text-[9px] truncate max-w-[150px]">
+                    "{{ busquedaPuestoClasificador }}"
+                  </span>
                 </div>
-                <div v-if="puestosFiltradosClasificador.length === 0" class="p-3 text-center text-xs text-slate-400">
+                <div v-if="puestosFiltradosClasificador.length === 0" class="p-4 text-center text-xs text-slate-400">
                   <i class="fa-solid fa-circle-exclamation text-amber-400 mr-1.5"></i>
                   No se encontró ningún puesto que coincida
                 </div>
