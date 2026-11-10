@@ -2,8 +2,8 @@
 API Route: Escalatoria de Precios & Obras (Enkontrol / Aryve SOC)
 Permite buscar instantáneamente por:
 - Obra / Centro de Costos / Proyecto
+- Insumos de la Obra (Vista Dividida Enkontrol SOC)
 - Clave de Escalatoria (ej. ESC-PRECIO-TAM-0002, AD - ARMEX, etc.)
-- Insumo
 - Resumen y estadísticas
 - Sincronización en vivo con botón manual
 """
@@ -40,6 +40,25 @@ def buscar_escalatorias(
         estatus=estatus,
         limite=limite,
         offset=offset
+    )
+
+
+@router.get("/por-obra")
+def consultar_insumos_por_obra(
+    obra: Optional[str] = Query(None),
+    insumo: Optional[str] = Query(None),
+    clave: Optional[str] = Query(None),
+    limite: int = Query(150, ge=1, le=500)
+):
+    """
+    Vista Dividida (Clon exacto de Enkontrol SOC):
+    Devuelve los insumos autorizados y la estructura WBS de una obra específica.
+    """
+    return EscalatoriaService.consultar_insumos_por_obra(
+        obra=obra,
+        insumo=insumo,
+        clave=clave,
+        limite=limite
     )
 
 

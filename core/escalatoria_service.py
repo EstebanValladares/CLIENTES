@@ -3,7 +3,8 @@ Core Domain: Servicio de Escalatoria de Precios & Obras (Enkontrol / Aryve SOC)
 Permite consultas instantáneas O(1) de:
 - Clave de Escalatoria (ej. ESC-PRECIO-TAM-0002, AD - ARMEX, etc.)
 - Obras y Centros de Costo afectados
-- Insumos y Precios autorizados
+- Insumos y Precios autorizados (PrecioMoneda pactado)
+- Búsqueda directa de Insumos por Obra (Vista tipo Enkontrol SOC)
 - Historial de autorizaciones y usuarios
 - Caché local en SQLite (data/escalatorias.db) para uso offline o red lenta
 - Sincronización en vivo con Enkontrol 10 Cloud (SOCEscalatoriaPrecios)
@@ -41,6 +42,12 @@ class EscalatoriaService:
     @classmethod
     def _crear_tablas_si_no_existen(cls, conn: sqlite3.Connection):
         cur = conn.cursor()
+        # Verificar si la tabla de insumos requiere actualización de esquema
+        cur.execute("PRAGMA table_info(escalatoria_insumos)")
+        cols = [r[1] for r in cur.fetchall()]
+        if cols and "obra_clave" not in cols:
+            cur.execute("DROP TABLE escalatoria_insumos")
+
         cur.execute("""
             CREATE TABLE IF NOT EXISTS escalatorias (
                 id INTEGER PRIMARY KEY,
@@ -75,6 +82,7 @@ class EscalatoriaService:
             CREATE TABLE IF NOT EXISTS escalatoria_insumos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 id_escalatoria INTEGER,
+                escalatoria_clave TEXT,
                 id_insumo INTEGER,
                 clave TEXT,
                 nombre TEXT,
@@ -82,6 +90,11 @@ class EscalatoriaService:
                 precio_ppto REAL DEFAULT 0,
                 precio_anterior REAL,
                 moneda TEXT,
+                id_obra INTEGER,
+                obra_clave TEXT,
+                obra_nombre TEXT,
+                centro_costo TEXT,
+                proyecto TEXT,
                 FOREIGN KEY(id_escalatoria) REFERENCES escalatorias(id)
             )
         """)
@@ -98,7 +111,10 @@ class EscalatoriaService:
         cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_obras_obra ON escalatoria_obras(obra)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_obras_cc ON escalatoria_obras(centro_costo)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_esc ON escalatoria_insumos(id_escalatoria)")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_nombre ON escalatoria_insumos(nombre)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_cve ON escalatoria_insumos(clave)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_nom ON escalatoria_insumos(nombre)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_obr_cve ON escalatoria_insumos(obra_clave)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_esc_insumos_obr_nom ON escalatoria_insumos(obra_nombre)")
         conn.commit()
 
     @classmethod
@@ -151,7 +167,6 @@ class EscalatoriaService:
         conn = cls._get_connection()
         cur = conn.cursor()
 
-        # Si no hay registros aún, intentar carga inicial en segundo plano o retornar vacío
         cur.execute("SELECT COUNT(*) FROM escalatorias")
         count_existente = cur.fetchone()[0]
         if count_existente == 0:
@@ -254,7 +269,6 @@ class EscalatoriaService:
             item = dict(r)
             esc_id = item["id"]
 
-            # Obtener resumen de hasta 5 obras afectadas
             cur.execute("""
                 SELECT DISTINCT obra, centro_costo, proyecto 
                 FROM escalatoria_obras 
@@ -264,7 +278,6 @@ class EscalatoriaService:
             obras_list = [dict(o) for o in cur.fetchall()]
             item["obras_resumen"] = obras_list
 
-            # Contar total de obras
             cur.execute("SELECT COUNT(DISTINCT obra) FROM escalatoria_obras WHERE id_escalatoria = ?", (esc_id,))
             item["total_obras"] = cur.fetchone()[0]
 
@@ -280,6 +293,212 @@ class EscalatoriaService:
         }
 
     @classmethod
+    def consultar_insumos_por_obra(
+        cls,
+        obra: Optional[str] = None,
+        insumo: Optional[str] = None,
+        clave: Optional[str] = None,
+        limite: int = 150
+    ) -> Dict[str, Any]:
+        """
+        Consulta directa de INSUMOS de una obra (Vista dividida de Enkontrol SOC):
+        Dado un filtro de Obra (ej. AR0 o VISTA LAGUNA) y/o Insumo (ej. 1040025 o Armex),
+        devuelve:
+        1. Lista de insumos autorizados con su PrecioMoneda (pactado), ppto y clave.
+        2. Árbol WBS de la Obra (Proyecto -> Centro de Costo -> Obra) idéntico a Enkontrol.
+        3. Información del folio de escalatoria que autorizó esos insumos.
+        """
+        conn = cls._get_connection()
+        cur = conn.cursor()
+
+        # Si se busca por obra y aún no tenemos insumos para esa obra en escalatoria_insumos,
+        # buscar la escalatoria que contiene esa obra y descargar los insumos al vuelo
+        obra_str = (obra or "").strip()
+        if obra_str:
+            cur.execute("""
+                SELECT COUNT(*) FROM escalatoria_insumos 
+                WHERE obra_clave LIKE ? OR obra_nombre LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+            """, (f"%{obra_str}%", f"%{obra_str}%", f"%{obra_str}%", f"%{obra_str}%"))
+            count_ins = cur.fetchone()[0]
+
+            if count_ins == 0:
+                # Buscar qué escalatoria afecta a esta obra
+                cur.execute("""
+                    SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                    WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                    LIMIT 3
+                """, (f"%{obra_str}%", f"%{obra_str}%", f"%{obra_str}%"))
+                cand_ids = [r[0] for r in cur.fetchall()]
+                for cid in cand_ids:
+                    cls._cargar_insumos_detallados_escalatoria(cid, conn)
+
+        where_parts = []
+        params = []
+
+        if obra_str:
+            o_term = f"%{obra_str}%"
+            where_parts.append("""
+                (
+                    ei.obra_clave LIKE ? 
+                    OR ei.obra_nombre LIKE ? 
+                    OR ei.centro_costo LIKE ? 
+                    OR ei.proyecto LIKE ?
+                    OR ei.id_escalatoria IN (
+                        SELECT id_escalatoria FROM escalatoria_obras 
+                        WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                    )
+                )
+            """)
+            params.extend([o_term, o_term, o_term, o_term, o_term, o_term, o_term])
+
+        if insumo and insumo.strip():
+            i_term = f"%{insumo.strip()}%"
+            where_parts.append("(ei.clave LIKE ? OR ei.nombre LIKE ?)")
+            params.extend([i_term, i_term])
+
+        if clave and clave.strip():
+            c_term = f"%{clave.strip()}%"
+            where_parts.append("(ei.escalatoria_clave LIKE ?)")
+            params.append(c_term)
+
+        where_sql = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
+
+        query_insumos = f"""
+            SELECT 
+                ei.id_insumo,
+                ei.clave,
+                ei.nombre,
+                ei.precio,
+                ei.precio_ppto,
+                ei.precio_anterior,
+                ei.moneda,
+                ei.id_escalatoria,
+                ei.escalatoria_clave,
+                ei.obra_nombre,
+                ei.obra_clave,
+                ei.centro_costo,
+                ei.proyecto
+            FROM escalatoria_insumos ei
+            {where_sql}
+            ORDER BY ei.precio DESC, ei.nombre ASC
+            LIMIT ?
+        """
+        cur.execute(query_insumos, params + [limite])
+        raw_insumos = cur.fetchall()
+
+        # Agrupar insumos únicos por (clave, nombre) para la vista limpia de Enkontrol
+        insumos_agrupados = []
+        vistos = set()
+        for r in raw_insumos:
+            d = dict(r)
+            k = (d.get("clave") or "", d.get("nombre") or "")
+            if k in vistos:
+                continue
+            vistos.add(k)
+            insumos_agrupados.append(d)
+
+        # Obtener estructura WBS de Obras coincidentes
+        obras_query = """
+            SELECT DISTINCT proyecto, centro_costo, obra, id_obra, id_escalatoria
+            FROM escalatoria_obras
+        """
+        if obra_str:
+            obras_query += " WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?"
+            cur.execute(obras_query + " LIMIT 50", (f"%{obra_str}%", f"%{obra_str}%", f"%{obra_str}%"))
+        else:
+            cur.execute(obras_query + " LIMIT 30")
+        obras_raw = [dict(o) for o in cur.fetchall()]
+
+        # Estructurar Árbol WBS (Proyecto -> Centro Costo -> Obra)
+        arbol_wbs = {}
+        for o in obras_raw:
+            p_nom = o.get("proyecto") or "Proyecto General"
+            cc_nom = o.get("centro_costo") or "Centro de Costos"
+            obr_nom = o.get("obra") or "Obra"
+
+            if p_nom not in arbol_wbs:
+                arbol_wbs[p_nom] = {}
+            if cc_nom not in arbol_wbs[p_nom]:
+                arbol_wbs[p_nom][cc_nom] = []
+            if obr_nom not in arbol_wbs[p_nom][cc_nom]:
+                arbol_wbs[p_nom][cc_nom].append({
+                    "nombre": obr_nom,
+                    "id_obra": o.get("id_obra"),
+                    "id_escalatoria": o.get("id_escalatoria")
+                })
+
+        conn.close()
+        return {
+            "total_insumos": len(insumos_agrupados),
+            "insumos": insumos_agrupados,
+            "obras_wbs": arbol_wbs,
+            "total_obras": len(obras_raw),
+            "filtro_obra": obra_str,
+            "filtro_insumo": insumo or ""
+        }
+
+    @classmethod
+    def _cargar_insumos_detallados_escalatoria(cls, id_escalatoria: int, conn: sqlite3.Connection):
+        """Descarga e indexa los insumos completos con PrecioMoneda y Obra para un ID de escalatoria"""
+        session = cls._crear_sesion_enkontrol()
+        if not session:
+            return
+
+        url = f"https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/Get/GetInsumosEscalatoria/?id={id_escalatoria}"
+        headers = {"User-Agent": "Mozilla/5.0", "Referer": "https://suite.ekloud.net:1445/Aryve/"}
+
+        try:
+            res = session.get(url, headers=headers, timeout=12)
+            if res.status_code == 200:
+                data = res.json()
+                if isinstance(data, list) and len(data) > 0:
+                    cur = conn.cursor()
+                    # Obtener clave de la escalatoria
+                    cur.execute("SELECT clave FROM escalatorias WHERE id = ?", (id_escalatoria,))
+                    row_esc = cur.fetchone()
+                    esc_clave = row_esc[0] if row_esc else f"ESC-{id_escalatoria}"
+
+                    for it in data:
+                        ins_obj = it.get("Insumo") or {}
+                        clave = str(ins_obj.get("Clave") or it.get("Clave") or "").strip()
+                        nombre = str(ins_obj.get("Nombre") or it.get("Nombre") or "").strip()
+                        id_insumo = it.get("IdInsumo") or ins_obj.get("ID")
+
+                        # PRECIOMONEDA es el precio unitario pactado en Enkontrol (ej. 15.85)
+                        precio = float(it.get("PrecioMoneda") or it.get("Precio") or 0.0)
+                        precio_ppto = float(it.get("PrecioPresupuesto") or 0.0)
+                        precio_ant = float(it.get("PrecioAnterior")) if it.get("PrecioAnterior") is not None else None
+
+                        moneda_obj = it.get("Moneda") or {}
+                        moneda = moneda_obj.get("MoneySymbol") or (moneda_obj.get("Clave") or "MXN")
+
+                        obr_obj = it.get("Obra") or {}
+                        id_obra = it.get("IdObra") or obr_obj.get("ID")
+                        obr_cve = str(obr_obj.get("Clave") or "")
+                        obr_nom = str(obr_obj.get("Nombre") or "")
+
+                        cc_obj = it.get("CentroCostos") or {}
+                        cc_nom = str(cc_obj.get("Nombre") or cc_obj.get("Clave") or "")
+
+                        proy_obj = it.get("Proyecto") or {}
+                        proy_nom = str(proy_obj.get("Nombre") or proy_obj.get("Clave") or "")
+
+                        cur.execute("""
+                            INSERT INTO escalatoria_insumos (
+                                id_escalatoria, escalatoria_clave, id_insumo, clave, nombre,
+                                precio, precio_ppto, precio_anterior, moneda,
+                                id_obra, obra_clave, obra_nombre, centro_costo, proyecto
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            id_escalatoria, esc_clave, id_insumo, clave, nombre,
+                            precio, precio_ppto, precio_ant, moneda,
+                            id_obra, obr_cve, obr_nom, cc_nom, proy_nom
+                        ))
+                    conn.commit()
+        except Exception:
+            pass
+
+    @classmethod
     def obtener_detalle(cls, id_escalatoria: int) -> Optional[Dict[str, Any]]:
         """Obtiene la información completa de una escalatoria con todos sus insumos y obras"""
         conn = cls._get_connection()
@@ -293,7 +512,6 @@ class EscalatoriaService:
 
         resultado = dict(row)
 
-        # Obras asociadas
         cur.execute("""
             SELECT proyecto, centro_costo, obra, id_obra 
             FROM escalatoria_obras 
@@ -302,35 +520,23 @@ class EscalatoriaService:
         """, (id_escalatoria,))
         resultado["obras"] = [dict(o) for o in cur.fetchall()]
 
-        # Insumos y precios
         cur.execute("""
             SELECT id_insumo, clave, nombre, precio, precio_ppto, precio_anterior, moneda 
             FROM escalatoria_insumos 
             WHERE id_escalatoria = ? 
-            ORDER BY id ASC
+            ORDER BY precio DESC, id ASC
         """, (id_escalatoria,))
         insumos = [dict(i) for i in cur.fetchall()]
 
-        # Si aún no tiene insumos en base local, intentar consultarlos al vuelo de Enkontrol Cloud
         if not insumos:
-            insumos = cls._consultar_insumos_en_vivo(id_escalatoria)
-            if insumos:
-                # Guardarlos en local para caché rápida futura
-                for ins in insumos:
-                    cur.execute("""
-                        INSERT INTO escalatoria_insumos (id_escalatoria, id_insumo, clave, nombre, precio, precio_ppto, precio_anterior, moneda)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        id_escalatoria,
-                        ins.get("id_insumo"),
-                        ins.get("clave"),
-                        ins.get("nombre"),
-                        ins.get("precio", 0),
-                        ins.get("precio_ppto", 0),
-                        ins.get("precio_anterior"),
-                        ins.get("moneda")
-                    ))
-                conn.commit()
+            cls._cargar_insumos_detallados_escalatoria(id_escalatoria, conn)
+            cur.execute("""
+                SELECT id_insumo, clave, nombre, precio, precio_ppto, precio_anterior, moneda 
+                FROM escalatoria_insumos 
+                WHERE id_escalatoria = ? 
+                ORDER BY precio DESC, id ASC
+            """, (id_escalatoria,))
+            insumos = [dict(i) for i in cur.fetchall()]
 
         resultado["insumos"] = insumos
         conn.close()
@@ -362,58 +568,10 @@ class EscalatoriaService:
         return None
 
     @classmethod
-    def _consultar_insumos_en_vivo(cls, id_escalatoria: int) -> List[Dict[str, Any]]:
-        """Consulta los insumos directamente desde el endpoint de Enkontrol Cloud"""
-        session = cls._crear_sesion_enkontrol()
-        if not session:
-            return []
-
-        url = f"https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/Get/GetInsumosEscalatoria/?id={id_escalatoria}"
-        headers = {"User-Agent": "Mozilla/5.0", "Referer": "https://suite.ekloud.net:1445/Aryve/"}
-
-        try:
-            res = session.get(url, headers=headers, timeout=10)
-            if res.status_code == 200:
-                data = res.json()
-                insumos_limpios = []
-                # Evitar duplicados por obra agrupando por insumo
-                vistos = set()
-                if isinstance(data, list):
-                    for item in data:
-                        ins_obj = item.get("Insumo") or {}
-                        clave = str(ins_obj.get("Clave") or item.get("Clave") or "").strip()
-                        nombre = str(ins_obj.get("Nombre") or item.get("Nombre") or "").strip()
-                        id_insumo = item.get("IdInsumo") or ins_obj.get("ID")
-                        key_uniq = clave or nombre or id_insumo
-                        if key_uniq and key_uniq in vistos:
-                            continue
-                        vistos.add(key_uniq)
-
-                        precio = float(item.get("Precio") or 0.0)
-                        precio_ppto = float(item.get("PrecioPresupuesto") or 0.0)
-                        precio_anterior = float(item.get("PrecioAnterior")) if item.get("PrecioAnterior") is not None else None
-                        moneda_obj = item.get("Moneda") or {}
-                        moneda = moneda_obj.get("MoneySymbol") or "MXN"
-
-                        insumos_limpios.append({
-                            "id_insumo": id_insumo,
-                            "clave": clave,
-                            "nombre": nombre,
-                            "precio": precio,
-                            "precio_ppto": precio_ppto,
-                            "precio_anterior": precio_anterior,
-                            "moneda": moneda
-                        })
-                return insumos_limpios
-        except Exception:
-            pass
-        return []
-
-    @classmethod
     def sincronizar_desde_enkontrol(cls, incluir_obras: bool = True) -> Dict[str, Any]:
         """
         Sincroniza todas las escalatorias desde Enkontrol 10 Cloud (GetAll)
-        y opcionalmente sus obras asociadas para búsquedas completas por obra.
+        y sus obras/insumos asociados para búsquedas completas por obra.
         """
         global _sincronizando_ahora
         with _lock_sync:
@@ -472,7 +630,6 @@ class EscalatoriaService:
 
                 num_insumos = int(item.get("NumeroInsumos") or 0)
 
-                # Centro de Costos / Plaza
                 cc_obj = item.get("CCA") or item.get("CentroCosto") or {}
                 cc_codigo = str(cc_obj.get("Clave") or item.get("CC") or "")
                 cc_nombre = str(cc_obj.get("Nombre") or "")
@@ -507,7 +664,6 @@ class EscalatoriaService:
                 ))
                 total_procesadas += 1
 
-                # Si se solicitan obras y aún no tiene registros de obras para este ID
                 if incluir_obras:
                     cur.execute("SELECT COUNT(*) FROM escalatoria_obras WHERE id_escalatoria = ?", (esc_id,))
                     if cur.fetchone()[0] == 0:
@@ -531,7 +687,6 @@ class EscalatoriaService:
                         except Exception:
                             pass
 
-            # Guardar metadatos
             cur.execute("""
                 INSERT INTO escalatoria_meta (clave, valor, fecha)
                 VALUES ('ultima_sincronizacion', ?, ?)

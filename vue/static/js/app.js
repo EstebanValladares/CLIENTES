@@ -483,10 +483,18 @@ createApp({
     const escalatoriasModulo = window.createEscalatoriasModule ? window.createEscalatoriasModule(Vue) : {};
     const {
       metricasEscalatorias,
+      modoVistaEscalatorias,
       escalatoriasRegistros,
       totalEscalatoriasFiltradas,
       cargandoEscalatorias,
       sincronizandoEscalatorias,
+      insumosPorObra,
+      arbolWbsObra,
+      totalInsumosObra,
+      totalObrasWbs,
+      cargandoInsumosPorObra,
+      filtroInternoInsumos,
+      insumosPorObraFiltrados,
       filtroEscalatoriaBusqueda,
       filtroEscalatoriaObra,
       filtroEscalatoriaClave,
@@ -506,6 +514,7 @@ createApp({
       cargarResumenEscalatorias,
       alCambiarFiltroEscalatorias,
       consultarEscalatorias,
+      consultarInsumosPorObra,
       limpiarFiltrosEscalatorias,
       cambiarPaginaEscalatorias,
       sincronizarEscalatoriasCloud,
@@ -528,6 +537,7 @@ createApp({
       },
       consultarEscalatorias: () => {
         if (typeof consultarEscalatorias === 'function') consultarEscalatorias();
+        if (typeof consultarInsumosPorObra === 'function') consultarInsumosPorObra();
       }
     }) : {};
     const {
@@ -1572,10 +1582,18 @@ createApp({
 
       // Escalatoria de Precios (SOC)
       metricasEscalatorias,
+      modoVistaEscalatorias,
       escalatoriasRegistros,
       totalEscalatoriasFiltradas,
       cargandoEscalatorias,
       sincronizandoEscalatorias,
+      insumosPorObra,
+      arbolWbsObra,
+      totalInsumosObra,
+      totalObrasWbs,
+      cargandoInsumosPorObra,
+      filtroInternoInsumos,
+      insumosPorObraFiltrados,
       filtroEscalatoriaBusqueda,
       filtroEscalatoriaObra,
       filtroEscalatoriaClave,
@@ -1595,6 +1613,7 @@ createApp({
       cargarResumenEscalatorias,
       alCambiarFiltroEscalatorias,
       consultarEscalatorias,
+      consultarInsumosPorObra,
       limpiarFiltrosEscalatorias,
       cambiarPaginaEscalatorias,
       sincronizarEscalatoriasCloud,
