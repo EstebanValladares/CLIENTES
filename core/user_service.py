@@ -375,6 +375,22 @@ class UserService:
                                 num = int(m.group(1))
                                 if num > max_num:
                                     max_num = num
+
+                    # Analizar también catálogo ordenado de posiciones registradas
+                    for reg in data.get("posiciones_registradas", []):
+                        if isinstance(reg, dict):
+                            reg_nom = reg.get("nombre")
+                            if reg_nom:
+                                puestos_nombres.add(str(reg_nom).strip())
+                            reg_cat = reg.get("categoria")
+                            if reg_cat:
+                                categorias.add(str(reg_cat).strip())
+                            reg_clave = str(reg.get("clave") or "")
+                            m_reg = re.search(r"POS-(\d+)", reg_clave, re.IGNORECASE)
+                            if m_reg:
+                                num_reg = int(m_reg.group(1))
+                                if num_reg > max_num:
+                                    max_num = num_reg
             except Exception as e:
                 logger.error(f"Error analizando puestos.json para meta posiciones: {e}")
 
@@ -393,9 +409,9 @@ class UserService:
             except Exception:
                 pass
 
-        # Baseline oficial Aryve Enkontrol (ultima posicion en vivo es POS-1077)
-        if max_num < 1077:
-            max_num = 1077
+        # Baseline oficial Aryve Enkontrol (última posición verificada en vivo es POS-1079)
+        if max_num < 1079:
+            max_num = 1079
 
         sig_num = max_num + 1
         ultima_clave = f"POS-{max_num:04d}" if max_num < 10000 else f"POS-{max_num}"
@@ -450,6 +466,18 @@ class UserService:
             "padre": padre
         }
 
+        # Registrar en el historial ordenado de posiciones
+        registradas = data.setdefault("posiciones_registradas", [])
+        registradas = [r for r in registradas if isinstance(r, dict) and r.get("clave") != clave]
+        registradas.append({
+            "clave": clave,
+            "nombre": nombre,
+            "categoria": categoria or nombre,
+            "padre": padre,
+            "fecha_registro": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+        data["posiciones_registradas"] = registradas
+
         data["total_posiciones"] = len(puestos_dict)
         data["ultima_actualizacion"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -460,6 +488,8 @@ class UserService:
             logger.error(f"Error guardando nueva posición en puestos.json: {e}")
             return {"ok": False, "error": str(e)}
 
+        meta_actualizada = cls.obtener_meta_posiciones()
+
         return {
             "ok": True,
             "mensaje": f"Posición {clave} - {nombre} guardada exitosamente.",
@@ -468,7 +498,8 @@ class UserService:
                 "nombre": nombre,
                 "categoria": categoria,
                 "padre": padre
-            }
+            },
+            "meta": meta_actualizada
         }
 
     @staticmethod

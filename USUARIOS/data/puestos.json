@@ -1,7 +1,7 @@
 {
   "_comentario": "Catálogo integral de 230 puestos y posiciones sincronizado desde Aryve Cloud",
-  "ultima_actualizacion": "2026-11-04 17:04:12",
-  "total_posiciones": 230,
+  "ultima_actualizacion": "2026-11-10 10:35:17",
+  "total_posiciones": 231,
   "puestos": {
     "ASESOR CALL CENTER CABOS": {
       "categoria": "BROKER LOS CABOS",
@@ -7604,7 +7604,7 @@
         "Clasificador de Autorizaciones": 1,
         "Vistas GIS": 7
       },
-      "clave_posicion_cloud": "POS-0151",
+      "clave_posicion_cloud": "POS-1078",
       "area_organizacion": "VENTAS",
       "grupos": [
         "BROKERS",
@@ -14792,7 +14792,7 @@
       "id_posicion_cloud": 1035,
       "total_clasificadores": 33,
       "area_organizacion": "VENTAS",
-      "clave_posicion_cloud": "POS-1045"
+      "clave_posicion_cloud": "POS-1079"
     },
     "ASESOR DE VENTA INVITADO": {
       "categoria": "ASESOR DE VENTA TAMPICO",
@@ -14960,5 +14960,35 @@
       "area_organizacion": "ALMACEN",
       "clave_posicion_cloud": "POS-0643"
     }
-  }
+  },
+  "posiciones_registradas": [
+    {
+      "clave": "POS-1076",
+      "nombre": "BROKER QUERETARO",
+      "categoria": "BROKER QUERETARO",
+      "padre": "",
+      "fecha_registro": "2026-11-04 12:42:00"
+    },
+    {
+      "clave": "POS-1077",
+      "nombre": "ASESOR DE VENTA TAMPICO",
+      "categoria": "ASESOR DE VENTA TAMPICO",
+      "padre": "",
+      "fecha_registro": "2026-11-04 12:42:00"
+    },
+    {
+      "clave": "POS-1078",
+      "nombre": "ASESOR DE VENTA TAMPICO",
+      "categoria": "ASESOR DE VENTA TAMPICO",
+      "padre": "",
+      "fecha_registro": "2026-11-09 10:00:00"
+    },
+    {
+      "clave": "POS-1079",
+      "nombre": "ASESOR DE VENTAS MATAMOROS",
+      "categoria": "ASESOR DE VENTA MATAMOROS",
+      "padre": "",
+      "fecha_registro": "2026-11-09 10:00:00"
+    }
+  ]
 }

@@ -96,13 +96,13 @@
 
     // Creación de Posiciones (Consecutivo POS-XXXX)
     const metaPosiciones = ref({
-      ultima_clave: 'POS-1077',
-      siguiente_clave: 'POS-1078',
+      ultima_clave: 'POS-1079',
+      siguiente_clave: 'POS-1080',
       puestos: [],
       categorias: []
     });
     const formCreacionPosicion = ref({
-      clave: 'POS-1078',
+      clave: 'POS-1080',
       nombre: '',
       categoria: '',
       padre: '',
@@ -240,8 +240,8 @@
         if (res.ok) {
           const data = await res.json();
           metaPosiciones.value = data;
-          if (!formCreacionPosicion.value.clave || formCreacionPosicion.value.clave === 'POS-1052' || formCreacionPosicion.value.clave === 'POS-1067') {
-            formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1078';
+          if (!formCreacionPosicion.value.clave || ['POS-1052', 'POS-1067', 'POS-1078'].includes(formCreacionPosicion.value.clave)) {
+            formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1080';
           }
         }
       } catch (e) {
@@ -256,9 +256,9 @@
         if (res.ok) {
           const data = await res.json();
           metaPosiciones.value = data;
-          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1078';
+          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1080';
         } else {
-          let num = 1077;
+          let num = 1079;
           const m = formCreacionPosicion.value.clave.match(/POS-(\d+)/);
           if (m) num = Math.max(num, parseInt(m[1], 10));
           formCreacionPosicion.value.clave = `POS-${String(num + 1).padStart(4, '0')}`;
@@ -304,7 +304,7 @@
 
     const limpiarFormPosicionSimple = () => {
       formCreacionPosicion.value = {
-        clave: metaPosiciones.value.siguiente_clave || 'POS-1078',
+        clave: metaPosiciones.value.siguiente_clave || 'POS-1080',
         nombre: '',
         categoria: '',
         padre: '',
