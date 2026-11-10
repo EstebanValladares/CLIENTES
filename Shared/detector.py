@@ -152,12 +152,12 @@ def obtener_rutas_monitoreadas_oc() -> List[str]:
         return rutas
 
     for root, _, files in os.walk(OC_SRC_DIR):
-        if any(p in root for p in ["__pycache__", ".git", ".vscode", "datos"]):
+        if any(p in root for p in ["__pycache__", ".git", ".vscode", "datos", "vendor", "storage", "node_modules"]):
             continue
         for f in files:
             if f.startswith("Docker") or f.startswith("docker") or f == ".dockerignore":
                 continue
-            if f.endswith((".py", ".html", ".js", ".css", ".sql", ".yml", ".yaml", ".env.example")):
+            if f.endswith((".php", ".blade.php", ".py", ".html", ".js", ".css", ".sql", ".json", ".yml", ".yaml", ".env.example")):
                 rutas.append(os.path.join(root, f))
     return rutas
 

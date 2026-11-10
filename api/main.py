@@ -105,7 +105,13 @@ _lock_torre = threading.Lock()
 def _sondear_telemetria_oc():
     """Consulta la telemetría en segundo plano sin congelar la API ni las búsquedas"""
     global _estado_torre_cache
-    oc_url = os.getenv("CONTROL_PAGOS_OC_URL", "http://127.0.0.1:5000/api/telemetria")
+    candidatos_oc = [u for u in [
+        os.getenv("CONTROL_PAGOS_OC_URL", ""),
+        "http://control_pagos_oc.test/api/telemetria",
+        "http://localhost/control_pagos_oc/public/api/telemetria",
+        "http://127.0.0.1:8000/api/telemetria",
+        "http://127.0.0.1:5000/api/telemetria"
+    ] if u]
     
     estado_oc = {
         "id": "OC",
@@ -116,7 +122,7 @@ def _sondear_telemetria_oc():
         "estado": "OFFLINE",
         "activo": False,
         "servicios": "Desconectado",
-        "conexion": "http://127.0.0.1:5000",
+        "conexion": "http://control_pagos_oc.test",
         "ocs_hoy": 0,
         "monto_hoy": 0.0,
         "total_ocs": 0,
@@ -126,41 +132,51 @@ def _sondear_telemetria_oc():
         "ultima_fecha": "-"
     }
 
-    try:
-        req = urllib.request.Request(oc_url, headers={"User-Agent": "TorreControl-CLIENTES"})
-        with urllib.request.urlopen(req, timeout=5.0) as resp:
-            if resp.status == 200:
-                data = json.loads(resp.read().decode("utf-8"))
-                datos = data.get("datos", {})
-                
-                uptime_seg = data.get("uptime_segundos", 0)
-                if uptime_seg > 3600:
-                    uptime_str = f"{uptime_seg // 3600}h {(uptime_seg % 3600) // 60}m"
-                elif uptime_seg > 60:
-                    uptime_str = f"{uptime_seg // 60}m {uptime_seg % 60}s"
-                else:
-                    uptime_str = f"{uptime_seg}s"
+    data = None
+    url_exitosa = None
+    for oc_url in candidatos_oc:
+        try:
+            req = urllib.request.Request(oc_url, headers={"User-Agent": "TorreControl-CLIENTES"})
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    url_exitosa = oc_url
+                    break
+        except Exception:
+            continue
 
-                dia_nombre = datos.get("dia_hoy", "Hoy")
-                estado_oc.update({
-                    "salud": data.get("salud", "100%"),
-                    "estado": data.get("estado", "OPERATIVO"),
-                    "activo": True,
-                    "servicios": "Aryve / Enkontrol (En Línea)",
-                    "dia_actual": dia_nombre,
-                    "ocs_hoy_aryve": datos.get("ocs_hoy_aryve", 0),
-                    "ocs_hoy_velas": datos.get("ocs_hoy_velas", 0),
-                    "ocs_hoy_total": datos.get("ocs_hoy_total", 0),
-                    "total_aryve": datos.get("total_aryve", 0),
-                    "total_velas": datos.get("total_velas", 0),
-                    "total_global": datos.get("total_global", 0),
-                    "historial_dias": datos.get("historial_dias", []),
-                    "errores": datos.get("errores", 0),
-                    "latencia_ms": data.get("latencia_db_ms", 0),
-                    "uptime": uptime_str
-                })
-    except Exception:
-        pass
+    if data:
+        try:
+            datos = data.get("datos", {})
+            uptime_seg = data.get("uptime_segundos", 0)
+            if uptime_seg > 3600:
+                uptime_str = f"{uptime_seg // 3600}h {(uptime_seg % 3600) // 60}m"
+            elif uptime_seg > 60:
+                uptime_str = f"{uptime_seg // 60}m {uptime_seg % 60}s"
+            else:
+                uptime_str = f"{uptime_seg}s"
+
+            dia_nombre = datos.get("dia_hoy", "Hoy")
+            estado_oc.update({
+                "salud": data.get("salud", "100%"),
+                "estado": data.get("estado", "OPERATIVO"),
+                "activo": True,
+                "servicios": "Aryve / Enkontrol (En Línea)",
+                "conexion": url_exitosa,
+                "dia_actual": dia_nombre,
+                "ocs_hoy_aryve": datos.get("ocs_hoy_aryve", 0),
+                "ocs_hoy_velas": datos.get("ocs_hoy_velas", 0),
+                "ocs_hoy_total": datos.get("ocs_hoy_total", 0),
+                "total_aryve": datos.get("total_aryve", 0),
+                "total_velas": datos.get("total_velas", 0),
+                "total_global": datos.get("total_global", 0),
+                "historial_dias": datos.get("historial_dias", []),
+                "errores": datos.get("errores", 0),
+                "latencia_ms": data.get("latencia_db_ms", 0),
+                "uptime": uptime_str
+            })
+        except Exception:
+            pass
 
     try:
         pub_info = obtener_estado_oc_publicacion()
