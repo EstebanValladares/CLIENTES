@@ -25,6 +25,17 @@
         iconoColor: 'text-cyan-400',
         bgIcono: 'bg-cyan-500/15 border-cyan-500/30',
         descripcion: 'Buscador instantáneo por Centro de Costo, Manzana, Lote, No. Interior e ID Lote EK.'
+      },
+      {
+        id: 'ESCALATORIAS',
+        nombre: 'Escalatoria de Precios (SOC)',
+        subtitulo: 'Tabulador de Precios e Insumos por Obra',
+        icono: 'fa-solid fa-arrow-trend-up',
+        badge: '86 claves',
+        color: 'from-amber-500 via-amber-600 to-orange-500',
+        iconoColor: 'text-amber-400',
+        bgIcono: 'bg-amber-500/15 border-amber-500/30',
+        descripcion: 'Búsqueda por Obra, Clave de escalatoria e insumos con sincronización en vivo de Enkontrol Cloud.'
       }
     ]);
 
@@ -47,6 +58,11 @@
           context.consultarLotesMapeo();
         } else if (typeof window.cargarResumenMapeoGlobal === 'function') {
           window.cargarResumenMapeoGlobal();
+        }
+      } else if (id === 'ESCALATORIAS') {
+        if (context && typeof context.cargarResumenEscalatorias === 'function') {
+          context.cargarResumenEscalatorias();
+          context.consultarEscalatorias();
         }
       }
     };

@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 
-from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas, chat, mapeo
+from api.routes import usuarios, bots, operaciones, obras, proveedores_contratistas, chat, mapeo, escalatorias
 from core.user_service import UserService
 from core.daemon_oc_service import iniciar_demonio_oc, forzar_sincronizacion_ahora
 from core.auto_publisher import iniciar_auto_publisher
@@ -41,6 +41,7 @@ app.include_router(obras.router)
 app.include_router(proveedores_contratistas.router)
 app.include_router(chat.router)
 app.include_router(mapeo.router)
+app.include_router(escalatorias.router)
 app.include_router(shared_router)
 
 @app.get("/api/metricas")

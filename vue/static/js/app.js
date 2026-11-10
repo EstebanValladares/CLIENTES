@@ -478,6 +478,42 @@ createApp({
     } = mapeoModulo;
 
     // ==========================================
+    // VISTA MODULAR: ESCALATORIAS (vue/static/js/modules/escalatorias.js)
+    // ==========================================
+    const escalatoriasModulo = window.createEscalatoriasModule ? window.createEscalatoriasModule(Vue) : {};
+    const {
+      metricasEscalatorias,
+      escalatoriasRegistros,
+      totalEscalatoriasFiltradas,
+      cargandoEscalatorias,
+      sincronizandoEscalatorias,
+      filtroEscalatoriaBusqueda,
+      filtroEscalatoriaObra,
+      filtroEscalatoriaClave,
+      filtroEscalatoriaInsumo,
+      filtroEscalatoriaEstatus,
+      paginaEscalatoriasActual,
+      limiteEscalatorias,
+      totalPaginasEscalatorias,
+      modalDetalleEscalatoriaAbierto,
+      escalatoriaSeleccionada,
+      cargandoDetalleEscalatoria,
+      tabDetalleActivo,
+      busquedaInsumoDetalle,
+      busquedaObraDetalle,
+      insumosDetalleFiltrados,
+      obrasDetalleFiltradas,
+      cargarResumenEscalatorias,
+      alCambiarFiltroEscalatorias,
+      consultarEscalatorias,
+      limpiarFiltrosEscalatorias,
+      cambiarPaginaEscalatorias,
+      sincronizarEscalatoriasCloud,
+      abrirDetalleEscalatoria,
+      cerrarDetalleEscalatoria
+    } = escalatoriasModulo;
+
+    // ==========================================
     // MÓDULO: CONSULTAS FLOTANTES (vue/static/js/modules/consultas_flotantes.js)
     // ==========================================
     const consultasFlotantesModulo = window.createConsultasFlotantesModule ? window.createConsultasFlotantesModule(Vue, {
@@ -486,6 +522,12 @@ createApp({
       },
       consultarLotesMapeo: () => {
         if (typeof consultarLotesMapeo === 'function') consultarLotesMapeo();
+      },
+      cargarResumenEscalatorias: () => {
+        if (typeof cargarResumenEscalatorias === 'function') cargarResumenEscalatorias();
+      },
+      consultarEscalatorias: () => {
+        if (typeof consultarEscalatorias === 'function') consultarEscalatorias();
       }
     }) : {};
     const {
@@ -563,6 +605,7 @@ createApp({
       setTimeout(cargarCatalogoObras, 650);
       setTimeout(cargarGruposInsumosTipo, 750);
       setTimeout(cargarResumenMapeo, 850);
+      setTimeout(cargarResumenEscalatorias, 950);
 
       // 2. Polling inteligente de Torre de Control: solo si la ventana está visible
       setInterval(() => {
@@ -1526,6 +1569,37 @@ createApp({
       seleccionarCCMapeo,
       sincronizarMapeoEnkontrol,
       exportarMapeoCSV,
+
+      // Escalatoria de Precios (SOC)
+      metricasEscalatorias,
+      escalatoriasRegistros,
+      totalEscalatoriasFiltradas,
+      cargandoEscalatorias,
+      sincronizandoEscalatorias,
+      filtroEscalatoriaBusqueda,
+      filtroEscalatoriaObra,
+      filtroEscalatoriaClave,
+      filtroEscalatoriaInsumo,
+      filtroEscalatoriaEstatus,
+      paginaEscalatoriasActual,
+      limiteEscalatorias,
+      totalPaginasEscalatorias,
+      modalDetalleEscalatoriaAbierto,
+      escalatoriaSeleccionada,
+      cargandoDetalleEscalatoria,
+      tabDetalleActivo,
+      busquedaInsumoDetalle,
+      busquedaObraDetalle,
+      insumosDetalleFiltrados,
+      obrasDetalleFiltradas,
+      cargarResumenEscalatorias,
+      alCambiarFiltroEscalatorias,
+      consultarEscalatorias,
+      limpiarFiltrosEscalatorias,
+      cambiarPaginaEscalatorias,
+      sincronizarEscalatoriasCloud,
+      abrirDetalleEscalatoria,
+      cerrarDetalleEscalatoria,
 
       // Modal Usuario
       modalUsuarioAbierto,
