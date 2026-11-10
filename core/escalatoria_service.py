@@ -499,6 +499,92 @@ class EscalatoriaService:
             pass
 
     @classmethod
+    def obtener_insumos_clave_obra(
+        cls,
+        id_escalatoria: int,
+        obra: Optional[str] = None,
+        insumo: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Retorna los insumos de una clave/escalatoria específica,
+        filtrando opcionalmente por la obra y/o insumo buscado.
+        """
+        conn = cls._get_connection()
+        cur = conn.cursor()
+
+        # Si aún no tiene insumos indexados en escalatoria_insumos para este id, cargarlos
+        cur.execute("SELECT COUNT(*) FROM escalatoria_insumos WHERE id_escalatoria = ?", (id_escalatoria,))
+        if cur.fetchone()[0] == 0:
+            cls._cargar_insumos_detallados_escalatoria(id_escalatoria, conn)
+
+        where_parts = ["id_escalatoria = ?"]
+        params = [id_escalatoria]
+
+        if obra and obra.strip():
+            o_term = f"%{obra.strip()}%"
+            where_parts.append("""
+                (
+                    obra_clave LIKE ? 
+                    OR obra_nombre LIKE ? 
+                    OR centro_costo LIKE ? 
+                    OR proyecto LIKE ?
+                )
+            """)
+            params.extend([o_term, o_term, o_term, o_term])
+
+        if insumo and insumo.strip():
+            i_term = f"%{insumo.strip()}%"
+            where_parts.append("(clave LIKE ? OR nombre LIKE ?)")
+            params.extend([i_term, i_term])
+
+        where_sql = "WHERE " + " AND ".join(where_parts)
+        cur.execute(f"""
+            SELECT 
+                clave,
+                nombre,
+                precio,
+                precio_ppto,
+                precio_anterior,
+                moneda,
+                obra_clave,
+                obra_nombre,
+                centro_costo,
+                proyecto
+            FROM escalatoria_insumos
+            {where_sql}
+            ORDER BY precio DESC, nombre ASC
+        """, params)
+        rows = cur.fetchall()
+
+        insumos = []
+        vistos = set()
+        for r in rows:
+            d = dict(r)
+            k = (d.get("clave") or "", d.get("nombre") or "", d.get("precio") or 0.0)
+            if k in vistos:
+                continue
+            vistos.add(k)
+            insumos.append(d)
+
+        cur.execute("SELECT clave, nombre, estatus, estatus_desc, fecha_autorizacion, modificado_por FROM escalatorias WHERE id = ?", (id_escalatoria,))
+        esc_row = cur.fetchone()
+        esc_info = dict(esc_row) if esc_row else {}
+
+        cur.execute("SELECT COUNT(DISTINCT clave) FROM escalatoria_insumos WHERE id_escalatoria = ?", (id_escalatoria,))
+        total_sin_filtro = cur.fetchone()[0]
+
+        conn.close()
+        return {
+            "id_escalatoria": id_escalatoria,
+            "escalatoria": esc_info,
+            "obra_filtro": obra or "",
+            "insumo_filtro": insumo or "",
+            "total_insumos": len(insumos),
+            "total_clave_sin_filtro": total_sin_filtro,
+            "insumos": insumos
+        }
+
+    @classmethod
     def obtener_detalle(cls, id_escalatoria: int) -> Optional[Dict[str, Any]]:
         """Obtiene la información completa de una escalatoria con todos sus insumos y obras"""
         conn = cls._get_connection()

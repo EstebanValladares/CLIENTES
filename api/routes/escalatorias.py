@@ -62,6 +62,23 @@ def consultar_insumos_por_obra(
     )
 
 
+@router.get("/{id_escalatoria}/insumos-obra")
+def obtener_insumos_clave_obra(
+    id_escalatoria: int,
+    obra: Optional[str] = Query(None),
+    insumo: Optional[str] = Query(None)
+):
+    """
+    Retorna los insumos autorizados de esa clave para la obra filtrada,
+    con sus precios unitarios (PrecioMoneda).
+    """
+    return EscalatoriaService.obtener_insumos_clave_obra(
+        id_escalatoria=id_escalatoria,
+        obra=obra,
+        insumo=insumo
+    )
+
+
 @router.get("/{id_escalatoria}/detalle")
 def obtener_detalle_escalatoria(id_escalatoria: int):
     """Retorna el detalle completo de una escalatoria con sus obras e insumos."""
