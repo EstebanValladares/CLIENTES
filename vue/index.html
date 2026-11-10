@@ -1376,7 +1376,14 @@
     <!-- ======================================================== -->
     <!-- WIDGET DE CHAT DE EQUIPO (GRUPAL Y PRIVADOS 1 A 1)       -->
     <!-- ======================================================== -->
-    <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 select-none">
+    <!-- BACKDROP INVISIBLE PARA CERRAR EL CHAT AL HACER CLIC AFUERA (CLICK OUTSIDE) -->
+    <div v-if="chatAbierto && !chatMinimizado" 
+         @click="chatAbierto = false"
+         class="fixed inset-0 z-40 bg-transparent cursor-default select-none"
+         aria-hidden="true"></div>
+
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 select-none"
+         @click.stop>
       
       <!-- VENTANA FLOTANTE DEL CHAT ESTILO WHATSAPP -->
       <div v-if="chatAbierto"

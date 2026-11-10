@@ -582,6 +582,13 @@ createApp({
           cargarProyectosTorre();
         }
       });
+
+      // 5. Cerrar chat flotante cómodamente con la tecla Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatAbierto.value) {
+          chatAbierto.value = false;
+        }
+      });
     });
 
 
