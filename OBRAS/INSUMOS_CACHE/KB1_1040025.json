@@ -1,0 +1,958 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "KB1",
+    "nombre": "KB1 - 196-A - 12PACK 2 R MOLDE VISTA LAGUNA BIENESTAR TAM"
+  },
+  "metricas": {
+    "total_partidas": 11,
+    "total_frentes": 7,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 14660.6526,
+    "requisitado_total": 14977.499,
+    "comprado_total": 14977.499,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "CIMENTACION",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "CIMENTACION"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1511.2921,
+              "importe_ppto": 22064.8647,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1511.2921,
+              "vigente_tarjetas": 1511.2921,
+              "diferencia": 0,
+              "requisitado": 1511.2921,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 1511.2921,
+              "en_proceso_compra": 0,
+              "recibido": 1511.2921,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "NIVEL 1",
+      "partidas": [
+        {
+          "id": "1.3.1",
+          "codigo": "1.3.1",
+          "nombre": "ESTRUCTURA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "NIVEL 1"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 544.7235,
+              "importe_ppto": 7952.9631,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 544.7235,
+              "vigente_tarjetas": 850.9151,
+              "diferencia": -306.1916,
+              "requisitado": 791.9092,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 791.9092,
+              "en_proceso_compra": 0,
+              "recibido": 691.8402,
+              "por_requisitar": -247.1857,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.2",
+          "codigo": "1.3.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "NIVEL 1"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2536.5691,
+              "importe_ppto": 37033.9085,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2536.5691,
+              "vigente_tarjetas": 4284.62,
+              "diferencia": -1748.0509,
+              "requisitado": 2536.5691,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2536.5691,
+              "en_proceso_compra": 0,
+              "recibido": 2536.5691,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "NIVEL 2",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "ESTRUCTURA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "NIVEL 2"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 791.9092,
+              "importe_ppto": 11561.8743,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 791.9092,
+              "vigente_tarjetas": 791.9092,
+              "diferencia": 0,
+              "requisitado": 791.9092,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 791.9092,
+              "en_proceso_compra": 0,
+              "recibido": 791.9092,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.2",
+          "codigo": "1.4.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "NIVEL 2"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2620.69,
+              "importe_ppto": 38262.074,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2620.69,
+              "vigente_tarjetas": 3202.33,
+              "diferencia": -581.64,
+              "requisitado": 2620.69,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2620.69,
+              "en_proceso_compra": 0,
+              "recibido": 2620.69,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "NIVEL 3",
+      "partidas": [
+        {
+          "id": "1.5.1",
+          "codigo": "1.5.1",
+          "nombre": "ESTRUCTURA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "NIVEL 3"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 791.9092,
+              "importe_ppto": 11561.8743,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 791.9092,
+              "vigente_tarjetas": 791.9092,
+              "diferencia": 0,
+              "requisitado": 791.9092,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 791.9092,
+              "en_proceso_compra": 0,
+              "recibido": 791.9092,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.2",
+          "codigo": "1.5.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "NIVEL 3"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2620.69,
+              "importe_ppto": 38262.074,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2620.69,
+              "vigente_tarjetas": 3202.33,
+              "diferencia": -581.64,
+              "requisitado": 2620.69,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2620.69,
+              "en_proceso_compra": 0,
+              "recibido": 2620.69,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.6",
+      "codigo": "1.6",
+      "nombre": "NIVEL 4",
+      "partidas": [
+        {
+          "id": "1.6.1",
+          "codigo": "1.6.1",
+          "nombre": "ESTRUCTURA NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "NIVEL 4"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 444.6545,
+              "importe_ppto": 6491.9557,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 444.6545,
+              "vigente_tarjetas": 691.8402,
+              "diferencia": -247.1857,
+              "requisitado": 691.8402,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 691.8402,
+              "en_proceso_compra": 0,
+              "recibido": 691.8402,
+              "por_requisitar": -247.1857,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.6.2",
+          "codigo": "1.6.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "NIVEL 4"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2620.69,
+              "importe_ppto": 38262.074,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2620.69,
+              "vigente_tarjetas": 3548,
+              "diferencia": -927.31,
+              "requisitado": 2620.69,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2620.69,
+              "en_proceso_compra": 0,
+              "recibido": 2620.69,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "AZOTEA",
+      "partidas": [
+        {
+          "id": "1.7.2",
+          "codigo": "1.7.2",
+          "nombre": "BASE TINACOS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AZOTEA"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 161.525,
+              "importe_ppto": 2358.265,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 161.525,
+              "vigente_tarjetas": 277.685,
+              "diferencia": -116.16,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 161.525,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.8",
+      "codigo": "1.8",
+      "nombre": "OBRA EXTERIOR",
+      "partidas": [
+        {
+          "id": "1.8.1",
+          "codigo": "1.8.1",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "OBRA EXTERIOR"
+          },
+          "insumos": [
+            {
+              "clave": "1040025",
+              "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 16,
+              "importe_ppto": 233.6,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 16,
+              "vigente_tarjetas": 16,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 16,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "CIMENTACION"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1511.2921,
+          "importe_ppto": 22064.8647,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1511.2921,
+          "vigente_tarjetas": 1511.2921,
+          "diferencia": 0,
+          "requisitado": 1511.2921,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 1511.2921,
+          "en_proceso_compra": 0,
+          "recibido": 1511.2921,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.1",
+      "codigo": "1.3.1",
+      "nombre": "ESTRUCTURA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "NIVEL 1"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 544.7235,
+          "importe_ppto": 7952.9631,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 544.7235,
+          "vigente_tarjetas": 850.9151,
+          "diferencia": -306.1916,
+          "requisitado": 791.9092,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 791.9092,
+          "en_proceso_compra": 0,
+          "recibido": 691.8402,
+          "por_requisitar": -247.1857,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.2",
+      "codigo": "1.3.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "NIVEL 1"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2536.5691,
+          "importe_ppto": 37033.9085,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2536.5691,
+          "vigente_tarjetas": 4284.62,
+          "diferencia": -1748.0509,
+          "requisitado": 2536.5691,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2536.5691,
+          "en_proceso_compra": 0,
+          "recibido": 2536.5691,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "ESTRUCTURA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "NIVEL 2"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 791.9092,
+          "importe_ppto": 11561.8743,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 791.9092,
+          "vigente_tarjetas": 791.9092,
+          "diferencia": 0,
+          "requisitado": 791.9092,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 791.9092,
+          "en_proceso_compra": 0,
+          "recibido": 791.9092,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.2",
+      "codigo": "1.4.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "NIVEL 2"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2620.69,
+          "importe_ppto": 38262.074,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2620.69,
+          "vigente_tarjetas": 3202.33,
+          "diferencia": -581.64,
+          "requisitado": 2620.69,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2620.69,
+          "en_proceso_compra": 0,
+          "recibido": 2620.69,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.1",
+      "codigo": "1.5.1",
+      "nombre": "ESTRUCTURA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "NIVEL 3"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 791.9092,
+          "importe_ppto": 11561.8743,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 791.9092,
+          "vigente_tarjetas": 791.9092,
+          "diferencia": 0,
+          "requisitado": 791.9092,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 791.9092,
+          "en_proceso_compra": 0,
+          "recibido": 791.9092,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.2",
+      "codigo": "1.5.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "NIVEL 3"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2620.69,
+          "importe_ppto": 38262.074,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2620.69,
+          "vigente_tarjetas": 3202.33,
+          "diferencia": -581.64,
+          "requisitado": 2620.69,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2620.69,
+          "en_proceso_compra": 0,
+          "recibido": 2620.69,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.1",
+      "codigo": "1.6.1",
+      "nombre": "ESTRUCTURA NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "NIVEL 4"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 444.6545,
+          "importe_ppto": 6491.9557,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 444.6545,
+          "vigente_tarjetas": 691.8402,
+          "diferencia": -247.1857,
+          "requisitado": 691.8402,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 691.8402,
+          "en_proceso_compra": 0,
+          "recibido": 691.8402,
+          "por_requisitar": -247.1857,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.2",
+      "codigo": "1.6.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "NIVEL 4"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2620.69,
+          "importe_ppto": 38262.074,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2620.69,
+          "vigente_tarjetas": 3548,
+          "diferencia": -927.31,
+          "requisitado": 2620.69,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2620.69,
+          "en_proceso_compra": 0,
+          "recibido": 2620.69,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.2",
+      "codigo": "1.7.2",
+      "nombre": "BASE TINACOS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AZOTEA"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 161.525,
+          "importe_ppto": 2358.265,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 161.525,
+          "vigente_tarjetas": 277.685,
+          "diferencia": -116.16,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 161.525,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.1",
+      "codigo": "1.8.1",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "OBRA EXTERIOR"
+      },
+      "insumos": [
+        {
+          "clave": "1040025",
+          "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 16,
+          "importe_ppto": 233.6,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 16,
+          "vigente_tarjetas": 16,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 16,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040025",
+      "nombre": "VARILLA 3/8\" CORRUGADA (NO.3) NMX-C-407-ONNCEE-2005",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 14660.6526,
+      "importe_ppto": 214045.5276,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 14660.6526,
+      "vigente_tarjetas": 19168.8308,
+      "diferencia": -4508.1782,
+      "requisitado": 14977.499,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 14977.499,
+      "en_proceso_compra": 0,
+      "recibido": 14877.43,
+      "por_requisitar": -316.8464,
+      "por_comprar": 0,
+      "situacion": "REQUISITADO EXCEDE",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "KB1",
+    "insumo": "1040025",
+    "nombre": ""
+  }
+}

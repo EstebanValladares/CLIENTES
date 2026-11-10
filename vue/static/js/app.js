@@ -760,13 +760,35 @@ createApp({
       }
     };
 
+    const ultimosTimestampsProcesados = {};
+    let primeraCargaConversaciones = true;
+
     const cargarConversaciones = async () => {
       if (!chatUsuarioActual.value?.id) return;
       try {
         const res = await fetch(`/api/chat/conversaciones?usuario_id=${chatUsuarioActual.value.id}`);
         if (res.ok) {
           const d = await res.json();
-          chatConversaciones.value = d.conversaciones || [];
+          const nuevas = d.conversaciones || [];
+
+          if (!primeraCargaConversaciones) {
+            for (const c of nuevas) {
+              const prevTs = ultimosTimestampsProcesados[c.canal] || 0;
+              if (c.ultimo_timestamp > prevTs && !c.es_mio && c.no_leidos > 0) {
+                dispararNotificacionChat({
+                  titulo: `💬 ${c.contacto_nombre}`,
+                  cuerpo: c.ultimo_texto,
+                  conversacion: c,
+                  canal: c.canal
+                });
+              }
+            }
+          }
+          nuevas.forEach(c => {
+            ultimosTimestampsProcesados[c.canal] = Math.max(ultimosTimestampsProcesados[c.canal] || 0, c.ultimo_timestamp || 0);
+          });
+          primeraCargaConversaciones = false;
+          chatConversaciones.value = nuevas;
         }
       } catch (e) {}
     };
@@ -916,25 +938,126 @@ createApp({
       }, 50);
     };
 
-    let ultimoConteoNoLeidos = 0;
+    // ==========================================
+    // NOTIFICACIONES ESTILO WHATSAPP WEB
+    // ==========================================
+    const notificacionesPermitidas = ref(
+      typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted'
+    );
+
+    const solicitarPermisoNotificaciones = async () => {
+      if (!('Notification' in window)) {
+        alert('Este navegador no soporta notificaciones de escritorio nativas.');
+        return;
+      }
+      try {
+        const perm = await Notification.requestPermission();
+        notificacionesPermitidas.value = (perm === 'granted');
+        if (perm === 'granted') {
+          reproducirSonidoNotificacion();
+          try {
+            new Notification('🔔 Notificaciones Activadas', {
+              body: 'Recibirás avisos en Windows cuando entren mensajes nuevos como en WhatsApp Web.',
+              icon: '/static/img/avatar_limpio.png'
+            });
+          } catch (e) {}
+        }
+      } catch (e) {
+        console.warn('Error al solicitar permiso de notificaciones:', e);
+      }
+    };
+
+    let audioContextCache = null;
     const reproducirSonidoNotificacion = () => {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // Nota D5
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12); // Nota A5
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.25);
+        if (!audioContextCache || audioContextCache.state === 'closed') {
+          audioContextCache = new AudioCtx();
+        }
+        const ctx = audioContextCache;
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const now = ctx.currentTime;
+        
+        // Tono 1 estilo campanilla WhatsApp (E5)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(659.25, now);
+        gain1.gain.setValueAtTime(0.18, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.18);
+
+        // Tono 2 cálido (A5)
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(880, now + 0.08);
+        gain2.gain.setValueAtTime(0.22, now + 0.08);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.08);
+        osc2.stop(now + 0.35);
       } catch (e) {}
     };
+
+    let parpadeoTituloInterval = null;
+    const alternarTituloPestana = (remitente, texto) => {
+      if (parpadeoTituloInterval) clearInterval(parpadeoTituloInterval);
+      let switchTitle = false;
+      const textoLimpio = texto ? String(texto).slice(0, 26) : 'Nuevo mensaje';
+      parpadeoTituloInterval = setInterval(() => {
+        if (document.hidden && chatTotalNoLeidos.value > 0) {
+          document.title = switchTitle 
+            ? `💬 (${chatTotalNoLeidos.value}) Mensaje nuevo` 
+            : `🔔 ${remitente}: ${textoLimpio}`;
+          switchTitle = !switchTitle;
+        } else {
+          clearInterval(parpadeoTituloInterval);
+          parpadeoTituloInterval = null;
+          document.title = chatTotalNoLeidos.value > 0 
+            ? `💬 (${chatTotalNoLeidos.value}) Mensaje nuevo | Dashboard` 
+            : 'Dashboard Intelligence Solutions - VELAS';
+        }
+      }, 1400);
+    };
+
+    const dispararNotificacionChat = ({ titulo, cuerpo, conversacion, canal }) => {
+      reproducirSonidoNotificacion();
+      alternarTituloPestana(titulo.replace('💬 ', ''), cuerpo);
+
+      if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+        try {
+          const notif = new Notification(titulo, {
+            body: cuerpo,
+            icon: '/static/img/avatar_limpio.png',
+            tag: canal || 'chat-velas',
+            renotify: true
+          });
+          notif.onclick = () => {
+            window.focus();
+            chatAbierto.value = true;
+            chatMinimizado.value = false;
+            if (conversacion) {
+              abrirConversacionDirecta(conversacion);
+            } else if (canal === 'general') {
+              abrirGrupoGeneral();
+            }
+          };
+        } catch (e) {
+          console.warn('Error al disparar notificación nativa:', e);
+        }
+      }
+    };
+
+    let ultimoConteoNoLeidos = 0;
+    let ultimoTsGeneralProcesado = 0;
 
     const canalDirectoId = (u1, u2) => {
       const a = String(u1).trim().toLowerCase();
@@ -961,7 +1084,6 @@ createApp({
           const d = await resUsers.json();
           chatUsuariosPresencia.value = d.usuarios || [];
           
-          // Actualizar estado 'En línea' / 'Desconectado' del contacto que tenemos abierto en pantalla
           if (contactoActivo.value) {
             const cid = String(contactoActivo.value.usuario_id);
             const pres = (chatUsuariosPresencia.value || []).find(u => String(u.usuario_id) === cid);
@@ -979,11 +1101,27 @@ createApp({
           const d = await resResumen.json();
           chatResumen.value = d.resumen || { general: { no_leidos: 0 }, dms_no_leidos: {} };
 
-          // Notificación visual en pestaña del navegador estilo WhatsApp Web
+          // Notificación para la Sala General si entra mensaje de otro usuario
+          const ultGen = chatResumen.value?.general?.ultimo_mensaje;
+          if (ultGen && !primeraCargaConversaciones) {
+            if (ultGen.timestamp > ultimoTsGeneralProcesado && String(ultGen.remitente_id) !== String(chatUsuarioActual.value.id)) {
+              if (chatResumen.value.general.no_leidos > 0) {
+                dispararNotificacionChat({
+                  titulo: `📢 Sala General • ${ultGen.remitente_nombre}`,
+                  cuerpo: ultGen.texto,
+                  canal: 'general'
+                });
+              }
+            }
+          }
+          if (ultGen) ultimoTsGeneralProcesado = Math.max(ultimoTsGeneralProcesado, ultGen.timestamp || 0);
+
           const tot = chatTotalNoLeidos.value;
           if (tot > 0) {
-            document.title = `💬 (${tot}) Mensaje nuevo | Dashboard`;
-            if (tot > ultimoConteoNoLeidos) {
+            if (!parpadeoTituloInterval) {
+              document.title = `💬 (${tot}) Mensaje nuevo | Dashboard`;
+            }
+            if (tot > ultimoConteoNoLeidos && !primeraCargaConversaciones) {
               reproducirSonidoNotificacion();
             }
           } else {
@@ -992,7 +1130,6 @@ createApp({
           ultimoConteoNoLeidos = tot;
         }
 
-        // Actualizar lista de conversaciones activas estilo WhatsApp
         cargarConversaciones();
       } catch (e) {}
     };
@@ -1142,6 +1279,10 @@ createApp({
       enviarMensajeChat,
       guardarPerfilChat,
       cargarMensajesCanal,
+      // Notificaciones estilo WhatsApp Web
+      notificacionesPermitidas,
+      solicitarPermisoNotificaciones,
+      reproducirSonidoNotificacion,
       // Tema Claro / Oscuro (Persistente)
       temaActual,
       toggleTema,

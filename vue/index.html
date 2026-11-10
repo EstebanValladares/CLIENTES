@@ -1465,6 +1465,15 @@
               <i class="fa-solid fa-pen text-[8px] opacity-60"></i>
             </button>
 
+            <!-- Botón Notificaciones estilo WhatsApp -->
+            <button @click="solicitarPermisoNotificaciones"
+                    type="button"
+                    :title="notificacionesPermitidas ? 'Notificaciones de escritorio activadas (estilo WhatsApp)' : 'Haz clic para activar notificaciones de escritorio estilo WhatsApp'"
+                    class="w-6 h-6 rounded-lg text-xs flex items-center justify-center transition cursor-pointer"
+                    :class="notificacionesPermitidas ? 'bg-indigo-100 hover:bg-indigo-200 text-indigo-700 dark:bg-indigo-950/60 dark:text-cyan-300' : 'bg-slate-200 hover:bg-slate-300 text-slate-500 dark:bg-slate-800 dark:text-slate-400'">
+              <i class="fa-solid" :class="notificacionesPermitidas ? 'fa-bell text-[11px]' : 'fa-bell-slash text-[11px]'"></i>
+            </button>
+
             <!-- Botón Alternar Modo Claro / Oscuro -->
             <button @click="toggleTema"
                     type="button"

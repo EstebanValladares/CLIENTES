@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "KB1",
+    "nombre": "KB1 - 196-A - 12PACK 2 R MOLDE VISTA LAGUNA BIENESTAR TAM"
+  },
+  "metricas": {
+    "total_partidas": 0,
+    "total_frentes": 0,
+    "total_insumos_resumen": 0,
+    "presupuesto_real_total": 0,
+    "requisitado_total": 0,
+    "comprado_total": 0,
+    "por_comprar_total": 0
+  },
+  "frentes": [],
+  "partidas": [],
+  "resumen": [],
+  "filtros_aplicados": {
+    "obra": "KB1",
+    "insumo": "10400025",
+    "nombre": ""
+  }
+}
