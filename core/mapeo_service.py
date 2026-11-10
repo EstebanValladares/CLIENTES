@@ -25,6 +25,40 @@ _detener_daemon_mapeo = False
 
 
 class MapeoService:
+    @staticmethod
+    def generar_clave_lote(cc: Any, manzana: Any, lote: Any, no_int: Any) -> str:
+        """
+        Genera la clave estándar única del lote con formato compuesto:
+        [CC]-M[MZA]-L[LOTE]-N[INT]
+        Ejemplo: CCOU-M010-L0114-N00114D1 o CKC9-M028-L0006-N000002D
+        """
+        cc_str = str(cc or "").strip().upper() or "000"
+        mza_raw = str(manzana or "").strip()
+        if mza_raw.upper().startswith("M"):
+            mza_raw = mza_raw[1:].strip()
+        if mza_raw.isdigit():
+            mza_fmt = f"M{int(mza_raw):03d}"
+        else:
+            mza_fmt = f"M{mza_raw.zfill(3)}" if mza_raw else "M000"
+
+        lote_raw = str(lote or "").strip()
+        if lote_raw.upper().startswith("L"):
+            lote_raw = lote_raw[1:].strip()
+        if lote_raw.isdigit():
+            lote_fmt = f"L{int(lote_raw):04d}"
+        else:
+            lote_fmt = f"L{lote_raw.zfill(4)}" if lote_raw else "L0000"
+
+        int_raw = str(no_int or "").strip()
+        if int_raw.upper().startswith("N"):
+            int_raw = int_raw[1:].strip()
+        if int_raw and int_raw not in ("0", "-", "000", "0000"):
+            int_fmt = f"N{int_raw.zfill(7)}"
+        else:
+            int_fmt = "N0000000"
+
+        return f"{cc_str}-{mza_fmt}-{lote_fmt}-{int_fmt}"
+
     @classmethod
     def _get_connection(cls) -> sqlite3.Connection:
         if not os.path.exists(DB_PATH):
@@ -116,12 +150,13 @@ class MapeoService:
                 clauses.append("CAST(id_lote_ek AS TEXT) LIKE ?")
                 params.append(f"%{id_lote_ek.strip()}%")
 
-            # 6. Búsqueda libre general (Cualquier texto)
+            # 6. Búsqueda libre general (Cualquier texto o Clave)
             if busqueda and busqueda.strip():
                 q = f"%{busqueda.strip()}%"
                 clauses.append("""
                     (
                         cc LIKE ? OR 
+                        clave_lote LIKE ? OR 
                         CAST(id_lote_ek AS TEXT) LIKE ? OR 
                         lote LIKE ? OR 
                         manzana LIKE ? OR 
@@ -131,7 +166,7 @@ class MapeoService:
                         modelo_vivienda LIKE ?
                     )
                 """)
-                params.extend([q, q, q, q, q, q, q, q])
+                params.extend([q, q, q, q, q, q, q, q, q])
 
             where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
 
@@ -154,7 +189,8 @@ class MapeoService:
                     modelo_vivienda, 
                     mts_terreno, 
                     mts_exced, 
-                    estatus
+                    estatus,
+                    clave_lote
                 FROM lotes_mapeo
                 {where_sql}
                 ORDER BY (CASE WHEN cc IS NULL OR TRIM(cc) = '' THEN 1 ELSE 0 END) ASC, cc ASC, manzana ASC, lote ASC
@@ -178,7 +214,12 @@ class MapeoService:
                     "modelo": r["modelo_vivienda"],
                     "mts_terreno": r["mts_terreno"],
                     "mts_exced": r["mts_exced"],
-                    "estatus": r["estatus"]
+                    "estatus": r["estatus"],
+                    "clave_lote": (
+                        r["clave_lote"]
+                        if "clave_lote" in r.keys() and r["clave_lote"]
+                        else cls.generar_clave_lote(r["cc"], r["manzana"], r["lote"], r["no_int"])
+                    )
                 }
                 for r in rows
             ]
@@ -287,7 +328,8 @@ class MapeoService:
                 modelo_vivienda TEXT,
                 mts_terreno REAL,
                 mts_exced REAL,
-                estatus TEXT
+                estatus TEXT,
+                clave_lote TEXT
             )
             """)
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_cc ON lotes_mapeo(cc)")
@@ -296,6 +338,7 @@ class MapeoService:
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_noint ON lotes_mapeo(cc, no_int)")
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_calle ON lotes_mapeo(calle)")
             cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_fracc ON lotes_mapeo(fraccionamiento)")
+            cur_local.execute("CREATE INDEX IF NOT EXISTS idx_mapeo_clave_lote ON lotes_mapeo(clave_lote)")
 
             insert_data = [
                 (
@@ -311,14 +354,15 @@ class MapeoService:
                     str(r[9] or '').strip(),
                     float(r[10] or 0),
                     float(r[11] or 0),
-                    str(r[12] or '').strip()
+                    str(r[12] or '').strip(),
+                    cls.generar_clave_lote(r[0], r[5], r[4], r[3])
                 )
                 for r in rows
             ]
             cur_local.executemany("""
             INSERT INTO lotes_mapeo (
-                cc, id_lote_ek, id_lote, no_int, lote, manzana, calle, cve_fracc, fraccionamiento, modelo_vivienda, mts_terreno, mts_exced, estatus
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                cc, id_lote_ek, id_lote, no_int, lote, manzana, calle, cve_fracc, fraccionamiento, modelo_vivienda, mts_terreno, mts_exced, estatus, clave_lote
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, insert_data)
 
             cur_local.execute("CREATE TABLE IF NOT EXISTS meta (clave TEXT PRIMARY KEY, valor TEXT)")

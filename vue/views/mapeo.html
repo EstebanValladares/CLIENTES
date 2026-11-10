@@ -76,7 +76,7 @@
               <input type="text" 
                      v-model="filtroMapeoCC" 
                      @input="alCambiarFiltroMapeo"
-                     placeholder="Ej: DQB, DQA..." 
+                     placeholder="" 
                      class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono uppercase">
               <span v-if="filtroMapeoCC" 
                     @click="filtroMapeoCC = ''; consultarLotesMapeo(true)" 
@@ -94,7 +94,7 @@
             <input type="text" 
                    v-model="filtroMapeoManzana" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="Ej: 2, 10..." 
+                   placeholder="" 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
@@ -106,7 +106,7 @@
             <input type="text" 
                    v-model="filtroMapeoLote" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="Ej: 65, 12..." 
+                   placeholder="" 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
@@ -118,7 +118,7 @@
             <input type="text" 
                    v-model="filtroMapeoNoInt" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="Ej: 65, A-1..." 
+                   placeholder="" 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
@@ -131,7 +131,7 @@
             <input type="text" 
                    v-model="filtroMapeoIdEK" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="Ej: 570345..." 
+                   placeholder="" 
                    class="w-full bg-slate-950 border-2 border-cyan-500/50 rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:border-cyan-400 shadow-sm shadow-cyan-500/20">
           </div>
 
@@ -143,7 +143,7 @@
             <input type="text" 
                    v-model="filtroMapeoBusqueda" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="Valencia, Sienna..." 
+                   placeholder="" 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
           </div>
 
@@ -216,11 +216,10 @@
                 <th class="py-3 px-3 font-black font-mono text-center text-emerald-400">LOTE</th>
                 <th class="py-3 px-3 font-black font-mono text-center text-purple-400">NO. INT</th>
                 <th class="py-3 px-3 font-black font-mono text-center th-col-idek text-cyan-300">ID LOTE EK</th>
-                <th class="py-3 px-3 font-black font-mono text-center text-slate-300">ID LOTE SUN</th>
+                <th class="py-3 px-3 font-black font-mono text-center text-cyan-300">CLAVE CONSECUTIVO</th>
                 <th class="py-3 px-3 font-black text-slate-200">CALLE / DIRECCIÓN</th>
                 <th class="py-3 px-3 font-black text-slate-200">FRACCIONAMIENTO</th>
                 <th class="py-3 px-3 font-black text-slate-200">MODELO</th>
-                <th class="py-3 px-3 font-black text-right font-mono text-slate-200">M2</th>
                 <th class="py-3 px-3 font-black text-center text-slate-200">ESTATUS</th>
               </tr>
             </thead>
@@ -268,10 +267,11 @@
                   </span>
                 </td>
 
-                <!-- ID Lote SUN -->
+                <!-- Clave Consecutivo Maestro (ej. CCOU-M010-L0114-N00114D1) -->
                 <td class="py-2.5 px-3 font-mono text-center">
-                  <span class="badge-mapeo-sun">
-                    {{ l.lote_id_sun || '-' }}
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 select-all shadow-xs tracking-tight"
+                        :title="'Clave de Consecutivo: ' + (l.clave_lote || '-')">
+                    {{ l.clave_lote || '-' }}
                   </span>
                 </td>
 
@@ -296,11 +296,6 @@
                   <span v-else class="text-slate-400 font-bold">-</span>
                 </td>
 
-                <!-- M2 Terreno -->
-                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-700 dark:text-slate-300">
-                  {{ Number(l.mts_terreno || 0).toFixed(2) }}
-                </td>
-
                 <!-- Estatus -->
                 <td class="py-2.5 px-3 text-center">
                   <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-700">
@@ -313,7 +308,7 @@
 
               <!-- Estado Vacío -->
               <tr v-if="!cargandoMapeo && lotesMapeo.length === 0">
-                <td colspan="11" class="py-16 text-center text-slate-500">
+                <td colspan="10" class="py-16 text-center text-slate-500">
                   <i class="fa-solid fa-map-location-dot text-4xl mb-3 text-slate-600"></i>
                   <p class="font-bold text-slate-300 text-sm">No se encontraron lotes con los filtros seleccionados</p>
                   <p class="text-xs text-slate-500 mt-1">Prueba cambiando o limpiando el CC, Manzana, Lote o ID Lote EK.</p>

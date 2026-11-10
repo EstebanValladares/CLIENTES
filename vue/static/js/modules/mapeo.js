@@ -146,20 +146,18 @@
         alert('No hay registros para exportar con los filtros actuales.');
         return;
       }
-      const encabezados = ['CC', 'ID_LOTE_EK', 'ID_LOTE_SUN', 'MANZANA', 'LOTE', 'NO_INTERIOR', 'CALLE', 'CVE_FRACC', 'FRACCIONAMIENTO', 'MODELO_VIVIENDA', 'MTS_TERRENO', 'MTS_EXCED', 'ESTATUS'];
+      const encabezados = ['CC', 'MANZANA', 'LOTE', 'NO_INTERIOR', 'ID_LOTE_EK', 'CLAVE_CONSECUTIVO', 'CALLE', 'CVE_FRACC', 'FRACCIONAMIENTO', 'MODELO_VIVIENDA', 'ESTATUS'];
       const filas = lotesMapeo.value.map(l => [
         `"${l.cc || ''}"`,
-        l.id_lote_ek || '',
-        l.id_lote || '',
         `"${l.manzana || ''}"`,
         `"${l.lote || ''}"`,
         `"${l.no_int || ''}"`,
+        l.id_lote_ek || '',
+        `"${l.clave_lote || ''}"`,
         `"${(l.calle || '').replace(/"/g, '""')}"`,
         `"${l.cve_fracc || ''}"`,
         `"${(l.fraccionamiento || '').replace(/"/g, '""')}"`,
         `"${(l.modelo || '').replace(/"/g, '""')}"`,
-        l.mts_terreno || 0,
-        l.mts_exced || 0,
         `"${l.estatus || ''}"`
       ]);
       const csvContent = "\uFEFF" + [encabezados.join(','), ...filas.map(f => f.join(','))].join('\n');
