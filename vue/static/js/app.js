@@ -1,4 +1,4 @@
-const { createApp, ref, computed, onMounted } = Vue;
+const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
 createApp({
   setup() {
@@ -531,7 +531,26 @@ createApp({
       }
     ]);
 
+    const ocultarPantallaCarga = () => {
+      const splash = document.getElementById('pantalla-carga-global');
+      if (splash && !splash.classList.contains('oculto')) {
+        splash.classList.add('oculto');
+        setTimeout(() => {
+          if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 320);
+      }
+    };
+
     onMounted(() => {
+      // 0. Ocultar pantalla de carga en cuanto Vue monte y estabilice el DOM inicial (adaptado al tiempo real de respuesta)
+      nextTick(() => {
+        requestAnimationFrame(() => {
+          ocultarPantallaCarga();
+        });
+      });
+      // Respaldo de seguridad en caso de red lenta
+      setTimeout(ocultarPantallaCarga, 2500);
+
       // 1. Carga escalonada (Waterfall) para evitar saturación de sockets concurrentes (cuellos de botella)
       cargarMetricas();
       setTimeout(cargarUsuarios, 70);
