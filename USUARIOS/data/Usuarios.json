@@ -1218,7 +1218,7 @@
     "Comisionable": "True",
     "ID_1": "301",
     "hasLicense": "True",
-    "Version": "93027263"
+    "Version": "94066173"
   },
   {
     "ID": "34",
@@ -24972,7 +24972,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92885099"
+    "Version": "94065426"
   },
   {
     "ID": "677",
@@ -25675,7 +25675,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93661157"
+    "Version": "94066227"
   },
   {
     "ID": "696",
@@ -25758,8 +25758,8 @@
     "Nombre": "MANUEL ALEJANDRO",
     "Apellidos": "ESCOBAR RAMOS",
     "Telefono": "0101010101",
-    "VigenciaInicio": "06/01/2025 15:00:00",
-    "VigenciaFin": "06/01/2027 09:00:00",
+    "VigenciaInicio": "06/01/2025 21:00:00",
+    "VigenciaFin": "06/01/2027 15:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "79d10f95-72c1-42b2-ba16-d8d09a992296",
@@ -25768,9 +25768,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "27/10/2026 14:59:10",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "11/11/2026 18:01:28",
+    "IdModificadoPor": "4",
+    "ModificadoPor": "LUIS SOTERO CRUZ GOMEZ",
     "IdPosicion": "701",
     "ClavePosicion": "POS-0710",
     "Posicion": "CONTRALOR DE OBRA TAMPICO",
@@ -25786,7 +25786,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93854914"
+    "Version": "94066325"
   },
   {
     "ID": "699",
@@ -25917,8 +25917,8 @@
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
     "Modificado": "11/11/2026 15:11:47",
-    "IdModificadoPor": "702",
-    "ModificadoPor": "MIGUEL ARTURO ZURITA BAUTISTA",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "35",
     "ClavePosicion": "POS-0043",
     "Posicion": "JEFE DE CONTRALORIA DE OBRA",
@@ -25934,7 +25934,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93830668"
+    "Version": "94059475"
   },
   {
     "ID": "703",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94059194"
+    "Version": "94066357"
   },
   {
     "ID": "1053",

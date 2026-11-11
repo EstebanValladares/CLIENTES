@@ -240,8 +240,8 @@
         if (res.ok) {
           const data = await res.json();
           metaPosiciones.value = data;
-          if (!formCreacionPosicion.value.clave || ['POS-1052', 'POS-1067', 'POS-1078'].includes(formCreacionPosicion.value.clave)) {
-            formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1080';
+          if (!formCreacionPosicion.value.clave || ['POS-1052', 'POS-1067', 'POS-1078', 'POS-1079', 'POS-1080'].includes(formCreacionPosicion.value.clave)) {
+            formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1081';
           }
         }
       } catch (e) {
@@ -252,19 +252,39 @@
     const calcularSiguienteClave = async () => {
       calculandoClave.value = true;
       try {
-        const res = await fetch('/api/usuarios/posiciones/meta');
+        const res = await fetch('/api/usuarios/posiciones/meta?sincronizar=true');
         if (res.ok) {
           const data = await res.json();
           metaPosiciones.value = data;
-          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1080';
+          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1081';
         } else {
-          let num = 1079;
+          let num = 1080;
           const m = formCreacionPosicion.value.clave.match(/POS-(\d+)/);
           if (m) num = Math.max(num, parseInt(m[1], 10));
           formCreacionPosicion.value.clave = `POS-${String(num + 1).padStart(4, '0')}`;
         }
       } catch (e) {
         console.error('Error al calcular siguiente clave:', e);
+      } finally {
+        setTimeout(() => { calculandoClave.value = false; }, 350);
+      }
+    };
+
+    const recalcularPosicionesEnkontrol = async () => {
+      calculandoClave.value = true;
+      try {
+        const res = await fetch('/api/usuarios/posiciones/recalcular', { method: 'POST' });
+        if (res.ok) {
+          const data = await res.json();
+          metaPosiciones.value = data;
+          formCreacionPosicion.value.clave = data.siguiente_clave || 'POS-1081';
+          alert(`✅ Sincronizado en vivo con Enkontrol:\n\n• Última posición detectada: ${data.ultima_clave}\n• Siguiente consecutiva calculada: ${data.siguiente_clave}`);
+        } else {
+          await calcularSiguienteClave();
+        }
+      } catch (e) {
+        console.error('Error recalculando posiciones:', e);
+        await calcularSiguienteClave();
       } finally {
         setTimeout(() => { calculandoClave.value = false; }, 350);
       }
@@ -660,6 +680,7 @@
       reiniciarCreacionSelenium,
       cargarMetaPosiciones,
       calcularSiguienteClave,
+      recalcularPosicionesEnkontrol,
       seleccionarNombrePosicion,
       seleccionarCategoriaPosicion,
       guardarPosicionSimple,

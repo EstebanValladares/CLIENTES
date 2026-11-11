@@ -90,9 +90,14 @@ def estado_sincronizacion_puestos():
     return UserService.obtener_estado_sincronizacion()
 
 @router.get("/posiciones/meta")
-def obtener_meta_posiciones():
+def obtener_meta_posiciones(sincronizar: bool = Query(False, description="Sincronizar en vivo con Enkontrol")):
     """Devuelve la ultima clave, siguiente clave consecutiva y listas de puestos y categorias"""
-    return UserService.obtener_meta_posiciones()
+    return UserService.obtener_meta_posiciones(sincronizar_en_vivo=sincronizar)
+
+@router.post("/posiciones/recalcular")
+def recalcular_posiciones():
+    """Fuerza la sincronización en vivo con Aryve Enkontrol y recalcula la última y siguiente clave"""
+    return UserService.obtener_meta_posiciones(sincronizar_en_vivo=True)
 
 @router.post("/posiciones/crear-simple")
 def crear_posicion_simple(payload: Dict[str, Any] = Body(...)):

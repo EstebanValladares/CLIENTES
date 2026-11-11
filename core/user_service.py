@@ -262,51 +262,6 @@ class UserService:
         return FirebaseClient.obtener_estado_sincronizacion_puestos()
 
     @classmethod
-    def obtener_meta_posiciones(cls) -> Dict[str, Any]:
-        """
-        Calcula la ultima clave POS-XXXX registrada, la siguiente clave consecutiva (POS-XXXX + 1),
-        y las listas unicas de puestos y categorias existentes para la creacion en tiempo real.
-        """
-        import re
-        puestos = cls.obtener_puestos()
-        max_num = 0
-        ultima_clave = "POS-0000"
-        categorias_set = set()
-        puestos_nombres = sorted(list(puestos.keys()))
-
-        for nom, info in puestos.items():
-            if isinstance(info, dict):
-                cve = str(info.get("clave_posicion_cloud", "")).strip()
-                m = re.search(r"POS-(\d+)", cve)
-                if m:
-                    num = int(m.group(1))
-                    if num > max_num:
-                        max_num = num
-                        ultima_clave = cve
-                
-                cat = str(info.get("categoria", "") or info.get("area_organizacion", "")).strip()
-                if cat:
-                    categorias_set.add(cat)
-                p_orig = str(info.get("puesto_origen", "")).strip()
-                if p_orig:
-                    categorias_set.add(p_orig)
-
-        # Baseline oficial Aryve Enkontrol (ultima posicion POS-1077)
-        if max_num < 1077:
-            max_num = 1077
-            ultima_clave = "POS-1077"
-
-        siguiente_num = max_num + 1
-        siguiente_clave = f"POS-{siguiente_num:04d}"
-
-        return {
-            "ultima_clave": ultima_clave,
-            "siguiente_clave": siguiente_clave,
-            "puestos": puestos_nombres,
-            "categorias": sorted(list(categorias_set))
-        }
-
-    @classmethod
     def crear_posicion_simple(cls, clave: str, nombre: str, categoria: str, padre: str) -> Dict[str, Any]:
         nombre = nombre.strip().upper()
         if not nombre:
@@ -354,17 +309,27 @@ class UserService:
         cls.recargar()
         return {"ok": True, "mensaje": "Catálogo de usuarios recargado localmente con éxito."}
     @classmethod
-    def obtener_meta_posiciones(cls) -> Dict[str, Any]:
+    def obtener_meta_posiciones(cls, sincronizar_en_vivo: bool = False) -> Dict[str, Any]:
         """
-        Retorna la clave máxima encontrada (ej. POS-1051),
-        la siguiente clave consecutiva (ej. POS-1052),
+        Retorna la clave máxima encontrada (ej. POS-1080),
+        la siguiente clave consecutiva (ej. POS-1081),
         y la lista de nombres de puestos y categorías disponibles.
+        Si sincronizar_en_vivo es True, consulta en vivo a Enkontrol para traer lo más nuevo.
         """
+        import re
+
+        if sincronizar_en_vivo:
+            try:
+                cls.sincronizar_desde_aryve()
+            except Exception as e:
+                logger.warning(f"No se pudo sincronizar en vivo con Aryve: {e}")
+
         ruta_puestos = os.path.join(DIR_USUARIOS_DATA, "puestos.json")
         max_num = 0
         puestos_nombres = set()
         categorias = set()
 
+        # 1. Analizar catálogo de puestos.json
         if os.path.exists(ruta_puestos):
             try:
                 with open(ruta_puestos, "r", encoding="utf-8") as f:
@@ -402,6 +367,7 @@ class UserService:
             except Exception as e:
                 logger.error(f"Error analizando puestos.json para meta posiciones: {e}")
 
+        # 2. Analizar catálogo real de Usuarios.json (posiciones asignadas en vivo en Enkontrol)
         ruta_usuarios = os.path.join(DIR_USUARIOS_DATA, "Usuarios.json")
         if os.path.exists(ruta_usuarios):
             try:
@@ -409,15 +375,28 @@ class UserService:
                     raw_u = json.load(f)
                     for u in raw_u:
                         pos = u.get("Posicion")
-                        if pos:
-                            puestos_nombres.add(str(pos).strip())
+                        if pos and isinstance(pos, str):
+                            puestos_nombres.add(pos.strip())
                         area = u.get("AreaOrganizacion")
                         if area:
                             categorias.add(str(area).strip())
-            except Exception:
-                pass
 
-        # Baseline oficial Aryve Enkontrol (última posición verificada en vivo es POS-1079)
+                        # Extraer clave de posición del usuario (ej. POS-1080)
+                        cve_u = str(u.get("ClavePosicion", "") or "").strip()
+                        if not cve_u and isinstance(pos, dict):
+                            cve_u = str(pos.get("Clave", "") or "").strip()
+                        if not cve_u and isinstance(pos, str):
+                            cve_u = pos.strip()
+
+                        m_u = re.search(r"POS-(\d+)", cve_u, re.IGNORECASE)
+                        if m_u:
+                            num_u = int(m_u.group(1))
+                            if num_u > max_num:
+                                max_num = num_u
+            except Exception as e:
+                logger.error(f"Error analizando Usuarios.json para meta posiciones: {e}")
+
+        # Baseline oficial
         if max_num < 1079:
             max_num = 1079
 
