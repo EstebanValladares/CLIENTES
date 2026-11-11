@@ -117,12 +117,23 @@
               <!-- FICHA GRID -->
               <div class="grid grid-cols-2 gap-3 my-3 text-xs">
                 <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/50">
-                  <span class="text-slate-400 text-[10px] uppercase font-semibold block">Posición / Puesto</span>
-                  <div class="flex items-center gap-1.5 mt-1 truncate" :title="usuarioSeleccionado.puesto">
-                    <span v-if="usuarioSeleccionado.clave_posicion || usuarioSeleccionado.puesto === 'LIDER DE VENTAS TAMPICO'" 
-                          class="bg-blue-500/20 text-blue-400 border border-blue-500/30 font-mono text-[11px] font-bold px-1.5 py-0.5 rounded shrink-0">
-                      [ {{ usuarioSeleccionado.clave_posicion || 'POS-0283' }} ]
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-slate-400 text-[10px] uppercase font-semibold block">Posición / Puesto</span>
+                    <span v-if="formCreacionPosicion.padre && formCreacionPosicion.padre === (usuarioSeleccionado.clave_posicion || 'POS-0069')" 
+                          class="text-[9px] font-bold text-cyan-400 bg-cyan-950/80 border border-cyan-500/40 px-1.5 py-0.2 rounded-full flex items-center gap-1 animate-pulse">
+                      <i class="fa-solid fa-check text-[8px]"></i> Padre Actual
                     </span>
+                  </div>
+                  <div class="flex items-center gap-1.5 mt-1 truncate" :title="usuarioSeleccionado.puesto">
+                    <!-- BOTÓN INTERACTIVO: CLIC PARA AGREGAR / CAMBIAR EL PUESTO PADRE -->
+                    <button v-if="usuarioSeleccionado.clave_posicion || usuarioSeleccionado.puesto === 'LIDER DE VENTAS TAMPICO'" 
+                            type="button"
+                            @click="asignarPosicionComoPadre(usuarioSeleccionado.clave_posicion || 'POS-0069')"
+                            :title="'Haz clic para agregar ' + (usuarioSeleccionado.clave_posicion || 'POS-0069') + ' al campo PADRE en Creación de Posiciones'"
+                            class="bg-blue-500/20 hover:bg-cyan-500/30 text-blue-400 hover:text-cyan-300 border border-blue-500/40 hover:border-cyan-400/60 font-mono text-[11px] font-bold px-2 py-0.5 rounded-lg shrink-0 transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95 flex items-center gap-1.5 group">
+                      <span>[ {{ usuarioSeleccionado.clave_posicion || 'POS-0069' }} ]</span>
+                      <i class="fa-solid fa-arrow-down text-[8px] text-cyan-400 opacity-60 group-hover:opacity-100 group-hover:translate-y-0.5 transition-transform"></i>
+                    </button>
                     <span class="font-medium text-slate-200 truncate">
                       {{ usuarioSeleccionado.puesto || 'No especificado' }}
                     </span>
@@ -285,18 +296,27 @@
             <!-- FILA 2: PADRE, CATEGORIA, ESTATUS -->
             <div class="grid grid-cols-12 gap-3 items-start">
               
-              <!-- PADRE (Texto Libre) -->
+              <!-- PADRE (Texto Libre o Clic en [POS]) -->
               <div class="col-span-12 sm:col-span-5">
                 <div class="flex items-center justify-between mb-1">
                   <label class="label-pos-field text-[10px] font-bold uppercase tracking-wider text-slate-200">
                     PADRE
                   </label>
-                  <span class="counter-pos-field text-[9px] text-slate-400 font-mono">Texto libre</span>
+                  <span class="counter-pos-field text-[9px] text-slate-400 font-mono">Texto libre / Clic en [POS]</span>
                 </div>
-                <input type="text"
-                       v-model="formCreacionPosicion.padre"
-                       placeholder="Escribe el puesto padre o nivel..."
-                       class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                <div class="relative flex items-center">
+                  <input type="text"
+                         v-model="formCreacionPosicion.padre"
+                         placeholder="Escribe o haz clic en [ POS-XXXX ]..."
+                         class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+                  <button v-if="formCreacionPosicion.padre"
+                          type="button"
+                          @click="formCreacionPosicion.padre = ''"
+                          title="Borrar puesto padre"
+                          class="absolute right-2 text-slate-400 hover:text-rose-400 text-xs p-1 cursor-pointer transition">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
               </div>
 
               <!-- CATEGORIA ! * (Dropdown sutil y ligero sin datalist) -->
@@ -376,14 +396,35 @@
                 <span>Limpiar</span>
               </button>
 
-              <!-- BOTÓN CREAR POSICIÓN (Estilo Gradiente Azul/Índigo/Cian con texto blanco nítido garantizado) -->
-              <button @click="guardarPosicionSimple" 
+              <!-- BOTÓN GUARDAR LOCAL (RÁPIDO) -->
+              <button @click="guardarPosicionSimple"
+                      type="button"
+                      :disabled="guardandoPosicionSimple || !formCreacionPosicion.nombre || estadoPosicionBot.ejecutando"
+                      title="Guardar únicamente en el catálogo local de puestos.json sin abrir Selenium"
+                      class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 border border-slate-600/60 text-slate-300 hover:text-white transition cursor-pointer flex items-center gap-1 shadow-xs disabled:opacity-40 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-floppy-disk text-slate-400 text-[10px]"></i>
+                <span>Solo Local</span>
+              </button>
+
+              <!-- BOTÓN DETENER SI ESTÁ EJECUTANDO -->
+              <button v-if="estadoPosicionBot.ejecutando"
+                      @click="detenerCreacionPosicionSelenium"
+                      type="button"
+                      title="Detener Selenium y cerrar ventana de Chrome"
+                      class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/60 text-rose-300 transition cursor-pointer flex items-center gap-1 shadow-xs">
+                <i class="fa-solid fa-stop text-[9px]"></i>
+                <span>Detener</span>
+              </button>
+
+              <!-- BOTÓN CREAR POSICIÓN SELENIUM (Estilo Gradiente Azul/Índigo/Cian con texto blanco nítido) -->
+              <button @click="iniciarCreacionPosicionSelenium(false)" 
                       type="button" 
-                      :disabled="guardandoPosicionSimple || !formCreacionPosicion.nombre" 
+                      :disabled="estadoPosicionBot.ejecutando || !formCreacionPosicion.nombre" 
+                      title="Iniciar sesión en Aryve Enkontrol y redirigir a https://suite.ekloud.net:1445/Aryve/#/kontrol/posiciones/id?nuevo con Selenium"
                       class="btn-gradient-pos px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md shadow-indigo-600/30 flex items-center gap-1.5 border border-blue-400/40 transition-all hover:scale-105 active:scale-95 shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
-                <i v-if="guardandoPosicionSimple" class="fa-solid fa-spinner fa-spin text-cyan-200 text-xs"></i>
-                <i v-else class="fa-solid fa-plus text-cyan-200 text-xs"></i>
-                <span class="text-white font-bold">{{ guardandoPosicionSimple ? 'Guardando...' : 'Crear Posición' }}</span>
+                <i v-if="estadoPosicionBot.ejecutando" class="fa-solid fa-spinner fa-spin text-cyan-200 text-xs"></i>
+                <i v-else class="fa-solid fa-robot text-cyan-200 text-xs"></i>
+                <span class="text-white font-bold">{{ estadoPosicionBot.ejecutando ? 'Iniciando en Aryve...' : 'Crear Posición' }}</span>
               </button>
             </div>
           </div>

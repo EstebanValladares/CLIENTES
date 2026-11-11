@@ -324,7 +324,7 @@
 
     const limpiarFormPosicionSimple = () => {
       formCreacionPosicion.value = {
-        clave: metaPosiciones.value.siguiente_clave || 'POS-1080',
+        clave: metaPosiciones.value.siguiente_clave || 'POS-1081',
         nombre: '',
         categoria: '',
         padre: '',
@@ -333,6 +333,120 @@
       resultadoCreacionPosicion.value = null;
       dropdownNombreAbierto.value = false;
       dropdownCategoriaAbierto.value = false;
+    };
+
+    const asignarPosicionComoPadre = (clave) => {
+      if (!clave) return;
+      formCreacionPosicion.value.padre = String(clave).trim();
+    };
+
+    // Selenium: Creación Automatizada de Posiciones en Aryve
+    const estadoPosicionBot = ref({
+      ejecutando: false,
+      ok: null,
+      mensaje: '',
+      logs: []
+    });
+    let intervalPosicionBot = null;
+
+    const pollingPosicionBot = () => {
+      if (intervalPosicionBot) clearInterval(intervalPosicionBot);
+      intervalPosicionBot = setInterval(async () => {
+        try {
+          const res = await fetch('/api/usuarios/posiciones/crear-selenium/estado');
+          if (res.ok) {
+            const data = await res.json();
+            estadoPosicionBot.value.ejecutando = data.ejecutando;
+            estadoPosicionBot.value.ok = data.ok;
+            estadoPosicionBot.value.mensaje = data.mensaje;
+            estadoPosicionBot.value.logs = data.logs || [];
+            if (!data.ejecutando) {
+              clearInterval(intervalPosicionBot);
+              intervalPosicionBot = null;
+              if (data.ok) {
+                await cargarPuestos();
+                await cargarMetaPosiciones();
+              }
+            }
+          }
+        } catch (e) {
+          console.error('Error polling posicion bot:', e);
+        }
+      }, 1200);
+    };
+
+    const iniciarCreacionPosicionSelenium = async (guardarEnProduccion = false) => {
+      const clave = (formCreacionPosicion.value.clave || '').trim();
+      const nom = (formCreacionPosicion.value.nombre || '').trim();
+      const cat = (formCreacionPosicion.value.categoria || '').trim();
+      const pad = (formCreacionPosicion.value.padre || '').trim();
+
+      if (!clave) {
+        alert('Por favor especifica la CLAVE de la posición (ej. POS-1081).');
+        return;
+      }
+      if (!nom) {
+        alert('Por favor escribe o selecciona el NOMBRE de la posición.');
+        return;
+      }
+      if (!cat) {
+        alert('Por favor selecciona o escribe la CATEGORÍA de la posición.');
+        return;
+      }
+
+      estadoPosicionBot.value = {
+        ejecutando: true,
+        ok: null,
+        mensaje: `Iniciando sesión en Aryve y redirigiendo a nueva posición...`,
+        logs: [`[INICIO]: Abriendo navegador Chrome para ${clave}...`]
+      };
+
+      try {
+        const res = await fetch('/api/usuarios/posiciones/crear-selenium', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clave: clave,
+            nombre: nom,
+            categoria: cat,
+            padre: pad,
+            guardar_en_produccion: guardarEnProduccion
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          estadoPosicionBot.value = {
+            ejecutando: false,
+            ok: false,
+            mensaje: data.detail || 'Error al iniciar automatización.',
+            logs: [`[ERROR]: ${data.detail || 'Fallo de conexión.'}`]
+          };
+          return;
+        }
+        pollingPosicionBot();
+      } catch (e) {
+        estadoPosicionBot.value = {
+          ejecutando: false,
+          ok: false,
+          mensaje: 'Error de conexión con el backend.',
+          logs: ['[ERROR]: Error de red al iniciar Selenium.']
+        };
+      }
+    };
+
+    const detenerCreacionPosicionSelenium = async () => {
+      try {
+        const res = await fetch('/api/usuarios/posiciones/crear-selenium/detener', { method: 'POST' });
+        const data = await res.json();
+        if (intervalPosicionBot) {
+          clearInterval(intervalPosicionBot);
+          intervalPosicionBot = null;
+        }
+        estadoPosicionBot.value.ejecutando = false;
+        estadoPosicionBot.value.mensaje = data.mensaje || 'Automatización detenida.';
+      } catch (e) {
+        console.error('Error al detener bot:', e);
+      }
     };
 
     // Modal Alta Usuario / Selenium
@@ -681,10 +795,14 @@
       cargarMetaPosiciones,
       calcularSiguienteClave,
       recalcularPosicionesEnkontrol,
+      estadoPosicionBot,
+      iniciarCreacionPosicionSelenium,
+      detenerCreacionPosicionSelenium,
       seleccionarNombrePosicion,
       seleccionarCategoriaPosicion,
       guardarPosicionSimple,
       limpiarFormPosicionSimple,
+      asignarPosicionComoPadre,
       cargarClasificadoresUsuario,
       abrirModalClasificador,
       cerrarModalClasificador,

@@ -1,7 +1,7 @@
 {
   "_comentario": "Catálogo integral de 230 puestos y posiciones sincronizado desde Aryve Cloud",
-  "ultima_actualizacion": "2026-11-10 10:35:17",
-  "total_posiciones": 231,
+  "ultima_actualizacion": "2026-11-11 12:22:36",
+  "total_posiciones": 230,
   "puestos": {
     "ASESOR CALL CENTER CABOS": {
       "categoria": "BROKER LOS CABOS",
@@ -7497,119 +7497,15 @@
       "clave_posicion_cloud": "POS-0951"
     },
     "ASESOR DE VENTA TAMPICO": {
-      "total_clasificadores": 48,
-      "area_organizacional": "VENTAS",
-      "niveles_asignados": [
-        {
-          "compania": "CONSTRUCCIONES ARYVE S.A. DE C.V.",
-          "nivel": "ASESORES DE VENTA"
-        },
-        {
-          "compania": "VELAHOGARES SA DE CV",
-          "nivel": "ASESORES DE VENTA"
-        },
-        {
-          "compania": "GRUPO VELAS DIVISION CONSTRUCCION SA DE CV",
-          "nivel": "ASESORES DE VENTA"
-        }
-      ],
       "categoria": "ASESOR DE VENTA TAMPICO",
-      "puesto_origen": "ASESOR",
-      "clasificadores": {
-        "Boletas de Prospección": {
-          "Clasificador de Prospectos": [
-            "P-ASOCIACION-ESPECIAL-BOLETA",
-            "P-ASOCIAR-BOLETA",
-            "P-DESCARTAR-BOLETA",
-            "P-REGISTRO-BOLETA"
-          ]
-        },
-        "Prospectos Clientes": {
-          "PROSPECTOS CLIENTES": [
-            "P-PROSPECTO-EDICION"
-          ]
-        },
-        "Comercial": {
-          "PLAZAS": [
-            "TAM"
-          ],
-          "DESARROLLOS": [
-            "AVA-001",
-            "AVA-002",
-            "AVA-003",
-            "AVA-004",
-            "TAM-001",
-            "TAM-002",
-            "TAM-003",
-            "TAM-004",
-            "TAM-005",
-            "TAM-006",
-            "TAM-007",
-            "TAM-008",
-            "TAM-009",
-            "TAM-010",
-            "TAM-011",
-            "TAM-012",
-            "TAM-013",
-            "TAM-014",
-            "TAM-015",
-            "TAM-016",
-            "TAM-017"
-          ]
-        },
-        "Cotización-Venta": {
-          "PROCESOS DE VENTA": [
-            "CI",
-            "V-EDICIONCONPP",
-            "GI"
-          ]
-        },
-        "Seguimiento del Expediente": {
-          "ETAPAS DE SEGUIMIENTO": [
-            "ET-0001",
-            "ET-0002",
-            "ET-0003",
-            "ET-0004",
-            "ET-0005",
-            "ET-0006"
-          ],
-          "ETIQUETA DE EXPEDIENTE": [
-            "EXPEDIENTE INCOMPLETO",
-            "AUTORIZACIÓN ESPECIAL",
-            "CON PROMOCIÓN EN ESPECIE",
-            "CON PROMOCIÓN ESPECIAL"
-          ]
-        },
-        "Clasificador de Autorizaciones": [
-          "BTN-REENVIO-AUTORIZACION"
-        ],
-        "Vistas GIS": [
-          "Estatus.ID",
-          "PorcentajeAvance.ID",
-          "Ubicacion.ID",
-          "EntregaServicioCliente.ID",
-          "EtapasVentas.ID",
-          "Financiamiento.ID",
-          "Prototipo.ID"
-        ]
-      },
+      "clasificadores": {},
+      "puesto_origen": "POS-0069",
       "time_zone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
-      "id_posicion_cloud": 145,
-      "resumen_clasificadores_por_abuelo": {
-        "Boletas de Prospección": 4,
-        "Prospectos Clientes": 1,
-        "Comercial": 22,
-        "Cotización-Venta": 3,
-        "Seguimiento del Expediente": 10,
-        "Clasificador de Autorizaciones": 1,
-        "Vistas GIS": 7
-      },
-      "clave_posicion_cloud": "POS-1078",
-      "area_organizacion": "VENTAS",
-      "grupos": [
-        "BROKERS",
-        "VENTAS-TAMPICO"
-      ]
+      "id_posicion_cloud": null,
+      "total_clasificadores": 0,
+      "area_organizacion": "ASESOR DE VENTA TAMPICO",
+      "clave_posicion_cloud": "POS-1081",
+      "padre": "POS-0069"
     },
     "CONTRALOR DE OBRA TAMPICO": {
       "categoria": "CONTRALOR DE OBRA",
@@ -14989,6 +14885,13 @@
       "categoria": "ASESOR DE VENTA MATAMOROS",
       "padre": "",
       "fecha_registro": "2026-11-09 10:00:00"
+    },
+    {
+      "clave": "POS-1081",
+      "nombre": "ASESOR DE VENTA TAMPICO",
+      "categoria": "ASESOR DE VENTA TAMPICO",
+      "padre": "POS-0069",
+      "fecha_registro": "2026-11-11 12:22:36"
     }
   ]
 }

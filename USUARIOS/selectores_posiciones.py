@@ -8,13 +8,14 @@ from pathlib import Path
 # --- URLs DE POSICIONES EN ARYVE ---
 ARYVE_BASE_URL = os.getenv("ARYVE_BASE_URL", "https://suite.ekloud.net:1445/Aryve/")
 ARYVE_POSICIONES_URL = f"{ARYVE_BASE_URL.rstrip('/')}/#/kontrol/posiciones"
+ARYVE_POSICIONES_NUEVO_URL = f"{ARYVE_BASE_URL.rstrip('/')}/#/kontrol/posiciones/id?nuevo"
 ARYVE_PUESTOS_URL = f"{ARYVE_BASE_URL.rstrip('/')}/#/kontrol/puestos"
 
 SELECTORES_POSICION = {
     # --- RUTA Y NAVEGACIÓN ---
     "menu_rh": "//span[contains(text(), 'Recursos Humanos') or contains(text(), 'RH')]",
     "menu_posiciones": "//a[contains(@href, 'posiciones') or contains(text(), 'Posiciones') or contains(text(), 'Puestos')]",
-    "btn_nueva_posicion": "//button[contains(@class, 'btn-nuevo') or contains(@title, 'Nuevo') or contains(text(), 'Nuevo')]",
+    "btn_nueva_posicion": "//button[contains(@class, 'btn-nuevo') or contains(@title, 'Agregar') or contains(@title, 'Nuevo')]",
 
     # --- FORMULARIO DE POSICIONES ---
     "clave": "formControl_Clave",
