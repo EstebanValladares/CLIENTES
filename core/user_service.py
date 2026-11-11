@@ -52,17 +52,25 @@ class UserService:
                         puesto = str(u.get("Posicion", "No especificado")).strip()
                         email = str(u.get("Email", "")).strip() or str(u.get("Clave", "")).strip()
 
-                        # Clave alfanumerica de posicion oficial (ej. POS-0283)
+                        # Clave alfanumerica de posicion oficial directamente desde Enkontrol (ej. POS-0270)
                         id_pos = str(u.get("IdPosicion", "")).strip()
-                        info_puesto = puestos_catalogo.get(puesto) or puestos_catalogo.get(puesto.upper().strip()) or {}
-                        clave_pos = str(info_puesto.get("clave_posicion_cloud", "")).strip()
+                        clave_pos = str(u.get("ClavePosicion", "")).strip()
                         if not clave_pos:
-                            if puesto.upper().strip() == "LIDER DE VENTAS TAMPICO":
-                                clave_pos = "POS-0283"
-                            elif id_pos and id_pos.isdigit():
-                                clave_pos = f"POS-{int(id_pos):04d}"
-                            elif id_pos:
-                                clave_pos = f"POS-{id_pos}"
+                            pos_raw = u.get("Posicion")
+                            if isinstance(pos_raw, dict):
+                                clave_pos = str(pos_raw.get("Clave", "") or "").strip()
+
+                        # Fallback secundario si la API no reportó clave directa
+                        if not clave_pos:
+                            info_puesto = puestos_catalogo.get(puesto) or puestos_catalogo.get(puesto.upper().strip()) or {}
+                            clave_pos = str(info_puesto.get("clave_posicion_cloud", "")).strip()
+                            if not clave_pos:
+                                if puesto.upper().strip() == "LIDER DE VENTAS TAMPICO":
+                                    clave_pos = "POS-0283"
+                                elif id_pos and id_pos.isdigit():
+                                    clave_pos = f"POS-{int(id_pos):04d}"
+                                elif id_pos:
+                                    clave_pos = f"POS-{id_pos}"
 
                         user_dict = {
                             "id": uid,
