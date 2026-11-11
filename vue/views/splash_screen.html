@@ -151,3 +151,26 @@
     </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    function cerrarSplashFailsafe() {
+      var s = document.getElementById('pantalla-carga-global');
+      if (s && !s.classList.contains('oculto')) {
+        s.classList.add('oculto');
+        setTimeout(function() {
+          if (s && s.parentNode) s.parentNode.removeChild(s);
+        }, 320);
+      }
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(cerrarSplashFailsafe, 900);
+    } else {
+      window.addEventListener('load', function() {
+        setTimeout(cerrarSplashFailsafe, 900);
+      });
+    }
+    // Failsafe absoluto e incondicional (2.2 segundos) para que nunca se quede trabado
+    setTimeout(cerrarSplashFailsafe, 2200);
+  })();
+</script>
