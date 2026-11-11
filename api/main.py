@@ -204,6 +204,7 @@ def startup_event():
     # Solo ejecutar demonio de OC si estamos en el entorno MASTER
     if es_modo_master():
         iniciar_demonio_oc(intervalo_segundos=60)
+        iniciar_auto_publisher(intervalo_segundos=45)
         from core.mapeo_service import MapeoService
         MapeoService.iniciar_demonio_mapeo(intervalo_minutos=30)
         def _bucle_torre():
