@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "117",
+    "nombre": "117 - VILLA HERMOSA - VELAHOGARES TAM"
+  },
+  "metricas": {
+    "total_partidas": 0,
+    "total_frentes": 0,
+    "total_insumos_resumen": 0,
+    "presupuesto_real_total": 0,
+    "requisitado_total": 0,
+    "comprado_total": 0,
+    "por_comprar_total": 0
+  },
+  "frentes": [],
+  "partidas": [],
+  "resumen": [],
+  "filtros_aplicados": {
+    "obra": "117",
+    "insumo": "",
+    "nombre": ""
+  }
+}

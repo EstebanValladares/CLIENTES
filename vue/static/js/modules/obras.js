@@ -504,6 +504,7 @@
     const inputNuevaObraOptimizacion = ref('');
     const obraSelectOptimizacion = ref('');
     const ejecutandoOptimizacion = ref(false);
+    const seccionOptimizacionColapsada = ref(false);
 
     const cargarGruposInsumosTipo = async () => {
       cargandoGruposInsumos.value = true;
@@ -906,6 +907,7 @@
       toggleTipoOptimizacion,
       toggleTodosHijosDeTipo,
       totalGruposInsumosSeleccionados,
+      seccionOptimizacionColapsada,
       verMovimientos
     };
   };

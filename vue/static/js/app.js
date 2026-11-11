@@ -242,6 +242,7 @@ createApp({
       toggleTipoOptimizacion,
       toggleTodosHijosDeTipo,
       totalGruposInsumosSeleccionados,
+      seccionOptimizacionColapsada,
       verMovimientos
     } = obrasModulo;
 
@@ -1383,6 +1384,7 @@ createApp({
       desmarcarTodosGruposInsumos,
       seleccionarSoloMateriales,
       totalGruposInsumosSeleccionados,
+      seccionOptimizacionColapsada,
       gruposInsumosFiltrados,
       agregarObraActualACola,
       agregarObraACola,
