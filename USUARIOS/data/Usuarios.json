@@ -34,7 +34,7 @@
     "Comisionable": "False",
     "ID_1": "498",
     "hasLicense": "False",
-    "Version": "94020410"
+    "Version": "94069562"
   },
   {
     "ID": "2",
@@ -128,8 +128,8 @@
     "IdCreadoPor": "1",
     "CreadoPor": "ADMINISTRADOR",
     "Modificado": "11/11/2026 16:57:33",
-    "IdModificadoPor": "4",
-    "ModificadoPor": "LUIS SOTERO CRUZ GOMEZ",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "2",
     "ClavePosicion": "POS-0002",
     "Posicion": "ADMINISTRADOR ARYVE (ENK)",
@@ -145,7 +145,7 @@
     "Comisionable": "False",
     "ID_1": "615",
     "hasLicense": "True",
-    "Version": "93953259"
+    "Version": "94102280"
   },
   {
     "ID": "5",
@@ -1144,7 +1144,7 @@
     "Comisionable": "False",
     "ID_1": "130",
     "hasLicense": "True",
-    "Version": "92187385"
+    "Version": "94102773"
   },
   {
     "ID": "32",
@@ -1810,7 +1810,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93409042"
+    "Version": "94071000"
   },
   {
     "ID": "50",
@@ -4252,7 +4252,7 @@
     "Comisionable": "True",
     "ID_1": "50",
     "hasLicense": "True",
-    "Version": "93406052"
+    "Version": "94070811"
   },
   {
     "ID": "117",
@@ -13724,7 +13724,7 @@
     "Comisionable": "True",
     "ID_1": "289",
     "hasLicense": "True",
-    "Version": "90182409"
+    "Version": "94079829"
   },
   {
     "ID": "373",
@@ -21457,7 +21457,7 @@
     "Comisionable": "False",
     "ID_1": "509",
     "hasLicense": "True",
-    "Version": "92858478"
+    "Version": "94071894"
   },
   {
     "ID": "582",
@@ -23788,7 +23788,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93022886"
+    "Version": "94076217"
   },
   {
     "ID": "645",
@@ -23882,8 +23882,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "10/11/2026 20:37:44",
-    "IdModificadoPor": "650",
-    "ModificadoPor": "PEDRO PEREZ GUZMAN",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "650",
     "ClavePosicion": "POS-0659",
     "Posicion": "AUXILIAR DE OBRA TAMPICO",
@@ -23899,7 +23899,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93449177"
+    "Version": "94067281"
   },
   {
     "ID": "648",
@@ -23973,7 +23973,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92885353"
+    "Version": "94073927"
   },
   {
     "ID": "650",
@@ -24380,7 +24380,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93838072"
+    "Version": "94094979"
   },
   {
     "ID": "661",
@@ -25120,7 +25120,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93130437"
+    "Version": "94072137"
   },
   {
     "ID": "681",
@@ -25305,7 +25305,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93027140"
+    "Version": "94095054"
   },
   {
     "ID": "686",
@@ -25379,7 +25379,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93960165"
+    "Version": "94079615"
   },
   {
     "ID": "688",
@@ -28635,7 +28635,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92874440"
+    "Version": "94069847"
   },
   {
     "ID": "778",
@@ -28709,7 +28709,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93411114"
+    "Version": "94072297"
   },
   {
     "ID": "780",
@@ -29893,7 +29893,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93838127"
+    "Version": "94080119"
   },
   {
     "ID": "813",
@@ -30522,7 +30522,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93812109"
+    "Version": "94070790"
   },
   {
     "ID": "831",
@@ -30633,7 +30633,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93783398"
+    "Version": "94077866"
   },
   {
     "ID": "834",
@@ -31410,7 +31410,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92886962"
+    "Version": "94071051"
   },
   {
     "ID": "856",
@@ -31689,8 +31689,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "05/11/2026 17:06:04",
-    "IdModificadoPor": "191",
-    "ModificadoPor": "ARTURO VILLANUEVA GUERRERO",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "845",
     "ClavePosicion": "POS-0853",
     "Posicion": "AUXILIAR DE OBRA REYNOSA BIENESTAR",
@@ -31706,7 +31706,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93390645"
+    "Version": "94070958"
   },
   {
     "ID": "864",
@@ -32409,7 +32409,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94019795"
+    "Version": "94067228"
   },
   {
     "ID": "883",
@@ -32816,7 +32816,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94054315"
+    "Version": "94094677"
   },
   {
     "ID": "895",
@@ -35813,7 +35813,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93812675"
+    "Version": "94102457"
   },
   {
     "ID": "976",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94066357"
+    "Version": "94113990"
   },
   {
     "ID": "1053",
@@ -39818,8 +39818,8 @@
     "Nombre": "KATERIN",
     "Apellidos": "ROJAS AVILA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "21/10/2026",
-    "VigenciaFin": "16/12/2026",
+    "VigenciaInicio": "21/10/2026 06:00:00",
+    "VigenciaFin": "16/12/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "6d2d4978-73e4-4651-b0d6-7a9514f06568",
@@ -39828,7 +39828,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "07/11/2026 19:20:35",
+    "Modificado": "11/11/2026 18:38:57",
     "IdModificadoPor": "1060",
     "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "685",
@@ -39846,7 +39846,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94018996"
+    "Version": "94075995"
   },
   {
     "ID": "1102",
