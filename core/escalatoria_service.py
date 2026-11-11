@@ -458,7 +458,14 @@ class EscalatoriaService:
                     row_esc = cur.fetchone()
                     esc_clave = row_esc[0] if row_esc else f"ESC-{id_escalatoria}"
 
+                    # IMPORTANTE: Enkontrol GetInsumosEscalatoria devuelve todo el catálogo general
+                    # y cada objeto tiene su campo 'IdEscalatoria'.
+                    # Solo debemos registrar los insumos que pertenezcan a id_escalatoria.
                     for it in data:
+                        esc_id_item = it.get("IdEscalatoria")
+                        if esc_id_item is not None and esc_id_item != id_escalatoria:
+                            continue
+
                         ins_obj = it.get("Insumo") or {}
                         clave = str(ins_obj.get("Clave") or it.get("Clave") or "").strip()
                         nombre = str(ins_obj.get("Nombre") or it.get("Nombre") or "").strip()
@@ -750,28 +757,89 @@ class EscalatoriaService:
                 ))
                 total_procesadas += 1
 
-                if incluir_obras:
-                    cur.execute("SELECT COUNT(*) FROM escalatoria_obras WHERE id_escalatoria = ?", (esc_id,))
-                    if cur.fetchone()[0] == 0:
-                        try:
-                            url_obras = f"https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/Get/GetObrasEscalatoria/?id={esc_id}"
-                            res_o = session.get(url_obras, headers=headers, timeout=6)
-                            if res_o.status_code == 200:
-                                obras_data = res_o.json()
-                                if isinstance(obras_data, list):
-                                    for o in obras_data:
-                                        cur.execute("""
-                                            INSERT INTO escalatoria_obras (id_escalatoria, proyecto, centro_costo, obra, id_obra)
-                                            VALUES (?, ?, ?, ?, ?)
-                                        """, (
-                                            esc_id,
-                                            o.get("_Proyecto") or (o.get("Proyecto") or {}).get("Nombre"),
-                                            o.get("_CentroCosto") or (o.get("CentroCosto") or {}).get("Nombre"),
-                                            o.get("_Obra") or (o.get("Obra") or {}).get("Nombre"),
-                                            o.get("IdObra")
-                                        ))
-                        except Exception:
-                            pass
+            # ========================================================
+            # SINCRONIZACIÓN DE OBRAS ASOCIADAS A CADA ESCALATORIA
+            # ========================================================
+            if incluir_obras:
+                try:
+                    url_obras = "https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/Get/GetObrasEscalatoria/?id=0"
+                    res_o = session.get(url_obras, headers=headers, timeout=12)
+                    if res_o.status_code == 200:
+                        obras_data = res_o.json()
+                        if isinstance(obras_data, list):
+                            cur.execute("DELETE FROM escalatoria_obras")
+                            for o in obras_data:
+                                real_esc_id = o.get("IdEscalatoria")
+                                if not real_esc_id:
+                                    continue
+                                cur.execute("""
+                                    INSERT INTO escalatoria_obras (id_escalatoria, proyecto, centro_costo, obra, id_obra)
+                                    VALUES (?, ?, ?, ?, ?)
+                                """, (
+                                    real_esc_id,
+                                    o.get("_Proyecto") or (o.get("Proyecto") or {}).get("Nombre"),
+                                    o.get("_CentroCosto") or (o.get("CentroCosto") or {}).get("Nombre"),
+                                    o.get("_Obra") or (o.get("Obra") or {}).get("Nombre"),
+                                    o.get("IdObra")
+                                ))
+                except Exception as ex_o:
+                    print(f"Aviso al sincronizar obras de escalatorias: {ex_o}")
+
+            # ========================================================
+            # SINCRONIZACIÓN PRECISA DE INSUMOS Y PRECIOS POR CLAVE
+            # ========================================================
+            try:
+                url_ins = "https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/Get/GetInsumosEscalatoria/?id=0"
+                res_i = session.get(url_ins, headers=headers, timeout=18)
+                if res_i.status_code == 200:
+                    ins_data = res_i.json()
+                    if isinstance(ins_data, list) and len(ins_data) > 0:
+                        cur.execute("DELETE FROM escalatoria_insumos")
+                        cur.execute("SELECT id, clave FROM escalatorias")
+                        map_claves = {r[0]: r[1] for r in cur.fetchall()}
+
+                        for it in ins_data:
+                            real_esc_id = it.get("IdEscalatoria")
+                            if not real_esc_id:
+                                continue
+
+                            esc_clave = map_claves.get(real_esc_id, f"ESC-{real_esc_id}")
+                            ins_obj = it.get("Insumo") or {}
+                            clave = str(ins_obj.get("Clave") or it.get("Clave") or "").strip()
+                            nombre = str(ins_obj.get("Nombre") or it.get("Nombre") or "").strip()
+                            id_insumo = it.get("IdInsumo") or ins_obj.get("ID")
+
+                            precio = float(it.get("PrecioMoneda") or it.get("Precio") or 0.0)
+                            precio_ppto = float(it.get("PrecioPresupuesto") or 0.0)
+                            precio_ant = float(it.get("PrecioAnterior")) if it.get("PrecioAnterior") is not None else None
+
+                            moneda_obj = it.get("Moneda") or {}
+                            moneda = moneda_obj.get("MoneySymbol") or (moneda_obj.get("Clave") or "MXN")
+
+                            obr_obj = it.get("Obra") or {}
+                            id_obra = it.get("IdObra") or obr_obj.get("ID")
+                            obr_cve = str(obr_obj.get("Clave") or "")
+                            obr_nom = str(obr_obj.get("Nombre") or "")
+
+                            cc_obj = it.get("CentroCostos") or {}
+                            cc_nom = str(cc_obj.get("Nombre") or cc_obj.get("Clave") or "")
+
+                            proy_obj = it.get("Proyecto") or {}
+                            proy_nom = str(proy_obj.get("Nombre") or proy_obj.get("Clave") or "")
+
+                            cur.execute("""
+                                INSERT INTO escalatoria_insumos (
+                                    id_escalatoria, escalatoria_clave, id_insumo, clave, nombre,
+                                    precio, precio_ppto, precio_anterior, moneda,
+                                    id_obra, obra_clave, obra_nombre, centro_costo, proyecto
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (
+                                real_esc_id, esc_clave, id_insumo, clave, nombre,
+                                precio, precio_ppto, precio_ant, moneda,
+                                id_obra, obr_cve, obr_nom, cc_nom, proy_nom
+                            ))
+            except Exception as ex_i:
+                print(f"Aviso al sincronizar insumos de escalatorias: {ex_i}")
 
             cur.execute("""
                 INSERT INTO escalatoria_meta (clave, valor, fecha)
