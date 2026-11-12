@@ -45,11 +45,29 @@ def _init_ek10_cache():
     with _cache_ek10_lock:
         if _cache_ek10_iniciado:
             return
-        if not os.path.exists(DB_EK10_PATH):
+        
+        path_origen = None
+        # 1. Buscar tabla homologacion_ubicaciones en mapeo_lotes.db (BD unificada para clientes y equipo)
+        if os.path.exists(DB_PATH):
+            try:
+                conn_test = sqlite3.connect(DB_PATH)
+                res = conn_test.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='homologacion_ubicaciones'").fetchone()
+                conn_test.close()
+                if res:
+                    path_origen = DB_PATH
+            except Exception:
+                pass
+
+        # 2. Respaldo: ek10_homologacion_ubicaciones.sqlite
+        if not path_origen and os.path.exists(DB_EK10_PATH):
+            path_origen = DB_EK10_PATH
+
+        if not path_origen:
             _cache_ek10_iniciado = True
             return
+
         try:
-            conn_ek10 = sqlite3.connect(DB_EK10_PATH)
+            conn_ek10 = sqlite3.connect(path_origen)
             conn_ek10.row_factory = sqlite3.Row
             cur = conn_ek10.cursor()
             cur.execute("""

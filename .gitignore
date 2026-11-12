@@ -11,7 +11,9 @@ __pycache__/
 # Almacenamiento local del usuario
 data/*
 !data/mapeo_lotes.db
+!data/ek10_homologacion_ubicaciones.sqlite
 *.sqlite
+!data/ek10_homologacion_ubicaciones.sqlite
 *.sqlite3
 
 # Logs y temporales
