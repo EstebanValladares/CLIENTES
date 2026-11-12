@@ -363,11 +363,17 @@
                   <span v-else class="text-slate-500 text-xs italic">-</span>
                 </td>
 
-                <!-- ID LOTE EK10 -->
+                <!-- ID LOTE EK10 (Verde si coincide ID con EK9, Azul/Índigo si homologa por ubicación) -->
                 <td class="py-1.5 px-1.5 font-mono text-center th-col-ek10">
-                  <span v-if="l.ek10_id" 
+                  <span v-if="l.ek10_coincide_id" 
+                        class="badge-ek10-id-coincide"
+                        :title="'¡ID Verificado y Coincidente! (EK9: ' + l.id_lote_ek + ' == EK10: ' + l.ek10_id + ')'">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span># {{ l.ek10_id }}</span>
+                  </span>
+                  <span v-else-if="l.ek10_id" 
                         class="badge-ek10-id"
-                        :title="'ID Oficial Suite EK10: ' + l.ek10_id">
+                        :title="'ID Oficial Suite EK10: ' + l.ek10_id + ' (Homologado por Manzana/Lote)'">
                     <i class="fa-solid fa-hashtag"></i>
                     <span>{{ l.ek10_id }}</span>
                   </span>
@@ -377,8 +383,9 @@
                 <!-- Clave Consecutivo EK10 -->
                 <td class="py-1.5 px-2 font-mono text-center border-r-2 border-slate-800 td-col-ek10">
                   <div v-if="l.ek10_clave" class="flex flex-col items-center gap-0.5">
-                    <span class="badge-ek10-clave select-all"
-                          :title="'Clave Ubicación EK10: ' + l.ek10_clave + (l.ek10_nombre ? ' (' + l.ek10_nombre + ')' : '')">
+                    <span :class="l.ek10_coincide_id ? 'badge-ek10-clave-coincide' : 'badge-ek10-clave'"
+                          class="select-all"
+                          :title="'Clave Ubicación EK10: ' + l.ek10_clave + (l.ek10_nombre ? ' (' + l.ek10_nombre + ')' : '') + (l.ek10_coincide_id ? ' [ID Verificado]' : '')">
                       {{ l.ek10_clave }}
                     </span>
                     <span v-if="l.ek10_info_enk" 

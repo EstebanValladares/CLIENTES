@@ -1,0 +1,4021 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "JA2",
+    "nombre": "JA2 - RIVERA CHAMPAYAN, COL TANCOL 10 VIV COLIBRI"
+  },
+  "metricas": {
+    "total_partidas": 50,
+    "total_frentes": 10,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 31121.25,
+    "requisitado_total": 22192.875,
+    "comprado_total": 22113.5,
+    "por_comprar_total": 79.375
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "COLIBRI FACHADA * A* LOTE 1",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 63,
+              "importe_ppto": 1055.25,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 63,
+              "vigente_tarjetas": 63,
+              "diferencia": 0,
+              "requisitado": 123,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 123,
+              "en_proceso_compra": 0,
+              "recibido": 123,
+              "por_requisitar": -60,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": true,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": true,
+          "leyenda": "Faltan insumos por suministrar"
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 647,
+              "en_proceso_compra": 0,
+              "recibido": 647,
+              "por_requisitar": 0,
+              "por_comprar": 48.875,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.75,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022,
+              "en_proceso_compra": 0,
+              "recibido": 2022,
+              "por_requisitar": 0,
+              "por_comprar": 0.75,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.16",
+          "codigo": "1.1.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.17",
+          "codigo": "1.1.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "COLIBRI FACHADA * B* LOTE 2",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 123,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 123,
+              "en_proceso_compra": 0,
+              "recibido": 123,
+              "por_requisitar": -52.5,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.5",
+          "codigo": "1.2.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695.875,
+              "en_proceso_compra": 0,
+              "recibido": 695.875,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.6",
+          "codigo": "1.2.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.75,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022.75,
+              "en_proceso_compra": 0,
+              "recibido": 2022.75,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.16",
+          "codigo": "1.2.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.2.17",
+          "codigo": "1.2.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "COLIBRI FACHADA * C* LOTE 3",
+      "partidas": [
+        {
+          "id": "1.3.1",
+          "codigo": "1.3.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 123,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 123,
+              "en_proceso_compra": 0,
+              "recibido": 123,
+              "por_requisitar": -52.5,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.5",
+          "codigo": "1.3.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695.875,
+              "en_proceso_compra": 0,
+              "recibido": 695.875,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.6",
+          "codigo": "1.3.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.75,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022.75,
+              "en_proceso_compra": 0,
+              "recibido": 2022.75,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.16",
+          "codigo": "1.3.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.17",
+          "codigo": "1.3.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "COLIBRI FACHADA * D *  LOTE 4",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 123,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 123,
+              "en_proceso_compra": 0,
+              "recibido": 123,
+              "por_requisitar": -52.5,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.5",
+          "codigo": "1.4.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 693.25,
+              "en_proceso_compra": 0,
+              "recibido": 693.25,
+              "por_requisitar": 0,
+              "por_comprar": 2.625,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.6",
+          "codigo": "1.4.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.75,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022.5,
+              "en_proceso_compra": 0,
+              "recibido": 2022.5,
+              "por_requisitar": 0,
+              "por_comprar": 0.25,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.16",
+          "codigo": "1.4.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.17",
+          "codigo": "1.4.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "COLIBRI FACHADA * A* LOTE 5",
+      "partidas": [
+        {
+          "id": "1.5.1",
+          "codigo": "1.5.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 123,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 123,
+              "en_proceso_compra": 0,
+              "recibido": 123,
+              "por_requisitar": -52.5,
+              "por_comprar": 0,
+              "situacion": "REQUISITADO EXCEDE",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.5",
+          "codigo": "1.5.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695,
+              "en_proceso_compra": 0,
+              "recibido": 695,
+              "por_requisitar": 0,
+              "por_comprar": 0.875,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.6",
+          "codigo": "1.5.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 1998,
+              "en_proceso_compra": 0,
+              "recibido": 1998,
+              "por_requisitar": 0.75,
+              "por_comprar": 24,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.16",
+          "codigo": "1.5.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.17",
+          "codigo": "1.5.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.6",
+      "codigo": "1.6",
+      "nombre": "COLIBRI FACHADA * B* LOTE 6",
+      "partidas": [
+        {
+          "id": "1.6.1",
+          "codigo": "1.6.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 70.5,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.6.5",
+          "codigo": "1.6.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 695.875,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.6.6",
+          "codigo": "1.6.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 2022.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.6.16",
+          "codigo": "1.6.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.6.17",
+          "codigo": "1.6.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "COLIBRI FACHADA * C* LOTE 7",
+      "partidas": [
+        {
+          "id": "1.7.1",
+          "codigo": "1.7.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "COLIBRI FACHADA * C* LOTE 7"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 70.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 70.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.5",
+          "codigo": "1.7.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "COLIBRI FACHADA * C* LOTE 7"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.375,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.6",
+          "codigo": "1.7.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "COLIBRI FACHADA * C* LOTE 7"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 255.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 255,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1767.25,
+              "por_comprar": 0.5,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.16",
+          "codigo": "1.7.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "COLIBRI FACHADA * C* LOTE 7"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.17",
+          "codigo": "1.7.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "COLIBRI FACHADA * C* LOTE 7"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.8",
+      "codigo": "1.8",
+      "nombre": "COLIBRI FACHADA * D* LOTE 8",
+      "partidas": [
+        {
+          "id": "1.8.1",
+          "codigo": "1.8.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "COLIBRI FACHADA * D* LOTE 8"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 70.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 70.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.8.5",
+          "codigo": "1.8.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "COLIBRI FACHADA * D* LOTE 8"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.375,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.8.6",
+          "codigo": "1.8.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "COLIBRI FACHADA * D* LOTE 8"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.25,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.8.16",
+          "codigo": "1.8.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "COLIBRI FACHADA * D* LOTE 8"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.8.17",
+          "codigo": "1.8.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "COLIBRI FACHADA * D* LOTE 8"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.9",
+      "codigo": "1.9",
+      "nombre": "COLIBRI FACHADA * A* LOTE 9",
+      "partidas": [
+        {
+          "id": "1.9.1",
+          "codigo": "1.9.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "COLIBRI FACHADA * A* LOTE 9"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 70.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 70.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.5",
+          "codigo": "1.9.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "COLIBRI FACHADA * A* LOTE 9"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695,
+              "en_proceso_compra": 0,
+              "recibido": 695,
+              "por_requisitar": 0,
+              "por_comprar": 0.875,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.6",
+          "codigo": "1.9.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "COLIBRI FACHADA * A* LOTE 9"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 620,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 620,
+              "en_proceso_compra": 0,
+              "recibido": 620,
+              "por_requisitar": 1402.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.16",
+          "codigo": "1.9.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "COLIBRI FACHADA * A* LOTE 9"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.17",
+          "codigo": "1.9.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "COLIBRI FACHADA * A* LOTE 9"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.10",
+      "codigo": "1.10",
+      "nombre": "COLIBRI FACHADA * B* LOTE 10",
+      "partidas": [
+        {
+          "id": "1.10.1",
+          "codigo": "1.10.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "COLIBRI FACHADA * B* LOTE 10"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 70.5,
+              "importe_ppto": 1180.875,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 70.5,
+              "vigente_tarjetas": 123,
+              "diferencia": -52.5,
+              "requisitado": 70.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 70.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.10.5",
+          "codigo": "1.10.5",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "COLIBRI FACHADA * B* LOTE 10"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 695.875,
+              "importe_ppto": 11655.9063,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 695.875,
+              "vigente_tarjetas": 695.875,
+              "diferencia": 0,
+              "requisitado": 695.875,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 695.25,
+              "en_proceso_compra": 0,
+              "recibido": 695.25,
+              "por_requisitar": 0,
+              "por_comprar": 0.625,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.10.6",
+          "codigo": "1.10.6",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "COLIBRI FACHADA * B* LOTE 10"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2022.75,
+              "importe_ppto": 33881.0625,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2022.75,
+              "vigente_tarjetas": 2022.75,
+              "diferencia": 0,
+              "requisitado": 2022.75,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2022.75,
+              "en_proceso_compra": 0,
+              "recibido": 2022.75,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.10.16",
+          "codigo": "1.10.16",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "COLIBRI FACHADA * B* LOTE 10"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 90,
+              "importe_ppto": 1507.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 90,
+              "vigente_tarjetas": 90,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 90,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.10.17",
+          "codigo": "1.10.17",
+          "nombre": "BARDA PERIMETRAL POSTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "COLIBRI FACHADA * B* LOTE 10"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 233.75,
+              "importe_ppto": 3915.3125,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 233.75,
+              "vigente_tarjetas": 233.75,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 233.75,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 63,
+          "importe_ppto": 1055.25,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 63,
+          "vigente_tarjetas": 63,
+          "diferencia": 0,
+          "requisitado": 123,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 123,
+          "en_proceso_compra": 0,
+          "recibido": 123,
+          "por_requisitar": -60,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": true,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": true,
+      "leyenda": "Faltan insumos por suministrar"
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 647,
+          "en_proceso_compra": 0,
+          "recibido": 647,
+          "por_requisitar": 0,
+          "por_comprar": 48.875,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.75,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022,
+          "en_proceso_compra": 0,
+          "recibido": 2022,
+          "por_requisitar": 0,
+          "por_comprar": 0.75,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.16",
+      "codigo": "1.1.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.17",
+      "codigo": "1.1.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 123,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 123,
+          "en_proceso_compra": 0,
+          "recibido": 123,
+          "por_requisitar": -52.5,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.5",
+      "codigo": "1.2.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695.875,
+          "en_proceso_compra": 0,
+          "recibido": 695.875,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.6",
+      "codigo": "1.2.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.75,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022.75,
+          "en_proceso_compra": 0,
+          "recibido": 2022.75,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.16",
+      "codigo": "1.2.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.17",
+      "codigo": "1.2.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.1",
+      "codigo": "1.3.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 123,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 123,
+          "en_proceso_compra": 0,
+          "recibido": 123,
+          "por_requisitar": -52.5,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.5",
+      "codigo": "1.3.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695.875,
+          "en_proceso_compra": 0,
+          "recibido": 695.875,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.6",
+      "codigo": "1.3.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.75,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022.75,
+          "en_proceso_compra": 0,
+          "recibido": 2022.75,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.16",
+      "codigo": "1.3.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.17",
+      "codigo": "1.3.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 123,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 123,
+          "en_proceso_compra": 0,
+          "recibido": 123,
+          "por_requisitar": -52.5,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.5",
+      "codigo": "1.4.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 693.25,
+          "en_proceso_compra": 0,
+          "recibido": 693.25,
+          "por_requisitar": 0,
+          "por_comprar": 2.625,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.6",
+      "codigo": "1.4.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.75,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022.5,
+          "en_proceso_compra": 0,
+          "recibido": 2022.5,
+          "por_requisitar": 0,
+          "por_comprar": 0.25,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.16",
+      "codigo": "1.4.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.17",
+      "codigo": "1.4.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.1",
+      "codigo": "1.5.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 123,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 123,
+          "en_proceso_compra": 0,
+          "recibido": 123,
+          "por_requisitar": -52.5,
+          "por_comprar": 0,
+          "situacion": "REQUISITADO EXCEDE",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.5",
+      "codigo": "1.5.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695,
+          "en_proceso_compra": 0,
+          "recibido": 695,
+          "por_requisitar": 0,
+          "por_comprar": 0.875,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.6",
+      "codigo": "1.5.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 1998,
+          "en_proceso_compra": 0,
+          "recibido": 1998,
+          "por_requisitar": 0.75,
+          "por_comprar": 24,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.16",
+      "codigo": "1.5.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.17",
+      "codigo": "1.5.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.1",
+      "codigo": "1.6.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 70.5,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.5",
+      "codigo": "1.6.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 695.875,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.6",
+      "codigo": "1.6.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 2022.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.16",
+      "codigo": "1.6.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.17",
+      "codigo": "1.6.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.1",
+      "codigo": "1.7.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "COLIBRI FACHADA * C* LOTE 7"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 70.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 70.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.5",
+      "codigo": "1.7.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "COLIBRI FACHADA * C* LOTE 7"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.375,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.6",
+      "codigo": "1.7.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "COLIBRI FACHADA * C* LOTE 7"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 255.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 255,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1767.25,
+          "por_comprar": 0.5,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.16",
+      "codigo": "1.7.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "COLIBRI FACHADA * C* LOTE 7"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.17",
+      "codigo": "1.7.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "COLIBRI FACHADA * C* LOTE 7"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.1",
+      "codigo": "1.8.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "COLIBRI FACHADA * D* LOTE 8"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 70.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 70.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.5",
+      "codigo": "1.8.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "COLIBRI FACHADA * D* LOTE 8"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.375,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.6",
+      "codigo": "1.8.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "COLIBRI FACHADA * D* LOTE 8"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.25,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.16",
+      "codigo": "1.8.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "COLIBRI FACHADA * D* LOTE 8"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.17",
+      "codigo": "1.8.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "COLIBRI FACHADA * D* LOTE 8"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.1",
+      "codigo": "1.9.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "COLIBRI FACHADA * A* LOTE 9"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 70.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 70.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.5",
+      "codigo": "1.9.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "COLIBRI FACHADA * A* LOTE 9"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695,
+          "en_proceso_compra": 0,
+          "recibido": 695,
+          "por_requisitar": 0,
+          "por_comprar": 0.875,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.6",
+      "codigo": "1.9.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "COLIBRI FACHADA * A* LOTE 9"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 620,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 620,
+          "en_proceso_compra": 0,
+          "recibido": 620,
+          "por_requisitar": 1402.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.16",
+      "codigo": "1.9.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "COLIBRI FACHADA * A* LOTE 9"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.17",
+      "codigo": "1.9.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "COLIBRI FACHADA * A* LOTE 9"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.1",
+      "codigo": "1.10.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "COLIBRI FACHADA * B* LOTE 10"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 70.5,
+          "importe_ppto": 1180.875,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 70.5,
+          "vigente_tarjetas": 123,
+          "diferencia": -52.5,
+          "requisitado": 70.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 70.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.5",
+      "codigo": "1.10.5",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "COLIBRI FACHADA * B* LOTE 10"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 695.875,
+          "importe_ppto": 11655.9063,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 695.875,
+          "vigente_tarjetas": 695.875,
+          "diferencia": 0,
+          "requisitado": 695.875,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 695.25,
+          "en_proceso_compra": 0,
+          "recibido": 695.25,
+          "por_requisitar": 0,
+          "por_comprar": 0.625,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.6",
+      "codigo": "1.10.6",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "COLIBRI FACHADA * B* LOTE 10"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2022.75,
+          "importe_ppto": 33881.0625,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2022.75,
+          "vigente_tarjetas": 2022.75,
+          "diferencia": 0,
+          "requisitado": 2022.75,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2022.75,
+          "en_proceso_compra": 0,
+          "recibido": 2022.75,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.16",
+      "codigo": "1.10.16",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "COLIBRI FACHADA * B* LOTE 10"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 90,
+          "importe_ppto": 1507.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 90,
+          "vigente_tarjetas": 90,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 90,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.17",
+      "codigo": "1.10.17",
+      "nombre": "BARDA PERIMETRAL POSTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "COLIBRI FACHADA * B* LOTE 10"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 233.75,
+          "importe_ppto": 3915.3125,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 233.75,
+          "vigente_tarjetas": 233.75,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 233.75,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1050022",
+      "nombre": "BLOCK 12 X 20 X 40 PESADO",
+      "unidad": "PZA",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 31121.25,
+      "importe_ppto": 521280.938,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 31121.25,
+      "vigente_tarjetas": 31593.75,
+      "diferencia": -472.5,
+      "requisitado": 22192.875,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 22113.5,
+      "en_proceso_compra": 0,
+      "recibido": 18163,
+      "por_requisitar": 8928.375,
+      "por_comprar": 79.375,
+      "situacion": "OK",
+      "pendiente_suministro": true,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "JA2",
+    "insumo": "1050022",
+    "nombre": ""
+  }
+}

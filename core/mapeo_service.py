@@ -33,6 +33,8 @@ _cache_ek10_lock = threading.Lock()
 _cache_ek10_by_id_enk: Dict[str, Dict[str, Any]] = {}
 _cache_ek10_by_clave: Dict[str, Dict[str, Any]] = {}
 _cache_ek10_by_id_ek10: Dict[str, Dict[str, Any]] = {}
+_cache_ek10_by_cc_mza_lote_int: Dict[tuple, Dict[str, Any]] = {}
+_cache_ek10_by_cc_mza_lote: Dict[tuple, Dict[str, Any]] = {}
 
 _regex_ek10_clave = re.compile(r'^(?:[A-Z0-9]+)-M([A-Z0-9]+)-L([A-Z0-9]+)-N([A-Z0-9]+)', re.IGNORECASE)
 
@@ -90,6 +92,20 @@ def _init_ek10_cache():
                     _cache_ek10_by_clave[clave_raw] = item
                     if clave_raw.startswith("C") and len(clave_raw) > 1:
                         _cache_ek10_by_clave[clave_raw[1:]] = item
+
+                if m:
+                    cc_raw = clave_raw.split("-")[0]
+                    cc_clean = cc_raw[1:] if cc_raw.startswith("C") and len(cc_raw) > 1 else cc_raw
+                    for cc_k in {cc_clean, cc_raw}:
+                        k_int = (cc_k, mza_val, lote_val, noint_val)
+                        k_lot = (cc_k, mza_val, lote_val)
+
+                        if k_int not in _cache_ek10_by_cc_mza_lote_int or (id_enk_str and not _cache_ek10_by_cc_mza_lote_int[k_int].get("id_enk")):
+                            _cache_ek10_by_cc_mza_lote_int[k_int] = item
+
+                        if k_lot not in _cache_ek10_by_cc_mza_lote or (id_enk_str and not _cache_ek10_by_cc_mza_lote[k_lot].get("id_enk")):
+                            _cache_ek10_by_cc_mza_lote[k_lot] = item
+
             conn_ek10.close()
         except Exception as e:
             print("Error cargando hash table de homologaciones EK10:", e)
@@ -299,7 +315,7 @@ class MapeoService:
                     clave_lote
                 FROM lotes_mapeo
                 {where_sql}
-                ORDER BY (CASE WHEN cc IS NULL OR TRIM(cc) = '' THEN 1 ELSE 0 END) ASC, cc ASC, manzana ASC, lote ASC
+                ORDER BY (CASE WHEN cc IS NULL OR TRIM(cc) = '' THEN 1 ELSE 0 END) ASC, cc ASC, CAST(manzana AS INTEGER) ASC, manzana ASC, CAST(lote AS INTEGER) ASC, lote ASC
                 LIMIT ? OFFSET ?
             """
             cur.execute(query_sql, params + [min(limite, 500), max(offset, 0)])
@@ -315,15 +331,29 @@ class MapeoService:
                     else cls.generar_clave_lote(r["cc"], r["manzana"], r["lote"], r["no_int"])
                 )
                 cve_upper = (cve_lote or "").strip().upper()
+                cc_clean = str(r["cc"] or "").strip().upper()
+                mza_clean = str(r["manzana"] or "").strip().lstrip("0") or "0"
+                lote_clean = str(r["lote"] or "").strip().lstrip("0") or "0"
+                noint_clean = str(r["no_int"] or "").strip().lstrip("0") or "0"
 
-                # Lookup O(1) instantáneo en hash table
+                # Lookup O(1) instantáneo y jerárquico en hash table:
+                # 1. Por ID ENK oficial (coincidencia de ID)
+                # 2. Por Clave Consecutivo exacto (con o sin 'C')
+                # 3. Por Ubicación (CC, Manzana, Lote, No. Int)
+                # 4. Por Ubicación (CC, Manzana, Lote) para ver todas las claves
                 ek10 = (
                     _cache_ek10_by_id_enk.get(id_ek_str) or
                     _cache_ek10_by_clave.get(cve_upper) or
-                    _cache_ek10_by_clave.get(f"C{cve_upper}")
+                    _cache_ek10_by_clave.get(f"C{cve_upper}") or
+                    _cache_ek10_by_cc_mza_lote_int.get((cc_clean, mza_clean, lote_clean, noint_clean)) or
+                    _cache_ek10_by_cc_mza_lote.get((cc_clean, mza_clean, lote_clean))
                 )
                 
                 homologado = bool(ek10)
+                coincide_id = False
+                if ek10 and ek10.get("id_enk"):
+                    coincide_id = (str(ek10["id_enk"]).strip() == id_ek_str)
+
                 if homologado:
                     total_homologados_pag += 1
 
@@ -353,7 +383,8 @@ class MapeoService:
                     "ek10_info_enk": ek10["informacion_enk"] if ek10 else "",
                     "ek10_cia": ek10["cia_cve"] if ek10 else "",
                     "ek10_cia_nom": ek10["cia_nom"] if ek10 else "",
-                    "ek10_homologado": homologado
+                    "ek10_homologado": homologado,
+                    "ek10_coincide_id": coincide_id
                 })
 
             conn.close()
