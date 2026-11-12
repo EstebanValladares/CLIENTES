@@ -1822,74 +1822,149 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- MODAL: SELECCIÓN DE IDENTIDAD PARA CLONES Y USUARIOS     -->
+    <!-- MODAL: IDENTIFICACIÓN DE COLABORADOR Y SESIÓN ACTIVA      -->
     <!-- ======================================================== -->
     <div v-if="chatPerfilModalAbierto"
          @click.self="chatPerfilModalAbierto = false"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in select-none">
-      <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-4">
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in select-none">
+      <div class="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 relative overflow-hidden">
         
-        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs shadow-sm">
-              <i class="fa-solid fa-id-card"></i>
+        <!-- FONDOS DE LUZ AMBIENTAL SUTIL -->
+        <div class="absolute -top-20 -right-20 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-20 -left-20 w-48 h-48 bg-cyan-500/10 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- HEADER EJECUTIVO -->
+        <div class="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800 pb-3.5 relative">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white text-base shadow-md shadow-indigo-600/25 ring-4 ring-indigo-50 dark:ring-indigo-950/40 shrink-0">
+              <i class="fa-solid fa-user-check"></i>
             </div>
             <div>
-              <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100">¿Quién eres en este Dashboard?</h3>
-              <p class="text-[11px] text-slate-500">Selecciona tu usuario para que tus compañeros vean tu nombre al chatear</p>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100 tracking-tight">Perfil de Sesión Activa</h3>
+                <span class="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-cyan-400 border border-indigo-200/60 dark:border-indigo-800/60">
+                  Red Operativa
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
+                Sincroniza tu identidad corporativa, presencia en tiempo real y chat de equipo.
+              </p>
             </div>
           </div>
-          <button @click="chatPerfilModalAbierto = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
-            <i class="fa-solid fa-xmark text-lg"></i>
+          <button @click="chatPerfilModalAbierto = false" 
+                  class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer shrink-0">
+            <i class="fa-solid fa-xmark text-sm"></i>
           </button>
         </div>
 
-        <!-- PERFIL ACTUAL SELECCIONADO -->
-        <div class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/40 rounded-2xl p-3 flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-sm">
-              {{ chatUsuarioActual.nombre.substring(0, 2).toUpperCase() }}
+        <!-- TARJETA DEL COLABORADOR ACTUALMENTE ACTIVO -->
+        <div class="bg-gradient-to-r from-slate-50 via-indigo-50/40 to-slate-50 dark:from-slate-800/60 dark:via-indigo-950/30 dark:to-slate-800/60 border border-slate-200/90 dark:border-indigo-900/40 rounded-2xl p-3.5 flex items-center justify-between shadow-sm relative overflow-hidden">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500 text-white font-black text-sm flex items-center justify-center shadow-md shadow-indigo-600/25 ring-2 ring-white dark:ring-slate-800 shrink-0">
+              {{ (chatUsuarioActual.nombre && chatUsuarioActual.nombre !== 'Cargando perfil...' ? chatUsuarioActual.nombre : 'CO').substring(0, 2).toUpperCase() }}
             </div>
-            <div>
-              <p class="text-xs font-bold text-slate-800 dark:text-slate-100">{{ chatUsuarioActual.nombre }}</p>
-              <p class="text-[10px] text-indigo-600 dark:text-cyan-300 font-mono">{{ chatUsuarioActual.puesto }}</p>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-100 leading-tight truncate">
+                {{ chatUsuarioActual.nombre && chatUsuarioActual.nombre !== 'Cargando perfil...' ? chatUsuarioActual.nombre : 'Sin colaborador seleccionado' }}
+              </p>
+              <div class="flex items-center gap-2 mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                <span class="font-medium text-indigo-600 dark:text-cyan-400 flex items-center gap-1 truncate">
+                  <i class="fa-solid fa-briefcase text-[10px]"></i>
+                  {{ chatUsuarioActual.puesto || 'Puesto no asignado' }}
+                </span>
+                <span v-if="chatUsuarioActual.area" class="text-slate-400 shrink-0">• {{ chatUsuarioActual.area }}</span>
+              </div>
             </div>
           </div>
-          <span class="text-[9px] font-bold bg-indigo-600 text-white px-2 py-0.5 rounded-full">Activo</span>
+          <div class="flex flex-col items-end gap-1 shrink-0 ml-2">
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Conectado
+            </span>
+          </div>
         </div>
 
-        <!-- BUSCAR EN CATÁLOGO EXISTENTE DE COMPAÑEROS -->
-        <div>
-          <label class="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 block mb-1.5">
-            Elige tu perfil del catálogo de usuarios:
-          </label>
-          <div class="relative mb-2">
-            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <!-- BUSCADOR Y DIRECTORIO DE COLABORADORES -->
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center justify-between px-0.5">
+            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-users text-indigo-500 text-xs"></i>
+              Selecciona tu cuenta del directorio:
+            </label>
+            <span class="text-[10px] font-mono font-medium text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full">
+              {{ listaUsuariosParaPerfil.length }} colaboradores
+            </span>
+          </div>
+
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-xs"></i>
             <input type="text"
                    v-model="filtroBuscarMiPerfil"
-                   placeholder="Escribe tu nombre, apellido o puesto (ej. Claudia, Auxiliar)..."
-                   class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+                   placeholder="Buscar por nombre, apellido o puesto corporativo..."
+                   class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl pl-9 pr-8 py-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all">
+            <button v-if="filtroBuscarMiPerfil" 
+                    @click="filtroBuscarMiPerfil = ''" 
+                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 cursor-pointer">
+              <i class="fa-solid fa-circle-xmark text-xs"></i>
+            </button>
           </div>
-          <div class="max-h-56 overflow-y-auto space-y-1.5 custom-scrollbar pr-1">
+
+          <!-- LISTADO SCROLLABLE ESTILIZADO -->
+          <div class="max-h-56 overflow-y-auto space-y-1.5 custom-scrollbar pr-1 pt-1">
             <div v-for="u in listaUsuariosParaPerfil" :key="u.id"
                  @click="guardarPerfilChat(u)"
-                 class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 bg-slate-50 dark:bg-slate-950/60 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 cursor-pointer flex items-center justify-between transition">
-              <div class="flex items-center gap-2">
-                <span class="font-bold text-xs text-slate-800 dark:text-slate-200">{{ u.nombre_completo || u.nombre }}</span>
-                <span class="text-[10px] text-slate-400">({{ u.puesto || 'General' }})</span>
+                 class="group p-2.5 rounded-2xl border transition-all duration-150 cursor-pointer flex items-center justify-between"
+                 :class="String(u.id) === String(chatUsuarioActual.id) || (u.nombre_completo && u.nombre_completo === chatUsuarioActual.nombre)
+                   ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-400 dark:border-indigo-600 shadow-sm ring-1 ring-indigo-500/30'
+                   : 'bg-slate-50/70 dark:bg-slate-950/40 border-slate-200/80 dark:border-slate-800/80 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-slate-100/70 dark:hover:bg-slate-800/60'">
+              
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[11px] shrink-0 transition"
+                     :class="String(u.id) === String(chatUsuarioActual.id) || (u.nombre_completo && u.nombre_completo === chatUsuarioActual.nombre)
+                       ? 'bg-indigo-600 text-white shadow-sm'
+                       : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50 group-hover:text-indigo-600 dark:group-hover:text-cyan-300'">
+                  {{ (u.nombre_completo || u.nombre || 'CO').trim().substring(0, 2).toUpperCase() }}
+                </div>
+                <div class="min-w-0">
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight truncate">
+                    {{ u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`.trim() || u.nombre }}
+                  </p>
+                  <p class="text-[10px] text-slate-400 dark:text-slate-500 truncate flex items-center gap-1.5 mt-0.5">
+                    <span>{{ u.puesto || 'Colaborador' }}</span>
+                    <span v-if="u.area_organizacion" class="text-slate-300 dark:text-slate-600">•</span>
+                    <span v-if="u.area_organizacion">{{ u.area_organizacion }}</span>
+                  </p>
+                </div>
               </div>
-              <i class="fa-solid fa-check text-xs text-indigo-500 opacity-60"></i>
+
+              <div class="flex items-center gap-2 shrink-0 ml-2">
+                <span v-if="String(u.id) === String(chatUsuarioActual.id) || (u.nombre_completo && u.nombre_completo === chatUsuarioActual.nombre)"
+                      class="text-[10px] font-bold text-indigo-600 dark:text-cyan-400 bg-indigo-100 dark:bg-indigo-900/60 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                  Actual
+                </span>
+                <i v-else class="fa-solid fa-chevron-right text-[10px] text-slate-300 dark:text-slate-600 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all"></i>
+              </div>
+
             </div>
-            <div v-if="listaUsuariosParaPerfil.length === 0" class="p-3 text-center text-xs text-slate-400">
-              No se encontraron coincidencias.
+
+            <div v-if="listaUsuariosParaPerfil.length === 0" class="py-8 px-4 text-center text-slate-400">
+              <i class="fa-regular fa-user text-2xl text-slate-300 dark:text-slate-600 mb-1.5"></i>
+              <p class="text-xs font-semibold text-slate-600 dark:text-slate-300">No se encontraron colaboradores</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Intenta con otro término o limpia el buscador.</p>
             </div>
           </div>
         </div>
 
-        <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+        <!-- FOOTER ELEGANTE -->
+        <div class="pt-3 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-1.5 text-[11px] text-slate-400 dark:text-slate-500">
+            <i class="fa-solid fa-shield-halved text-xs text-indigo-500/80"></i>
+            <span>Sesión guardada en este equipo</span>
+          </div>
           <button @click="chatPerfilModalAbierto = false" 
-                  class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
-            Cerrar
+                  class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
+            Aceptar
           </button>
         </div>
 
