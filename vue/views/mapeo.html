@@ -1,45 +1,54 @@
     <!-- ======================================================== -->
-    <!-- VISTA: MAPEO DE LOTES & CONSECUTIVO EK (60,742 LOTES)     -->
+    <!-- VISTA: MAPEO DE LOTES & COMPARATIVA HOMOLOGADA EK9 vs EK10 -->
     <!-- Archivo Modular: vue/views/mapeo.html (Consulta Flotante)  -->
     <!-- ======================================================== -->
     <div v-show="consultaFlotanteActiva === 'MAPEO'" class="flex flex-col flex-1 pb-16">
 
       <!-- SUB-HEADER DE MAPEO -->
-      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-5">
         <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-map-location-dot text-cyan-400"></i>
-            <span>Mapeo de Lotes & Consecutivo Maestro</span>
-          </h2>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-code-compare text-cyan-400"></i>
+              <span>Mapeo & Comparativa de Ubicaciones: Enkontrol 9 vs EK10</span>
+            </h2>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+              <i class="fa-solid fa-bolt text-[9px] text-cyan-400"></i> Hash Table O(1) Instantáneo
+            </span>
+          </div>
           <p class="text-xs text-slate-400 mt-1">
-            Buscador de <b>CC, Manzana, Lote, No. Interior</b> e <b>ID Lote EK</b> ({{ (metricasMapeo.total_lotes || 116483).toLocaleString() }} lotes registrados).
+            Visualización homologada de <b>Enkontrol 9</b> lado a lado con la nueva suite <b>EK10</b> ({{ (metricasMapeo.total_lotes || 116483).toLocaleString() }} lotes y 79,845 equivalencias).
           </p>
         </div>
 
         <!-- Tarjetas KPIs Rápidos -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 w-full lg:w-auto">
-          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full lg:w-auto">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Total Lotes</span>
             <span class="text-sm font-bold font-mono text-cyan-400">{{ (metricasMapeo.total_lotes || 116483).toLocaleString() }}</span>
           </div>
-          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Centros Costo</span>
             <span class="text-sm font-bold font-mono text-indigo-400">{{ (metricasMapeo.total_ccs || 1103).toLocaleString() }}</span>
           </div>
-          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5">
+            <span class="text-[10px] text-slate-500 uppercase font-semibold block">Catálogo EK10</span>
+            <span class="text-sm font-bold font-mono text-purple-400">79,845 claves</span>
+          </div>
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5">
             <span class="text-[10px] text-slate-500 uppercase font-semibold block">Filtrados</span>
             <span class="text-sm font-bold font-mono text-emerald-400">{{ totalLotesMapeoFiltrados.toLocaleString() }}</span>
           </div>
         </div>
       </div>
 
-      <!-- PANEL DE FILTROS SUPERIORES -->
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl mb-5 backdrop-blur-md">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-4">
+      <!-- PANEL DE FILTROS SUPERIORES UNIFICADOS -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-xl mb-5 backdrop-blur-md">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-3.5">
           <div class="flex items-center gap-2 text-xs font-bold text-slate-200">
             <i class="fa-solid fa-sliders text-cyan-400"></i>
-            <span>Filtros de Búsqueda Rápida</span>
-            <span class="text-[11px] text-slate-500 font-normal hidden sm:inline">(Filtra en tiempo real combinando cualquier campo)</span>
+            <span>Filtros de Búsqueda Rápida Unificada (EK9 & EK10)</span>
+            <span class="text-[11px] text-slate-500 font-normal hidden sm:inline">(Filtra en tiempo real combinando cualquier campo para ambos sistemas)</span>
           </div>
 
           <div class="flex items-center gap-2">
@@ -76,7 +85,7 @@
               <input type="text" 
                      v-model="filtroMapeoCC" 
                      @input="alCambiarFiltroMapeo"
-                     placeholder="" 
+                     placeholder="Ej. CEB, 001, DQB..." 
                      class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono uppercase">
               <span v-if="filtroMapeoCC" 
                     @click="filtroMapeoCC = ''; consultarLotesMapeo(true)" 
@@ -94,7 +103,7 @@
             <input type="text" 
                    v-model="filtroMapeoManzana" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="" 
+                   placeholder="Ej. 1, 32..." 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
@@ -106,7 +115,7 @@
             <input type="text" 
                    v-model="filtroMapeoLote" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="" 
+                   placeholder="Ej. 2, 1031A..." 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
@@ -118,32 +127,32 @@
             <input type="text" 
                    v-model="filtroMapeoNoInt" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="" 
+                   placeholder="Ej. 1A, 2..." 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
           </div>
 
-          <!-- Filtro ID Lote EK (DESTACADO) -->
+          <!-- Filtro ID Lote EK o ID EK10 (DUAL) -->
           <div class="sm:col-span-1 lg:col-span-1">
             <label class="block text-[11px] font-bold text-cyan-300 mb-1 flex items-center justify-between">
-              <span><i class="fa-solid fa-fingerprint text-cyan-400 mr-1"></i> ID LOTE EK</span>
-              <span class="text-[9px] font-normal px-1.5 py-0.2 bg-cyan-950 text-cyan-300 border border-cyan-800 rounded">Clave</span>
+              <span><i class="fa-solid fa-fingerprint text-cyan-400 mr-1"></i> ID LOTE EK / EK10</span>
+              <span class="text-[9px] font-normal px-1.5 py-0.2 bg-cyan-950 text-cyan-300 border border-cyan-800 rounded">Dual</span>
             </label>
             <input type="text" 
                    v-model="filtroMapeoIdEK" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="" 
+                   placeholder="Ej. 563764 o 6369..." 
                    class="w-full bg-slate-950 border-2 border-cyan-500/50 rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:border-cyan-400 shadow-sm shadow-cyan-500/20">
           </div>
 
-          <!-- Filtro Búsqueda Libre (Calle / Fraccionamiento / Modelo) -->
+          <!-- Filtro Búsqueda Libre Unificada (Claves, Nombres EK10, Calle, WBS) -->
           <div class="sm:col-span-2 lg:col-span-1">
             <label class="block text-[11px] font-semibold text-slate-400 mb-1">
-              <i class="fa-solid fa-magnifying-glass text-slate-400 mr-1"></i> Calle / Fracc
+              <i class="fa-solid fa-magnifying-glass text-slate-400 mr-1"></i> Búsqueda Libre (EK9 / EK10)
             </label>
             <input type="text" 
                    v-model="filtroMapeoBusqueda" 
                    @input="alCambiarFiltroMapeo"
-                   placeholder="" 
+                   placeholder="Clave EK10, WBS, Obra, Calle..." 
                    class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
           </div>
 
@@ -167,11 +176,11 @@
 
       </div>
 
-      <!-- TABLA DE RESULTADOS DE MAPEO -->
+      <!-- TABLA COMPARATIVA LADO A LADO (EK9 vs EK10) -->
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden flex flex-col flex-1 backdrop-blur-md">
         
         <!-- Header de la tabla con paginador -->
-        <div class="px-4 py-3 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-950/40">
+        <div class="px-4 py-3 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-950/50">
           <div class="flex items-center gap-2 text-xs">
             <span class="text-slate-400">Mostrando</span>
             <span class="font-mono font-bold text-white">{{ lotesMapeo.length }}</span>
@@ -206,112 +215,204 @@
           </div>
         </div>
 
-        <!-- Tabla interactiva -->
+        <!-- Tabla interactiva con cabecera de doble nivel -->
         <div class="overflow-x-auto custom-scrollbar flex-1 max-h-[68vh]">
-          <table class="w-full text-left text-xs">
-            <thead class="table-mapeo-header text-[11px] uppercase bg-slate-950/90 border-b-2 border-slate-700 sticky top-0 z-10 backdrop-blur-md">
-              <tr>
-                <th class="py-3 px-3 font-black font-mono text-indigo-400">CC / OBRA</th>
-                <th class="py-3 px-3 font-black font-mono text-center text-orange-400">MANZANA</th>
-                <th class="py-3 px-3 font-black font-mono text-center text-emerald-400">LOTE</th>
-                <th class="py-3 px-3 font-black font-mono text-center text-purple-400">NO. INT</th>
-                <th class="py-3 px-3 font-black font-mono text-center th-col-idek text-cyan-300">ID LOTE EK</th>
-                <th class="py-3 px-3 font-black font-mono text-center text-cyan-300">CLAVE CONSECUTIVO</th>
-                <th class="py-3 px-3 font-black text-slate-200">CALLE / DIRECCIÓN</th>
-                <th class="py-3 px-3 font-black text-slate-200">FRACCIONAMIENTO</th>
-                <th class="py-3 px-3 font-black text-slate-200">MODELO</th>
-                <th class="py-3 px-3 font-black text-center text-slate-200">ESTATUS</th>
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="table-mapeo-header text-[11px] uppercase bg-slate-950/95 sticky top-0 z-10 backdrop-blur-md">
+              
+              <!-- NIVEL 1: SUPER-HEADERS DE COMPARACIÓN -->
+              <tr class="border-b border-slate-800 text-[10px] tracking-wider select-none">
+                <!-- Anchor Compartido -->
+                <th rowspan="2" class="py-2.5 px-2.5 font-black font-mono text-indigo-400 bg-slate-950/80 border-r border-slate-800 text-center w-24">
+                  CC / OBRA
+                </th>
+
+                <!-- BLOQUE 1: ENKONTROL 9 (TRADICIONAL) -->
+                <th colspan="5" class="py-1.5 px-2 text-center font-black bg-cyan-950/40 text-cyan-300 border-r-2 border-indigo-500/40 shadow-inner">
+                  <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-900/50 border border-cyan-500/30">
+                    <i class="fa-solid fa-database text-[10px]"></i>
+                    <span>ENKONTROL 9 (DATOS TRADICIONALES)</span>
+                  </div>
+                </th>
+
+                <!-- BLOQUE 2: SUITE EK10 (NUEVA ARQUITECTURA) -->
+                <th colspan="5" class="py-1.5 px-2 text-center font-black bg-indigo-950/40 text-indigo-300 border-r-2 border-slate-800 shadow-inner">
+                  <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-indigo-900/50 border border-indigo-400/40">
+                    <i class="fa-solid fa-cloud text-[10px] text-cyan-300"></i>
+                    <span>SUITE EK10 (HOMOLOGACIÓN EXTRAÍDA)</span>
+                  </div>
+                </th>
+
+                <!-- BLOQUE 3: DETALLES ADICIONALES -->
+                <th colspan="3" class="py-1.5 px-2 text-center font-black bg-slate-900/70 text-slate-400">
+                  <span>DETALLES DE UBICACIÓN</span>
+                </th>
               </tr>
+
+              <!-- NIVEL 2: COLUMNAS ESPECÍFICAS -->
+              <tr class="border-b-2 border-slate-700 bg-slate-950/90 text-[10px]">
+                <!-- Columnas EK9 -->
+                <th class="py-2 px-1.5 font-bold font-mono text-center text-orange-400">MANZANA</th>
+                <th class="py-2 px-1.5 font-bold font-mono text-center text-emerald-400">LOTE</th>
+                <th class="py-2 px-1.5 font-bold font-mono text-center text-purple-400">NO. INT</th>
+                <th class="py-2 px-2 font-bold font-mono text-center text-cyan-300 bg-cyan-950/30">ID LOTE EK</th>
+                <th class="py-2 px-2 font-bold font-mono text-center text-cyan-300 border-r-2 border-indigo-500/40">CLAVE CONSECUTIVO</th>
+
+                <!-- Columnas EK10 -->
+                <th class="py-2 px-2 font-bold font-mono text-center text-indigo-300 bg-indigo-950/30">ID EK10</th>
+                <th class="py-2 px-2 font-bold font-mono text-center text-indigo-300">CLAVE EK10</th>
+                <th class="py-2 px-2 font-bold font-mono text-center text-emerald-300">NOMBRE EK10</th>
+                <th class="py-2 px-2 font-bold font-mono text-center text-purple-300">INFORMACIÓN ENK (WBS)</th>
+                <th class="py-2 px-1.5 font-bold font-mono text-center text-slate-400 border-r-2 border-slate-800">CIA</th>
+
+                <!-- Columnas Detalles -->
+                <th class="py-2 px-2.5 font-bold text-slate-300">CALLE / DIRECCIÓN</th>
+                <th class="py-2 px-2.5 font-bold text-slate-300">FRACCIONAMIENTO</th>
+                <th class="py-2 px-2 font-bold text-slate-300">MODELO</th>
+              </tr>
+
             </thead>
             <tbody class="divide-y divide-slate-800/60 font-sans">
               
               <tr v-for="l in lotesMapeo" 
                   :key="l.id_lote_ek" 
-                  class="hover:bg-slate-800/50 transition-all duration-150">
+                  class="hover:bg-slate-800/50 transition-all duration-100">
                 
-                <!-- CC / Obra -->
-                <td class="py-2.5 px-3 font-mono font-bold">
-                  <span v-if="l.cc" class="badge-mapeo-cc">
+                <!-- CC / Obra (Fijo a la izquierda) -->
+                <td class="py-1.5 px-2.5 font-mono font-bold text-center border-r border-slate-800 bg-slate-950/30">
+                  <span v-if="l.cc" class="badge-mapeo-cc text-xs">
                     {{ l.cc }}
                   </span>
                   <span v-else class="badge-mapeo-cc-vacio">-</span>
                 </td>
 
-                <!-- Manzana -->
-                <td class="py-2.5 px-3 font-mono text-center">
-                  <span class="badge-mapeo-manzana">
+                <!-- ============================================== -->
+                <!-- MITAD 1: DATOS ENKONTROL 9 (COMPACTOS)         -->
+                <!-- ============================================== -->
+                <!-- Manzana EK9 -->
+                <td class="py-1.5 px-1.5 font-mono text-center">
+                  <span class="badge-mapeo-manzana text-xs px-2 py-0.5">
                     {{ l.manzana }}
                   </span>
                 </td>
 
-                <!-- Lote -->
-                <td class="py-2.5 px-3 font-mono text-center">
-                  <span class="badge-mapeo-lote">
+                <!-- Lote EK9 -->
+                <td class="py-1.5 px-1.5 font-mono text-center">
+                  <span class="badge-mapeo-lote text-xs px-2 py-0.5">
                     {{ l.lote }}
                   </span>
                 </td>
 
-                <!-- No. Interior -->
-                <td class="py-2.5 px-3 font-mono text-center">
-                  <span v-if="l.no_int" class="badge-mapeo-noint">
+                <!-- No. Interior EK9 -->
+                <td class="py-1.5 px-1.5 font-mono text-center">
+                  <span v-if="l.no_int" class="badge-mapeo-noint text-xs px-2 py-0.5">
                     {{ l.no_int }}
                   </span>
-                  <span v-else class="text-slate-400 font-bold">-</span>
+                  <span v-else class="text-slate-500 font-bold text-xs">-</span>
                 </td>
 
-                <!-- ID LOTE EK (Destacado) -->
-                <td class="py-2.5 px-3 font-mono text-center td-col-idek">
-                  <span class="badge-mapeo-idek cursor-pointer" title="ID Lote EK Oficial Enkontrol">
-                    <i class="fa-solid fa-fingerprint"></i>
+                <!-- ID LOTE EK (EK9) -->
+                <td class="py-1.5 px-2 font-mono text-center bg-cyan-950/20">
+                  <span class="badge-mapeo-idek px-2 py-0.5 text-xs font-mono" title="ID Lote EK Oficial Enkontrol 9">
+                    <i class="fa-solid fa-fingerprint text-[10px]"></i>
                     <span>{{ l.id_lote_ek }}</span>
                   </span>
                 </td>
 
-                <!-- Clave Consecutivo Maestro (ej. CCOU-M010-L0114-N00114D1) -->
-                <td class="py-2.5 px-3 font-mono text-center">
-                  <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 select-all shadow-xs tracking-tight"
-                        :title="'Clave de Consecutivo: ' + (l.clave_lote || '-')">
+                <!-- Clave Consecutivo Maestro EK9 -->
+                <td class="py-1.5 px-2 font-mono text-center border-r-2 border-indigo-500/40">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 select-all shadow-xs tracking-tight"
+                        :title="'Clave Consecutivo EK9: ' + (l.clave_lote || '-')">
                     {{ l.clave_lote || '-' }}
                   </span>
                 </td>
 
+                <!-- ============================================== -->
+                <!-- MITAD 2: DATOS SUITE EK10 (HOMOLOGADOS O(1))   -->
+                <!-- ============================================== -->
+                <!-- ID EK10 -->
+                <td class="py-1.5 px-2 font-mono text-center bg-indigo-950/20">
+                  <span v-if="l.ek10_id" 
+                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs font-mono font-black text-indigo-200 bg-gradient-to-r from-indigo-900/90 to-blue-900/90 border border-indigo-400/50 shadow-sm"
+                        :title="'ID Oficial EK10: ' + l.ek10_id">
+                    <i class="fa-solid fa-hashtag text-[9px] text-cyan-300"></i>
+                    <span>{{ l.ek10_id }}</span>
+                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
+                </td>
+
+                <!-- Clave EK10 -->
+                <td class="py-1.5 px-2 font-mono text-center">
+                  <span v-if="l.ek10_clave" 
+                        class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-mono font-bold text-cyan-200 bg-slate-900/90 border border-indigo-500/40 select-all tracking-tight"
+                        :title="'Clave Ubicación EK10: ' + l.ek10_clave">
+                    {{ l.ek10_clave }}
+                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
+                </td>
+
+                <!-- Nombre EK10 (Frente / Ubicación) -->
+                <td class="py-1.5 px-2 text-center">
+                  <span v-if="l.ek10_nombre" 
+                        class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 tracking-tight"
+                        :title="'Nombre/Obra en EK10: ' + l.ek10_nombre">
+                    {{ l.ek10_nombre }}
+                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
+                </td>
+
+                <!-- Información ENK / Código WBS de EK10 -->
+                <td class="py-1.5 px-2 font-mono text-center">
+                  <span v-if="l.ek10_info_enk" 
+                        class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold text-purple-200 bg-purple-950/60 border border-purple-500/40 select-all tracking-tight"
+                        :title="'Código Contable WBS (5 Segmentos): ' + l.ek10_info_enk">
+                    {{ l.ek10_info_enk }}
+                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
+                </td>
+
+                <!-- Compañía EK10 -->
+                <td class="py-1.5 px-1.5 font-mono text-center border-r-2 border-slate-800">
+                  <span v-if="l.ek10_cia" 
+                        class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-200 border border-slate-700" 
+                        :title="'Compañía: ' + l.ek10_cia + ' - ' + (l.ek10_cia_nom || '')">
+                    {{ l.ek10_cia }}
+                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
+                </td>
+
+                <!-- ============================================== -->
+                <!-- BLOQUE 3: DETALLES DE UBICACIÓN                -->
+                <!-- ============================================== -->
                 <!-- Calle / Dirección -->
-                <td class="py-2.5 px-3 font-bold text-slate-800 dark:text-slate-100 text-xs">
+                <td class="py-1.5 px-2.5 font-semibold text-slate-800 dark:text-slate-100 text-xs truncate max-w-[160px]" :title="l.calle">
                   {{ l.calle || 'CIRCUITO INTERIOR' }}
                 </td>
 
                 <!-- Fraccionamiento -->
-                <td class="py-2.5 px-3 font-semibold text-slate-700 dark:text-slate-200 text-xs">
-                  <div class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-tree-city text-[10px] text-slate-400"></i>
-                    <span>{{ l.fraccionamiento || '-' }}</span>
+                <td class="py-1.5 px-2.5 font-medium text-slate-700 dark:text-slate-300 text-xs truncate max-w-[150px]" :title="l.fraccionamiento">
+                  <div class="flex items-center gap-1.5 truncate">
+                    <i class="fa-solid fa-tree-city text-[10px] text-slate-400 shrink-0"></i>
+                    <span class="truncate">{{ l.fraccionamiento || '-' }}</span>
                   </div>
                 </td>
 
                 <!-- Modelo / Prototipo -->
-                <td class="py-2.5 px-3">
-                  <span v-if="l.modelo" class="badge-mapeo-modelo">
+                <td class="py-1.5 px-2 truncate max-w-[120px]">
+                  <span v-if="l.modelo" class="badge-mapeo-modelo text-xs px-2 py-0.5" :title="l.modelo">
                     {{ l.modelo }}
                   </span>
-                  <span v-else class="text-slate-400 font-bold">-</span>
-                </td>
-
-                <!-- Estatus -->
-                <td class="py-2.5 px-3 text-center">
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-700">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Activo</span>
-                  </span>
+                  <span v-else class="text-slate-500 text-xs">-</span>
                 </td>
 
               </tr>
 
               <!-- Estado Vacío -->
               <tr v-if="!cargandoMapeo && lotesMapeo.length === 0">
-                <td colspan="10" class="py-16 text-center text-slate-500">
-                  <i class="fa-solid fa-map-location-dot text-4xl mb-3 text-slate-600"></i>
+                <td colspan="14" class="py-16 text-center text-slate-500">
+                  <i class="fa-solid fa-code-compare text-4xl mb-3 text-slate-600"></i>
                   <p class="font-bold text-slate-300 text-sm">No se encontraron lotes con los filtros seleccionados</p>
-                  <p class="text-xs text-slate-500 mt-1">Prueba cambiando o limpiando el CC, Manzana, Lote o ID Lote EK.</p>
+                  <p class="text-xs text-slate-500 mt-1">Prueba cambiando o limpiando el CC, Manzana, Lote, ID Lote EK o ID EK10.</p>
                   <button @click="limpiarFiltrosMapeo" 
                           class="mt-3 px-3 py-1.5 rounded-xl bg-cyan-600/20 text-cyan-300 hover:bg-cyan-600/30 border border-cyan-500/30 text-xs font-semibold cursor-pointer">
                     Restablecer Filtros
@@ -323,14 +424,14 @@
           </table>
         </div>
 
-        <!-- Footer con resumen -->
-        <div class="px-4 py-2 border-t border-slate-800 bg-slate-950/60 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <!-- Footer con resumen de homologación -->
+        <div class="px-4 py-2 border-t border-slate-800 bg-slate-950/70 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div class="flex items-center gap-2">
-            <i class="fa-solid fa-layer-group text-cyan-400 text-xs"></i>
-            <span>Catálogo Consecutivo Maestro de Lotes</span>
+            <i class="fa-solid fa-code-compare text-cyan-400 text-xs"></i>
+            <span>Comparativa Homologada: Enkontrol Tradicional (EK9) vs Suite Web EK10</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-slate-500">Búsqueda rápida por CC, Manzana, Lote e ID Lote EK</span>
+            <span class="text-slate-500">Filtrado O(1) en tiempo real con soporte cruzado de ID EK9 y ID EK10</span>
           </div>
         </div>
 
