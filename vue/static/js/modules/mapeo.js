@@ -146,7 +146,25 @@
         alert('No hay registros para exportar con los filtros actuales.');
         return;
       }
-      const encabezados = ['CC', 'MANZANA', 'LOTE', 'NO_INTERIOR', 'ID_LOTE_EK', 'CLAVE_CONSECUTIVO', 'CALLE', 'CVE_FRACC', 'FRACCIONAMIENTO', 'MODELO_VIVIENDA', 'ESTATUS'];
+      const encabezados = [
+        'CC', 
+        'MANZANA_EK9', 
+        'LOTE_EK9', 
+        'NO_INT_EK9', 
+        'ID_LOTE_EK9', 
+        'CLAVE_CONSECUTIVO_EK9',
+        'MANZANA_EK10',
+        'LOTE_EK10',
+        'NO_INT_EK10',
+        'ID_EK10',
+        'CLAVE_CONSECUTIVO_EK10',
+        'INFO_ENK_WBS',
+        'CALLE', 
+        'CVE_FRACC', 
+        'FRACCIONAMIENTO', 
+        'MODELO_VIVIENDA', 
+        'ESTATUS'
+      ];
       const filas = lotesMapeo.value.map(l => [
         `"${l.cc || ''}"`,
         `"${l.manzana || ''}"`,
@@ -154,6 +172,12 @@
         `"${l.no_int || ''}"`,
         l.id_lote_ek || '',
         `"${l.clave_lote || ''}"`,
+        `"${l.ek10_manzana || ''}"`,
+        `"${l.ek10_lote || ''}"`,
+        `"${l.ek10_no_int || ''}"`,
+        l.ek10_id || '',
+        `"${l.ek10_clave || ''}"`,
+        `"${l.ek10_info_enk || ''}"`,
         `"${(l.calle || '').replace(/"/g, '""')}"`,
         `"${l.cve_fracc || ''}"`,
         `"${(l.fraccionamiento || '').replace(/"/g, '""')}"`,
