@@ -177,10 +177,10 @@
       </div>
 
       <!-- TABLA COMPARATIVA LADO A LADO (EK9 vs EK10) -->
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden flex flex-col flex-1 backdrop-blur-md">
+      <div class="mapeo-card-container bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden flex flex-col flex-1 backdrop-blur-md">
         
         <!-- Header de la tabla con paginador -->
-        <div class="px-4 py-3 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-950/50">
+        <div class="mapeo-table-topbar px-4 py-3 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-950/50">
           <div class="flex items-center gap-2 text-xs">
             <span class="text-slate-400">Mostrando</span>
             <span class="font-mono font-bold text-white">{{ lotesMapeo.length }}</span>
@@ -223,34 +223,34 @@
               <!-- NIVEL 1: SUPER-HEADERS DE COMPARACIÓN -->
               <tr class="border-b border-slate-800 text-[10px] tracking-wider select-none">
                 <!-- Anchor Compartido -->
-                <th rowspan="2" class="py-2.5 px-2.5 font-black font-mono text-indigo-400 bg-slate-950/80 border-r border-slate-800 text-center w-24">
+                <th rowspan="2" class="th-mapeo-cc py-2.5 px-2.5 font-black font-mono text-indigo-400 bg-slate-950/80 border-r border-slate-800 text-center w-24">
                   CC / OBRA
                 </th>
 
                 <!-- BLOQUE 1: ENKONTROL 9 (TRADICIONAL) -->
-                <th colspan="5" class="py-1.5 px-2 text-center font-black bg-cyan-950/40 text-cyan-300 border-r-2 border-indigo-500/40 shadow-inner">
-                  <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-900/50 border border-cyan-500/30">
+                <th colspan="5" class="th-super-ek9 py-1.5 px-2 text-center font-black bg-cyan-950/40 text-cyan-300 border-r-2 border-indigo-500/40 shadow-inner">
+                  <div class="pill-super-ek9 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-900/50 border border-cyan-500/30">
                     <i class="fa-solid fa-database text-[10px]"></i>
                     <span>ENKONTROL 9 (DATOS TRADICIONALES)</span>
                   </div>
                 </th>
 
                 <!-- BLOQUE 2: SUITE EK10 (NUEVA ARQUITECTURA) -->
-                <th colspan="5" class="py-1.5 px-2 text-center font-black bg-indigo-950/70 text-indigo-200 border-r-2 border-slate-800 shadow-md">
-                  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-600 text-white font-extrabold border border-indigo-400 shadow-md">
+                <th colspan="5" class="th-super-ek10 py-1.5 px-2 text-center font-black bg-indigo-950/70 text-indigo-200 border-r-2 border-slate-800 shadow-md">
+                  <div class="pill-super-ek10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-600 text-white font-extrabold border border-indigo-400 shadow-md">
                     <i class="fa-solid fa-cloud text-xs text-cyan-300"></i>
                     <span>SUITE EK10 (HOMOLOGACIÓN EXTRAÍDA)</span>
                   </div>
                 </th>
 
                 <!-- BLOQUE 3: DETALLES ADICIONALES -->
-                <th colspan="3" class="py-1.5 px-2 text-center font-black bg-slate-900/70 text-slate-400">
+                <th colspan="3" class="th-super-detalles py-1.5 px-2 text-center font-black bg-slate-900/70 text-slate-400">
                   <span>DETALLES DE UBICACIÓN</span>
                 </th>
               </tr>
 
               <!-- NIVEL 2: COLUMNAS ESPECÍFICAS -->
-              <tr class="border-b-2 border-slate-700 bg-slate-950/90 text-[10px]">
+              <tr class="tr-mapeo-subheaders border-b-2 border-slate-700 bg-slate-950/90 text-[10px]">
                 <!-- Columnas EK9 -->
                 <th class="py-2 px-1 font-bold font-mono text-center text-orange-400">MANZANA</th>
                 <th class="py-2 px-1 font-bold font-mono text-center text-emerald-400">LOTE</th>
@@ -258,11 +258,11 @@
                 <th class="py-2 px-1.5 font-bold font-mono text-center text-cyan-300 bg-cyan-950/30">ID LOTE EK</th>
                 <th class="py-2 px-2 font-bold font-mono text-center text-cyan-300 border-r-2 border-indigo-500/40">CLAVE CONSECUTIVO</th>
 
-                <!-- Columnas EK10 (Espejo idéntico a EK9 - Alto Impacto) -->
+                <!-- Columnas EK10 (Espejo idéntico a EK9 - Alto Impacto con ID ENK) -->
                 <th class="py-2 px-1 font-black font-mono text-center text-amber-500 dark:text-amber-400">MANZANA</th>
                 <th class="py-2 px-1 font-black font-mono text-center text-teal-600 dark:text-teal-400">LOTE</th>
                 <th class="py-2 px-1 font-black font-mono text-center text-purple-600 dark:text-purple-400">NO. INT</th>
-                <th class="py-2 px-1.5 font-black font-mono text-center text-indigo-600 dark:text-indigo-400 th-col-ek10">ID EK10</th>
+                <th class="py-2 px-1.5 font-black font-mono text-center text-indigo-600 dark:text-indigo-400 th-col-ek10">ID ENK</th>
                 <th class="py-2 px-2 font-black font-mono text-center text-indigo-700 dark:text-indigo-300 border-r-2 border-slate-800">CLAVE CONSECUTIVO</th>
 
                 <!-- Columnas Detalles -->
@@ -272,14 +272,14 @@
               </tr>
 
             </thead>
-            <tbody class="divide-y divide-slate-800/60 font-sans">
+            <tbody class="tbody-mapeo divide-y divide-slate-800/60 font-sans">
               
               <tr v-for="l in lotesMapeo" 
                   :key="l.id_lote_ek" 
                   class="hover:bg-slate-800/50 transition-all duration-100">
                 
                 <!-- CC / Obra (Fijo a la izquierda) -->
-                <td class="py-1.5 px-2 font-mono font-bold text-center border-r border-slate-800 bg-slate-950/30">
+                <td class="td-mapeo-cc py-1.5 px-2 font-mono font-bold text-center border-r border-slate-800 bg-slate-950/30">
                   <span v-if="l.cc" class="badge-mapeo-cc text-xs">
                     {{ l.cc }}
                   </span>
@@ -312,7 +312,7 @@
                 </td>
 
                 <!-- ID LOTE EK (EK9) -->
-                <td class="py-1.5 px-1.5 font-mono text-center bg-cyan-950/20">
+                <td class="td-mapeo-idek py-1.5 px-1.5 font-mono text-center bg-cyan-950/20">
                   <span class="badge-mapeo-idek px-2 py-0.5 text-xs font-mono" title="ID Lote EK Oficial Enkontrol 9">
                     <i class="fa-solid fa-fingerprint text-[10px]"></i>
                     <span>{{ l.id_lote_ek }}</span>
@@ -363,38 +363,34 @@
                   <span v-else class="text-slate-500 text-xs italic">-</span>
                 </td>
 
-                <!-- ID LOTE EK10 (Verde si coincide ID con EK9, Azul/Índigo si homologa por ubicación) -->
-                <td class="py-1.5 px-1.5 font-mono text-center th-col-ek10">
-                  <span v-if="l.ek10_coincide_id" 
-                        class="badge-ek10-id-coincide"
-                        :title="'¡ID Verificado y Coincidente! (EK9: ' + l.id_lote_ek + ' == EK10: ' + l.ek10_id + ')'">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span># {{ l.ek10_id }}</span>
+                <!-- ID ENK (Enkontrol ID registrado en Suite EK10) -->
+                <td class="td-mapeo-idenk py-1.5 px-1.5 font-mono text-center th-col-ek10">
+                  <span v-if="l.ek10_id_enk" 
+                        class="badge-mapeo-idek px-2 py-0.5 text-xs font-mono"
+                        :title="'ID ENK registrado en Catálogo EK10: ' + l.ek10_id_enk">
+                    <i class="fa-solid fa-fingerprint text-[10px]"></i>
+                    <span>{{ l.ek10_id_enk }}</span>
                   </span>
-                  <span v-else-if="l.ek10_id" 
-                        class="badge-ek10-id"
-                        :title="'ID Oficial Suite EK10: ' + l.ek10_id + ' (Homologado por Manzana/Lote)'">
-                    <i class="fa-solid fa-hashtag"></i>
-                    <span>{{ l.ek10_id }}</span>
-                  </span>
-                  <span v-else class="text-slate-500 text-xs italic">-</span>
+                  <span v-else class="text-slate-400 font-mono text-xs font-bold">-</span>
                 </td>
 
-                <!-- Clave Consecutivo EK10 -->
-                <td class="py-1.5 px-2 font-mono text-center border-r-2 border-slate-800 td-col-ek10">
+                <!-- Clave Consecutivo EK10 (Verde si coincide ID ENK con ID LOTE EK) -->
+                <td class="td-mapeo-clave-ek10 py-1.5 px-2 font-mono text-center border-r-2 border-slate-800 td-col-ek10">
                   <div v-if="l.ek10_clave" class="flex flex-col items-center gap-0.5">
-                    <span :class="l.ek10_coincide_id ? 'badge-ek10-clave-coincide' : 'badge-ek10-clave'"
+                    <span :class="l.ek10_coincide_id ? 'badge-ek10-clave-verde' : 'badge-ek10-clave'"
                           class="select-all"
-                          :title="'Clave Ubicación EK10: ' + l.ek10_clave + (l.ek10_nombre ? ' (' + l.ek10_nombre + ')' : '') + (l.ek10_coincide_id ? ' [ID Verificado]' : '')">
-                      {{ l.ek10_clave }}
+                          :title="'Clave Ubicación EK10: ' + l.ek10_clave + (l.ek10_coincide_id ? ' [¡ID ENK COINCIDE CON ID LOTE EK!]' : '')">
+                      <i v-if="l.ek10_coincide_id" class="fa-solid fa-circle-check text-[10px] mr-1"></i>
+                      <span>{{ l.ek10_clave }}</span>
                     </span>
                     <span v-if="l.ek10_info_enk" 
-                          class="text-ek10-wbs select-all"
+                          :class="l.ek10_coincide_id ? 'text-emerald-700 dark:text-emerald-400 font-bold' : 'text-ek10-wbs'"
+                          class="text-[9.5px] font-mono select-all tracking-tighter"
                           :title="'Código Contable WBS Enkontrol: ' + l.ek10_info_enk">
                       {{ l.ek10_info_enk }}
                     </span>
                   </div>
-                  <span v-else class="text-slate-500 text-xs italic">-</span>
+                  <span v-else class="text-slate-400 text-xs italic">-</span>
                 </td>
 
                 <!-- ============================================== -->
