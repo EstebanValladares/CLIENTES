@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AOM",
+    "nombre": "AOM - REPARACIONES ENCINOS"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 49.059,
+    "requisitado_total": 39.307,
+    "comprado_total": 0.0,
+    "por_comprar_total": 39.307
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "CASA ENCINO #212",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CANAL PLUVIAL",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "CASA ENCINO #212"
+          },
+          "insumos": [
+            {
+              "clave": "1170627",
+              "nombre": "MAT. BANCO MEDRANO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 9.752,
+              "importe_ppto": 1023.96,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 9.752,
+              "vigente_tarjetas": 9.752,
+              "diferencia": 0,
+              "requisitado": 9.752,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 9.752,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.3",
+          "codigo": "1.1.3",
+          "nombre": "HUELLAS Y BANQUETAS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "CASA ENCINO #212"
+          },
+          "insumos": [
+            {
+              "clave": "1170627",
+              "nombre": "MAT. BANCO MEDRANO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 39.307,
+              "importe_ppto": 4127.235,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 39.307,
+              "vigente_tarjetas": 39.307,
+              "diferencia": 0,
+              "requisitado": 29.555,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 9.752,
+              "por_comprar": 29.555,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CANAL PLUVIAL",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "CASA ENCINO #212"
+      },
+      "insumos": [
+        {
+          "clave": "1170627",
+          "nombre": "MAT. BANCO MEDRANO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 9.752,
+          "importe_ppto": 1023.96,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 9.752,
+          "vigente_tarjetas": 9.752,
+          "diferencia": 0,
+          "requisitado": 9.752,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 9.752,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.3",
+      "codigo": "1.1.3",
+      "nombre": "HUELLAS Y BANQUETAS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "CASA ENCINO #212"
+      },
+      "insumos": [
+        {
+          "clave": "1170627",
+          "nombre": "MAT. BANCO MEDRANO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 39.307,
+          "importe_ppto": 4127.235,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 39.307,
+          "vigente_tarjetas": 39.307,
+          "diferencia": 0,
+          "requisitado": 29.555,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 9.752,
+          "por_comprar": 29.555,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1170627",
+      "nombre": "MAT. BANCO MEDRANO",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 49.059,
+      "importe_ppto": 5151.195,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 49.059,
+      "vigente_tarjetas": 49.059,
+      "diferencia": 0,
+      "requisitado": 39.307,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 9.752,
+      "por_comprar": 39.307,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AOM",
+    "insumo": "1170627",
+    "nombre": ""
+  }
+}
