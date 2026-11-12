@@ -375,6 +375,7 @@ class MapeoService:
                     "clave_lote": cve_lote,
                     # Campos Homologación EK10 O(1)
                     "ek10_id": ek10["id_ek10"] if ek10 else None,
+                    "ek10_id_enk": ek10.get("id_enk", "") if ek10 else "",
                     "ek10_clave": ek10["clave_ek10"] if ek10 else "",
                     "ek10_manzana": ek10["manzana"] if ek10 else "",
                     "ek10_lote": ek10["lote"] if ek10 else "",
