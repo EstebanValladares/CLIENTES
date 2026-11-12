@@ -14,6 +14,7 @@ import os
 import sqlite3
 import time
 import threading
+import re
 from typing import Dict, Any, List, Optional
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -32,6 +33,8 @@ _cache_ek10_lock = threading.Lock()
 _cache_ek10_by_id_enk: Dict[str, Dict[str, Any]] = {}
 _cache_ek10_by_clave: Dict[str, Dict[str, Any]] = {}
 _cache_ek10_by_id_ek10: Dict[str, Dict[str, Any]] = {}
+
+_regex_ek10_clave = re.compile(r'^(?:[A-Z0-9]+)-M([A-Z0-9]+)-L([A-Z0-9]+)-N([A-Z0-9]+)', re.IGNORECASE)
 
 def _init_ek10_cache():
     global _cache_ek10_iniciado
@@ -55,12 +58,26 @@ def _init_ek10_cache():
                 id_enk_str = str(r["id_enk"] or "").strip()
                 id_ek10_str = str(r["id_ek10"] or "").strip()
                 clave_raw = str(r["clave_ek10"] or "").strip().upper()
+
+                m = _regex_ek10_clave.search(clave_raw)
+                if m:
+                    mza_val = m.group(1).lstrip("0") or "0"
+                    lote_val = m.group(2).lstrip("0") or "0"
+                    noint_val = m.group(3).lstrip("0") or "0"
+                else:
+                    mza_val = ""
+                    lote_val = ""
+                    noint_val = ""
+
                 item = {
                     "id_mapeo": r["id_mapeo"],
                     "cia_cve": r["compania_clave"] or "",
                     "cia_nom": r["compania_nombre"] or "",
                     "id_ek10": r["id_ek10"],
                     "clave_ek10": clave_raw,
+                    "manzana": mza_val,
+                    "lote": lote_val,
+                    "no_int": noint_val,
                     "nombre_ek10": r["nombre_ek10"] or "",
                     "id_enk": id_enk_str,
                     "informacion_enk": r["informacion_enk"] or ""
@@ -329,6 +346,9 @@ class MapeoService:
                     # Campos Homologación EK10 O(1)
                     "ek10_id": ek10["id_ek10"] if ek10 else None,
                     "ek10_clave": ek10["clave_ek10"] if ek10 else "",
+                    "ek10_manzana": ek10["manzana"] if ek10 else "",
+                    "ek10_lote": ek10["lote"] if ek10 else "",
+                    "ek10_no_int": ek10["no_int"] if ek10 else "",
                     "ek10_nombre": ek10["nombre_ek10"] if ek10 else "",
                     "ek10_info_enk": ek10["informacion_enk"] if ek10 else "",
                     "ek10_cia": ek10["cia_cve"] if ek10 else "",
