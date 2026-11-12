@@ -19,9 +19,65 @@ from typing import Dict, Any, List, Optional
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "mapeo_lotes.db")
+DB_EK10_PATH = os.path.join(DATA_DIR, "ek10_homologacion_ubicaciones.sqlite")
 
 _hilo_daemon_mapeo = None
 _detener_daemon_mapeo = False
+
+# ========================================================
+# TABLAS DE HASH EN MEMORIA RAM (LOOKUP O(1) ULTRA-RÁPIDO)
+# ========================================================
+_cache_ek10_iniciado = False
+_cache_ek10_lock = threading.Lock()
+_cache_ek10_by_id_enk: Dict[str, Dict[str, Any]] = {}
+_cache_ek10_by_clave: Dict[str, Dict[str, Any]] = {}
+_cache_ek10_by_id_ek10: Dict[str, Dict[str, Any]] = {}
+
+def _init_ek10_cache():
+    global _cache_ek10_iniciado
+    if _cache_ek10_iniciado:
+        return
+    with _cache_ek10_lock:
+        if _cache_ek10_iniciado:
+            return
+        if not os.path.exists(DB_EK10_PATH):
+            _cache_ek10_iniciado = True
+            return
+        try:
+            conn_ek10 = sqlite3.connect(DB_EK10_PATH)
+            conn_ek10.row_factory = sqlite3.Row
+            cur = conn_ek10.cursor()
+            cur.execute("""
+                SELECT id_mapeo, compania_clave, compania_nombre, id_ek10, clave_ek10, nombre_ek10, id_enk, informacion_enk
+                FROM homologacion_ubicaciones
+            """)
+            for r in cur.fetchall():
+                id_enk_str = str(r["id_enk"] or "").strip()
+                id_ek10_str = str(r["id_ek10"] or "").strip()
+                clave_raw = str(r["clave_ek10"] or "").strip().upper()
+                item = {
+                    "id_mapeo": r["id_mapeo"],
+                    "cia_cve": r["compania_clave"] or "",
+                    "cia_nom": r["compania_nombre"] or "",
+                    "id_ek10": r["id_ek10"],
+                    "clave_ek10": clave_raw,
+                    "nombre_ek10": r["nombre_ek10"] or "",
+                    "id_enk": id_enk_str,
+                    "informacion_enk": r["informacion_enk"] or ""
+                }
+                if id_enk_str:
+                    _cache_ek10_by_id_enk[id_enk_str] = item
+                if id_ek10_str:
+                    _cache_ek10_by_id_ek10[id_ek10_str] = item
+                if clave_raw:
+                    _cache_ek10_by_clave[clave_raw] = item
+                    if clave_raw.startswith("C") and len(clave_raw) > 1:
+                        _cache_ek10_by_clave[clave_raw[1:]] = item
+            conn_ek10.close()
+        except Exception as e:
+            print("Error cargando hash table de homologaciones EK10:", e)
+        finally:
+            _cache_ek10_iniciado = True
 
 
 class MapeoService:
@@ -116,9 +172,10 @@ class MapeoService:
     ) -> Dict[str, Any]:
         """
         Consulta rápida con soporte para filtros directos de CC, Manzana, Lote, No. Int, Id EK
-        y búsqueda libre.
+        y búsqueda libre combinada EK9 + EK10.
         """
         try:
+            _init_ek10_cache()
             conn = cls._get_connection()
             cur = conn.cursor()
 
@@ -145,28 +202,60 @@ class MapeoService:
                 clauses.append("no_int = ?")
                 params.append(no_int.strip())
 
-            # 5. Filtro por Id Lote EK
+            # 5. Filtro por Id Lote EK o ID EK10 (Búsqueda Dual)
             if id_lote_ek and id_lote_ek.strip():
-                clauses.append("CAST(id_lote_ek AS TEXT) LIKE ?")
-                params.append(f"%{id_lote_ek.strip()}%")
+                val_id = id_lote_ek.strip()
+                id_sub_clauses = ["CAST(id_lote_ek AS TEXT) LIKE ?"]
+                id_sub_params = [f"%{val_id}%"]
+                
+                # Si coincide con un ID de EK10 en la tabla hash, mapear a su ID ENK o clave
+                if val_id in _cache_ek10_by_id_ek10:
+                    matched_item = _cache_ek10_by_id_ek10[val_id]
+                    if matched_item.get("id_enk"):
+                        id_sub_clauses.append("CAST(id_lote_ek AS TEXT) = ?")
+                        id_sub_params.append(matched_item["id_enk"])
+                    if matched_item.get("clave_ek10"):
+                        id_sub_clauses.append("clave_lote LIKE ?")
+                        id_sub_params.append(f"%{matched_item['clave_ek10']}%")
+                        if matched_item['clave_ek10'].startswith("C"):
+                            id_sub_params.append(f"%{matched_item['clave_ek10'][1:]}%")
+                            id_sub_clauses.append("clave_lote LIKE ?")
+                clauses.append(f"({' OR '.join(id_sub_clauses)})")
+                params.extend(id_sub_params)
 
-            # 6. Búsqueda libre general (Cualquier texto o Clave)
+            # 6. Búsqueda libre general (Cualquier texto, Clave EK9 o Clave/Nombre EK10)
             if busqueda and busqueda.strip():
-                q = f"%{busqueda.strip()}%"
-                clauses.append("""
-                    (
-                        cc LIKE ? OR 
-                        clave_lote LIKE ? OR 
-                        CAST(id_lote_ek AS TEXT) LIKE ? OR 
-                        lote LIKE ? OR 
-                        manzana LIKE ? OR 
-                        no_int LIKE ? OR 
-                        calle LIKE ? OR 
-                        fraccionamiento LIKE ? OR 
-                        modelo_vivienda LIKE ?
-                    )
-                """)
-                params.extend([q, q, q, q, q, q, q, q, q])
+                q_raw = busqueda.strip()
+                q = f"%{q_raw}%"
+                sub_busqueda = [
+                    "cc LIKE ?",
+                    "clave_lote LIKE ?",
+                    "CAST(id_lote_ek AS TEXT) LIKE ?",
+                    "lote LIKE ?",
+                    "manzana LIKE ?",
+                    "no_int LIKE ?",
+                    "calle LIKE ?",
+                    "fraccionamiento LIKE ?",
+                    "modelo_vivienda LIKE ?"
+                ]
+                busq_params = [q] * len(sub_busqueda)
+                
+                # Revisar si coincide con nombres o claves de EK10 en la tabla hash
+                q_upper = q_raw.upper()
+                ids_enk_match = []
+                for cve, it in _cache_ek10_by_clave.items():
+                    if q_upper in cve or q_upper in it.get("nombre_ek10", "").upper() or q_upper in it.get("informacion_enk", "").upper():
+                        if it.get("id_enk"):
+                            ids_enk_match.append(it["id_enk"])
+                        if len(ids_enk_match) >= 100:
+                            break
+                if ids_enk_match:
+                    placeholders = ",".join(["?"] * len(ids_enk_match))
+                    sub_busqueda.append(f"CAST(id_lote_ek AS TEXT) IN ({placeholders})")
+                    busq_params.extend(ids_enk_match)
+
+                clauses.append(f"({' OR '.join(sub_busqueda)})")
+                params.extend(busq_params)
 
             where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
 
@@ -199,8 +288,29 @@ class MapeoService:
             cur.execute(query_sql, params + [min(limite, 500), max(offset, 0)])
             rows = cur.fetchall()
 
-            resultado = [
-                {
+            resultado = []
+            total_homologados_pag = 0
+            for r in rows:
+                id_ek_str = str(r["id_lote_ek"] or "").strip()
+                cve_lote = (
+                    r["clave_lote"]
+                    if "clave_lote" in r.keys() and r["clave_lote"]
+                    else cls.generar_clave_lote(r["cc"], r["manzana"], r["lote"], r["no_int"])
+                )
+                cve_upper = (cve_lote or "").strip().upper()
+
+                # Lookup O(1) instantáneo en hash table
+                ek10 = (
+                    _cache_ek10_by_id_enk.get(id_ek_str) or
+                    _cache_ek10_by_clave.get(cve_upper) or
+                    _cache_ek10_by_clave.get(f"C{cve_upper}")
+                )
+                
+                homologado = bool(ek10)
+                if homologado:
+                    total_homologados_pag += 1
+
+                resultado.append({
                     "cc": r["cc"],
                     "id_lote_ek": r["id_lote_ek"],
                     "id_lote": r["id_lote"],
@@ -215,19 +325,22 @@ class MapeoService:
                     "mts_terreno": r["mts_terreno"],
                     "mts_exced": r["mts_exced"],
                     "estatus": r["estatus"],
-                    "clave_lote": (
-                        r["clave_lote"]
-                        if "clave_lote" in r.keys() and r["clave_lote"]
-                        else cls.generar_clave_lote(r["cc"], r["manzana"], r["lote"], r["no_int"])
-                    )
-                }
-                for r in rows
-            ]
+                    "clave_lote": cve_lote,
+                    # Campos Homologación EK10 O(1)
+                    "ek10_id": ek10["id_ek10"] if ek10 else None,
+                    "ek10_clave": ek10["clave_ek10"] if ek10 else "",
+                    "ek10_nombre": ek10["nombre_ek10"] if ek10 else "",
+                    "ek10_info_enk": ek10["informacion_enk"] if ek10 else "",
+                    "ek10_cia": ek10["cia_cve"] if ek10 else "",
+                    "ek10_cia_nom": ek10["cia_nom"] if ek10 else "",
+                    "ek10_homologado": homologado
+                })
 
             conn.close()
             return {
                 "ok": True,
                 "total": total_filtrados,
+                "total_homologados_pagina": total_homologados_pag,
                 "limite": limite,
                 "offset": offset,
                 "registros": resultado
