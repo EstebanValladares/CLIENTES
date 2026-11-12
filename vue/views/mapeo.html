@@ -440,14 +440,22 @@
           </table>
         </div>
 
-        <!-- Footer con resumen de homologación -->
+        <!-- Footer con resumen de homologación y guía de colores -->
         <div class="px-4 py-2 border-t border-slate-800 bg-slate-950/70 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-code-compare text-cyan-400 text-xs"></i>
-            <span>Comparativa Homologada: Enkontrol Tradicional (EK9) vs Suite Web EK10</span>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span class="flex items-center gap-1.5 text-xs text-slate-300 font-semibold">
+              <i class="fa-solid fa-circle-info text-cyan-400"></i>
+              <span>Guía de Estados:</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-500/40">
+              <i class="fa-solid fa-circle-check text-[10px]"></i> Verde: ID Vinculado Oficial (EK9 == EK10)
+            </span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-300 bg-indigo-950/60 px-2 py-0.5 rounded-md border border-indigo-500/40">
+              <i class="fa-solid fa-hashtag text-[10px]"></i> Índigo: Clave EK10 por Ubicación (Mza/Lote)
+            </span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-slate-500">Filtrado O(1) en tiempo real con soporte cruzado de ID EK9 y ID EK10</span>
+            <span class="text-slate-500 font-mono text-[11px]">Búsqueda cruzada O(1) con 79,845 claves</span>
           </div>
         </div>
 
