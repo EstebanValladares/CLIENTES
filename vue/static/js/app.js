@@ -683,14 +683,36 @@ createApp({
 
     const listaUsuariosParaPerfil = computed(() => {
       const q = (filtroBuscarMiPerfil.value || '').trim().toLowerCase();
-      const todos = usuarios.value || [];
-      if (!q) return todos.slice(0, 40);
-      return todos.filter(u => {
+      const palabrasIgnoradas = new Set(['job', 'email', 'correo', 'general', 'nombre', 'usuario', 'puesto', 'id', 'test', 'demo', '']);
+
+      const filtrados = (usuarios.value || []).filter(u => {
+        const nom = (u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`).trim();
+        const nomLower = nom.toLowerCase();
+        
+        // Descartar registros vacíos o encabezados basura de importaciones anteriores
+        if (!nom || palabrasIgnoradas.has(nomLower)) return false;
+        if (nomLower.length < 3) return false;
+        
+        const ptoLower = (u.puesto || '').trim().toLowerCase();
+        if (palabrasIgnoradas.has(ptoLower) && palabrasIgnoradas.has(nomLower)) return false;
+
+        return true;
+      });
+
+      // Ordenar alfabéticamente por nombre completo
+      const ordenados = [...filtrados].sort((a, b) => {
+        const na = (a.nombre_completo || `${a.nombre || ''} ${a.apellidos || ''}`).trim().toLowerCase();
+        const nb = (b.nombre_completo || `${b.nombre || ''} ${b.apellidos || ''}`).trim().toLowerCase();
+        return na.localeCompare(nb, 'es', { sensitivity: 'base' });
+      });
+
+      if (!q) return ordenados.slice(0, 100);
+      return ordenados.filter(u => {
         const nom = (u.nombre_completo || `${u.nombre || ''} ${u.apellidos || ''}`).toLowerCase();
         const pto = (u.puesto || '').toLowerCase();
         const mail = (u.correo || u.email || u.clave || '').toLowerCase();
         return nom.includes(q) || pto.includes(q) || mail.includes(q);
-      }).slice(0, 50);
+      }).slice(0, 100);
     });
 
     const inicializarIdentidadChat = async () => {
@@ -721,7 +743,10 @@ createApp({
                   }
                 } catch (e) {}
               }
-              // Si no tiene perfil válido de compañero, abrir modal para que elija su nombre
+              // Si no tiene perfil válido de compañero, asegurar carga de catálogo y abrir modal
+              if (!usuarios.value || usuarios.value.length === 0) {
+                if (typeof cargarUsuarios === 'function') cargarUsuarios();
+              }
               chatPerfilModalAbierto.value = true;
               return;
             }
