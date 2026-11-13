@@ -1,0 +1,611 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AR0",
+    "nombre": "AR0 - URB VISTA LAGUNA TRADICIONAL"
+  },
+  "metricas": {
+    "total_partidas": 7,
+    "total_frentes": 2,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 92.5365,
+    "requisitado_total": 35.6613,
+    "comprado_total": 28.0,
+    "por_comprar_total": 7.6613
+  },
+  "frentes": [
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "BARDAS MOD 102, 104 Y 106",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "BARDAS MOD 102",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "BARDAS MOD 102, 104 Y 106"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 13.5613,
+              "importe_ppto": 30640.2883,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 13.5613,
+              "vigente_tarjetas": 13.5613,
+              "diferencia": 0,
+              "requisitado": 13.5613,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 6,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 7.5612,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.2",
+          "codigo": "1.4.2",
+          "nombre": "BARDAS MOD. 104",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "BARDAS MOD 102, 104 Y 106"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 13.5613,
+              "importe_ppto": 30640.2883,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 13.5613,
+              "vigente_tarjetas": 13.5613,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 13.5613,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.4.3",
+          "codigo": "1.4.3",
+          "nombre": "BARDAS MOD. 106",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "BARDAS MOD 102, 104 Y 106"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 13.5613,
+              "importe_ppto": 30640.2883,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 13.5613,
+              "vigente_tarjetas": 13.5613,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 13.5613,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)",
+      "partidas": [
+        {
+          "id": "1.7.2",
+          "codigo": "1.7.2",
+          "nombre": "ANDADORES Y/O FIRMES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 22.1,
+              "importe_ppto": 49932.74,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 22.1,
+              "vigente_tarjetas": 22.1,
+              "diferencia": 0,
+              "requisitado": 22.1,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 22,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.1,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.4",
+          "codigo": "1.7.4",
+          "nombre": "BANCAS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 8.8161,
+              "importe_ppto": 19919.0963,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 8.8161,
+              "vigente_tarjetas": 26.4483,
+              "diferencia": -17.6322,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 8.8161,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.9",
+          "codigo": "1.7.9",
+          "nombre": "FIRME EN ROTONDA Y BANCAS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 4.9166,
+              "importe_ppto": 11108.566,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 4.9166,
+              "vigente_tarjetas": 4.9166,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.9166,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.10",
+          "codigo": "1.7.10",
+          "nombre": "HUELLAS DE CONCRETO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+          },
+          "insumos": [
+            {
+              "clave": "1100003",
+              "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 16.02,
+              "importe_ppto": 36195.588,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 16.02,
+              "vigente_tarjetas": 16.02,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 16.02,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "BARDAS MOD 102",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "BARDAS MOD 102, 104 Y 106"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 13.5613,
+          "importe_ppto": 30640.2883,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 13.5613,
+          "vigente_tarjetas": 13.5613,
+          "diferencia": 0,
+          "requisitado": 13.5613,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 6,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 7.5612,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.2",
+      "codigo": "1.4.2",
+      "nombre": "BARDAS MOD. 104",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "BARDAS MOD 102, 104 Y 106"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 13.5613,
+          "importe_ppto": 30640.2883,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 13.5613,
+          "vigente_tarjetas": 13.5613,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 13.5613,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.3",
+      "codigo": "1.4.3",
+      "nombre": "BARDAS MOD. 106",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "BARDAS MOD 102, 104 Y 106"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 13.5613,
+          "importe_ppto": 30640.2883,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 13.5613,
+          "vigente_tarjetas": 13.5613,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 13.5613,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.2",
+      "codigo": "1.7.2",
+      "nombre": "ANDADORES Y/O FIRMES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 22.1,
+          "importe_ppto": 49932.74,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 22.1,
+          "vigente_tarjetas": 22.1,
+          "diferencia": 0,
+          "requisitado": 22.1,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 22,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.1,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.4",
+      "codigo": "1.7.4",
+      "nombre": "BANCAS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 8.8161,
+          "importe_ppto": 19919.0963,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 8.8161,
+          "vigente_tarjetas": 26.4483,
+          "diferencia": -17.6322,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 8.8161,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.9",
+      "codigo": "1.7.9",
+      "nombre": "FIRME EN ROTONDA Y BANCAS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 4.9166,
+          "importe_ppto": 11108.566,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 4.9166,
+          "vigente_tarjetas": 4.9166,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.9166,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.10",
+      "codigo": "1.7.10",
+      "nombre": "HUELLAS DE CONCRETO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+      },
+      "insumos": [
+        {
+          "clave": "1100003",
+          "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 16.02,
+          "importe_ppto": 36195.588,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 16.02,
+          "vigente_tarjetas": 16.02,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 16.02,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1100003",
+      "nombre": "CONCRETO F'C=200 KG/CM2,DIRECTO NMXC155ONNCCE 2004",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 92.5365,
+      "importe_ppto": 209076.8552,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 92.5365,
+      "vigente_tarjetas": 110.1687,
+      "diferencia": -17.6322,
+      "requisitado": 35.6613,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 28,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 56.8752,
+      "por_comprar": 7.6613,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AR0",
+    "insumo": "1100003",
+    "nombre": ""
+  }
+}
