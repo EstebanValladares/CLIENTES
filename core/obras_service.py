@@ -78,17 +78,20 @@ class ObrasCoreService:
                         if clave and clave != "NONE":
                             mapa_clave[clave] = o
 
-                    cls._metadata = {
-                        "total_obras": len(catalogo),
-                        "total_frentes": total_frentes,
-                        "total_partidas": total_partidas,
-                        "total_tarjetas": total_tarjetas
-                    }
-                    cls._catalogo_ligero = catalogo
-                    cls._obras_map_id = mapa_id
-                    cls._obras_map_clave = mapa_clave
-                    cls._cargado = True
-                    return
+                    if catalogo:
+                        cls._metadata = {
+                            "total_obras": len(catalogo),
+                            "total_frentes": total_frentes,
+                            "total_partidas": total_partidas,
+                            "total_tarjetas": total_tarjetas
+                        }
+                        cls._catalogo_ligero = catalogo
+                        cls._obras_map_id = mapa_id
+                        cls._obras_map_clave = mapa_clave
+                        cls._cargado = True
+                        return
+                    else:
+                        print("[ObrasCoreService] obras.json no contiene obras válidas, recurriendo a catálogo alternativo.")
                 except Exception as e:
                     print(f"[ObrasCoreService] Error al cargar obras.json: {e}")
 
