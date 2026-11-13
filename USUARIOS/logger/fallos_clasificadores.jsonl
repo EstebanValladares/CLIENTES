@@ -284,3 +284,13 @@
 {"fecha": "2026-11-11 09:51:13", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EtapasVentas.ID", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-11 09:51:20", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-11 09:51:22", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:50:35", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:50:36", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:50:38", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-DESCARTAR-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:50:57", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "JRZ-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:50:59", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "JRZ-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:51:01", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "JRZ-003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:51:03", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "JRZ-004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:51:05", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "JRZ-005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:51:31", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-13 15:51:36", "usuario": "ASESOR DE VENTA JUAREZ", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}

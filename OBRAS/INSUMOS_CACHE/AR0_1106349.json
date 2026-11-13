@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AR0",
+    "nombre": "AR0 - URB VISTA LAGUNA TRADICIONAL"
+  },
+  "metricas": {
+    "total_partidas": 1,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 1.5808,
+    "requisitado_total": 0.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)",
+      "partidas": [
+        {
+          "id": "1.7.3",
+          "codigo": "1.7.3",
+          "nombre": "JARDINERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+          },
+          "insumos": [
+            {
+              "clave": "1106349",
+              "nombre": "CONCRETO BM FC 200 KG/CM2 TM3/4 R14",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.5808,
+              "importe_ppto": 3792.5605,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.5808,
+              "vigente_tarjetas": 1.5808,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.5808,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.7.3",
+      "codigo": "1.7.3",
+      "nombre": "JARDINERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "AREA VERDE (LAGUNA CHAIREL / LAGUNA MIRAMAR MZA 03)"
+      },
+      "insumos": [
+        {
+          "clave": "1106349",
+          "nombre": "CONCRETO BM FC 200 KG/CM2 TM3/4 R14",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.5808,
+          "importe_ppto": 3792.5605,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.5808,
+          "vigente_tarjetas": 1.5808,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.5808,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1106349",
+      "nombre": "CONCRETO BM FC 200 KG/CM2 TM3/4 R14",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 1.5808,
+      "importe_ppto": 3792.5605,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 1.5808,
+      "vigente_tarjetas": 1.5808,
+      "diferencia": 0,
+      "requisitado": 0,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 1.5808,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AR0",
+    "insumo": "1106349",
+    "nombre": ""
+  }
+}
