@@ -6,7 +6,9 @@ from typing import Any, Dict, List
 from urllib.parse import quote
 
 BASE_DIR = Path(__file__).resolve().parents[1]
-DB_PATH = BASE_DIR.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db"
+DB_PATH = BASE_DIR.parent / "CONTROL_PAGOS_OC" / "database" / "ecosistema_oc.db"
+if not DB_PATH.is_file():
+    DB_PATH = BASE_DIR.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db"
 
 
 class OrdenesCompraService:
