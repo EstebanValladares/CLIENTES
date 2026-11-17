@@ -108,6 +108,8 @@ def _sondear_telemetria_oc():
     global _estado_torre_cache
     candidatos_oc = [u for u in [
         os.getenv("CONTROL_PAGOS_OC_URL", ""),
+        "http://127.0.0.1:8050/api/telemetria",
+        "http://localhost:8050/api/telemetria",
         "http://control_pagos_oc.test/api/telemetria",
         "http://localhost/control_pagos_oc/public/api/telemetria",
         "http://127.0.0.1:8000/api/telemetria",
