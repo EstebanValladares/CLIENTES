@@ -1,101 +1,12 @@
 <!-- ======================================================== -->
-<!-- WIDGET CENTINELA DE ESQUINA: OMFG HELLO TOAST           -->
+<!-- WIDGET CENTINELA DE ESQUINA: ASISTENTE DE PANTALLA       -->
 <!-- Ubicación Modular: vue/views/asistente_widget.html        -->
 <!-- ======================================================== -->
 
 <div id="asistente-centinela" class="fixed bottom-5 right-6 z-50 flex flex-col items-end pointer-events-none select-none">
 
   <!-- ======================================================== -->
-  <!-- 0. CARD DE BAUTIZO / PRIMER INICIO (NOMBRAR ASISTENTE)   -->
-  <!-- Se muestra solo la primera vez para personalizar el bot  -->
-  <!-- ======================================================== -->
-  <transition enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 translate-y-4 scale-95"
-              enter-to-class="opacity-100 translate-y-0 scale-100"
-              leave-active-class="transition-all duration-200 ease-in"
-              leave-from-class="opacity-100 translate-y-0 scale-100"
-              leave-to-class="opacity-0 translate-y-3 scale-95">
-    
-    <div v-if="modalNombrarAsistente"
-         class="pointer-events-auto relative mb-3 w-84 sm:w-96 bg-white/95 dark:bg-slate-900/95 border-2 border-indigo-500 dark:border-indigo-400 rounded-3xl p-5 shadow-2xl backdrop-blur-xl text-slate-800 dark:text-slate-100 animate-pop-speech z-50">
-      
-      <!-- Fondo resplandeciente -->
-      <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/15 dark:bg-cyan-500/20 rounded-full blur-2xl pointer-events-none"></div>
-
-      <!-- Cabecera -->
-      <div class="flex items-center justify-between pb-2 mb-3 border-b border-indigo-100 dark:border-slate-800">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">🍞</span>
-          <div>
-            <h4 class="text-xs font-black tracking-wider uppercase text-indigo-700 dark:text-indigo-300">¡OMFG HELLO!</h4>
-            <p class="text-[10px] text-slate-400 font-medium">Asistente Centinela del Dashboard</p>
-          </div>
-        </div>
-        <button @click="modalNombrarAsistente = false" 
-                class="w-6 h-6 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
-                title="Cerrar">
-          <i class="fa-solid fa-xmark text-xs"></i>
-        </button>
-      </div>
-
-      <!-- Cuerpo / Explicación amigable -->
-      <div class="mb-4">
-        <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200 font-medium mb-3">
-          ¡Bienvenido! Seré tu centinela en pantalla: te avisaré si cae un correo, mensaje del chat o una escalatoria de precios.
-        </p>
-        <p class="text-xs font-bold text-indigo-900 dark:text-cyan-300 mb-2 flex items-center gap-1.5">
-          <i class="fa-solid fa-tag text-indigo-500"></i>
-          <span>¿Cómo te gustaría llamarme?</span>
-        </p>
-
-        <!-- Chips de sugerencias rápidas -->
-        <div class="flex flex-wrap gap-1.5 mb-3">
-          <button v-for="sug in sugerenciasNombres" :key="sug"
-                  type="button"
-                  @click="elegirSugerenciaNombre(sug)"
-                  class="px-2.5 py-1 text-[11px] font-bold rounded-xl transition cursor-pointer"
-                  :class="inputNuevoNombreAsistente === sug 
-                    ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/40' 
-                    : 'bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-slate-750'">
-            {{ sug }}
-          </button>
-        </div>
-
-        <!-- Input para escribir nombre -->
-        <div class="relative">
-          <input v-model="inputNuevoNombreAsistente"
-                 @keydown.enter.prevent="guardarNombreAsistente"
-                 type="text" 
-                 maxlength="25"
-                 placeholder="Escribe su nombre (ej. Toastie)..."
-                 class="w-full px-3.5 py-2 text-xs font-semibold rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-indigo-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-cyan-400 placeholder-slate-400 transition" />
-        </div>
-      </div>
-
-      <!-- Botón de Confirmación -->
-      <div class="flex items-center justify-between pt-1">
-        <button @click="modalNombrarAsistente = false"
-                type="button"
-                class="text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 font-medium transition cursor-pointer">
-          Más tarde
-        </button>
-
-        <button @click="guardarNombreAsistente"
-                type="button"
-                class="px-4 py-1.5 rounded-2xl text-xs font-black bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-lg shadow-indigo-600/30 transition-all transform active:scale-95 flex items-center gap-1.5 cursor-pointer">
-          <i class="fa-solid fa-check text-xs"></i>
-          <span>¡Guardar Nombre!</span>
-        </button>
-      </div>
-
-      <!-- Triángulo apuntador hacia la tostada -->
-      <div class="absolute -bottom-2.5 right-8 w-5 h-5 bg-white dark:bg-slate-900 border-r-2 border-b-2 border-indigo-500 dark:border-indigo-400 transform rotate-45"></div>
-    </div>
-  </transition>
-
-  <!-- ======================================================== -->
-  <!-- 1. GLOBO DE DIÁLOGO DIRECTO (SPEECH BALLOON)             -->
-  <!-- Habla de inmediato cuando ocurre un evento o mensaje    -->
+  <!-- 1. GLOBO FLOTANTE DE SALUDO AL CARGAR EL DASHBOARD       -->
   <!-- ======================================================== -->
   <transition enter-active-class="transition-all duration-300 ease-out"
               enter-from-class="opacity-0 translate-y-3 scale-95"
@@ -104,264 +15,150 @@
               leave-from-class="opacity-100 translate-y-0 scale-100"
               leave-to-class="opacity-0 translate-y-2 scale-95">
     
-    <div v-if="asistenteGloboActual && !modalNombrarAsistente"
-         @mouseenter="pausarAutoOcultarAsistente"
-         @mouseleave="reanudarAutoOcultarAsistente"
-         class="pointer-events-auto relative mb-3 w-80 sm:w-96 bg-white/95 dark:bg-slate-900/95 border-2 border-indigo-400 dark:border-indigo-500 rounded-3xl p-4 shadow-2xl backdrop-blur-md overflow-hidden text-slate-800 dark:text-slate-100 animate-pop-speech">
+    <div v-if="asistenteGloboVisible && !chatAsistenteAbierto"
+         class="pointer-events-auto relative mb-3 w-72 sm:w-80 bg-white/95 dark:bg-slate-900/95 border border-indigo-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xl backdrop-blur-md text-slate-800 dark:text-slate-100 animate-pop-speech">
       
-      <!-- Fondo decorativo sutil -->
-      <div class="absolute -top-12 -right-12 w-28 h-28 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-2xl pointer-events-none"></div>
-
-      <!-- Cabecera del Globo -->
-      <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-2">
-          <!-- Badge de Categoría -->
-          <span v-if="asistenteGloboActual.tipo === 'chat'" 
-                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-700">
-            <i class="fa-solid fa-comment-dots text-[10px]"></i> Chat de Equipo
-          </span>
-          <span v-else-if="asistenteGloboActual.tipo === 'escalatoria'" 
-                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700">
-            <i class="fa-solid fa-chart-line text-[10px]"></i> Escalatoria
-          </span>
-          <span v-else-if="asistenteGloboActual.tipo === 'cerebro'" 
-                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-950/80 text-violet-700 dark:text-violet-300 border border-violet-300 dark:border-violet-700">
-            <i class="fa-solid fa-lightbulb text-[10px]"></i> Consulta
-          </span>
-          <span v-else-if="asistenteGloboActual.tipo === 'bautizo'" 
-                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
-            <i class="fa-solid fa-sparkles text-[10px]"></i> Personalizado
-          </span>
-          <span v-else 
-                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
-            <i class="fa-solid fa-bell text-[10px]"></i> Centinela
-          </span>
-
-          <span class="text-[10px] font-mono text-slate-400">{{ asistenteGloboActual.hora || 'Ahora' }}</span>
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex-1">
+          <p class="text-xs font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5 mb-1">
+            <span>👋 ¡Hola, {{ nombreUsuarioActivo }}!</span>
+          </p>
+          <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            Soy {{ asistenteNombrePersonalizado || 'Toastie' }}. Haz clic en mí en cualquier momento si quieres preguntarme sobre colaboradores, obras, lotes o escalatorias.
+          </p>
         </div>
-
-        <!-- Botón cerrar globo -->
-        <button @click="descartarGloboAsistente" 
-                class="w-6 h-6 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
-                title="Descartar aviso">
+        <button @click="asistenteGloboVisible = false" 
+                class="w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                title="Cerrar saludo">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
 
-      <!-- Contenido del Mensaje Hablado -->
-      <div class="mb-3">
-        <h4 class="text-xs font-black tracking-tight text-indigo-900 dark:text-indigo-200 mb-1 flex items-center gap-1.5">
-          <span>{{ asistenteGloboActual.titulo }}</span>
-        </h4>
-        <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200 font-medium whitespace-pre-line">
-          {{ asistenteGloboActual.texto }}
-        </p>
-        <p v-if="asistenteGloboActual.subtexto" class="text-[11px] text-slate-400 dark:text-slate-400 mt-1 italic">
-          {{ asistenteGloboActual.subtexto }}
-        </p>
-      </div>
-
-      <!-- Botones de Acción Inmediata -->
-      <div class="flex items-center justify-between pt-1">
-        <div class="flex items-center gap-2">
-          <button v-if="asistenteGloboActual.accion === 'abrir_chat'"
-                  @click="ejecutarAccionAsistente(asistenteGloboActual)"
-                  class="px-3 py-1 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-reply text-[10px]"></i>
-            <span>Ver en Chat</span>
-          </button>
-
-          <button v-else-if="asistenteGloboActual.accion === 'abrir_escalatorias'"
-                  @click="ejecutarAccionAsistente(asistenteGloboActual)"
-                  class="px-3 py-1 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition flex items-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            <span>Ver Escalatoria</span>
-          </button>
-
-          <button @click="descartarGloboAsistente"
-                  class="px-2.5 py-1 rounded-xl text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer">
-            Entendido
-          </button>
-        </div>
-
-        <span class="text-[10px] text-slate-400 font-medium flex items-center gap-1">
-          <i class="fa-solid fa-robot text-indigo-400 text-[10px]"></i> {{ asistenteNombrePersonalizado || 'Toastie' }}
-        </span>
-      </div>
-
-      <!-- Barra de progreso de auto-cierre -->
-      <div class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 via-cyan-400 to-indigo-600 transition-all duration-100 ease-linear rounded-full"
-           :style="{ width: asistenteProgresoCierre + '%' }">
-      </div>
-
-      <!-- Triángulo apuntador de bocadillo hacia la tostada -->
-      <div class="absolute -bottom-2.5 right-8 w-5 h-5 bg-white dark:bg-slate-900 border-r-2 border-b-2 border-indigo-400 dark:border-indigo-500 transform rotate-45"></div>
-
+      <!-- Triángulo apuntador hacia la tostada -->
+      <div class="absolute -bottom-2 right-8 w-4 h-4 bg-white dark:bg-slate-900 border-r border-b border-indigo-200 dark:border-slate-800 transform rotate-45"></div>
     </div>
   </transition>
 
   <!-- ======================================================== -->
-  <!-- 2. HISTORIAL RECIENTE / MINI PANEL DESPLEGABLE           -->
+  <!-- 2. VENTANA DE CHAT INTERACTIVO (AL DAR CLIC A LA TOSTADA)-->
   <!-- ======================================================== -->
   <transition enter-active-class="transition-all duration-200 ease-out"
-              enter-from-class="opacity-0 scale-95"
-              enter-to-class="opacity-100 scale-100"
+              enter-from-class="opacity-0 translate-y-4 scale-95"
+              enter-to-class="opacity-100 translate-y-0 scale-100"
               leave-active-class="transition-all duration-150 ease-in"
-              leave-from-class="opacity-100 scale-100"
-              leave-to-class="opacity-0 scale-95">
-    <div v-if="asistenteHistorialAbierto"
-         class="pointer-events-auto relative mb-3 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-2xl backdrop-blur-md z-40">
+              leave-from-class="opacity-100 translate-y-0 scale-100"
+              leave-to-class="opacity-0 translate-y-3 scale-95">
+    
+    <div v-if="chatAsistenteAbierto"
+         class="pointer-events-auto relative mb-3 w-80 sm:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-slate-800 dark:text-slate-100 z-50 h-[480px]">
       
-      <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200 dark:border-slate-800">
-        <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Avisos de {{ asistenteNombrePersonalizado || 'Toastie' }}</span>
-          <span v-if="statsGrafoNodos" 
-                class="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-cyan-400 font-mono font-bold"
-                title="Conocimiento indexado en grafo">
-            🧠 {{ statsGrafoNodos }}
-          </span>
-        </div>
-
-        <div class="flex items-center gap-1.5">
-          <!-- Botón renombrar -->
-          <button @click="abrirRenombrarAsistente" 
-                  class="text-slate-400 hover:text-indigo-600 dark:hover:text-cyan-400 text-xs p-1 rounded transition" 
-                  title="Cambiar nombre de mi asistente">
-            <i class="fa-solid fa-pen text-[10px]"></i>
-          </button>
-          <!-- Botón cerrar panel -->
-          <button @click="asistenteHistorialAbierto = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
-            <i class="fa-solid fa-xmark text-xs"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="flex flex-col gap-2 max-h-52 overflow-y-auto custom-scrollbar pr-1">
-        <div v-for="h in asistenteHistorial" :key="h.id"
-             @click="asistenteGloboActual = h; asistenteHistorialAbierto = false"
-             class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-750 transition cursor-pointer">
-          <div class="flex items-center justify-between text-[10px] text-slate-400 mb-0.5">
-            <span class="font-bold text-indigo-600 dark:text-cyan-400">{{ h.titulo }}</span>
-            <span class="font-mono">{{ h.hora }}</span>
+      <!-- Cabecera del Chat -->
+      <div class="px-4 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-white/20 p-1 flex items-center justify-center overflow-hidden">
+            <img src="/static/img/toast.png" alt="Avatar" class="w-full h-full object-contain">
           </div>
-          <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate">{{ h.texto }}</p>
+          <div>
+            <h3 class="text-xs font-bold leading-tight">{{ asistenteNombrePersonalizado || 'Toastie' }}</h3>
+            <p class="text-[10px] text-indigo-100 flex items-center gap-1 font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Asistente Activo
+            </p>
+          </div>
         </div>
-        <div v-if="asistenteHistorial.length === 0" class="py-3 text-center text-xs text-slate-400">
-          Sin avisos recientes. ¡Pregúntame algo abajo!
+        
+        <div class="flex items-center gap-2">
+          <button @click="limpiarHistorialChat" 
+                  class="text-indigo-200 hover:text-white text-xs p-1 rounded transition cursor-pointer" 
+                  title="Limpiar conversación">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+          <button @click="chatAsistenteAbierto = false" 
+                  class="text-indigo-200 hover:text-white text-sm p-1 rounded transition cursor-pointer" 
+                  title="Cerrar chat">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
       </div>
 
-      <!-- Barra de Pregunta al Cerebro Autónomo -->
-      <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5">
-        <input v-model="preguntaCerebroTexto"
-               @keydown.enter.prevent="enviarPreguntaCerebro"
-               type="text"
-               placeholder="Pregúntale algo (ej. ¿Cómo está HFA?)..."
-               class="flex-1 px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder-slate-400 transition" />
-        <button @click="enviarPreguntaCerebro"
-                :disabled="enviandoPreguntaCerebro"
-                class="px-2.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center justify-center cursor-pointer shadow-sm">
-          <i :class="enviandoPreguntaCerebro ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-paper-plane text-[10px]'"></i>
+      <!-- Área de Mensajes con Scroll -->
+      <div id="chat-asistente-scroll" class="flex-1 p-3.5 overflow-y-auto space-y-3 custom-scrollbar bg-slate-50/60 dark:bg-slate-900/60">
+        <div v-for="(msg, idx) in conversacionChat" :key="idx"
+             :class="msg.remitente === 'usuario' ? 'flex justify-end' : 'flex justify-start items-start gap-2'">
+          
+          <!-- Mini avatar si es el bot -->
+          <div v-if="msg.remitente !== 'usuario'" class="w-6 h-6 rounded-full bg-indigo-100 dark:bg-slate-800 flex-shrink-0 flex items-center justify-center overflow-hidden mt-0.5">
+            <img src="/static/img/toast.png" class="w-5 h-5 object-contain">
+          </div>
+
+          <!-- Burbuja de Mensaje -->
+          <div :class="msg.remitente === 'usuario' 
+                 ? 'bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-3.5 py-2 text-xs max-w-[82%] shadow-sm' 
+                 : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-2xl rounded-tl-sm px-3.5 py-2 text-xs max-w-[85%] shadow-sm whitespace-pre-line'">
+            {{ msg.texto }}
+            <span class="block text-[9px] mt-1 text-right"
+                  :class="msg.remitente === 'usuario' ? 'text-indigo-200' : 'text-slate-400'">
+              {{ msg.hora }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Indicador cuando está pensando -->
+        <div v-if="cargandoRespuestaChat" class="flex justify-start items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-indigo-100 dark:bg-slate-800 flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <img src="/static/img/toast.png" class="w-5 h-5 object-contain animate-pulse">
+          </div>
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl rounded-tl-sm px-3 py-2 text-xs text-slate-400 flex items-center gap-1.5 shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.15s"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.3s"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chips de Preguntas Sugeridas -->
+      <div class="px-3 py-1.5 bg-slate-100/70 dark:bg-slate-850 border-t border-slate-200 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto custom-scrollbar text-[11px]">
+        <button v-for="sug in sugerenciasPreguntas" :key="sug"
+                type="button"
+                @click="enviarPreguntaSugerida(sug)"
+                class="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 whitespace-nowrap transition cursor-pointer text-[10px] font-medium">
+          {{ sug }}
         </button>
       </div>
+
+      <!-- Barra de Entrada de Texto -->
+      <div class="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+        <input v-model="textoEntradaChat"
+               @keydown.enter.prevent="enviarMensajeDesdeInput"
+               type="text"
+               placeholder="Escribe tu pregunta o duda..."
+               class="flex-1 px-3.5 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder-slate-400 transition" />
+        
+        <button @click="enviarMensajeDesdeInput"
+                :disabled="!textoEntradaChat.trim() || cargandoRespuestaChat"
+                class="w-8 h-8 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white flex items-center justify-center transition cursor-pointer shadow-sm">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </div>
+
     </div>
   </transition>
 
   <!-- ======================================================== -->
-  <!-- 3. PERSONAJE EN LA ESQUINA: OMFG HELLO TOAST             -->
+  <!-- 3. PERSONAJE EN LA ESQUINA: TOASTIE ESTÁTICO Y LIMPIO    -->
   <!-- ======================================================== -->
   <div class="pointer-events-auto relative group flex items-center justify-center">
 
-    <!-- Efecto Glow de fondo -->
-    <div class="absolute inset-0 bg-indigo-500/20 dark:bg-cyan-500/20 rounded-full blur-xl scale-125 group-hover:scale-150 transition-all pointer-events-none"></div>
-
-    <!-- Badge Contador de Notificaciones / DMs -->
-    <div v-if="asistenteMetricas && asistenteMetricas.dms_no_leidos > 0"
-         @click.stop="asistenteHistorialAbierto = !asistenteHistorialAbierto"
-         class="absolute -top-1.5 -left-1.5 z-20 px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white shadow-lg border-2 border-white dark:border-slate-900 animate-bounce cursor-pointer"
-         title="Mensajes no leídos en el Chat">
-      {{ asistenteMetricas.dms_no_leidos }}
-    </div>
-
-    <!-- Avatar de la Tostada (OMFG Hello) con Estados Animados -->
-    <button @click="alHacerClicEnTostada"
-            class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center transition-all transform active:scale-90 cursor-pointer focus:outline-none"
-            :class="{
-              'animate-toast-alert': asistenteEstadoVisual === 'alerta',
-              'animate-toast-wave': asistenteEstadoVisual === 'saludando',
-              'animate-toast-sleep opacity-90': asistenteEstadoVisual === 'durmiendo',
-              'animate-toast-wake': asistenteEstadoVisual === 'despertando',
-              'animate-toast-calma': asistenteEstadoVisual === 'calma'
-            }"
-            :title="asistenteEstadoVisual === 'durmiendo' 
-              ? (asistenteNombrePersonalizado || 'Toastie') + ' está durmiendo (Zzz)... Mueve el mouse o haz clic para despertarlo.'
-              : '¡Hola! Soy ' + (asistenteNombrePersonalizado || 'Toastie') + ', tu centinela de pantalla. Haz clic para interactuar.'">
+    <!-- Avatar de la Tostada (Limpio, estático, sin animaciones de mareo) -->
+    <button @click="toggleChatAsistente"
+            class="relative w-20 h-20 sm:w-22 sm:h-22 flex items-center justify-center transition-transform transform active:scale-95 cursor-pointer focus:outline-none group"
+            :title="'Haz clic para platicar con ' + (asistenteNombrePersonalizado || 'Toastie')">
       
-      <!-- Manita saludando agitándose enérgicamente (en saludo inicial y al llegar mensaje) -->
-      <transition enter-active-class="transition-all duration-200"
-                  leave-active-class="transition-all duration-150"
-                  enter-from-class="opacity-0 scale-50"
-                  leave-to-class="opacity-0 scale-50">
-        <div v-if="asistenteEstadoVisual === 'saludando' || asistenteEstadoVisual === 'alerta'"
-             class="absolute -top-1 -right-1 z-30 text-2xl filter drop-shadow animate-hand-wave pointer-events-none select-none">
-          👋
-        </div>
-      </transition>
+      <img src="/static/img/toast.png" 
+           alt="Asistente" 
+           class="w-full h-full object-contain filter drop-shadow-md select-none pointer-events-none transition-transform group-hover:scale-105">
 
-      <!-- Letras Zzz flotando hacia arriba cuando duerme -->
-      <div v-if="asistenteEstadoVisual === 'durmiendo'"
-           class="absolute -top-7 -right-1 z-30 pointer-events-none select-none flex flex-col items-center">
-        <span class="text-xs font-black text-indigo-400 dark:text-cyan-400 animate-zzz-1">z</span>
-        <span class="text-sm font-black text-indigo-500 dark:text-cyan-300 animate-zzz-2">Z</span>
-        <span class="text-base font-black text-indigo-600 dark:text-cyan-200 animate-zzz-3">Z</span>
-      </div>
-
-      <!-- Imagen base de la Tostada HD -->
-      <img src="/static/img/toast.png?v=20261118_1000" 
-           alt="OMFG Hello Toast" 
-           class="w-full h-full object-contain filter drop-shadow-lg select-none pointer-events-none transition-transform group-hover:scale-105">
-
-      <!-- ============================================== -->
-      <!-- CAPA DE OJOS: PARPADEO EN CALMA Y OJOS CERRADOS AL DORMIR -->
-      <!-- ============================================== -->
-      <!-- Ojo Izquierdo -->
-      <div class="absolute pointer-events-none select-none transition-all duration-150"
-           style="left: 30.5%; top: 15.2%; width: 17.2%; height: 19.5%;"
-           :class="{
-             'animate-eye-blink': asistenteEstadoVisual === 'calma',
-             'opacity-100 scale-y-100': asistenteEstadoVisual === 'durmiendo',
-             'opacity-0': asistenteEstadoVisual !== 'calma' && asistenteEstadoVisual !== 'durmiendo'
-           }">
-        <div class="w-full h-full rounded-full flex items-center justify-center relative"
-             style="background-color: #FBDFB7;">
-          <!-- Pestaña / línea de ojo cerrado feliz -->
-          <svg viewBox="0 0 40 30" class="w-full h-full fill-none stroke-black stroke-[4] stroke-linecap-round">
-            <path d="M 6 12 Q 20 26 34 12" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Ojo Derecho -->
-      <div class="absolute pointer-events-none select-none transition-all duration-150"
-           style="left: 52.2%; top: 15.2%; width: 17.2%; height: 17.5%;"
-           :class="{
-             'animate-eye-blink': asistenteEstadoVisual === 'calma',
-             'opacity-100 scale-y-100': asistenteEstadoVisual === 'durmiendo',
-             'opacity-0': asistenteEstadoVisual !== 'calma' && asistenteEstadoVisual !== 'durmiendo'
-           }">
-        <div class="w-full h-full rounded-full flex items-center justify-center relative"
-             style="background-color: #FBDFB7;">
-          <!-- Pestaña / línea de ojo cerrado feliz -->
-          <svg viewBox="0 0 40 30" class="w-full h-full fill-none stroke-black stroke-[4] stroke-linecap-round">
-            <path d="M 6 11 Q 20 24 34 11" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Indicador de pulso activo (Verde despierto / Azul suave durmiendo) -->
-      <span class="absolute bottom-1 right-3 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-slate-900 shadow transition-colors"
-            :class="asistenteEstadoVisual === 'durmiendo' ? 'bg-indigo-400 dark:bg-cyan-400' : 'bg-emerald-500'"></span>
+      <!-- Indicador de pulso activo verde sutil -->
+      <span class="absolute bottom-1 right-2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 shadow"></span>
     </button>
 
   </div>
