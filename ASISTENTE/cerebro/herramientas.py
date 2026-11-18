@@ -132,7 +132,8 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
             "dime", "busca", "buscar", "contacto", "correo", "email", "trabaja", "cuantos",
             "cuántos", "hay", "guardados", "registrados", "activos", "cual", "cuál", "cuales",
             "cuáles", "id", "clave", "numero", "número", "telefono", "teléfono", "dame", "muestra",
-            "muéstrame", "pasa", "pásame", "tiene", "tienen", "su", "sus", "del", "al", "para", "como", "cómo"
+            "muéstrame", "pasa", "pásame", "tiene", "tienen", "su", "sus", "del", "al", "para", "como", "cómo",
+            "que", "qué", "puesto", "puestos", "posicion", "posiciones", "area", "área", "departamento", "estatus"
         }
 
         tokens = [w for w in re.findall(r"\w+", consulta.lower()) if w not in stop_words and len(w) > 2]

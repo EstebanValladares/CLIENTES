@@ -150,16 +150,28 @@ class ModuloAprendizaje:
 
     @classmethod
     def buscar_en_conocimiento(cls, consulta: str, limite: int = 5) -> List[Dict[str, Any]]:
-        """Busca en todos los textos y documentos aprendidos."""
+        """Busca en todos los textos y documentos aprendidos omitiendo palabras vacías."""
         cls.inicializar_tablas()
+        import re
+
+        stopwords = {
+            "que", "qué", "cual", "cuál", "cuales", "cuáles", "quien", "quién", "quienes", "quiénes",
+            "como", "cómo", "donde", "dónde", "cuando", "cuándo", "cuanto", "cuánto", "cuanta", "cuánta",
+            "cuantos", "cuántos", "cuantas", "cuántas", "tiene", "tienen", "es", "son", "era", "fueron",
+            "el", "la", "los", "las", "un", "una", "unos", "unas", "de", "del", "al", "en", "por", "para",
+            "con", "sin", "su", "sus", "mi", "mis", "tu", "tus", "este", "esta", "estos", "estas", "ese",
+            "esa", "esos", "esas", "hay", "habra", "habría", "sabes", "saber", "dime", "dame", "pasa",
+            "favor", "id", "clave", "usuario", "usuarios"
+        }
+
+        terminos = [t.lower() for t in re.findall(r"\w+", consulta) if t.lower() not in stopwords and len(t) > 2]
+        if not terminos:
+            return []
+
         conn = GrafoConocimiento.get_db()
         cur = conn.cursor()
 
-        terminos = [t.strip() for t in consulta.split() if len(t.strip()) > 2]
-        if not terminos:
-            terminos = [consulta.strip()]
-
-        condiciones = " OR ".join(["contenido LIKE ? OR nombre_archivo LIKE ?"] * len(terminos))
+        condiciones = " OR ".join(["LOWER(contenido) LIKE ? OR LOWER(nombre_archivo) LIKE ?"] * len(terminos))
         params = []
         for t in terminos:
             params.extend([f"%{t}%", f"%{t}%"])

@@ -130,17 +130,11 @@ class MotorRazonamiento:
         if any(w in p_lower for w in palabras_pos) and any(w in p_lower for w in ["clave", "crear", "ultima", "última", "siguiente", "nueva", "disponible", "cuales", "cuáles", "catalogo", "catálogo", "cuantas", "cuántas"]):
             info_pos = tool_consultar_claves_posiciones()
             if info_pos.get("ok"):
-                return {
-                    "ok": True,
-                    "motor": "Catálogo de Posiciones",
-                    "pregunta": pregunta,
-                    "respuesta": (
-                        f"🎯 **Claves de Posición para Usuarios:**\n"
-                        f"• **Última clave registrada:** `{info_pos['ultima_clave']}` ({info_pos['ultimo_puesto_nombre']})\n"
-                        f"• **Siguiente clave para crear:** `{info_pos['siguiente_clave']}`\n"
-                        f"• **Total catalogadas:** {info_pos['total_posiciones']} posiciones"
-                    )
-                }
+                if any(w in p_lower for w in ["ultima", "última"]):
+                    return {"ok": True, "motor": "Posiciones", "pregunta": pregunta, "respuesta": f"La última clave registrada es `{info_pos['ultima_clave']}` ({info_pos['ultimo_puesto_nombre']})."}
+                if any(w in p_lower for w in ["siguiente", "crear", "disponible", "nueva"]):
+                    return {"ok": True, "motor": "Posiciones", "pregunta": pregunta, "respuesta": f"La siguiente clave para crear es `{info_pos['siguiente_clave']}` (última: `{info_pos['ultima_clave']}`)."}
+                return {"ok": True, "motor": "Posiciones", "pregunta": pregunta, "respuesta": f"Hay **{info_pos['total_posiciones']} posiciones** catalogadas (última: `{info_pos['ultima_clave']}`, siguiente: `{info_pos['siguiente_clave']}`)."}
 
         # =============================================================
         # 0.1 CONSULTAS SOBRE ESCALATORIAS DE PRECIO / ADITIVAS (PRIORIDAD ALTA)
@@ -166,74 +160,40 @@ class MotorRazonamiento:
                         break
 
             if obra_detectada:
-                # Si específicamente preguntan por un material en esa obra (ej. block en AUS)
                 terminos_mat = [w for w in re.findall(r"\w+", p_lower) if w in ["acero", "block", "concreto", "tinaco", "alambre", "mortero", "varilla", "armex", "malla", "cemento"]]
                 if terminos_mat:
                     mat = terminos_mat[0]
                     res_mat = tool_consultar_insumo_en_obra(mat, obra_detectada)
                     if res_mat.get("ok") and res_mat.get("total", 0) > 0:
-                        lineas = [f"🧱 **{mat.upper()} en Obra {obra_detectada}:**"]
+                        lineas = [f"**{mat.upper()} en {obra_detectada}:**"]
                         for i in res_mat["resultados"][:3]:
-                            lineas.append(f"• **{i['nombre']}**: ${i['precio']:,.2f} {i['moneda']} (Presupuesto original: ${i['precio_ppto']:,.2f}) [{i['escalatoria_clave']}]")
-                        return {
-                            "ok": True,
-                            "motor": "Insumo en Obra",
-                            "pregunta": pregunta,
-                            "respuesta": "\n".join(lineas)
-                        }
+                            lineas.append(f"• {i['nombre']}: ${i['precio']:,.2f} {i['moneda']} (base: ${i['precio_ppto']:,.2f}) [{i['escalatoria_clave']}]")
+                        return {"ok": True, "motor": "Insumo en Obra", "pregunta": pregunta, "respuesta": "\n".join(lineas)}
 
                 res_esc = tool_consultar_escalatorias(obra_o_cc=obra_detectada)
                 tot = res_esc.get("total_escalatorias", 0)
                 lista = res_esc.get("escalatorias", [])
-                insumos = res_esc.get("insumos_impactados", [])
-
-                lineas = [
-                    f"📈 **La obra {obra_detectada} tiene {tot} escalatorias / aditivas de precio autorizadas en SOC Enkontrol:**\n"
-                ]
+                lineas = [f"La obra **{obra_detectada}** tiene **{tot} escalatorias** autorizadas en SOC:"]
                 for e in lista[:5]:
-                    lineas.append(f"• **{e['clave']}**: {e['nombre']} ({e['numero_insumos']} insumos) [{e['estatus_desc']}]")
-
-                if insumos:
-                    lineas.append("\n🧱 **Principales insumos y materiales ajustados:**")
-                    for ins in insumos[:4]:
-                        lineas.append(f"• **{ins['nombre']}**: ${ins['precio']:,.2f} {ins['moneda']} (Presupuesto base: ${ins['precio_ppto']:,.2f})")
-
-                lineas.append("\n💡 *Puedes consultarlas a detalle en el módulo de Escalatorias del Dashboard.*")
-                return {
-                    "ok": True,
-                    "motor": "Escalatorias por Obra",
-                    "pregunta": pregunta,
-                    "respuesta": "\n".join(lineas)
-                }
+                    lineas.append(f"• {e['clave']}: {e['nombre']}")
+                return {"ok": True, "motor": "Escalatorias por Obra", "pregunta": pregunta, "respuesta": "\n".join(lineas)}
 
             terminos_ins = [w for w in re.findall(r"\w+", p_lower) if w in ["acero", "block", "concreto", "tinaco", "alambre", "mortero", "varilla", "armex", "malla", "cemento"]]
             if terminos_ins:
                 term = terminos_ins[0]
                 res_ins = tool_consultar_escalatorias(termino_insumo=term)
                 if res_ins.get("ok") and (res_ins.get("escalatorias") or res_ins.get("insumos_detalles")):
-                    lineas = [f"📈 **Escalatorias de {term.upper()} autorizadas en SOC Enkontrol:**\n"]
+                    lineas = [f"**Escalatorias de {term.upper()} autorizadas en SOC:**"]
                     for e in res_ins.get("escalatorias", [])[:3]:
-                        lineas.append(f"• **{e['clave']}**: {e['nombre']} ({e['numero_insumos']} insumos)")
-                    for ins in res_ins.get("insumos_detalles", [])[:3]:
-                        lineas.append(f"• **{ins['nombre']}**: ${ins['precio']:,.2f} {ins['moneda']} (Presupuesto: ${ins['precio_ppto']:,.2f}) en {ins.get('obra_nombre','')}")
-                    return {
-                        "ok": True,
-                        "motor": "Escalatorias por Insumo",
-                        "pregunta": pregunta,
-                        "respuesta": "\n".join(lineas)
-                    }
+                        lineas.append(f"• {e['clave']}: {e['nombre']}")
+                    return {"ok": True, "motor": "Escalatorias por Insumo", "pregunta": pregunta, "respuesta": "\n".join(lineas)}
 
             res_gen = tool_consultar_escalatorias()
             return {
                 "ok": True,
-                "motor": "Escalatorias Enkontrol",
+                "motor": "Escalatorias",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"📈 **Tenemos {res_gen.get('total_escalatorias', 98)} escalatorias autorizadas** en SOC Enkontrol:\n"
-                    f"• **Centros de costo con ajuste:** {res_gen.get('total_obras_con_escalatorias', 400)}+ desarrollos impactados.\n"
-                    f"• **Insumos actualizados:** {res_gen.get('total_insumos_afectados', 10500):,} precios de insumos.\n\n"
-                    f"💡 *Puedes preguntarme por una obra en particular (ej. '¿Cuántas escalatorias tiene AUS?' o '¿Qué escalatorias tiene HFA?').*"
-                )
+                "respuesta": f"Hay **{res_gen.get('total_escalatorias', 98)} escalatorias autorizadas** en SOC ({res_gen.get('total_insumos_afectados', 10500):,} insumos en {res_gen.get('total_obras_con_escalatorias', 121)} obras)."
             }
 
         # =============================================================
@@ -242,35 +202,23 @@ class MotorRazonamiento:
         es_pregunta_conteo = any(w in p_lower for w in ["cuantos", "cuántos", "cuantas", "cuántas", "total de", "cantidad de", "numero de", "número de", "hay ahorita", "guardados"])
         
         # A) Conteo de Usuarios / Colaboradores / Personas
-        if es_pregunta_conteo and any(w in p_lower for w in ["usuario", "colaborador", "persona", "empleado", "gente", "puesto"]):
+        if es_pregunta_conteo and any(w in p_lower for w in ["usuario", "colaborador", "persona", "empleado", "gente"]):
             m = tool_metricas_totales()
-            areas_str = ", ".join([f"{k} ({v})" for k, v in list(m["areas_principales"].items())[:4]])
             return {
                 "ok": True,
-                "motor": "Plantilla de Usuarios",
+                "motor": "Usuarios",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"👥 **Actualmente tenemos {m['usuarios_totales']:,} usuarios guardados** en la plantilla de Grupo Velas:\n"
-                    f"• **Colaboradores Activos:** {m['usuarios_activos']:,}\n"
-                    f"• **Puestos y Posiciones Catalogadas:** {m['puestos_totales']:,}\n"
-                    f"• **Principales Áreas:** {areas_str}\n\n"
-                    f"💡 *Puedes preguntarme por alguien en específico (ej. '¿Quién es Claudia Padilla?' o 'Busca al líder de ventas').*"
-                )
+                "respuesta": f"Hay **{m['usuarios_totales']:,} usuarios** guardados (**{m['usuarios_activos']:,} activos**) en {m['puestos_totales']} puestos."
             }
 
         # B) Conteo de Obras / Centros de Costo
-        if es_pregunta_conteo and any(w in p_lower for w in ["obra", "obras", "cc", "ccs", "centro de costo", "centros de costo", "fraccionamiento"]):
+        if es_pregunta_conteo and any(w in p_lower for w in ["obra", "obras", "cc", "ccs", "centro de costo", "centros de costo"]):
             m = tool_metricas_totales()
             return {
                 "ok": True,
-                "motor": "Mapeo de Obras",
+                "motor": "Obras",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"🏗️ **Tenemos {m['obras_totales']:,} centros de costo (obras)** registrados en Enkontrol:\n"
-                    f"• **Total de Lotes en Obras:** {m['lotes_totales']:,}\n"
-                    f"• **Lotes con Equivalencia en Suite EK10:** {m['lotes_ek10_totales']:,}\n\n"
-                    f"💡 *Si quieres analizar una obra en particular, solo dime su clave (ej. '¿Cómo va HFA?' o 'DQA').*"
-                )
+                "respuesta": f"Tenemos **{m['obras_totales']:,} centros de costo** ({m['lotes_totales']:,} lotes totales, {m['lotes_ek10_totales']:,} con clave EK10)."
             }
 
         # C) Conteo de Lotes
@@ -278,13 +226,9 @@ class MotorRazonamiento:
             m = tool_metricas_totales()
             return {
                 "ok": True,
-                "motor": "Mapeo de Lotes",
+                "motor": "Lotes",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"🏠 **Tenemos {m['lotes_totales']:,} lotes registrados** en el Mapeo Maestro de Enkontrol 9:\n"
-                    f"• **Lotes vinculados a la Suite EK10:** {m['lotes_ek10_totales']:,}\n"
-                    f"• **Distribuidos en:** {m['obras_totales']:,} centros de costo diferentes."
-                )
+                "respuesta": f"Hay **{m['lotes_totales']:,} lotes** registrados ({m['lotes_ek10_totales']:,} vinculados a EK10) en {m['obras_totales']} obras."
             }
 
         # D) Conteo de Escalatorias
@@ -292,12 +236,9 @@ class MotorRazonamiento:
             m = tool_metricas_totales()
             return {
                 "ok": True,
-                "motor": "Escalatorias Enkontrol",
+                "motor": "Escalatorias",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"📈 **Tenemos {m['escalatorias_totales']} escalatorias y aditivas de precios** autorizadas en SOC Enkontrol.\n"
-                    f"Ajustan costos de insumos clave como acero, block 12, armex y tinacos."
-                )
+                "respuesta": f"Hay **{m['escalatorias_totales']} escalatorias autorizadas** en SOC Enkontrol."
             }
 
         # E) Preguntas de Resumen General ("¿Qué información tienes?", "¿Qué datos manejas?")
@@ -307,14 +248,7 @@ class MotorRazonamiento:
                 "ok": True,
                 "motor": "Resumen General",
                 "pregunta": pregunta,
-                "respuesta": (
-                    f"📊 **Información disponible en mi memoria para ti:**\n"
-                    f"• **Plantilla de Usuarios:** {m['usuarios_totales']:,} colaboradores ({m['usuarios_activos']:,} activos) y {m['puestos_totales']:,} puestos.\n"
-                    f"• **Mapeo de Obras:** {m['obras_totales']:,} centros de costo.\n"
-                    f"• **Inventario de Lotes:** {m['lotes_totales']:,} lotes ({m['lotes_ek10_totales']:,} con clave EK10).\n"
-                    f"• **Escalatorias de Precios:** {m['escalatorias_totales']} aditivas en SOC Enkontrol.\n\n"
-                    f"Pregúntame sobre cualquier persona, obra, lote o material y te daré los datos."
-                )
+                "respuesta": f"Datos en memoria: {m['usuarios_totales']:,} usuarios, {m['puestos_totales']} puestos, {m['obras_totales']:,} obras, {m['lotes_totales']:,} lotes y {m['escalatorias_totales']} escalatorias."
             }
 
         # =============================================================
@@ -324,27 +258,21 @@ class MotorRazonamiento:
             exp = tool_explorar_carpetas(p_lower)
             if exp.get("tema") != "GENERAL":
                 det = exp.get("detalle", {})
-                archivos_str = "\n".join([f"  • `{a}`" for a in det.get("archivos_clave", [])])
+                archivos_str = ", ".join([f"`{a}`" for a in det.get("archivos_clave", [])])
                 return {
                     "ok": True,
-                    "motor": "Explorador de Archivos y Carpetas",
+                    "motor": "Carpetas",
                     "pregunta": pregunta,
-                    "respuesta": (
-                        f"📁 **Carpeta `{det.get('ruta')}` ({exp.get('tema')}):**\n"
-                        f"_{det.get('descripcion')}_\n\n"
-                        f"**Archivos principales:**\n{archivos_str}\n\n"
-                        f"**Datos que contiene:** {det.get('datos_disponibles')}"
-                    )
+                    "respuesta": f"📁 **{det.get('ruta')}** ({exp.get('tema')}): {det.get('descripcion')}. Archivos: {archivos_str}."
                 }
             else:
                 carpetas = exp.get("carpetas", {})
-                lineas = ["🗂️ **Ecosistema de carpetas y datos conectados:**\n"]
+                lineas = ["Carpetas principales conectadas:"]
                 for k, v in carpetas.items():
-                    lineas.append(f"• **`{v['ruta']}`** ({k}): {v['descripcion']}")
-                lineas.append("\n💡 *Puedes pedirme detalles de cualquier carpeta (ej. '¿Qué hay en OBRAS?' o '¿Qué hay en data?').*")
+                    lineas.append(f"• `{v['ruta']}` ({k}): {v['descripcion']}")
                 return {
                     "ok": True,
-                    "motor": "Explorador de Archivos",
+                    "motor": "Carpetas",
                     "pregunta": pregunta,
                     "respuesta": "\n".join(lineas)
                 }
@@ -357,9 +285,9 @@ class MotorRazonamiento:
             if area_key in p_lower and any(w in p_lower for w in ["quienes", "quiénes", "usuarios de", "personas de", "equipo de", "trabajan en", "en el area", "en el área"]):
                 matches_area = tool_buscar_usuarios_por_area(area_key, limite=5)
                 if matches_area:
-                    lineas = [f"💼 **Colaboradores encontrados en {area_key.upper()}:**"]
+                    lineas = [f"Colaboradores en **{area_key.upper()}**:"]
                     for u in matches_area:
-                        lineas.append(f"• **{u['nombre']}** - {u['puesto']}\n  Correo: `{u['email']}`")
+                        lineas.append(f"• **{u['nombre']}** - {u['puesto']} (`{u['email']}`)")
                     return {
                         "ok": True,
                         "motor": "Directorio de Áreas",
@@ -368,7 +296,7 @@ class MotorRazonamiento:
                     }
 
         # =============================================================
-        # 3. BÚSQUEDA DE UN USUARIO / PERSONA ESPECÍFICA
+        # 3. BÚSQUEDA DE UN USUARIO / PERSONA ESPECÍFICA (INTERPRETANDO CAMPO SOLICITADO)
         # =============================================================
         palabras_usuario = [
             "usuario", "colaborador", "compañero", "compañera", "quién es", "quien es",
@@ -382,29 +310,56 @@ class MotorRazonamiento:
             lista = res_usuarios["usuarios"]
             if len(lista) == 1:
                 u = lista[0]
-                texto = (
-                    f"👤 **{u['nombre_completo']}:**\n"
-                    f"• **ID de Usuario:** {u.get('id', 'N/D')}\n"
-                    f"• **Clave Posición:** `{u.get('clave_posicion', 'N/D')}`\n"
-                    f"• **Puesto:** {u['puesto']}\n"
-                    f"• **Área:** {u['area']}\n"
-                    f"• **Correo:** `{u['email']}`\n"
-                    f"• **Estatus:** {u['estatus']}"
-                )
+                nom = u['nombre_completo']
+                # Si específicamente pidió el ID
+                if any(w in p_lower for w in ["id", "identificador"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"El ID de **{nom}** es **{u.get('id', 'N/D')}**."
+                    }
+                # Si específicamente pidió el correo / email
+                if any(w in p_lower for w in ["correo", "email"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"El correo de **{nom}** es `{u.get('email', 'N/D')}`."
+                    }
+                # Si específicamente pidió el puesto / posición
+                if any(w in p_lower for w in ["puesto", "posicion", "posicion de"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"El puesto de **{nom}** es **{u['puesto']}** ({u['area']})."
+                    }
+                # Si específicamente pidió el estatus
+                if any(w in p_lower for w in ["estatus", "activo", "vigente"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"El estatus de **{nom}** es **{u['estatus']}**."
+                    }
+                # Pregunta general sobre la persona: respuesta limpia y directa
+                return {
+                    "ok": True,
+                    "motor": "Usuarios",
+                    "pregunta": pregunta,
+                    "respuesta": f"👤 **{nom}** (ID: {u.get('id')})\n• Puesto: {u['puesto']} ({u['area']})\n• Correo: `{u['email']}`\n• Estatus: {u['estatus']}"
+                }
             else:
-                texto = f"👥 **{res_usuarios['total']} colaboradores encontrados:**\n\n"
+                texto = f"👥 Coincidencias ({res_usuarios['total']}):\n"
                 for u in lista:
-                    texto += (
-                        f"• **{u['nombre_completo']}** (ID: {u.get('id')} | Posición: {u.get('clave_posicion')})\n"
-                        f"  Puesto: {u['puesto']} ({u['area']})\n"
-                        f"  Correo: `{u['email']}`\n\n"
-                    )
-            return {
-                "ok": True,
-                "motor": "Plantilla de Usuarios",
-                "pregunta": pregunta,
-                "respuesta": texto.strip()
-            }
+                    texto += f"• **{u['nombre_completo']}** (ID: {u.get('id')}) - {u['puesto']} (`{u['email']}`)\n"
+                return {
+                    "ok": True,
+                    "motor": "Usuarios",
+                    "pregunta": pregunta,
+                    "respuesta": texto.strip()
+                }
 
         # =============================================================
         # 4. DETECCIÓN DE ESCALATORIAS E INSUMOS DE PRECIOS
@@ -480,15 +435,7 @@ class MotorRazonamiento:
                 salud = diag.get("salud_homologacion", "0%")
                 coinciden = diag.get("lotes_con_id_enk_coincidente", 0)
 
-                respuesta = (
-                    f"🏗️ **Estado de la Obra {palabra}:**\n"
-                    f"• **Total Lotes:** {total_lt}\n"
-                    f"• **Con Suite EK10 vinculada:** {lotes_hom}\n"
-                    f"• **Coincidencia Exacta (Clave en Verde):** {coinciden}\n"
-                    f"• **Lotes Pendientes por Vincular:** {lotes_pend}\n"
-                    f"• **Índice de Sincronización:** {salud}\n\n"
-                    f"💡 *Para ver cada lote con sus claves, abre el Mapeo de Lotes en la barra flotante.*"
-                )
+                respuesta = f"🏗️ **Obra {palabra}:** {total_lt} lotes ({lotes_hom} en EK10, {coinciden} clave verde, sincronización: {salud})."
                 return {
                     "ok": True,
                     "motor": "Diagnóstico de Obra",
@@ -506,7 +453,7 @@ class MotorRazonamiento:
                 "ok": True,
                 "motor": "Base de Conocimiento",
                 "pregunta": pregunta,
-                "respuesta": f"📚 **De las guías y reglas del sistema ({doc['nombre_archivo']}):**\n\n{doc['resumen']}"
+                "respuesta": f"📚 **{doc['nombre_archivo']}:** {doc['resumen']}"
             }
 
         # Si preguntó por un usuario específico y no se encontró
@@ -515,23 +462,15 @@ class MotorRazonamiento:
                 "ok": True,
                 "motor": "Búsqueda de Usuarios",
                 "pregunta": pregunta,
-                "respuesta": "🔍 No encontré a ningún colaborador registrado con ese nombre en la plantilla de Grupo Velas. Verifica que el nombre esté bien escrito o prueba con su apellido o correo."
+                "respuesta": "No encontré ningún colaborador registrado con ese nombre."
             }
 
         # =============================================================
-        # 7. FALLBACK CONVERSACIONAL LIMPIO Y AMIGABLE
+        # 7. FALLBACK DIRECTO Y LIMPIO
         # =============================================================
         return {
             "ok": True,
             "motor": "Asistente",
             "pregunta": pregunta,
-            "respuesta": (
-                f"🤔 No encontré datos sobre eso en el sistema por el momento.\n\n"
-                f"💡 **Puedes preguntarme por:**\n"
-                f"• **Totales:** *'¿Cuántos usuarios hay?'* o *'¿Cuántas obras tenemos?'*\n"
-                f"• **Personas:** *'¿Quién es Claudia Padilla?'* o *'¿Quiénes están en sistemas?'*\n"
-                f"• **Obras y Lotes:** *'¿Cómo está la obra HFA?'* o *'Lotes de DQA'*\n"
-                f"• **Precios:** *'¿Qué escalatorias tenemos autorizadas?'*\n"
-                f"• **Reglas:** *'¿Cuándo se marca la clave en verde?'*"
-            )
+            "respuesta": "No encontré registro de eso en las bases del sistema."
         }
