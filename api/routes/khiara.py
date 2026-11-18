@@ -29,9 +29,21 @@ def get_agente():
         _agente_instancia = crear_agente_khiara()
     return _agente_instancia
 
+def reiniciar_agente():
+    global _agente_instancia
+    _agente_instancia = None
+    return get_agente()
+
 
 class ChatRequest(BaseModel):
     mensaje: str
+
+
+@router.post("/api/chat/limpiar")
+def limpiar_sesion_chat():
+    """Reinicia la memoria de sesión del agente KHIARA."""
+    reiniciar_agente()
+    return {"ok": True, "mensaje": "Sesión reiniciada con éxito"}
 
 
 @router.get("/api/khiara/status")
@@ -40,7 +52,7 @@ def status_khiara():
     return {
         "nombre": "KHIARA",
         "avatar": "Gatita Rive Companion",
-        "motor": "gemini-3.1-flash-lite",
+        "motor": "gemini-3.5-flash-lite",
         "capacidades": [
             "Tool Calling",
             "Grafo de Conocimiento (NetworkX)",
@@ -54,18 +66,27 @@ def status_khiara():
 
 @router.post("/api/chat")
 async def chat_stream(req: ChatRequest):
-    """Genera streaming de la respuesta del agente KHIARA para el widget de la gatita."""
+    """Genera streaming de la respuesta del agente KHIARA para el widget de la gatita con autorrecuperación."""
     agente = get_agente()
+    loop = asyncio.get_event_loop()
     
     async def generador():
+        nonlocal agente
         try:
             # Evento inicial de pensamiento
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'thinking'})}\n\n"
             await asyncio.sleep(0.05)
             
-            # Ejecución en hilo seguro para no bloquear FastAPI
-            loop = asyncio.get_event_loop()
-            respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
+            try:
+                respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
+            except Exception as e_run:
+                # Si ocurrió una desincronización de turnos en el historial de Gemini (código 400), reiniciar sesión y reintentar
+                err_str = str(e_run)
+                if "function call turn" in err_str or "INVALID_ARGUMENT" in err_str or "400" in err_str:
+                    agente = reiniciar_agente()
+                    respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
+                else:
+                    raise e_run
             
             # Evento de habla
             texto = respuesta.content if hasattr(respuesta, "content") else str(respuesta)
@@ -86,6 +107,8 @@ async def chat_stream(req: ChatRequest):
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
             yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
         except Exception as e:
-            yield f"data: {json.dumps({'tipo': 'error', 'valor': str(e)})}\n\n"
+            # En caso de error, limpiar la instancia para la siguiente pregunta
+            reiniciar_agente()
+            yield f"data: {json.dumps({'tipo': 'error', 'valor': f'Ocurrió un detalle: {str(e)}'})}\n\n"
 
     return StreamingResponse(generador(), media_type="text/event-stream")

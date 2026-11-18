@@ -1,10 +1,10 @@
 {
-  "timestamp": 1795040232.38276,
-  "fecha_hora": "18/11/2026 04:17 PM",
+  "timestamp": 1795041796.1704655,
+  "fecha_hora": "18/11/2026 04:43 PM",
   "blindado": true,
-  "commit": "ac9a680",
+  "commit": "2fcdf87",
   "carpeta": "CLIENTES",
-  "pushed": true,
-  "ok": true,
-  "mensaje": "Versi\u00f3n del equipo sincronizada y subida a GitHub con \u00e9xito (Commit ac9a680)."
+  "pushed": false,
+  "ok": false,
+  "mensaje": "Versi\u00f3n generada localmente (Commit 2fcdf87), pero pendiente de subida a GitHub: To https://github.com/EstebanValladares/CLIENTES.git\n ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at a4ce19ac5f76117fedb30b87962c42e9e326652d but expected ac9a68061fbdaa2ea0bc757b86c481cd6ca040af)\nerror: failed to push some refs to 'https://github.com/EstebanValladares/CLIENTES.git'"
 }

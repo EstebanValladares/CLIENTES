@@ -9,7 +9,7 @@
 (function () {
   if (document.getElementById('khiara-widget-container')) return;
 
-  const HOST = window.KHIARA_SERVER_URL || 'http://localhost:8501';
+  const HOST = typeof window.KHIARA_SERVER_URL === 'string' ? window.KHIARA_SERVER_URL : 'http://localhost:8501';
 
   // Inyectar script de Rive si no existe
   if (!window.rive) {
@@ -236,6 +236,9 @@
           <span class="khiara-badge">IA</span>
         </div>
         <div style="display: flex; align-items: center; gap: 6px;">
+          <button class="khiara-btn-gmail" id="khiara-btn-limpiar" title="Reiniciar chat" style="border-color: rgba(148, 163, 184, 0.3); color: #94a3b8;">
+            🗑️
+          </button>
           <button class="khiara-btn-gmail" id="khiara-btn-gmail" title="Conectar Gmail">
             ✉️ Gmail
           </button>
@@ -328,6 +331,19 @@
   chatWindow.addEventListener('click', (e) => {
     e.stopPropagation();
   });
+
+  const limpiarBtn = document.getElementById('khiara-btn-limpiar');
+  if (limpiarBtn) {
+    limpiarBtn.addEventListener('click', async () => {
+      try { await fetch(`${HOST}/api/chat/limpiar`, { method: 'POST' }); } catch(e){}
+      msgs.innerHTML = `
+        <div class="khiara-msg-bot">
+          ¡Miau! Conversación reiniciada. 🐾<br>
+          Estoy al pendiente del sistema y de tu correo. ¿En qué te ayudo?
+        </div>
+      `;
+    });
+  }
 
   // Botón Gmail: guía interactiva dentro del chat
   gmailBtn.addEventListener('click', () => {
