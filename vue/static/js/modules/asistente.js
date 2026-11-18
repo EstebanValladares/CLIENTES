@@ -27,13 +27,8 @@
     const textoEntradaChat = ref('');
     const cargandoRespuestaChat = ref(false);
 
-    // Preguntas sugeridas rápidas
-    const sugerenciasPreguntas = ref([
-      '¿Quién es Claudia Padilla?',
-      '¿Cómo está la obra HFA?',
-      '¿Hay escalatorias nuevas?',
-      '¿Cuándo se marca en verde la clave?'
-    ]);
+    // Preguntas sugeridas rápidas (desactivadas)
+    const sugerenciasPreguntas = ref([]);
 
     let audioCtx = null;
     let temporizadorSaludo = null;

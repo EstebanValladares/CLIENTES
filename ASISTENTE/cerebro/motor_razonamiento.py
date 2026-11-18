@@ -10,7 +10,9 @@ from ASISTENTE.cerebro.config_cerebro import obtener_gemini_api_key, DEFAULT_MOD
 from ASISTENTE.cerebro.grafo_conocimiento import GrafoConocimiento
 from ASISTENTE.cerebro.aprendizaje import ModuloAprendizaje
 from ASISTENTE.cerebro.herramientas import (
+    tool_metricas_totales,
     tool_buscar_usuario,
+    tool_buscar_usuarios_por_area,
     tool_consultar_obra,
     tool_buscar_lotes,
     tool_consultar_escalatorias,
@@ -41,6 +43,9 @@ class MotorRazonamiento:
 
             client = genai.Client(api_key=api_key)
 
+            # Métricas generales del sistema
+            m = tool_metricas_totales()
+
             # Extraer contexto previo relevante
             docs_relevantes = ModuloAprendizaje.buscar_en_conocimiento(pregunta, limite=3)
             resumen_docs = "\n".join([f"- {d['nombre_archivo']}: {d['resumen']}" for d in docs_relevantes])
@@ -55,22 +60,28 @@ class MotorRazonamiento:
                 ])
 
             system_instruction = f"""
-            Eres el Asistente Centinela del Dashboard EK10 de Grupo Velas (la simpática y astuta tostada inteligente).
-            Estás hablando con {usuario}.
+            Eres el Asistente Centinela del Dashboard EK10 de Grupo Velas.
+            Estás platicando con {usuario}.
             
-            Información disponible del sistema:
-            Usuarios encontrados:
+            Información global del sistema:
+            - Usuarios totales: {m['usuarios_totales']} ({m['usuarios_activos']} activos)
+            - Puestos: {m['puestos_totales']}
+            - Obras (Centros de costo): {m['obras_totales']}
+            - Lotes totales: {m['lotes_totales']} (Equivalencias EK10: {m['lotes_ek10_totales']})
+            - Escalatorias autorizadas: {m['escalatorias_totales']}
+
+            Usuarios coincidentes:
             {resumen_usuarios or "Ninguno específico para esta búsqueda."}
 
             Documentación aprendida:
             {resumen_docs or "Sin notas adicionales."}
 
             Instrucciones de Respuesta:
-            1. Responde de forma muy natural, amistosa, directa y profesional (como un compañero de equipo de confianza).
-            2. NUNCA uses términos técnicos robóticos como "Grafo Local", "nodos", "aristas" o "tabla hash".
-            3. Si preguntan por una persona (ej. Claudia Padilla), di claramente quién es, su puesto, área y correo.
-            4. Si preguntan por una obra (ej. HFA), resume el total de lotes y el estado de homologación.
-            5. Usa viñetas limpias y emojis agradables.
+            1. Responde de forma natural, amigable, clara y profesional.
+            2. NUNCA uses términos técnicos como "Grafo Local", "nodos", "aristas" o "tabla hash".
+            3. Si preguntan por totales o conteos, da los números exactos con viñetas.
+            4. Si preguntan por una persona, detalla su puesto, área y correo.
+            5. Si preguntan por una obra, resume sus lotes y homologación.
             """
 
             response = client.models.generate_content(
@@ -100,19 +111,119 @@ class MotorRazonamiento:
     def _razonar_con_datos_locales(cls, pregunta: str, usuario: str) -> Dict[str, Any]:
         """Motor inteligente local (100% offline) que consulta directamente las bases de datos del Dashboard."""
         p_upper = pregunta.upper()
-        p_lower = pregunta.lower()
+        p_lower = pregunta.lower().strip()
 
-        # 1. Búsqueda de Usuarios / Colaboradores / Puestos / Correos
+        # =============================================================
+        # 1. PREGUNTAS DE CONTEOS, TOTALES Y MÉTRICAS (¿CUÁNTOS HAY?)
+        # =============================================================
+        es_pregunta_conteo = any(w in p_lower for w in ["cuantos", "cuántos", "cuantas", "cuántas", "total de", "cantidad de", "numero de", "número de", "hay ahorita", "guardados"])
+        
+        # A) Conteo de Usuarios / Colaboradores / Personas
+        if es_pregunta_conteo and any(w in p_lower for w in ["usuario", "colaborador", "persona", "empleado", "gente", "puesto"]):
+            m = tool_metricas_totales()
+            areas_str = ", ".join([f"{k} ({v})" for k, v in list(m["areas_principales"].items())[:4]])
+            return {
+                "ok": True,
+                "motor": "Plantilla de Usuarios",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"👥 **Actualmente tenemos {m['usuarios_totales']:,} usuarios guardados** en la plantilla de Grupo Velas:\n"
+                    f"• **Colaboradores Activos:** {m['usuarios_activos']:,}\n"
+                    f"• **Puestos y Posiciones Catalogadas:** {m['puestos_totales']:,}\n"
+                    f"• **Principales Áreas:** {areas_str}\n\n"
+                    f"💡 *Puedes preguntarme por alguien en específico (ej. '¿Quién es Claudia Padilla?' o 'Busca al líder de ventas').*"
+                )
+            }
+
+        # B) Conteo de Obras / Centros de Costo
+        if es_pregunta_conteo and any(w in p_lower for w in ["obra", "obras", "cc", "ccs", "centro de costo", "centros de costo", "fraccionamiento"]):
+            m = tool_metricas_totales()
+            return {
+                "ok": True,
+                "motor": "Mapeo de Obras",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"🏗️ **Tenemos {m['obras_totales']:,} centros de costo (obras)** registrados en Enkontrol:\n"
+                    f"• **Total de Lotes en Obras:** {m['lotes_totales']:,}\n"
+                    f"• **Lotes con Equivalencia en Suite EK10:** {m['lotes_ek10_totales']:,}\n\n"
+                    f"💡 *Si quieres analizar una obra en particular, solo dime su clave (ej. '¿Cómo va HFA?' o 'DQA').*"
+                )
+            }
+
+        # C) Conteo de Lotes
+        if es_pregunta_conteo and any(w in p_lower for w in ["lote", "lotes", "vivienda", "viviendas"]):
+            m = tool_metricas_totales()
+            return {
+                "ok": True,
+                "motor": "Mapeo de Lotes",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"🏠 **Tenemos {m['lotes_totales']:,} lotes registrados** en el Mapeo Maestro de Enkontrol 9:\n"
+                    f"• **Lotes vinculados a la Suite EK10:** {m['lotes_ek10_totales']:,}\n"
+                    f"• **Distribuidos en:** {m['obras_totales']:,} centros de costo diferentes."
+                )
+            }
+
+        # D) Conteo de Escalatorias
+        if es_pregunta_conteo and any(w in p_lower for w in ["escalatoria", "escalatorias", "aditiva", "aditivas"]):
+            m = tool_metricas_totales()
+            return {
+                "ok": True,
+                "motor": "Escalatorias Enkontrol",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"📈 **Tenemos {m['escalatorias_totales']} escalatorias y aditivas de precios** autorizadas en SOC Enkontrol.\n"
+                    f"Ajustan costos de insumos clave como acero, block 12, armex y tinacos."
+                )
+            }
+
+        # E) Preguntas de Resumen General ("¿Qué información tienes?", "¿Qué datos manejas?")
+        if any(w in p_lower for w in ["que informacion tienes", "qué información tienes", "que datos tienes", "qué datos tienes", "resumen general", "que sabes hacer", "qué sabes"]):
+            m = tool_metricas_totales()
+            return {
+                "ok": True,
+                "motor": "Resumen General",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"📊 **Información disponible en mi memoria para ti:**\n"
+                    f"• **Plantilla de Usuarios:** {m['usuarios_totales']:,} colaboradores ({m['usuarios_activos']:,} activos) y {m['puestos_totales']:,} puestos.\n"
+                    f"• **Mapeo de Obras:** {m['obras_totales']:,} centros de costo.\n"
+                    f"• **Inventario de Lotes:** {m['lotes_totales']:,} lotes ({m['lotes_ek10_totales']:,} con clave EK10).\n"
+                    f"• **Escalatorias de Precios:** {m['escalatorias_totales']} aditivas en SOC Enkontrol.\n\n"
+                    f"Pregúntame sobre cualquier persona, obra, lote o material y te daré los datos."
+                )
+            }
+
+        # =============================================================
+        # 2. BÚSQUEDA DE COLABORADORES POR ÁREA O DEPARTAMENTO
+        # =============================================================
+        areas_conocidas = ["sistemas", "ventas", "titulación", "titulacion", "postventa", "call center", "broker", "obra", "proyectos", "administracion", "administración"]
+        for area_key in areas_conocidas:
+            if area_key in p_lower and any(w in p_lower for w in ["quienes", "quiénes", "usuarios de", "personas de", "equipo de", "trabajan en", "en el area", "en el área"]):
+                matches_area = tool_buscar_usuarios_por_area(area_key, limite=5)
+                if matches_area:
+                    lineas = [f"💼 **Colaboradores encontrados en {area_key.upper()}:**"]
+                    for u in matches_area:
+                        lineas.append(f"• **{u['nombre']}** - {u['puesto']}\n  Correo: `{u['email']}`")
+                    return {
+                        "ok": True,
+                        "motor": "Directorio de Áreas",
+                        "pregunta": pregunta,
+                        "respuesta": "\n".join(lineas)
+                    }
+
+        # =============================================================
+        # 3. BÚSQUEDA DE UN USUARIO / PERSONA ESPECÍFICA
+        # =============================================================
         palabras_usuario = [
             "usuario", "colaborador", "compañero", "compañera", "quién es", "quien es",
             "sabes si", "conoces a", "persona", "correo", "email", "puesto", "trabaja",
-            "contacto", "encargado", "líder", "lider", "broker"
+            "contacto", "encargado", "líder", "lider"
         ]
-        es_pregunta_usuario = any(w in p_lower for w in palabras_usuario)
+        es_pregunta_persona = any(w in p_lower for w in palabras_usuario)
 
-        # Buscar en la plantilla de usuarios de Grupo Velas
         res_usuarios = tool_buscar_usuario(pregunta, limite=3)
-        if res_usuarios.get("ok") and res_usuarios.get("total", 0) > 0 and (es_pregunta_usuario or len(res_usuarios["usuarios"]) <= 3):
+        if res_usuarios.get("ok") and res_usuarios.get("total", 0) > 0 and (es_pregunta_persona or len(res_usuarios["usuarios"]) <= 3):
             lista = res_usuarios["usuarios"]
             if len(lista) == 1:
                 u = lista[0]
@@ -138,12 +249,14 @@ class MotorRazonamiento:
                 "respuesta": texto.strip()
             }
 
-        # 2. Detección de Escalatorias de Precios (SOC Enkontrol)
-        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS"]):
+        # =============================================================
+        # 4. DETECCIÓN DE ESCALATORIAS DE PRECIOS
+        # =============================================================
+        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS", "ACERO", "BLOCK", "TINACO", "CEMENTO"]):
             datos_esc = tool_consultar_escalatorias()
             if datos_esc.get("ok") and datos_esc.get("escalatorias_recientes"):
                 lista = datos_esc["escalatorias_recientes"]
-                lineas = [f"📈 **Estas son las últimas escalatorias autorizadas en Enkontrol:**"]
+                lineas = [f"📈 **Últimas escalatorias autorizadas en SOC Enkontrol:**"]
                 for esc in lista[:4]:
                     lineas.append(f"• **{esc['clave']}**: {esc['nombre']} ({esc['numero_insumos']} insumos) [{esc['estatus_desc']}]")
                 lineas.append("\n💡 *Puedes revisarlas a detalle abriendo la consulta de Escalatorias en la barra flotante.*")
@@ -154,10 +267,11 @@ class MotorRazonamiento:
                     "respuesta": "\n".join(lineas)
                 }
 
-        # 3. Detección de Obras específicas (ej. HFA, DQA, DQC, C38, C39, 008, 024, 045)
+        # =============================================================
+        # 5. DETECCIÓN DE OBRAS ESPECÍFICAS (ej. HFA, DQA, DQC, C38, C39)
+        # =============================================================
         coincidencias_obra = re.findall(r"\b([A-Z0-9]{3,4})\b", p_upper)
-        # Filtrar palabras comunes que coinciden con 3-4 letras
-        palabras_ignorar = {"PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE", "CUAL", "CUAN", "DONDE", "COMO"}
+        palabras_ignorar = {"PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE", "CUAL", "CUAN", "DONDE", "COMO", "TIENE", "HAY"}
         for palabra in coincidencias_obra:
             if palabra in palabras_ignorar:
                 continue
@@ -185,7 +299,9 @@ class MotorRazonamiento:
                     "respuesta": respuesta
                 }
 
-        # 4. Búsqueda en documentación y memoria aprendida
+        # =============================================================
+        # 6. BÚSQUEDA EN DOCUMENTACIÓN Y BASE DE CONOCIMIENTO
+        # =============================================================
         docs = tool_buscar_conocimiento(pregunta)
         if docs.get("ok") and docs.get("documentos"):
             doc = docs["documentos"][0]
@@ -196,16 +312,18 @@ class MotorRazonamiento:
                 "respuesta": f"📚 **De las guías y reglas del sistema ({doc['nombre_archivo']}):**\n\n{doc['resumen']}"
             }
 
-        # 5. Si preguntó por un usuario pero no se encontró
-        if es_pregunta_usuario:
+        # Si preguntó por un usuario específico y no se encontró
+        if es_pregunta_persona:
             return {
                 "ok": True,
                 "motor": "Búsqueda de Usuarios",
                 "pregunta": pregunta,
-                "respuesta": "🔍 No encontré a ningún colaborador registrado con ese nombre en la plantilla de usuarios de Grupo Velas. Verifica que el nombre esté bien escrito o prueba con su apellido o correo."
+                "respuesta": "🔍 No encontré a ningún colaborador registrado con ese nombre en la plantilla de Grupo Velas. Verifica que el nombre esté bien escrito o prueba con su apellido o correo."
             }
 
-        # 6. Fallback conversacional limpio, humano y amigable (CERO texto técnico de grafos)
+        # =============================================================
+        # 7. FALLBACK CONVERSACIONAL LIMPIO Y AMIGABLE
+        # =============================================================
         return {
             "ok": True,
             "motor": "Asistente",
@@ -213,7 +331,8 @@ class MotorRazonamiento:
             "respuesta": (
                 f"🤔 No encontré datos sobre eso en el sistema por el momento.\n\n"
                 f"💡 **Puedes preguntarme por:**\n"
-                f"• **Colaboradores:** *'¿Quién es Claudia Padilla?'* o *'Busca al líder de ventas'*\n"
+                f"• **Totales:** *'¿Cuántos usuarios hay?'* o *'¿Cuántas obras tenemos?'*\n"
+                f"• **Personas:** *'¿Quién es Claudia Padilla?'* o *'¿Quiénes están en sistemas?'*\n"
                 f"• **Obras y Lotes:** *'¿Cómo está la obra HFA?'* o *'Lotes de DQA'*\n"
                 f"• **Precios:** *'¿Qué escalatorias tenemos autorizadas?'*\n"
                 f"• **Reglas:** *'¿Cuándo se marca la clave en verde?'*"
