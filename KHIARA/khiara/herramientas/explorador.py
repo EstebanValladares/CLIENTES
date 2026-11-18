@@ -4,6 +4,7 @@ Permite consultar el Grafo, examinar archivos, ejecutar SQL y cálculos matemát
 """
 
 import os
+import sys
 import sqlite3
 import json
 import subprocess
@@ -488,3 +489,174 @@ def tool_interpretar_consulta_negocio(consulta: str) -> str:
         f"• Tablas sugeridas: {', '.join(interp['tablas_sugeridas'])}\n"
         f"• Endpoints sugeridos: {', '.join(interp['endpoints_sugeridos'])}"
     )
+
+
+# ==============================================================================
+# HERRAMIENTAS LOCALES DE DASHBOARD_EK10 (USUARIOS, CARPETAS Y ARCHIVOS)
+# ==============================================================================
+
+DIR_DASHBOARD_RAIZ = Path(__file__).resolve().parent.parent.parent.parent
+if str(DIR_DASHBOARD_RAIZ) not in sys.path:
+    sys.path.insert(0, str(DIR_DASHBOARD_RAIZ))
+
+
+def tool_buscar_usuarios_locales(termino_busqueda: str = "", filtro_vigencia: str = "TODOS") -> str:
+    """
+    Busca usuarios, colaboradores, asesores, residentes y puestos en los datos locales de DASHBOARD_EK10 (1,122 usuarios).
+    Permite buscar por nombre, apellido, correo, ID, clave de puesto (POS-XXXX) o área organizativa.
+    Ejemplos de búsqueda:
+      - 'yeudiel esteban'
+      - 'alejandro romo'
+      - 'POS-1007'
+      - 'SISTEMAS'
+      - ''
+    """
+    termino = (termino_busqueda or "").strip()
+    
+    # Intentar primero mediante UserService oficial del proyecto
+    try:
+        from core.user_service import UserService
+        usuarios = UserService.buscar_usuarios(query=termino, filtro_vigencia=filtro_vigencia)
+        if usuarios:
+            lineas = [f"Se encontraron {len(usuarios)} usuario(s) en DASHBOARD_EK10 para '{termino}':"]
+            for u in usuarios[:8]:
+                lineas.append(
+                    f"• ID: {u.get('id')} | Nombre: {u.get('nombre_completo')} | Estatus: {u.get('estatus')}\n"
+                    f"  - Correo: {u.get('correo')}\n"
+                    f"  - Puesto: {u.get('puesto')} (Clave: {u.get('clave_posicion')})\n"
+                    f"  - Área: {u.get('area_organizacion')} | Teléfono: {u.get('telefono')}\n"
+                    f"  - Vigencia: {u.get('vigencia_inicio')} al {u.get('vigencia_fin')}"
+                )
+            if len(usuarios) > 8:
+                lineas.append(f"... y {len(usuarios) - 8} usuario(s) más.")
+            return "\n".join(lineas)
+    except Exception:
+        pass
+
+    # Fallback directo al archivo JSON local
+    p_json = DIR_DASHBOARD_RAIZ / "USUARIOS" / "data" / "Usuarios.json"
+    if not p_json.exists():
+        p_json = Path.cwd() / "USUARIOS" / "data" / "Usuarios.json"
+
+    if not p_json.exists():
+        return f"No se encontró el archivo local de usuarios en {p_json}."
+
+    try:
+        with open(p_json, "r", encoding="utf-8") as f:
+            datos = json.load(f)
+
+        if not termino:
+            return f"Total de usuarios en la base local: {len(datos)}. Especifica un nombre, ID o puesto para filtrar."
+
+        tokens = termino.lower().split()
+        coincidencias = []
+        for u in datos:
+            texto = f"{u.get('ID','')} {u.get('Nombre','')} {u.get('Apellidos','')} {u.get('Clave','')} {u.get('Email','')} {u.get('Posicion','')} {u.get('ClavePosicion','')} {u.get('AreaOrganizacion','')}".lower()
+            if all(t in texto for t in tokens):
+                coincidencias.append(u)
+
+        if not coincidencias:
+            return f"No se encontró ningún usuario con el término '{termino}' en los {len(datos)} registros locales de Usuarios.json."
+
+        lineas = [f"Se encontraron {len(coincidencias)} usuario(s) en Usuarios.json:"]
+        for u in coincidencias[:8]:
+            lineas.append(
+                f"• ID: {u.get('ID')} | {u.get('Nombre')} {u.get('Apellidos')} | Estatus: {u.get('Estatus')}\n"
+                f"  - Correo: {u.get('Email') or u.get('Clave')}\n"
+                f"  - Puesto: {u.get('Posicion')} (Clave: {u.get('ClavePosicion')})\n"
+                f"  - Área: {u.get('AreaOrganizacion')} | Creado por: {u.get('CreadoPor')}\n"
+                f"  - Vigencia: {u.get('VigenciaInicio')} al {u.get('VigenciaFin')}"
+            )
+        if len(coincidencias) > 8:
+            lineas.append(f"... y {len(coincidencias) - 8} usuario(s) adicionales.")
+        return "\n".join(lineas)
+    except Exception as e:
+        return f"Error leyendo archivo local de usuarios: {str(e)}"
+
+
+def tool_escanear_carpetas_proyecto(subcarpeta: str = "", patron_nombre: str = "*", limite: int = 30) -> str:
+    """
+    Escanea y lista archivos y carpetas locales dentro del proyecto DASHBOARD_EK10.
+    Permite explorar qué módulos o archivos de datos existen (ej. 'data', 'USUARIOS', 'OBRAS', 'core', 'api', 'vue').
+    """
+    base = DIR_DASHBOARD_RAIZ
+    if subcarpeta.strip():
+        base = base / subcarpeta.strip().lstrip("/\\")
+
+    if not base.exists():
+        base = Path.cwd() / subcarpeta.strip().lstrip("/\\")
+        if not base.exists():
+            return f"La carpeta '{subcarpeta}' no existe en el proyecto."
+
+    ignorados = {".git", "__pycache__", "node_modules", ".venv", "venv", "CLIENTES"}
+    archivos = []
+    carpetas = []
+
+    try:
+        for item in base.iterdir():
+            if item.name in ignorados:
+                continue
+            if item.is_dir():
+                carpetas.append(f"📁 {item.name}/")
+            elif item.is_file():
+                if patron_nombre == "*" or item.match(patron_nombre):
+                    tam = round(item.stat().st_size / 1024, 1)
+                    archivos.append(f"📄 {item.name} ({tam} KB)")
+
+        lineas = [f"Contenido de '{base.name}' ({len(carpetas)} carpetas, {len(archivos)} archivos):"]
+        lineas.extend(sorted(carpetas)[:15])
+        lineas.extend(sorted(archivos)[:limite])
+        return "\n".join(lineas)
+    except Exception as e:
+        return f"Error escaneando carpeta: {str(e)}"
+
+
+def tool_buscar_texto_en_archivos_locales(texto_a_buscar: str, subcarpeta: str = "", extensiones: str = ".json,.py,.sql,.txt,.csv,.md", limite: int = 10) -> str:
+    """
+    Busca un texto o término específico dentro del contenido de los archivos de DASHBOARD_EK10.
+    Útil para encontrar dónde se menciona un usuario, variable, función o tabla en los archivos locales.
+    """
+    if not texto_a_buscar.strip():
+        return "Indica un texto a buscar."
+
+    base = DIR_DASHBOARD_RAIZ
+    if subcarpeta.strip():
+        base = base / subcarpeta.strip().lstrip("/\\")
+
+    if not base.exists():
+        base = Path.cwd()
+
+    exts = tuple(e.strip().lower() for e in extensiones.split(",") if e.strip())
+    ignorados = {".git", "__pycache__", "node_modules", ".venv", "venv", "CLIENTES", "grafos"}
+
+    hallazgos = []
+    texto_lower = texto_a_buscar.lower()
+
+    for root, dirs, files in os.walk(base):
+        dirs[:] = [d for d in dirs if d not in ignorados]
+        for f in files:
+            if not f.lower().endswith(exts):
+                continue
+            ruta_f = Path(root) / f
+            try:
+                if ruta_f.stat().st_size > 5 * 1024 * 1024:  # Ignorar archivos > 5MB
+                    continue
+                with open(ruta_f, "r", encoding="utf-8", errors="ignore") as arch:
+                    for i, linea in enumerate(arch, 1):
+                        if texto_lower in linea.lower():
+                            rel = ruta_f.relative_to(DIR_DASHBOARD_RAIZ) if DIR_DASHBOARD_RAIZ in ruta_f.parents else ruta_f.name
+                            hallazgos.append(f"• [{rel}:{i}] {linea.strip()[:140]}")
+                            if len(hallazgos) >= limite:
+                                break
+            except Exception:
+                continue
+            if len(hallazgos) >= limite:
+                break
+        if len(hallazgos) >= limite:
+            break
+
+    if not hallazgos:
+        return f"No se encontró el texto '{texto_a_buscar}' en los archivos locales inspeccionados."
+
+    return f"Coincidencias para '{texto_a_buscar}' en archivos locales ({len(hallazgos)}):\n" + "\n".join(hallazgos)
+
