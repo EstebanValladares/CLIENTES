@@ -145,7 +145,7 @@
     "Comisionable": "False",
     "ID_1": "615",
     "hasLicense": "True",
-    "Version": "96562865"
+    "Version": "96590479"
   },
   {
     "ID": "5",
@@ -7027,7 +7027,7 @@
     "Comisionable": "False",
     "ID_1": "183",
     "hasLicense": "True",
-    "Version": "96491467"
+    "Version": "96590525"
   },
   {
     "ID": "192",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96572002"
+    "Version": "96590599"
   },
   {
     "ID": "1053",
@@ -40817,8 +40817,8 @@
     "Nombre": "YARA SORAIDA",
     "Apellidos": "ALVAREZ ANAYA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "18/11/2026 06:00:00",
-    "VigenciaFin": "16/02/2027 06:00:00",
+    "VigenciaInicio": "18/11/2026 12:00:00",
+    "VigenciaFin": "16/02/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "87efd8e3-5b23-4c72-a916-00dea98abbc2",
@@ -40827,12 +40827,12 @@
     "IdDashBoard": "",
     "IdCreadoPor": "1052",
     "CreadoPor": "YEUDIEL ESTEBAN",
-    "Modificado": "18/11/2026 15:01:10",
+    "Modificado": "18/11/2026 15:03:15",
     "IdModificadoPor": "1052",
     "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
-    "IdPosicion": "",
-    "ClavePosicion": "",
-    "Posicion": "",
+    "IdPosicion": "1074",
+    "ClavePosicion": "POS-1085",
+    "Posicion": "ASESOR DE VENTA MATAMOROS",
     "IdEstatus": "13",
     "Estatus": "Activo",
     "IdTimeZone": "172",
@@ -40845,6 +40845,6 @@
     "Comisionable": "True",
     "ID_1": "757",
     "hasLicense": "True",
-    "Version": "96570180"
+    "Version": "96590461"
   }
 ]
