@@ -151,7 +151,7 @@
     <div class="absolute inset-0 bg-indigo-500/20 dark:bg-cyan-500/20 rounded-full blur-xl scale-125 group-hover:scale-150 transition-all pointer-events-none"></div>
 
     <!-- Badge Contador de Notificaciones / DMs -->
-    <div v-if="asistenteMetricas.dms_no_leidos > 0"
+    <div v-if="asistenteMetricas && asistenteMetricas.dms_no_leidos > 0"
          @click.stop="asistenteHistorialAbierto = !asistenteHistorialAbierto"
          class="absolute -top-1.5 -left-1.5 z-20 px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white shadow-lg border-2 border-white dark:border-slate-900 animate-bounce cursor-pointer"
          title="Mensajes no leídos en el Chat">

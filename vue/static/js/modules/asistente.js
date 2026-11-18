@@ -6,7 +6,11 @@
  */
 (function() {
   window.createAsistenteModule = function(Vue, context) {
-    const { ref, onMounted, onBeforeUnmount } = Vue;
+    const { ref } = Vue || {};
+    if (!ref) {
+      console.warn('[Asistente] Vue.ref no disponible');
+      return {};
+    }
 
     const asistenteGloboActual = ref(null);
     const asistenteProgresoCierre = ref(100);
@@ -129,15 +133,15 @@
      */
     const verificarEventosAsistente = async () => {
       try {
-        const usuarioActual = context?.chatUsuarioActual?.value || {};
-        const uid = usuarioActual.usuario_id || '';
-        const nom = usuarioActual.nombre || '';
+        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
+        const uid = uVal.id || uVal.usuario_id || '';
+        const nom = uVal.nombre || '';
 
-        const resp = await fetch(`/api/asistente/estado?usuario_id=${uid}&nombre=${encodeURIComponent(nom)}`);
+        const resp = await fetch(`/api/asistente/estado?usuario_id=${encodeURIComponent(uid)}&nombre=${encodeURIComponent(nom)}`);
         if (!resp.ok) return;
 
         const data = await resp.json();
-        if (data.ok) {
+        if (data && data.ok) {
           if (data.metricas) {
             asistenteMetricas.value = data.metricas;
           }
@@ -195,8 +199,6 @@
       if (globo.accion === 'abrir_chat') {
         if (typeof context?.abrirModalChat === 'function') {
           context.abrirModalChat();
-        } else if (context?.chatModalAbierto) {
-          context.chatModalAbierto.value = true;
         }
       } else if (globo.accion === 'abrir_escalatorias') {
         if (typeof context?.abrirConsultaFlotante === 'function') {
@@ -212,9 +214,9 @@
      */
     const iniciarAsistenteCentinela = async () => {
       try {
-        const usuarioActual = context?.chatUsuarioActual?.value || {};
-        const primerNombre = (usuarioActual.nombre && usuarioActual.nombre !== 'Cargando perfil...') 
-          ? usuarioActual.nombre.split(' ')[0] 
+        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
+        const primerNombre = (uVal.nombre && uVal.nombre !== 'Cargando perfil...') 
+          ? uVal.nombre.split(' ')[0] 
           : 'Esteban';
 
         const resp = await fetch(`/api/asistente/saludo?nombre=${encodeURIComponent(primerNombre)}`);
@@ -225,22 +227,17 @@
       } catch (e) {}
 
       // Arrancar loop de monitoreo cada 4.5 segundos
-      asistenteLoopPoll = setInterval(() => {
-        verificarEventosAsistente();
-      }, 4500);
+      if (!asistenteLoopPoll) {
+        asistenteLoopPoll = setInterval(() => {
+          verificarEventosAsistente();
+        }, 4500);
+      }
     };
 
-    // Montar con breve delay para dejar cargar el DOM
-    onMounted(() => {
-      setTimeout(() => {
-        iniciarAsistenteCentinela();
-      }, 1500);
-    });
-
-    onBeforeUnmount(() => {
-      if (asistenteLoopPoll) clearInterval(asistenteLoopPoll);
-      if (asistenteIntervaloCierre) clearInterval(asistenteIntervaloCierre);
-    });
+    // Inicializar de forma segura sin depender exclusivamente de hooks
+    setTimeout(() => {
+      iniciarAsistenteCentinela();
+    }, 1500);
 
     return {
       asistenteGloboActual,
