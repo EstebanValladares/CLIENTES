@@ -90,6 +90,21 @@ async def chat_stream(req: ChatRequest):
             
             # Evento de habla
             texto = respuesta.content if hasattr(respuesta, "content") else str(respuesta)
+            
+            # Si Agno devolvió una cadena con el error 400/429 de la API en lugar de lanzar excepción:
+            if '"error"' in texto and ('"code": 400' in texto or 'function call turn' in texto or 'INVALID_ARGUMENT' in texto or '"code": 429' in texto):
+                agente = reiniciar_agente()
+                try:
+                    respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
+                    texto = respuesta.content if hasattr(respuesta, "content") else str(respuesta)
+                except Exception:
+                    texto = "Detecté un parpadeo en la conexión con la IA. Ya he limpiado la memoria para sincronizar el historial. Por favor, reenvía tu mensaje."
+            
+            # Si aún después de reintentar sigue conteniendo un error crudo de Gemini:
+            if '"error"' in texto and ('"code": 400' in texto or '"code": 429' in texto or 'INVALID_ARGUMENT' in texto):
+                reiniciar_agente()
+                texto = "Reinicié la memoria de la sesión para evitar desincronización de turnos. ¿Me repites tu consulta?"
+
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
             
             # Streaming fluido de palabras

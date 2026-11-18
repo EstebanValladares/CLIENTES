@@ -660,3 +660,127 @@ def tool_buscar_texto_en_archivos_locales(texto_a_buscar: str, subcarpeta: str =
 
     return f"Coincidencias para '{texto_a_buscar}' en archivos locales ({len(hallazgos)}):\n" + "\n".join(hallazgos)
 
+
+def tool_consultar_catalogo_obras(termino_o_clave: str = "") -> str:
+    """
+    Consulta el catálogo de las 275 obras registradas en DASHBOARD_EK10 (Enkontrol / Aryve).
+    Permite buscar por clave de 3 letras (ej. 'AUS', 'AT1', 'EY0', 'JA2', 'KB1', 'ICB', 'ICC') o por nombre (ej. 'VISTA VELA', 'CASA CLUB').
+    Si la obra no existe (por ejemplo 'ICB'), busca automáticamente las obras más similares o con prefijo coincidente.
+    """
+    termino = (termino_o_clave or "").strip().upper()
+    try:
+        from core.obras_service import ObrasCoreService
+        catalogo = ObrasCoreService.obtener_catalogo()
+    except Exception:
+        p_cat = DIR_DASHBOARD_RAIZ / "OBRAS" / "catalogo_obras.json"
+        if not p_cat.exists():
+            p_cat = Path.cwd() / "OBRAS" / "catalogo_obras.json"
+        if p_cat.exists():
+            with open(p_cat, "r", encoding="utf-8") as f:
+                catalogo = json.load(f)
+        else:
+            catalogo = []
+
+    if not catalogo:
+        return "No se pudo cargar el catálogo de obras."
+
+    if not termino:
+        lineas = [f"Catálogo General de Obras ({len(catalogo)} obras registradas):"]
+        for o in catalogo[:15]:
+            lineas.append(f"• [{o.get('clave')}] {o.get('nombre')} (ID: {o.get('id_obra')}) | Ppto: ${o.get('importe_total', 0):,.2f}")
+        lineas.append(f"... y {len(catalogo) - 15} obras más.")
+        return "\n".join(lineas)
+
+    # Buscar coincidencia exacta por clave
+    coincidencias_exactas = [o for o in catalogo if str(o.get("clave", "")).strip().upper() == termino]
+    if coincidencias_exactas:
+        o = coincidencias_exactas[0]
+        return (
+            f"✔ Obra encontrada en el catálogo:\n"
+            f"• Clave: {o.get('clave')}\n"
+            f"• Nombre: {o.get('nombre')}\n"
+            f"• ID Obra: {o.get('id_obra')}\n"
+            f"• Clave Presupuesto: {o.get('presupuesto_clave') or o.get('clave_presupuesto')}\n"
+            f"• Presupuesto Total: ${o.get('importe_total', 0):,.2f} {o.get('moneda', 'MXN')}\n"
+            f"• Frentes: {o.get('total_frentes', 0)} | Partidas: {o.get('total_partidas', 0)} | Tarjetas: {o.get('total_tarjetas', 0)}"
+        )
+
+    # Buscar coincidencia parcial por nombre o clave
+    coincidencias_nombre = [o for o in catalogo if termino in str(o.get("nombre", "")).upper() or termino in str(o.get("clave", "")).upper()]
+    if coincidencias_nombre:
+        lineas = [f"Se encontraron {len(coincidencias_nombre)} obra(s) relacionadas con '{termino}':"]
+        for o in coincidencias_nombre[:8]:
+            lineas.append(
+                f"• [{o.get('clave')}] {o.get('nombre')} (ID: {o.get('id_obra')})\n"
+                f"  - Presupuesto: ${o.get('importe_total', 0):,.2f} {o.get('moneda', 'MXN')} | Frentes: {o.get('total_frentes', 0)}"
+            )
+        return "\n".join(lineas)
+
+    # Si no hubo coincidencia, buscar obras parecidas por prefijo
+    prefijo = termino[:2] if len(termino) >= 2 else termino[:1]
+    similares = [o for o in catalogo if str(o.get("clave", "")).upper().startswith(prefijo)]
+    lineas = [f"❌ No existe ninguna obra registrada con la clave '{termino}' en el catálogo de las {len(catalogo)} obras de Grupo Velas."]
+    if similares:
+        lineas.append(f"Obras registradas con prefijo '{prefijo}':")
+        for s in similares[:6]:
+            lineas.append(f"• [{s.get('clave')}] {s.get('nombre')} (ID: {s.get('id_obra')}) | Ppto: ${s.get('importe_total', 0):,.2f}")
+    return "\n".join(lineas)
+
+
+def tool_consultar_presupuesto_insumos_oc(obra: str, insumo: str = "", nombre_insumo: str = "") -> str:
+    """
+    Consulta en tiempo real el Centro de Presupuestos, Insumos & Órdenes de Compra (OC) de una obra.
+    Devuelve los 4 indicadores clave que se ven en el Dashboard:
+      1. Presupuesto Real ($)
+      2. Requisitado ($)
+      3. Comprado (OC) ($)
+      4. Por Comprar ($)
+    Además incluye el desglose de frentes, partidas e insumos individuales (cantidades y costos unitarios).
+    Parámetros:
+      - obra: Clave de la obra en mayúsculas (ej. 'AT1', 'AUS', 'JA2', 'EY0', 'KB1', 'AR0').
+      - insumo: Código numérico del insumo si se quiere filtrar (ej. '1040001').
+      - nombre_insumo: Nombre o tipo de insumo (ej. 'BLOCK', 'CEMENTO', 'VARILLA', 'PINTURA').
+    """
+    obra_clean = (obra or "").strip().upper()
+    if not obra_clean:
+        return "Indica la clave de la obra a consultar (ej. 'AT1', 'AUS', 'JA2')."
+
+    try:
+        from core.insumos_service import InsumosService
+        res = InsumosService.consultar_reporte(obra=obra_clean, insumo=insumo, nombre=nombre_insumo)
+        if not res or not res.get("ok"):
+            return f"No se encontró información de insumos/presupuesto para la obra '{obra_clean}'."
+
+        metricas = res.get("metricas", {})
+        lineas = [
+            f"📊 CENTRO DE PRESUPUESTOS, INSUMOS & ÓRDENES DE COMPRA (Obra: {obra_clean}):",
+            f"• Presupuesto Real: ${metricas.get('presupuesto_real_total', 0):,.2f}",
+            f"• Requisitado:     ${metricas.get('requisitado_total', 0):,.2f}",
+            f"• Comprado (OC):    ${metricas.get('comprado_total', 0):,.2f}",
+            f"• Por Comprar:      ${metricas.get('por_comprar_total', 0):,.2f}",
+            f"• Frentes totales:  {metricas.get('total_frentes', 0)} | Partidas: {metricas.get('total_partidas', 0)} | Insumos: {metricas.get('total_insumos_resumen', 0)}"
+        ]
+
+        resumen_insumos = res.get("resumen", [])
+        if resumen_insumos:
+            lineas.append("\nDesglose de Insumos:")
+            for item in resumen_insumos[:10]:
+                cod = item.get("codigo_insumo") or item.get("insumo")
+                desc = item.get("descripcion") or item.get("nombre", "")
+                udm = item.get("unidad", "")
+                cant_p = item.get("cant_presupuesto", 0)
+                cant_c = item.get("cant_comprado", 0)
+                imp_real = item.get("importe_real", 0)
+                imp_comp = item.get("importe_comprado", 0)
+                lineas.append(
+                    f"• [{cod}] {desc[:35]} ({udm}):\n"
+                    f"  Ppto: {cant_p:,.2f} (${imp_real:,.2f}) | Comprado: {cant_c:,.2f} (${imp_comp:,.2f})"
+                )
+            if len(resumen_insumos) > 10:
+                lineas.append(f"... y {len(resumen_insumos) - 10} insumos más.")
+
+        return "\n".join(lineas)
+    except Exception as e:
+        return f"Error consultando Centro de Presupuestos e Insumos: {str(e)}"
+
+
