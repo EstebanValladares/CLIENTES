@@ -212,6 +212,11 @@
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Avisos de {{ asistenteNombrePersonalizado || 'Toastie' }}</span>
+          <span v-if="statsGrafoNodos" 
+                class="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-cyan-400 font-mono font-bold"
+                title="Conocimiento indexado en grafo">
+            🧠 {{ statsGrafoNodos }}
+          </span>
         </div>
 
         <div class="flex items-center gap-1.5">
@@ -228,7 +233,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-2 max-h-56 overflow-y-auto custom-scrollbar pr-1">
+      <div class="flex flex-col gap-2 max-h-52 overflow-y-auto custom-scrollbar pr-1">
         <div v-for="h in asistenteHistorial" :key="h.id"
              @click="asistenteGloboActual = h; asistenteHistorialAbierto = false"
              class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-750 transition cursor-pointer">
@@ -238,9 +243,23 @@
           </div>
           <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate">{{ h.texto }}</p>
         </div>
-        <div v-if="asistenteHistorial.length === 0" class="py-4 text-center text-xs text-slate-400">
-          No hay avisos recientes por ahora.
+        <div v-if="asistenteHistorial.length === 0" class="py-3 text-center text-xs text-slate-400">
+          Sin avisos recientes. ¡Pregúntame algo abajo!
         </div>
+      </div>
+
+      <!-- Barra de Pregunta al Cerebro Autónomo -->
+      <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5">
+        <input v-model="preguntaCerebroTexto"
+               @keydown.enter.prevent="enviarPreguntaCerebro"
+               type="text"
+               placeholder="Pregúntale algo (ej. ¿Cómo está HFA?)..."
+               class="flex-1 px-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder-slate-400 transition" />
+        <button @click="enviarPreguntaCerebro"
+                :disabled="enviandoPreguntaCerebro"
+                class="px-2.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center justify-center cursor-pointer shadow-sm">
+          <i :class="enviandoPreguntaCerebro ? 'fa-solid fa-spinner fa-spin' : 'fa-solid fa-paper-plane text-[10px]'"></i>
+        </button>
       </div>
     </div>
   </transition>

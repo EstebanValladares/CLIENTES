@@ -38,6 +38,11 @@
     const inputNuevoNombreAsistente = ref(nombreGuardado === 'Toastie' ? '' : nombreGuardado);
     const sugerenciasNombres = ['Toastie', 'Pancho', 'Ary', 'VelasBot', 'Centinela'];
 
+    // Módulo Cerebro Cognitivo y Preguntas
+    const preguntaCerebroTexto = ref('');
+    const enviandoPreguntaCerebro = ref(false);
+    const statsGrafoNodos = ref(0);
+
     let asistenteIntervaloCierre = null;
     let asistenteLoopPoll = null;
     let audioCtx = null;
