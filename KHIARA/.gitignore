@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Variables de entorno y credenciales
+.env
+*.env
+!*.env.example
+
+# Datos locales de KHIARA
+data/memoria/
+data/grafos/
+data/credenciales_gmail.json
+data/descargas_gmail/
+data/descargas/
+data/sandbox/
+se-metadata.json
+*.db
+*.sqlite
+*.sqlite3
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# REA Chrome profile
+.chrome_rea_profile/
+rea/.chrome_rea_profile/

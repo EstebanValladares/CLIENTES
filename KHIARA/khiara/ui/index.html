@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KHIARA — Tu Compañera Felina de IA</title>
+  <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(16, 23, 38, 0.75);
+      --card-border: rgba(56, 189, 248, 0.2);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.4);
+      --accent-pink: #f472b6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #131c31 0%, #090d16 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      background: rgba(9, 13, 22, 0.6);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 10px var(--accent-pink));
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-pill:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: flex;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+      gap: 1.5rem;
+      height: calc(100vh - 72px);
+    }
+
+    /* Left: Companion Stage */
+    .stage-card {
+      flex: 1.1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .stage-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    .rive-canvas-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: grab;
+      min-height: 420px;
+    }
+
+    .rive-canvas-container:active {
+      cursor: grabbing;
+    }
+
+    #rive-cat-canvas {
+      width: 100%;
+      height: 100%;
+      max-width: 600px;
+      max-height: 520px;
+      display: block;
+    }
+
+    .companion-controls {
+      padding: 1rem 1.5rem;
+      background: rgba(9, 13, 22, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hints-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hints-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Right: Chat Panel */
+    .chat-card {
+      flex: 0.9;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .chat-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .messages-container {
+      flex: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.9rem 1.15rem;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+    }
+
+    .message.khiara {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.khiara pre {
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.75rem;
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* Chat Input Form */
+    .chat-input-bar {
+      padding: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(9, 13, 22, 0.6);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .chat-input:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #fff;
+      border: none;
+      padding: 0 1.25rem;
+      border-radius: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-send:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* Floating Widget Demo Mode */
+    .widget-bubble {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+      border: 2px solid var(--accent);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4), 0 0 20px rgba(244, 114, 182, 0.3);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .widget-bubble:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .widget-bubble-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent-pink);
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <span class="brand-icon">🐾</span>
+      <h1 class="brand-title">KHIARA</h1>
+      <span class="brand-badge">Muza Companion</span>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-pill" id="btn-meow">🔊 Maullido</button>
+      <button class="btn-pill" id="btn-purr">✨ Ronroneo</button>
+      <button class="btn-pill" id="btn-toggle-view">📱 Probar Flotante</button>
+    </div>
+  </header>
+
+  <main id="main-studio">
+    <!-- Companion Interactive Stage -->
+    <section class="stage-card">
+      <div class="stage-header">
+        <div class="status-indicator">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-label">KHIARA atenta y lista</span>
+        </div>
+        <div class="badge-tech" style="font-size:0.75rem; color: var(--text-muted); font-family: monospace;">
+          Rive Canvas • 60 FPS
+        </div>
+      </div>
+
+      <div class="rive-canvas-container" id="cat-container">
+        <canvas id="rive-cat-canvas"></canvas>
+      </div>
+
+      <div class="companion-controls">
+        <div class="hints-text">
+          💡 Haz clic en su <span>frente</span> para jugar, acaricia su <span>mentón</span> para ronronear, o <span>mueve el cursor</span> para que te siga.
+        </div>
+      </div>
+    </section>
+
+    <!-- Chat Panel -->
+    <section class="chat-card">
+      <div class="chat-header">
+        <div class="chat-title">Conversación con KHIARA</div>
+        <span style="font-size: 0.8rem; color: var(--accent);">gemini-3.1-flash-lite</span>
+      </div>
+
+      <div class="messages-container" id="messages">
+        <div class="message khiara">
+          ¡Miau! Hola Esteban. Soy <strong>KHIARA</strong>, tu compañera felina de ingeniería y análisis. 🐾<br><br>
+          Estoy conectada a tus repositorios, a la ontología de negocio y lista para ayudarte. ¿Qué reto técnico revisamos hoy?
+        </div>
+      </div>
+
+      <form class="chat-input-bar" id="chat-form">
+        <input 
+          type="text" 
+          class="chat-input" 
+          id="user-input" 
+          placeholder="Escribe un mensaje o pídele crear un usuario, consultar una obra..." 
+          autocomplete="off"
+        />
+        <button type="submit" class="btn-send">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Floating Bubble for Widget Mode Simulation -->
+  <div class="widget-bubble" id="widget-bubble" title="Abrir KHIARA">
+    <span style="font-size: 2rem;">🐱</span>
+    <span class="widget-bubble-badge">IA</span>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('rive-cat-canvas');
+    let riveInstance = null;
+    let stateMachineInputs = [];
+
+    // Inicializar Rive con el archivo de la gatita
+    try {
+      riveInstance = new rive.Rive({
+        src: '/static/khiara_gatita.riv',
+        canvas: canvas,
+        autoplay: true,
+        stateMachines: 'State Machine 1',
+        onLoad: () => {
+          riveInstance.resizeDrawingSurfaceToCanvas();
+          stateMachineInputs = riveInstance.stateMachineInputs('State Machine 1');
+          console.log('Inputs cargados de Muza:', stateMachineInputs.map(i => i.name));
+        }
+      });
+    } catch (e) {
+      console.error('Error cargando Rive:', e);
+    }
+
+    // Adaptar tamaño en resize
+    window.addEventListener('resize', () => {
+      if (riveInstance) riveInstance.resizeDrawingSurfaceToCanvas();
+    });
+
+    // Sonidos y triggers
+    document.getElementById('btn-meow').addEventListener('click', () => {
+      dispararTrigger(['Click Meow hitbox', 'Forehead click', 'Meow']);
+      actualizarEstado('KHIARA maullando 🐾', '#f472b6');
+      setTimeout(() => actualizarEstado('KHIARA atenta', '#10b981'), 1500);
+    });
+
+    document.getElementById('btn-purr').addEventListener('click', () => {
+      dispararTrigger(['Hold purr hitbox', 'Chin hold']);
+      actualizarEstado('KHIARA ronroneando feliz ✨', '#38bdf8');
+      setTimeout(() => {
+        dispararTrigger(['Release purr hitbox']);
+        actualizarEstado('KHIARA atenta', '#10b981');
+      }, 2500);
+    });
+
+    function dispararTrigger(posiblesNombres) {
+      if (!stateMachineInputs) return;
+      for (const input of stateMachineInputs) {
+        if (posiblesNombres.includes(input.name) && typeof input.fire === 'function') {
+          input.fire();
+          return;
+        }
+      }
+    }
+
+    function actualizarEstado(texto, color) {
+      document.getElementById('status-label').textContent = texto;
+      document.getElementById('status-dot').style.background = color;
+      document.getElementById('status-dot').style.boxShadow = `0 0 12px ${color}`;
+    }
+
+    // Simulación de modo Widget Flotante
+    let modoFlotante = false;
+    document.getElementById('btn-toggle-view').addEventListener('click', () => {
+      modoFlotante = !modoFlotante;
+      const studio = document.getElementById('main-studio');
+      const bubble = document.getElementById('widget-bubble');
+      if (modoFlotante) {
+        studio.style.display = 'none';
+        bubble.style.display = 'flex';
+      } else {
+        studio.style.display = 'flex';
+        bubble.style.display = 'none';
+      }
+    });
+
+    document.getElementById('widget-bubble').addEventListener('click', () => {
+      document.getElementById('btn-toggle-view').click();
+    });
+
+    // Chat Streaming
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const messages = document.getElementById('messages');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      // Mensaje del usuario
+      const userDiv = document.createElement('div');
+      userDiv.className = 'message user';
+      userDiv.textContent = msg;
+      messages.appendChild(userDiv);
+      input.value = '';
+      messages.scrollTop = messages.scrollHeight;
+
+      // Estado pensando
+      actualizarEstado('KHIARA pensando...', '#fbbf24');
+      dispararTrigger(['cursor follow listen', 'Forehead click']);
+
+      // Burbuja de KHIARA
+      const khiaraDiv = document.createElement('div');
+      khiaraDiv.className = 'message khiara';
+      khiaraDiv.innerHTML = '<em>Escribiendo...</em>';
+      messages.appendChild(khiaraDiv);
+      messages.scrollTop = messages.scrollHeight;
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mensaje: msg })
+        });
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let textoAcumulado = '';
+        let inicio = true;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.substring(6));
+                if (data.tipo === 'texto') {
+                  if (inicio) {
+                    textoAcumulado = '';
+                    inicio = false;
+                  }
+                  textoAcumulado += data.valor;
+                  khiaraDiv.innerHTML = formatearTexto(textoAcumulado);
+                  messages.scrollTop = messages.scrollHeight;
+                } else if (data.tipo === 'estado' && data.valor === 'speaking') {
+                  actualizarEstado('KHIARA respondiendo 🐾', '#38bdf8');
+                  dispararTrigger(['Click Meow hitbox']);
+                } else if (data.tipo === 'fin') {
+                  actualizarEstado('KHIARA atenta y lista', '#10b981');
+                }
+              } catch (err) {}
+            }
+          }
+        }
+      } catch (err) {
+        khiaraDiv.innerHTML = `<span style="color:#ef4444;">Error al conectar con KHIARA: ${err.message}</span>`;
+        actualizarEstado('KHIARA atenta', '#10b981');
+      }
+    });
+
+    function formatearTexto(txt) {
+      return txt
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n/g, '<br>');
+    }
+  </script>
+</body>
+</html>
