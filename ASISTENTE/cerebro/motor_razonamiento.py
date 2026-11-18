@@ -87,11 +87,11 @@ class MotorRazonamiento:
             {resumen_docs or "Sin notas adicionales."}
 
             Instrucciones de Respuesta:
-            1. Responde de forma natural, amigable, clara y profesional.
+            1. Responde de forma ULTRA CONCISA, directa y al grano ("a lo que va, poco texto").
             2. NUNCA uses términos técnicos como "Grafo Local", "nodos", "aristas" o "tabla hash".
-            3. Si preguntan por totales o conteos, da los números exactos con viñetas.
-            4. Si preguntan por una persona, detalla su puesto, área y correo.
-            5. Si preguntan por una obra, resume sus lotes y homologación.
+            3. Si preguntan específicamente por un solo dato (como el ID, correo, puesto o si existe alguien), responde EXCLUSIVAMENTE ese dato en una sola frase corta.
+            4. No agregues saludos largos, introducciones de relleno ni sugerencias ("puedes preguntarme...").
+            5. Si preguntan por totales o conteos, da el número exacto directamente.
             """
 
             response = client.models.generate_content(
@@ -300,8 +300,9 @@ class MotorRazonamiento:
         # =============================================================
         palabras_usuario = [
             "usuario", "colaborador", "compañero", "compañera", "quién es", "quien es",
-            "sabes si", "conoces a", "persona", "correo", "email", "puesto", "trabaja",
-            "contacto", "encargado", "líder", "lider", "id de", "id del", "cual es el id", "cuál es el id"
+            "sabes si", "conoces a", "conoces", "persona", "correo", "email", "puesto", "trabaja",
+            "contacto", "encargado", "líder", "lider", "id de", "id del", "cual es el id", "cuál es el id",
+            "existe", "existen", "ubicas", "ubica", "aparece", "tienes a", "tienes al"
         ]
         es_pregunta_persona = any(w in p_lower for w in palabras_usuario)
 
@@ -311,6 +312,14 @@ class MotorRazonamiento:
             if len(lista) == 1:
                 u = lista[0]
                 nom = u['nombre_completo']
+                # Si preguntó si existe / ubica / conoce
+                if any(w in p_lower for w in ["existe", "ubicas", "ubica", "conoces", "conoce", "aparece", "tienes a", "tienes al", "sabes si tenemos", "sabes si hay"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"Sí, **{nom}** (ID: {u.get('id')}) es **{u['puesto']}** ({u['area']})."
+                    }
                 # Si específicamente pidió el ID
                 if any(w in p_lower for w in ["id", "identificador"]):
                     return {
@@ -334,6 +343,14 @@ class MotorRazonamiento:
                         "motor": "Usuarios",
                         "pregunta": pregunta,
                         "respuesta": f"El puesto de **{nom}** es **{u['puesto']}** ({u['area']})."
+                    }
+                # Si específicamente pidió el teléfono
+                if any(w in p_lower for w in ["telefono", "teléfono", "celular", "tel"]):
+                    return {
+                        "ok": True,
+                        "motor": "Usuarios",
+                        "pregunta": pregunta,
+                        "respuesta": f"El teléfono de **{nom}** es `{u.get('telefono', 'No registrado')}`."
                     }
                 # Si específicamente pidió el estatus
                 if any(w in p_lower for w in ["estatus", "activo", "vigente"]):

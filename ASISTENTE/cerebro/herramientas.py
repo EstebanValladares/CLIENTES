@@ -7,6 +7,7 @@ import sqlite3
 import os
 import json
 import re
+import unicodedata
 from typing import Dict, Any, List
 from ASISTENTE.config import DB_MAPEO_PATH, DB_ESC_PATH, BASE_DIR
 from ASISTENTE.cerebro.grafo_conocimiento import GrafoConocimiento
@@ -17,6 +18,14 @@ PATH_PUESTOS_JSON = os.path.join(BASE_DIR, "USUARIOS", "data", "puestos.json")
 DB_EK10_PATH = os.path.join(BASE_DIR, "data", "ek10_homologacion_ubicaciones.sqlite")
 PATH_CATALOGO_OBRAS = os.path.join(BASE_DIR, "OBRAS", "catalogo_obras.json")
 PATH_GRUPO_INSUMOS = os.path.join(BASE_DIR, "OBRAS", "GRUPO_INSUMOS_TIPO.json")
+
+
+def _normalizar_texto(texto: str) -> str:
+    """Remueve acentos, normaliza caracteres y convierte a minúsculas."""
+    if not texto:
+        return ""
+    s = unicodedata.normalize('NFKD', str(texto)).encode('ASCII', 'ignore').decode('utf-8')
+    return s.lower().strip()
 
 
 def tool_metricas_totales() -> Dict[str, Any]:
@@ -117,7 +126,7 @@ def tool_buscar_usuarios_por_area(area_o_puesto: str, limite: int = 6) -> List[D
 
 
 def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
-    """Busca usuarios, colaboradores, puestos y correos en la base oficial de Grupo Velas."""
+    """Busca usuarios, colaboradores, puestos y correos en la base oficial de Grupo Velas con scoring inteligente y tolerancia a lenguaje natural."""
     if not os.path.exists(PATH_USUARIOS_JSON):
         return {"ok": False, "error": "Archivo Usuarios.json no encontrado", "total": 0, "usuarios": []}
 
@@ -125,28 +134,55 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
         with open(PATH_USUARIOS_JSON, "r", encoding="utf-8") as f:
             usuarios = json.load(f)
 
-        stop_words = {
-            "sabes", "si", "tenemos", "un", "una", "usuario", "usuarios", "llamado", "llamada",
-            "persona", "personas", "colaborador", "colaboradores", "compañero", "compañera",
-            "quien", "quién", "es", "el", "la", "los", "las", "de", "en", "a", "por", "favor",
-            "dime", "busca", "buscar", "contacto", "correo", "email", "trabaja", "cuantos",
-            "cuántos", "hay", "guardados", "registrados", "activos", "cual", "cuál", "cuales",
-            "cuáles", "id", "clave", "numero", "número", "telefono", "teléfono", "dame", "muestra",
-            "muéstrame", "pasa", "pásame", "tiene", "tienen", "su", "sus", "del", "al", "para", "como", "cómo",
-            "que", "qué", "puesto", "puestos", "posicion", "posiciones", "area", "área", "departamento", "estatus"
+        q_norm = _normalizar_texto(consulta)
+        palabras_q = set(re.findall(r"\b[a-z0-9]{3,}\b", q_norm))
+
+        palabras_descarte = {
+            "existe", "existen", "un", "una", "unos", "unas", "usuario", "usuarios", "llamado", "llamada", "llamados",
+            "persona", "personas", "colaborador", "colaboradores", "compañero", "compañera", "compañeros",
+            "quien", "quién", "quienes", "quiénes", "es", "son", "el", "la", "los", "las", "de", "del", "al", "en", "a",
+            "por", "favor", "dime", "dame", "muestra", "muéstrame", "busca", "buscar", "contacto", "correo", "email",
+            "trabaja", "trabajando", "cuantos", "cuántos", "hay", "guardados", "registrados", "registrado", "registrada",
+            "activo", "activos", "cual", "cuál", "cuales", "cuáles", "id", "clave", "numero", "número", "telefono",
+            "teléfono", "pasa", "pásame", "tiene", "tienen", "su", "sus", "para", "como", "cómo", "que", "qué",
+            "puesto", "puestos", "posicion", "posiciones", "area", "área", "departamento", "estatus", "sabes", "saber",
+            "conoces", "conoce", "ubicas", "ubica", "encuentras", "encuentra", "aparece", "aparecen", "plantilla", "grupo", "velas"
         }
 
-        tokens = [w for w in re.findall(r"\w+", consulta.lower()) if w not in stop_words and len(w) > 2]
-        if not tokens:
+        tokens_utiles = [w for w in palabras_q if w not in palabras_descarte]
+        if not tokens_utiles:
+            tokens_utiles = list(palabras_q)
+
+        if not tokens_utiles:
             return {"ok": True, "total": 0, "usuarios": []}
 
-        coincidencias = []
+        candidatos = []
         for u in usuarios:
             nom_comp = f"{u.get('Nombre','')} {u.get('Apellidos','')}".strip()
-            texto_completo = f"{nom_comp} {u.get('Email','')} {u.get('Clave','')} {u.get('Posicion','')} {u.get('AreaOrganizacion','')}".lower()
+            nom_norm = _normalizar_texto(nom_comp)
+            email_norm = _normalizar_texto(u.get('Email', '') or u.get('Clave', ''))
+            pos_norm = _normalizar_texto(u.get('Posicion', ''))
+            area_norm = _normalizar_texto(u.get('AreaOrganizacion', ''))
 
-            if all(t in texto_completo for t in tokens):
-                coincidencias.append({
+            score = 0
+            palabras_nom = set(re.findall(r"\b[a-z0-9]+\b", nom_norm))
+
+            # Coincidencia completa de nombre o todos los tokens útiles en el nombre
+            if nom_norm and (nom_norm in q_norm or all(t in nom_norm for t in tokens_utiles)):
+                score += 10
+
+            for t in tokens_utiles:
+                if t in palabras_nom:
+                    score += 4
+                elif t in nom_norm:
+                    score += 2
+                elif t in email_norm:
+                    score += 3
+                elif t in pos_norm or t in area_norm:
+                    score += 1
+
+            if score >= 3 or (len(tokens_utiles) == 1 and score >= 2):
+                candidatos.append((score, {
                     "id": u.get("ID"),
                     "clave_posicion": u.get("ClavePosicion") or "N/D",
                     "nombre_completo": nom_comp,
@@ -155,12 +191,23 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
                     "email": u.get("Email") or u.get("Clave"),
                     "telefono": u.get("Telefono") or "No registrado",
                     "estatus": u.get("Estatus") or "Activo"
-                })
+                }))
+
+        candidatos.sort(key=lambda x: x[0], reverse=True)
+
+        # Si el candidato principal tiene una coincidencia contundente sobre los demás
+        if len(candidatos) > 1:
+            top_score = candidatos[0][0]
+            segundo_score = candidatos[1][0]
+            if top_score >= 8 and (top_score - segundo_score) >= 3:
+                candidatos = [candidatos[0]]
+
+        coincidencias = [c[1] for c in candidatos[:limite]]
 
         return {
             "ok": True,
             "total": len(coincidencias),
-            "usuarios": coincidencias[:limite]
+            "usuarios": coincidencias
         }
     except Exception as e:
         return {"ok": False, "error": str(e), "total": 0, "usuarios": []}
