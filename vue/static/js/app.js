@@ -558,37 +558,6 @@ createApp({
     } = consultasFlotantesModulo;
 
     // ==========================================
-    // MÓDULO: ASISTENTE CENTINELA TOASTIE (vue/static/js/modules/asistente.js)
-    // ==========================================
-    const asistenteModulo = window.createAsistenteModule ? window.createAsistenteModule(Vue, {
-      chatUsuarioActual,
-      chatModalAbierto,
-      abrirModalChat: () => {
-        if (typeof chatModalAbierto !== 'undefined') chatModalAbierto.value = true;
-      },
-      abrirConsultaFlotante: (tipo) => {
-        if (typeof abrirConsultaFlotante === 'function') abrirConsultaFlotante(tipo);
-      }
-    }) : {};
-    const {
-      asistenteGloboActual,
-      asistenteProgresoCierre,
-      asistentePausado,
-      asistenteAnimando,
-      asistenteHistorialAbierto,
-      asistenteHistorial,
-      asistenteMetricas,
-      asistenteSonidoHabilitado,
-      hablarAsistente,
-      descartarGloboAsistente,
-      pausarAutoOcultarAsistente,
-      reanudarAutoOcultarAsistente,
-      alHacerClicEnTostada,
-      ejecutarAccionAsistente,
-      reproducirSonidoAsistente
-    } = asistenteModulo;
-
-    // ==========================================
     // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
     // ==========================================
     const catalogoVistas = computed(() => [
@@ -1365,6 +1334,38 @@ createApp({
         cargarMensajesCanal(false);
       }
     }, 3000);
+
+    // ==========================================
+    // MÓDULO: ASISTENTE CENTINELA TOASTIE (vue/static/js/modules/asistente.js)
+    // ==========================================
+    const asistenteModulo = window.createAsistenteModule ? window.createAsistenteModule(Vue, {
+      chatUsuarioActual,
+      chatAbierto,
+      abrirModalChat: () => {
+        chatAbierto.value = true;
+        chatMinimizado.value = false;
+      },
+      abrirConsultaFlotante: (tipo) => {
+        if (typeof abrirConsultaFlotante === 'function') abrirConsultaFlotante(tipo);
+      }
+    }) : {};
+    const {
+      asistenteGloboActual,
+      asistenteProgresoCierre,
+      asistentePausado,
+      asistenteAnimando,
+      asistenteHistorialAbierto,
+      asistenteHistorial,
+      asistenteMetricas,
+      asistenteSonidoHabilitado,
+      hablarAsistente,
+      descartarGloboAsistente,
+      pausarAutoOcultarAsistente,
+      reanudarAutoOcultarAsistente,
+      alHacerClicEnTostada,
+      ejecutarAccionAsistente,
+      reproducirSonidoAsistente
+    } = asistenteModulo;
 
     return {
       // CHAT DE EQUIPO Y PRIVADOS 1 A 1 ESTILO WHATSAPP
