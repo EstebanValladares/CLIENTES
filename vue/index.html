@@ -919,6 +919,34 @@
       animation: dockPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    /* ======================================================== */
+    /* ANIMACIONES DEL ASISTENTE CENTINELA (TOASTIE)            */
+    /* ======================================================== */
+    @keyframes toastIdle {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+    @keyframes toastBounce {
+      0% { transform: scale(1) translateY(0); }
+      30% { transform: scale(1.18) translateY(-14px) rotate(-4deg); }
+      50% { transform: scale(0.92) translateY(2px) rotate(3deg); }
+      70% { transform: scale(1.06) translateY(-5px) rotate(-1deg); }
+      100% { transform: scale(1) translateY(0); }
+    }
+    @keyframes popSpeech {
+      0% { opacity: 0; transform: translateY(14px) scale(0.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-toast-idle {
+      animation: toastIdle 3.2s ease-in-out infinite;
+    }
+    .animate-toast-bounce {
+      animation: toastBounce 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .animate-pop-speech {
+      animation: popSpeech 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
     /* MODO CLARO: LIQUID FROSTED GLASS */
     .dock-glass-outer-light {
       background: rgba(255, 255, 255, 0.38) !important;
@@ -1634,6 +1662,10 @@
     <!-- ======================================================== -->
     <!-- INCLUDE: views/consultas_flotantes/modal_flotante.html -->
     <!-- ======================================================== -->
+    <!-- COMPONENTE CENTINELA: ASISTENTE EN ESQUINA (TOASTIE)     -->
+    <!-- ======================================================== -->
+    <!-- INCLUDE: views/asistente_widget.html -->
+    <!-- ======================================================== -->
     <!-- (Los modales de Usuarios se encuentran modularizados en views/usuarios.html) -->
 
 
@@ -2231,10 +2263,11 @@
 <script src="/static/js/modules/obras.js?v=20261112_1230"></script>
 <script src="/static/js/modules/mapeo.js?v=20261112_1230"></script>
 <script src="/static/js/modules/escalatorias.js?v=20261112_1230"></script>
-<script src="/static/js/modules/consultas_flotantes.js?v=20261112_1230"></script>
-<script src="/static/js/modules/proveedores_contratistas.js?v=20261112_1230"></script>
+<script src="/static/js/modules/consultas_flotantes.js?v=20261118_0938"></script>
+<script src="/static/js/modules/proveedores_contratistas.js?v=20261118_0938"></script>
+<script src="/static/js/modules/asistente.js?v=20261118_0938"></script>
 <!-- Orquestador Principal -->
-<script src="/static/js/app.js?v=20261112_1230"></script>
+<script src="/static/js/app.js?v=20261118_0938"></script>
 
 </body>
 </html>

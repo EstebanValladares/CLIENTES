@@ -1741,7 +1741,23 @@ createApp({
       toggleMenuConsultas,
       abrirConsultaFlotante,
       cerrarConsultaFlotante,
-      toggleMaximizarConsulta
+      toggleMaximizarConsulta,
+      // Asistente Centinela Toastie
+      asistenteGloboActual,
+      asistenteProgresoCierre,
+      asistentePausado,
+      asistenteAnimando,
+      asistenteHistorialAbierto,
+      asistenteHistorial,
+      asistenteMetricas,
+      asistenteSonidoHabilitado,
+      hablarAsistente,
+      descartarGloboAsistente,
+      pausarAutoOcultarAsistente,
+      reanudarAutoOcultarAsistente,
+      alHacerClicEnTostada,
+      ejecutarAccionAsistente,
+      reproducirSonidoAsistente
     };
   }
 }).mount('#app');
