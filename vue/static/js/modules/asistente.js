@@ -2,78 +2,62 @@
  * ===============================================================================
  * MÓDULO JAVASCRIPT: ASISTENTE CENTINELA TOASTIE (OMFG HELLO TOAST)
  * Ubicación: vue/static/js/modules/asistente.js
- * Soporta: Saludo ultra-ligero instantáneo, Bautizo/Nombrado en primer inicio,
- * persistencia local + SQLite, y monitoreo en tiempo real de chat y escalatorias.
+ * Modo: Avatar estático en esquina, Saludo flotante al cargar, y Chat interactivo.
  * ===============================================================================
  */
 (function() {
   window.createAsistenteModule = function(Vue, context) {
-    const { ref } = Vue || {};
+    const { ref, nextTick } = Vue || {};
     if (!ref) {
       console.warn('[Asistente] Vue.ref no disponible');
       return {};
     }
 
-    const asistenteGloboActual = ref(null);
-    const asistenteProgresoCierre = ref(100);
-    const asistentePausado = ref(false);
-    const asistenteAnimando = ref(false);
-    const asistenteHistorialAbierto = ref(false);
-    const asistenteHistorial = ref([]);
-    const asistenteMetricas = ref({
-      dms_no_leidos: 0,
-      escalatorias_activas: 0
-    });
-    const asistenteSonidoHabilitado = ref(true);
-
-    // Estados visuales: 'calma' (parpadea) | 'saludando' (manita) | 'alerta' (brinco) | 'durmiendo' (Zzz) | 'despertando'
-    const asistenteEstadoVisual = ref('saludando');
-    let segundosInactivo = 0;
-    let temporizadorInactividad = null;
-
-    // Sistema de personalización y bautizo
+    // Nombre personalizado del bot
     const nombreGuardado = localStorage.getItem('asistente_nombre_personalizado') || 'Toastie';
     const asistenteNombrePersonalizado = ref(nombreGuardado);
-    const modalNombrarAsistente = ref(false);
-    const inputNuevoNombreAsistente = ref(nombreGuardado === 'Toastie' ? '' : nombreGuardado);
-    const sugerenciasNombres = ['Toastie', 'Pancho', 'Ary', 'VelasBot', 'Centinela'];
 
-    // Módulo Cerebro Cognitivo y Preguntas
-    const preguntaCerebroTexto = ref('');
-    const enviandoPreguntaCerebro = ref(false);
-    const statsGrafoNodos = ref(0);
+    // Estado del globo de saludo inicial
+    const asistenteGloboVisible = ref(true);
+    const nombreUsuarioActivo = ref('Esteban');
 
-    let asistenteIntervaloCierre = null;
-    let asistenteLoopPoll = null;
+    // Estado de la ventana de Chat interactivo
+    const chatAsistenteAbierto = ref(false);
+    const conversacionChat = ref([]);
+    const textoEntradaChat = ref('');
+    const cargandoRespuestaChat = ref(false);
+
+    // Preguntas sugeridas rápidas
+    const sugerenciasPreguntas = ref([
+      '¿Quién es Claudia Padilla?',
+      '¿Cómo está la obra HFA?',
+      '¿Hay escalatorias nuevas?',
+      '¿Cuándo se marca en verde la clave?'
+    ]);
+
     let audioCtx = null;
+    let temporizadorSaludo = null;
 
     /**
      * Sintetizador de audio con Web Audio API (Bubble Pop suave)
      */
-    const reproducirSonidoAsistente = () => {
-      if (!asistenteSonidoHabilitado.value) return;
+    const reproducirSonido = () => {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
 
-        if (!audioCtx) {
-          audioCtx = new AudioCtx();
-        }
-
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
+        if (!audioCtx) audioCtx = new AudioCtx();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
 
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         const t = audioCtx.currentTime;
 
         osc.type = 'sine';
-        // Tono juguetón suave ascendente tipo "burbuja / blip"
         osc.frequency.setValueAtTime(440, t);
         osc.frequency.exponentialRampToValueAtTime(880, t + 0.08);
 
-        gain.gain.setValueAtTime(0.06, t);
+        gain.gain.setValueAtTime(0.05, t);
         gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
 
         osc.connect(gain);
@@ -85,447 +69,161 @@
     };
 
     /**
-     * Descartar globo actual
+     * Desplazar el contenedor de chat al fondo
      */
-    const descartarGloboAsistente = () => {
-      if (asistenteIntervaloCierre) clearInterval(asistenteIntervaloCierre);
-      asistenteGloboActual.value = null;
-      asistenteProgresoCierre.value = 100;
-    };
-
-    /**
-     * Iniciar cuenta regresiva para autocerrar
-     */
-    const iniciarTemporizadorCierre = (segundosTotales) => {
-      if (asistenteIntervaloCierre) clearInterval(asistenteIntervaloCierre);
-
-      const pasoMs = 100;
-      const totalPasos = (segundosTotales * 1000) / pasoMs;
-      let pasoActual = totalPasos;
-
-      asistenteIntervaloCierre = setInterval(() => {
-        if (!asistentePausado.value) {
-          pasoActual--;
-          asistenteProgresoCierre.value = Math.max(0, (pasoActual / totalPasos) * 100);
-
-          if (pasoActual <= 0) {
-            clearInterval(asistenteIntervaloCierre);
-            descartarGloboAsistente();
-          }
-        }
-      }, pasoMs);
-    };
-
-    /**
-     * Hace que la tostada hable de inmediato y active la animación correspondiente
-     */
-    const hablarAsistente = (globo) => {
-      if (!globo) return;
-
-      asistenteGloboActual.value = globo;
-      asistenteProgresoCierre.value = 100;
-      asistentePausado.value = false;
-      segundosInactivo = 0;
-
-      // Seleccionar animación según la naturaleza del evento
-      if (globo.tipo === 'chat' || globo.tipo === 'escalatoria' || globo.tipo === 'alerta') {
-        // Alerta: brinco con manita agitada
-        asistenteEstadoVisual.value = 'alerta';
-        setTimeout(() => {
-          if (asistenteEstadoVisual.value === 'alerta') asistenteEstadoVisual.value = 'calma';
-        }, 2600);
-      } else {
-        // Saludo / bienvenida / bautizo: saludo amigable con la manita
-        asistenteEstadoVisual.value = 'saludando';
-        setTimeout(() => {
-          if (asistenteEstadoVisual.value === 'saludando') asistenteEstadoVisual.value = 'calma';
-        }, 3200);
-      }
-
-      // Animación de bote alegre y sonido
-      asistenteAnimando.value = true;
+    const scrollChatAlFondo = () => {
       setTimeout(() => {
-        asistenteAnimando.value = false;
-      }, 700);
-
-      reproducirSonidoAsistente();
-
-      // Autocierre
-      iniciarTemporizadorCierre(globo.duracion_segundos || 8);
+        const el = document.getElementById('chat-asistente-scroll');
+        if (el) el.scrollTop = el.scrollHeight;
+      }, 50);
     };
 
     /**
-     * Detección de Inactividad: Dormirse tras 40s sin interacción y despertar al mover el mouse
+     * Obtiene el nombre del usuario logueado en el dashboard
      */
-    const registrarActividadUsuario = () => {
-      segundosInactivo = 0;
-      if (asistenteEstadoVisual.value === 'durmiendo') {
-        asistenteEstadoVisual.value = 'despertando';
-        reproducirSonidoAsistente();
-        setTimeout(() => {
-          asistenteEstadoVisual.value = 'calma';
-        }, 600);
+    const detectarNombreUsuario = () => {
+      const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
+      const nomCompleto = uVal.nombre || localStorage.getItem('chat_usuario_nombre') || 'Esteban';
+      
+      if (nomCompleto && nomCompleto !== 'Cargando perfil...') {
+        const partes = nomCompleto.trim().split(' ');
+        // Si tiene nombre compuesto tipo "YEUDIEL ESTEBAN", usar "Esteban" o primer nombre
+        if (partes.length >= 2 && partes[0].toUpperCase() === 'YEUDIEL') {
+          nombreUsuarioActivo.value = 'Esteban';
+        } else {
+          nombreUsuarioActivo.value = partes[0].charAt(0).toUpperCase() + partes[0].slice(1).toLowerCase();
+        }
+      } else {
+        nombreUsuarioActivo.value = 'Esteban';
       }
     };
 
-    window.addEventListener('mousemove', registrarActividadUsuario, { passive: true });
-    window.addEventListener('mousedown', registrarActividadUsuario, { passive: true });
-    window.addEventListener('keydown', registrarActividadUsuario, { passive: true });
-    window.addEventListener('scroll', registrarActividadUsuario, { passive: true });
-    window.addEventListener('touchstart', registrarActividadUsuario, { passive: true });
-
-    if (!temporizadorInactividad) {
-      temporizadorInactividad = setInterval(() => {
-        segundosInactivo++;
-        if (segundosInactivo >= 40 && asistenteEstadoVisual.value === 'calma' && !asistenteGloboActual.value && !modalNombrarAsistente.value) {
-          asistenteEstadoVisual.value = 'durmiendo';
-        }
-      }, 1000);
-    }
-
-    const pausarAutoOcultarAsistente = () => {
-      asistentePausado.value = true;
-    };
-
-    const reanudarAutoOcultarAsistente = () => {
-      asistentePausado.value = false;
-    };
-
     /**
-     * Abrir modal para bautizar o renombrar al asistente
+     * Mensaje de bienvenida inicial en el chat
      */
-    const abrirRenombrarAsistente = () => {
-      inputNuevoNombreAsistente.value = asistenteNombrePersonalizado.value || '';
-      modalNombrarAsistente.value = true;
-      descartarGloboAsistente();
-      reproducirSonidoAsistente();
-    };
-
-    /**
-     * Seleccionar una sugerencia rápida
-     */
-    const elegirSugerenciaNombre = (nom) => {
-      inputNuevoNombreAsistente.value = nom;
-    };
-
-    /**
-     * Guardar el nombre asignado (bautizo del asistente)
-     */
-    const guardarNombreAsistente = async () => {
-      const nombreLimpio = (inputNuevoNombreAsistente.value || '').trim() || 'Toastie';
-      asistenteNombrePersonalizado.value = nombreLimpio;
-      localStorage.setItem('asistente_nombre_personalizado', nombreLimpio);
-      localStorage.setItem('asistente_onboarding_completado', 'true');
-      modalNombrarAsistente.value = false;
-
-      // Notificar al backend para guardar en SQLite
-      try {
-        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
-        const uid = uVal.id || uVal.usuario_id || 'default';
-
-        const resp = await fetch('/api/asistente/configurar-nombre', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            usuario_id: String(uid),
-            nombre_asistente: nombreLimpio
-          })
+    const inicializarConversacionSiEstaVacia = () => {
+      if (conversacionChat.value.length === 0) {
+        const bot = asistenteNombrePersonalizado.value || 'Toastie';
+        const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        conversacionChat.value.push({
+          remitente: 'bot',
+          texto: `¡Hola, ${nombreUsuarioActivo.value}! 👋 Soy ${bot}.\n\n¿En qué te puedo apoyar hoy? Puedes preguntarme sobre cualquier colaborador de la empresa, obras, lotes o escalatorias de precios.`,
+          hora: hora
         });
-
-        if (resp.ok) {
-          const res = await resp.json();
-          if (res.globo) {
-            hablarAsistente(res.globo);
-            return;
-          }
-        }
-      } catch (e) {
-        console.warn('[Asistente] Error al persistir nombre en backend:', e);
       }
-
-      // Confirmación visual y verbal inmediata en caso de offline
-      hablarAsistente({
-        id: `bautizo_${Date.now()}`,
-        tipo: 'bautizo',
-        titulo: `🎉 ¡Mucho gusto! Soy ${nombreLimpio}`,
-        texto: `¡Me encanta ese nombre! A partir de ahora seré ${nombreLimpio}. ¡Aquí estaré en la esquina cuidando tus pendientes!`,
-        subtexto: 'Nombre guardado para siempre',
-        hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        accion: '',
-        duracion_segundos: 9
-      });
     };
 
     /**
-     * Envía una pregunta al Cerebro Autónomo (ReAct + Grafos + Gemini)
+     * Alternar ventana de chat al dar clic a la tostada
      */
-    const enviarPreguntaCerebro = async () => {
-      const q = (preguntaCerebroTexto.value || '').trim();
-      if (!q || enviandoPreguntaCerebro.value) return;
+    const toggleChatAsistente = () => {
+      chatAsistenteAbierto.value = !chatAsistenteAbierto.value;
+      asistenteGloboVisible.value = false;
+      if (temporizadorSaludo) clearTimeout(temporizadorSaludo);
 
-      enviandoPreguntaCerebro.value = true;
-      asistenteHistorialAbierto.value = false;
-      registrarActividadUsuario();
-      asistenteEstadoVisual.value = 'saludando';
-      reproducirSonidoAsistente();
+      if (chatAsistenteAbierto.value) {
+        reproducirSonido();
+        inicializarConversacionSiEstaVacia();
+        scrollChatAlFondo();
+      }
+    };
+
+    /**
+     * Enviar mensaje y procesar respuesta con el cerebro cognitivo
+     */
+    const enviarMensajeDesdeInput = async () => {
+      const q = (textoEntradaChat.value || '').trim();
+      if (!q || cargandoRespuestaChat.value) return;
+
+      const horaActual = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // 1. Agregar mensaje del usuario a la conversación
+      conversacionChat.value.push({
+        remitente: 'usuario',
+        texto: q,
+        hora: horaActual
+      });
+
+      textoEntradaChat.value = '';
+      cargandoRespuestaChat.value = true;
+      scrollChatAlFondo();
 
       try {
-        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
-        const nom = uVal.nombre ? uVal.nombre.split(' ')[0] : 'Esteban';
-
         const resp = await fetch('/api/asistente/preguntar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             pregunta: q,
-            usuario: nom
+            usuario: nombreUsuarioActivo.value
           })
         });
 
         if (resp.ok) {
           const res = await resp.json();
-          if (res.ok && res.respuesta) {
-            preguntaCerebroTexto.value = '';
-            const botNombre = asistenteNombrePersonalizado.value || 'Toastie';
-            hablarAsistente({
-              id: `cerebro_${Date.now()}`,
-              tipo: 'cerebro',
-              titulo: `💡 ${botNombre}`,
-              texto: res.respuesta,
-              subtexto: `Consulta: "${q}"`,
-              hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-              accion: '',
-              duracion_segundos: 18
-            });
-            enviandoPreguntaCerebro.value = false;
-            return;
-          }
+          const horaResp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          conversacionChat.value.push({
+            remitente: 'bot',
+            texto: res.respuesta || 'Listo.',
+            hora: horaResp
+          });
+          reproducirSonido();
+        } else {
+          conversacionChat.value.push({
+            remitente: 'bot',
+            texto: 'Lo siento, ocurrió una incidencia temporal al consultar los datos. Por favor intenta de nuevo.',
+            hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
         }
       } catch (e) {
-        console.warn('[Asistente] Error consultando cerebro:', e);
+        conversacionChat.value.push({
+          remitente: 'bot',
+          texto: 'No pude conectar con el servicio local. Verifica que el servidor esté activo.',
+          hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+      } finally {
+        cargandoRespuestaChat.value = false;
+        scrollChatAlFondo();
       }
-
-      enviandoPreguntaCerebro.value = false;
     };
 
     /**
-     * Consulta el backend para detectar si cayó un mensaje o escalatoria nueva
+     * Enviar sugerencia rápida
      */
-    const verificarEventosAsistente = async () => {
-      // Si el modal de bautizo está abierto, no interrumpir con otros globos
-      if (modalNombrarAsistente.value) return;
-
-      try {
-        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
-        const uid = uVal.id || uVal.usuario_id || '';
-        const nom = uVal.nombre || '';
-
-        const resp = await fetch(`/api/asistente/estado?usuario_id=${encodeURIComponent(uid)}&nombre=${encodeURIComponent(nom)}`);
-        if (!resp.ok) return;
-
-        const data = await resp.json();
-        if (data && data.ok) {
-          if (data.metricas) {
-            asistenteMetricas.value = data.metricas;
-          }
-          if (data.historial_reciente && data.historial_reciente.length > 0) {
-            asistenteHistorial.value = data.historial_reciente;
-          }
-
-          // Si el backend tiene un nombre configurado y localmente no teníamos uno personalizado, sincronizar
-          if (data.personaje && data.personaje.nombre && data.personaje.nombre !== 'Toastie') {
-            asistenteNombrePersonalizado.value = data.personaje.nombre;
-            localStorage.setItem('asistente_nombre_personalizado', data.personaje.nombre);
-          }
-
-          // Si el backend detectó un nuevo evento no visto, la tostada HABLA de inmediato
-          if (data.nuevo_globo) {
-            hablarAsistente(data.nuevo_globo);
-          }
-        }
-      } catch (e) {}
+    const enviarPreguntaSugerida = (sug) => {
+      textoEntradaChat.value = sug;
+      enviarMensajeDesdeInput();
     };
 
     /**
-     * Clic en el avatar de la Tostada: Saludo o reporte interactivo
+     * Limpiar historial de chat
      */
-    const alHacerClicEnTostada = async () => {
-      registrarActividadUsuario();
-      asistenteEstadoVisual.value = 'saludando';
-      setTimeout(() => { if (asistenteEstadoVisual.value === 'saludando') asistenteEstadoVisual.value = 'calma'; }, 2500);
-
-      asistenteAnimando.value = true;
-      setTimeout(() => { asistenteAnimando.value = false; }, 600);
-      reproducirSonidoAsistente();
-
-      // Si tiene el modal de nombrar abierto, mantener foco allí
-      if (modalNombrarAsistente.value) return;
-
-      // Si ya hay un globo visible, togglear historial
-      if (asistenteGloboActual.value) {
-        asistenteHistorialAbierto.value = !asistenteHistorialAbierto.value;
-        return;
-      }
-
-      // Obtener reacción divertida
-      try {
-        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
-        const uid = uVal.id || uVal.usuario_id || '';
-        const resp = await fetch(`/api/asistente/reaccion-clic?usuario_id=${encodeURIComponent(uid)}`);
-        if (resp.ok) {
-          const globo = await resp.json();
-          hablarAsistente(globo);
-          return;
-        }
-      } catch (e) {}
-
-      // Fallback local instantáneo
-      const nom = asistenteNombrePersonalizado.value || 'Toastie';
-      const frases = [
-        `¡OMFG HELLO! Soy ${nom}. Todo tranquilo en el sistema. Te avisaré aquí mismo si entra un correo o mensaje.`,
-        `¡Aquí sigo en la esquina cuidando tus pendientes! Si un compañero te escribe en el chat, te lo diré al instante.`,
-        `¡Todo al 100%! Lotes sincronizados y sin alertas críticas por el momento. ¡A darle con todo!`,
-        `¿Buscando algo? Recuerda que el Mapeo de Lotes y Escalatorias están disponibles con un clic en la barra flotante.`
-      ];
-      const frase = frases[Math.floor(Math.random() * frases.length)];
-
-      hablarAsistente({
-        id: `click_${Date.now()}`,
-        tipo: 'saludo',
-        titulo: `🍞 ¡Hola! Soy ${nom}`,
-        texto: frase,
-        subtexto: 'Tu centinela personal de pantalla',
-        hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        accion: '',
-        duracion_segundos: 8
-      });
+    const limpiarHistorialChat = () => {
+      conversacionChat.value = [];
+      inicializarConversacionSiEstaVacia();
     };
 
-    /**
-     * Ejecuta acción del globo
-     */
-    const ejecutarAccionAsistente = (globo) => {
-      if (!globo) return;
-
-      if (globo.accion === 'abrir_chat') {
-        if (typeof context?.abrirModalChat === 'function') {
-          context.abrirModalChat();
-        }
-      } else if (globo.accion === 'abrir_escalatorias') {
-        if (typeof context?.abrirConsultaFlotante === 'function') {
-          context.abrirConsultaFlotante('ESCALATORIAS');
-        }
-      }
-
-      descartarGloboAsistente();
-    };
-
-    /**
-     * Inicialización del Asistente Centinela al entrar al Dashboard
-     */
-    const iniciarAsistenteCentinela = async () => {
-      const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
-      const uid = uVal.id || uVal.usuario_id || '';
-      const primerNombre = (uVal.nombre && uVal.nombre !== 'Cargando perfil...') 
-        ? uVal.nombre.split(' ')[0] 
-        : 'Esteban';
-
-      // 1. Verificar si es el primer inicio para bautizarlo
-      const onboardingCompletado = localStorage.getItem('asistente_onboarding_completado') === 'true';
-
-      if (!onboardingCompletado) {
-        try {
-          const resp = await fetch(`/api/asistente/estado?usuario_id=${encodeURIComponent(uid)}&nombre=${encodeURIComponent(primerNombre)}`);
-          if (resp.ok) {
-            const data = await resp.json();
-            if (data.primer_inicio_completado) {
-              // Ya estaba registrado en backend
-              localStorage.setItem('asistente_onboarding_completado', 'true');
-              if (data.personaje && data.personaje.nombre) {
-                asistenteNombrePersonalizado.value = data.personaje.nombre;
-                localStorage.setItem('asistente_nombre_personalizado', data.personaje.nombre);
-              }
-            } else {
-              // Primera vez: mostrar modal interactivo de bienvenida y bautizo
-              modalNombrarAsistente.value = true;
-              reproducirSonidoAsistente();
-              // Iniciar loop de monitoreo y salir del saludo automático por ahora
-              iniciarLoopMonitoreo();
-              return;
-            }
-          }
-        } catch (e) {
-          // En caso de fallo de red, si no está completado mostramos el modal
-          modalNombrarAsistente.value = true;
-          iniciarLoopMonitoreo();
-          return;
-        }
-      }
-
-      // 2. Si ya fue bautizado antes, saludar de inmediato (sub-milisegundo)
-      try {
-        const resp = await fetch(`/api/asistente/saludo?usuario_id=${encodeURIComponent(uid)}&nombre=${encodeURIComponent(primerNombre)}`);
-        if (resp.ok) {
-          const saludoGlobo = await resp.json();
-          hablarAsistente(saludoGlobo);
-        }
-      } catch (e) {}
-
-      // Consultar estadísticas de nodos en el grafo de conocimiento
-      try {
-        const respG = await fetch('/api/asistente/grafo-stats');
-        if (respG.ok) {
-          const datG = await respG.json();
-          if (datG.grafo && datG.grafo.total_nodos) {
-            statsGrafoNodos.value = datG.grafo.total_nodos;
-          }
-        }
-      } catch (e) {}
-
-      iniciarLoopMonitoreo();
-    };
-
-    const iniciarLoopMonitoreo = () => {
-      if (!asistenteLoopPoll) {
-        asistenteLoopPoll = setInterval(() => {
-          verificarEventosAsistente();
-        }, 4500);
-      }
-    };
-
-    // Inicializar de forma segura sin retrasos perceptibles
+    // Inicialización al arrancar
     setTimeout(() => {
-      iniciarAsistenteCentinela();
-    }, 1200);
+      detectarNombreUsuario();
+      // Ocultar saludo automáticamente a los 9 segundos si no lo tocan
+      temporizadorSaludo = setTimeout(() => {
+        asistenteGloboVisible.value = false;
+      }, 9000);
+    }, 1000);
 
     return {
-      asistenteGloboActual,
-      asistenteProgresoCierre,
-      asistentePausado,
-      asistenteAnimando,
-      asistenteEstadoVisual,
-      asistenteHistorialAbierto,
-      asistenteHistorial,
-      asistenteMetricas,
-      asistenteSonidoHabilitado,
       asistenteNombrePersonalizado,
-      modalNombrarAsistente,
-      inputNuevoNombreAsistente,
-      sugerenciasNombres,
-      preguntaCerebroTexto,
-      enviandoPreguntaCerebro,
-      statsGrafoNodos,
-      enviarPreguntaCerebro,
-      abrirRenombrarAsistente,
-      elegirSugerenciaNombre,
-      guardarNombreAsistente,
-      hablarAsistente,
-      descartarGloboAsistente,
-      pausarAutoOcultarAsistente,
-      reanudarAutoOcultarAsistente,
-      alHacerClicEnTostada,
-      ejecutarAccionAsistente,
-      reproducirSonidoAsistente
+      asistenteGloboVisible,
+      nombreUsuarioActivo,
+      chatAsistenteAbierto,
+      conversacionChat,
+      textoEntradaChat,
+      cargandoRespuestaChat,
+      sugerenciasPreguntas,
+      toggleChatAsistente,
+      enviarMensajeDesdeInput,
+      enviarPreguntaSugerida,
+      limpiarHistorialChat
     };
   };
 })();
