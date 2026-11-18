@@ -18,7 +18,8 @@ from ASISTENTE.cerebro.herramientas import (
     tool_consultar_escalatorias,
     tool_buscar_conocimiento,
     tool_explorar_carpetas,
-    tool_consultar_insumos
+    tool_consultar_insumos,
+    tool_consultar_claves_posiciones
 )
 
 
@@ -116,7 +117,26 @@ class MotorRazonamiento:
         p_lower = pregunta.lower().strip()
 
         # =============================================================
-        # 0. CONSULTAS SOBRE ESCALATORIAS DE PRECIO / ADITIVAS (PRIORIDAD ALTA)
+        # 0. CONSULTAS SOBRE POSICIONES / PUESTOS / CLAVES (PRIORIDAD ALTA)
+        # =============================================================
+        palabras_pos = ["posicion", "posiciones", "posision", "posisiones", "puesto", "puestos"]
+        if any(w in p_lower for w in palabras_pos) and any(w in p_lower for w in ["clave", "crear", "ultima", "última", "siguiente", "nueva", "disponible", "cuales", "cuáles", "catalogo", "catálogo", "cuantas", "cuántas"]):
+            info_pos = tool_consultar_claves_posiciones()
+            if info_pos.get("ok"):
+                return {
+                    "ok": True,
+                    "motor": "Catálogo de Posiciones",
+                    "pregunta": pregunta,
+                    "respuesta": (
+                        f"🎯 **Claves de Posición para Usuarios:**\n"
+                        f"• **Última clave registrada:** `{info_pos['ultima_clave']}` ({info_pos['ultimo_puesto_nombre']})\n"
+                        f"• **Siguiente clave para crear:** `{info_pos['siguiente_clave']}`\n"
+                        f"• **Total catalogadas:** {info_pos['total_posiciones']} posiciones"
+                    )
+                }
+
+        # =============================================================
+        # 0.1 CONSULTAS SOBRE ESCALATORIAS DE PRECIO / ADITIVAS (PRIORIDAD ALTA)
         # =============================================================
         palabras_esc = ["escalatoria", "escalatorias", "aditiva", "aditivas", "ajuste de precio", "ajustes de precio"]
         es_consulta_escalatoria = any(w in p_lower for w in palabras_esc)
@@ -385,7 +405,14 @@ class MotorRazonamiento:
         # 5. DETECCIÓN DE OBRAS ESPECÍFICAS (ej. HFA, DQA, DQC, C38, C39)
         # =============================================================
         coincidencias_obra = re.findall(r"\b([A-Z0-9]{3,4})\b", p_upper)
-        palabras_ignorar = {"PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE", "CUAL", "CUAN", "DONDE", "COMO", "TIENE", "HAY"}
+        palabras_ignorar = {
+            "PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE",
+            "CUAL", "CUAN", "DONDE", "COMO", "TIENE", "HAY", "LOS", "LAS",
+            "DEL", "CON", "POR", "QUE", "MAS", "SUS", "MIS", "TUS", "SON",
+            "ERA", "FUE", "SER", "VER", "DAR", "UNOS", "UNAS", "CREAR",
+            "CLAVE", "ULTIMO", "ULTIMA", "PUESTO", "USUARIO", "USUARIOS",
+            "SABES", "TIENEN", "PUEDE", "DATOS", "PUESTOS", "POSICION", "POSICIONES"
+        }
         for palabra in coincidencias_obra:
             if palabra in palabras_ignorar:
                 continue

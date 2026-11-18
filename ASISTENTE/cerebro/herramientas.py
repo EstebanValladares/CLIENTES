@@ -162,22 +162,77 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
         return {"ok": False, "error": str(e), "total": 0, "usuarios": []}
 
 
+def tool_consultar_claves_posiciones() -> Dict[str, Any]:
+    """Obtiene la última clave registrada de posiciones y la siguiente disponible para crear."""
+    if not os.path.exists(PATH_PUESTOS_JSON):
+        return {"ok": False, "error": "puestos.json no encontrado"}
+
+    try:
+        with open(PATH_PUESTOS_JSON, "r", encoding="utf-8") as f:
+            p_data = json.load(f)
+
+        text = json.dumps(p_data)
+        all_pos = sorted(list(set(re.findall(r"POS-\d+", text))))
+
+        nums = [int(p.split("-")[1]) for p in all_pos]
+        max_num = max(nums) if nums else 1084
+
+        ultima_clave = f"POS-{max_num:04d}"
+        siguiente_clave = f"POS-{max_num + 1:04d}"
+
+        registradas = p_data.get("posiciones_registradas", [])
+        ultimo_registro = None
+        for r in registradas:
+            if r.get("clave") == ultima_clave:
+                ultimo_registro = r
+                break
+        if not ultimo_registro and registradas:
+            ultimo_registro = registradas[-1]
+
+        nombre_ultimo = ultimo_registro.get("nombre") if ultimo_registro else "ASESOR DE VENTA MATAMOROS"
+
+        return {
+            "ok": True,
+            "ultima_clave": ultima_clave,
+            "siguiente_clave": siguiente_clave,
+            "ultimo_puesto_nombre": nombre_ultimo,
+            "total_posiciones": p_data.get("total_posiciones", len(all_pos))
+        }
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
 def tool_consultar_obra(cc_o_nombre: str) -> Dict[str, Any]:
     """Diagnostica una obra consultando MapeoService, lotes_mapeo o catalogo_obras.json."""
-    diag = GrafoConocimiento.diagnosticar_obra(cc_o_nombre)
+    q_raw = cc_o_nombre.strip()
+    q = q_raw.lower()
+
+    # Ignorar palabras comunes que nunca deben considerarse nombres o claves de obra
+    stopwords = {
+        "para", "lote", "obra", "todo", "esta", "bien", "hola", "hace", "cual", "cuan", 
+        "donde", "como", "tiene", "tienen", "hay", "los", "las", "les", "del", "con", 
+        "por", "que", "mas", "sus", "mis", "tus", "son", "era", "fue", "ser", "ver", 
+        "dar", "unos", "unas", "crear", "clave", "ultimo", "ultima", "puesto", "usuario",
+        "usuarios", "posicion", "posiciones", "siguiente"
+    }
+    if q in stopwords or len(q) < 2:
+        return {"ok": False, "mensaje": f"'{cc_o_nombre}' no es una clave de obra válida"}
+
+    # 1. Diagnóstico por CC en lotes_mapeo
+    diag = GrafoConocimiento.diagnosticar_obra(q_raw.upper())
     if diag.get("ok"):
         return diag
 
-    # Buscar en OBRAS/catalogo_obras.json por clave o nombre
+    # 2. Buscar en OBRAS/catalogo_obras.json por clave exacta o palabra completa
     if os.path.exists(PATH_CATALOGO_OBRAS):
         try:
             with open(PATH_CATALOGO_OBRAS, "r", encoding="utf-8") as f:
                 obras = json.load(f)
-            q = cc_o_nombre.strip().lower()
+
+            # A) Coincidencia exacta de clave de obra (ej. "AP4", "117", "226", "HFA")
             for ob in obras:
-                nom = str(ob.get("nombre", "")).lower()
-                cve = str(ob.get("clave", "")).lower()
-                if q in nom or q == cve:
+                cve = str(ob.get("clave", "")).strip().lower()
+                if q == cve:
                     return {
                         "ok": True,
                         "obra": ob.get("clave"),
@@ -190,6 +245,25 @@ def tool_consultar_obra(cc_o_nombre: str) -> Dict[str, Any]:
                         "total_tarjetas": ob.get("total_tarjetas", 0),
                         "es_catalogo_obras": True
                     }
+
+            # B) Coincidencia de palabra completa si tiene al menos 3 caracteres
+            if len(q) >= 3:
+                pattern = re.compile(r'\b' + re.escape(q) + r'\b', re.IGNORECASE)
+                for ob in obras:
+                    nom = str(ob.get("nombre", ""))
+                    if pattern.search(nom):
+                        return {
+                            "ok": True,
+                            "obra": ob.get("clave"),
+                            "nombre": ob.get("nombre"),
+                            "presupuesto_clave": ob.get("presupuesto_clave"),
+                            "importe_total": ob.get("importe_total", 0),
+                            "moneda": ob.get("moneda", "MXN"),
+                            "total_partidas": ob.get("total_partidas", 0),
+                            "total_frentes": ob.get("total_frentes", 0),
+                            "total_tarjetas": ob.get("total_tarjetas", 0),
+                            "es_catalogo_obras": True
+                        }
         except Exception:
             pass
 
