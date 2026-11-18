@@ -34,7 +34,7 @@
     "Comisionable": "False",
     "ID_1": "498",
     "hasLicense": "False",
-    "Version": "95278556"
+    "Version": "96561682"
   },
   {
     "ID": "2",
@@ -145,7 +145,7 @@
     "Comisionable": "False",
     "ID_1": "615",
     "hasLicense": "True",
-    "Version": "95318386"
+    "Version": "96562865"
   },
   {
     "ID": "5",
@@ -219,7 +219,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93407528"
+    "Version": "96473053"
   },
   {
     "ID": "7",
@@ -811,7 +811,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94301301"
+    "Version": "96475475"
   },
   {
     "ID": "23",
@@ -848,7 +848,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238561"
+    "Version": "96503951"
   },
   {
     "ID": "24",
@@ -1042,8 +1042,8 @@
     "Nombre": "ALMA DELIA",
     "Apellidos": "GONZALEZ VAZQUEZ",
     "Telefono": "8332300770",
-    "VigenciaInicio": "16/12/2024 18:00:00",
-    "VigenciaFin": "03/01/2035 18:00:00",
+    "VigenciaInicio": "17/12/2024",
+    "VigenciaFin": "04/01/2035",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "b1d2a35d-39cb-47d2-9c04-560a41d2dd84",
@@ -1052,14 +1052,14 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "12/11/2026 14:20:49",
-    "IdModificadoPor": "1060",
-    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
+    "Modificado": "17/11/2026 23:10:31",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "61",
     "ClavePosicion": "POS-0067",
     "Posicion": "ANALISTA DE TITULACION TAMPICO",
-    "IdEstatus": "14",
-    "Estatus": "Inactivos",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -1069,8 +1069,8 @@
     "Bloqueado": "0",
     "Comisionable": "True",
     "ID_1": "240",
-    "hasLicense": "False",
-    "Version": "94394248"
+    "hasLicense": "True",
+    "Version": "96497867"
   },
   {
     "ID": "30",
@@ -1292,7 +1292,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94200909"
+    "Version": "96257537"
   },
   {
     "ID": "36",
@@ -1329,7 +1329,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "86187637"
+    "Version": "96257684"
   },
   {
     "ID": "37",
@@ -1440,7 +1440,7 @@
     "Comisionable": "True",
     "ID_1": "605",
     "hasLicense": "True",
-    "Version": "94582689"
+    "Version": "95378199"
   },
   {
     "ID": "40",
@@ -1514,7 +1514,7 @@
     "Comisionable": "False",
     "ID_1": "507",
     "hasLicense": "True",
-    "Version": "90056631"
+    "Version": "96176967"
   },
   {
     "ID": "42",
@@ -1625,7 +1625,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94258647"
+    "Version": "95845727"
   },
   {
     "ID": "45",
@@ -2513,7 +2513,7 @@
     "Comisionable": "True",
     "ID_1": "69",
     "hasLicense": "True",
-    "Version": "93579166"
+    "Version": "96041590"
   },
   {
     "ID": "70",
@@ -2665,13 +2665,13 @@
   },
   {
     "ID": "74",
-    "Clave": "yara.alvarez@grupovelas.com",
+    "Clave": "yara.alvarez.liderventas@grupovelas.com",
     "Email": "yara.alvarez@grupovelas.com",
     "Nombre": "YARA SORAIDA",
     "Apellidos": "ALVAREZ ANAYA",
     "Telefono": "8332300770",
-    "VigenciaInicio": "15/12/2024",
-    "VigenciaFin": "02/01/2035",
+    "VigenciaInicio": "15/12/2024 18:00:00",
+    "VigenciaFin": "02/01/2035 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "2b9d50bc-4e97-430d-9624-aa89605f710f",
@@ -2680,9 +2680,9 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "02/09/2026 21:45:36",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 17:42:11",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "263",
     "ClavePosicion": "POS-0270",
     "Posicion": "LIDER DE VENTAS MATAMOROS",
@@ -2698,7 +2698,7 @@
     "Comisionable": "True",
     "ID_1": "258",
     "hasLicense": "True",
-    "Version": "94633592"
+    "Version": "96049220"
   },
   {
     "ID": "75",
@@ -2855,8 +2855,8 @@
     "Nombre": "BEATRIZ",
     "Apellidos": "LOPEZ GARCIA ",
     "Telefono": "8332300770",
-    "VigenciaInicio": "14/12/2024 06:00:00",
-    "VigenciaFin": "01/01/2035 06:00:00",
+    "VigenciaInicio": "14/12/2024 12:00:00",
+    "VigenciaFin": "01/01/2035 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "7072b08d-c3d4-4281-9fda-644e863b1b4a",
@@ -2865,14 +2865,14 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "18/07/2025 03:05:30",
-    "IdModificadoPor": "4",
-    "ModificadoPor": "LUIS SOTERO CRUZ GOMEZ",
+    "Modificado": "13/11/2026 22:22:03",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "106",
     "ClavePosicion": "POS-0112",
     "Posicion": "LIDER DE VENTAS PDC",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -2882,8 +2882,8 @@
     "Bloqueado": "0",
     "Comisionable": "True",
     "ID_1": "157",
-    "hasLicense": "True",
-    "Version": "18989858"
+    "hasLicense": "False",
+    "Version": "95364501"
   },
   {
     "ID": "80",
@@ -3031,7 +3031,7 @@
     "Comisionable": "True",
     "ID_1": "263",
     "hasLicense": "True",
-    "Version": "85571531"
+    "Version": "96501931"
   },
   {
     "ID": "84",
@@ -4252,7 +4252,7 @@
     "Comisionable": "True",
     "ID_1": "50",
     "hasLicense": "True",
-    "Version": "94070811"
+    "Version": "96472783"
   },
   {
     "ID": "117",
@@ -4770,7 +4770,7 @@
     "Comisionable": "True",
     "ID_1": "134",
     "hasLicense": "True",
-    "Version": "94770579"
+    "Version": "96310078"
   },
   {
     "ID": "131",
@@ -6176,7 +6176,7 @@
     "Comisionable": "True",
     "ID_1": "109",
     "hasLicense": "True",
-    "Version": "86257967"
+    "Version": "96474976"
   },
   {
     "ID": "169",
@@ -7027,7 +7027,7 @@
     "Comisionable": "False",
     "ID_1": "183",
     "hasLicense": "True",
-    "Version": "95238571"
+    "Version": "96491467"
   },
   {
     "ID": "192",
@@ -7064,7 +7064,7 @@
     "Comisionable": "False",
     "ID_1": "3",
     "hasLicense": "True",
-    "Version": "94859469"
+    "Version": "96569774"
   },
   {
     "ID": "193",
@@ -8285,7 +8285,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94652463"
+    "Version": "95370114"
   },
   {
     "ID": "226",
@@ -8840,7 +8840,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95060462"
+    "Version": "95970002"
   },
   {
     "ID": "241",
@@ -10882,10 +10882,10 @@
     "Clave": "dsaldana@invelmex.mx",
     "Email": "dsaldana@invelmex.mx",
     "Nombre": "DULCE",
-    "Apellidos": "SALDAÑA",
+    "Apellidos": "SALDAÑA MENDOZA",
     "Telefono": "8332300770",
-    "VigenciaInicio": "02/01/2025 18:00:00",
-    "VigenciaFin": "02/01/2026 18:00:00",
+    "VigenciaInicio": "03/01/2025",
+    "VigenciaFin": "03/01/2026",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "f01353ac-b60e-4ef1-bd3c-95c62110da08",
@@ -10894,14 +10894,14 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "07/10/2026 16:44:17",
-    "IdModificadoPor": "1052",
-    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "Modificado": "17/11/2026 16:27:42",
+    "IdModificadoPor": "4",
+    "ModificadoPor": "LUIS SOTERO CRUZ GOMEZ",
     "IdPosicion": "329",
     "ClavePosicion": "POS-0322",
-    "Posicion": "LIDER CALL CENTER MATAMOROS",
-    "IdEstatus": "14",
-    "Estatus": "Inactivos",
+    "Posicion": "LIDER DE MATAMOROS",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -10912,7 +10912,7 @@
     "Comisionable": "True",
     "ID_1": "196",
     "hasLicense": "False",
-    "Version": "73103238"
+    "Version": "95908209"
   },
   {
     "ID": "297",
@@ -12031,8 +12031,8 @@
     "Nombre": "MARGARITA",
     "Apellidos": "CHÁVEZ HERNÁNDEZ",
     "Telefono": "8332300770",
-    "VigenciaInicio": "02/01/2025 12:00:00",
-    "VigenciaFin": "02/07/2025 12:00:00",
+    "VigenciaInicio": "02/01/2025 18:00:00",
+    "VigenciaFin": "02/07/2025 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "09b1e0fa-d22e-41bc-883b-8d3354c0e1a0",
@@ -12041,25 +12041,25 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "191",
     "CreadoPor": "ARTURO",
-    "Modificado": "07/10/2026 17:10:55",
+    "Modificado": "13/11/2026 22:39:44",
     "IdModificadoPor": "1052",
     "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "353",
     "ClavePosicion": "POS-0437",
-    "Posicion": "ASESOR CALL CENTER MATAMOROS",
-    "IdEstatus": "14",
-    "Estatus": "Inactivos",
+    "Posicion": "ASESOR DE MATAMOROS",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
     "Idioma": "Español (México)",
-    "IdAreaOrganizacion": "2449",
-    "AreaOrganizacion": "CALL CENTER",
+    "IdAreaOrganizacion": "797",
+    "AreaOrganizacion": "VENTAS",
     "Bloqueado": "0",
     "Comisionable": "True",
     "ID_1": "227",
     "hasLicense": "False",
-    "Version": "73123228"
+    "Version": "95385639"
   },
   {
     "ID": "328",
@@ -13576,7 +13576,7 @@
     "Comisionable": "True",
     "ID_1": "284",
     "hasLicense": "True",
-    "Version": "89686113"
+    "Version": "96569946"
   },
   {
     "ID": "369",
@@ -13724,7 +13724,7 @@
     "Comisionable": "True",
     "ID_1": "289",
     "hasLicense": "True",
-    "Version": "94275995"
+    "Version": "96562132"
   },
   {
     "ID": "373",
@@ -20384,7 +20384,7 @@
     "Comisionable": "True",
     "ID_1": "487",
     "hasLicense": "True",
-    "Version": "93107906"
+    "Version": "96174540"
   },
   {
     "ID": "553",
@@ -21124,7 +21124,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95125351"
+    "Version": "96475453"
   },
   {
     "ID": "573",
@@ -21346,7 +21346,7 @@
     "Comisionable": "False",
     "ID_1": "505",
     "hasLicense": "True",
-    "Version": "90220668"
+    "Version": "95394281"
   },
   {
     "ID": "579",
@@ -21383,7 +21383,7 @@
     "Comisionable": "False",
     "ID_1": "506",
     "hasLicense": "True",
-    "Version": "95067362"
+    "Version": "96310112"
   },
   {
     "ID": "580",
@@ -21457,7 +21457,7 @@
     "Comisionable": "False",
     "ID_1": "509",
     "hasLicense": "True",
-    "Version": "94780500"
+    "Version": "96186387"
   },
   {
     "ID": "582",
@@ -21531,7 +21531,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "84770689"
+    "Version": "96185589"
   },
   {
     "ID": "584",
@@ -21827,7 +21827,7 @@
     "Comisionable": "True",
     "ID_1": "517",
     "hasLicense": "True",
-    "Version": "69657059"
+    "Version": "96299253"
   },
   {
     "ID": "592",
@@ -22382,7 +22382,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238569"
+    "Version": "96471793"
   },
   {
     "ID": "607",
@@ -22419,7 +22419,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94858263"
+    "Version": "96569089"
   },
   {
     "ID": "608",
@@ -22456,7 +22456,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95211232"
+    "Version": "96569812"
   },
   {
     "ID": "609",
@@ -22493,7 +22493,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95111742"
+    "Version": "96486231"
   },
   {
     "ID": "610",
@@ -22650,9 +22650,9 @@
     "Nombre": "MARÍA DEL CARMEN",
     "Apellidos": "DÁVALOS RAMÍREZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "14/01/2025 07:00:00",
-    "VigenciaFin": "13/01/2027 19:00:00",
-    "InicioOperaciones": "12/01/2025 07:00:00",
+    "VigenciaInicio": "14/01/2025 13:00:00",
+    "VigenciaFin": "14/01/2027 01:00:00",
+    "InicioOperaciones": "12/01/2025 13:00:00",
     "IdCliente": "",
     "UUID": "ef386611-8a8e-4320-9be3-fa3a4e3a6b81",
     "IdAgente": "533",
@@ -22660,7 +22660,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "05/11/2026 18:09:40",
+    "Modificado": "13/11/2026 22:09:11",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "618",
@@ -22678,7 +22678,7 @@
     "Comisionable": "False",
     "ID_1": "533",
     "hasLicense": "True",
-    "Version": "95127127"
+    "Version": "96494630"
   },
   {
     "ID": "615",
@@ -22724,8 +22724,8 @@
     "Nombre": "ANA LUISA",
     "Apellidos": "GÓMEZ MUÑOZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "09/01/2025 01:00:00",
-    "VigenciaFin": "08/01/2027 19:00:00",
+    "VigenciaInicio": "09/01/2025 07:00:00",
+    "VigenciaFin": "09/01/2027 01:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "999f499e-9296-442c-944c-b75ac84f9489",
@@ -22734,7 +22734,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "07/09/2026 23:28:08",
+    "Modificado": "13/11/2026 22:41:45",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "620",
@@ -22752,7 +22752,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95272025"
+    "Version": "96299485"
   },
   {
     "ID": "617",
@@ -22798,8 +22798,8 @@
     "Nombre": "KAREN ESTEPHANIA",
     "Apellidos": "LÓPEZ FRANCO",
     "Telefono": "0101010101",
-    "VigenciaInicio": "10/01/2025 07:00:00",
-    "VigenciaFin": "10/01/2027 01:00:00",
+    "VigenciaInicio": "10/01/2025 19:00:00",
+    "VigenciaFin": "10/01/2027 13:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "c88ee0b9-d151-447b-96c3-5b4fea122c3c",
@@ -22808,7 +22808,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "07/11/2026 16:30:32",
+    "Modificado": "17/11/2026 16:07:48",
     "IdModificadoPor": "904",
     "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
     "IdPosicion": "623",
@@ -22826,7 +22826,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94640643"
+    "Version": "96438538"
   },
   {
     "ID": "619",
@@ -22937,7 +22937,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94329750"
+    "Version": "95969179"
   },
   {
     "ID": "622",
@@ -23233,7 +23233,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238619"
+    "Version": "96504645"
   },
   {
     "ID": "630",
@@ -23242,8 +23242,8 @@
     "Nombre": "ERIKA ESMERALDA",
     "Apellidos": "MARTINEZ SANCHEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "06/01/2025 06:00:00",
-    "VigenciaFin": "05/01/2027 12:00:00",
+    "VigenciaInicio": "06/01/2025 12:00:00",
+    "VigenciaFin": "05/01/2027 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "4a88d7ef-a005-4208-aa0d-0fa0df6a96d9",
@@ -23252,9 +23252,9 @@
     "IdDashBoard": "1042",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "13/11/2026 16:59:24",
-    "IdModificadoPor": "630",
-    "ModificadoPor": "ERIKA ESMERALDA MARTINEZ SANCHEZ",
+    "Modificado": "17/11/2026 15:30:28",
+    "IdModificadoPor": "904",
+    "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
     "IdPosicion": "630",
     "ClavePosicion": "POS-0639",
     "Posicion": "CAPTURISTA ALMACÉN TAMPICO",
@@ -23270,7 +23270,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94874129"
+    "Version": "95848260"
   },
   {
     "ID": "631",
@@ -23418,7 +23418,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94820648"
+    "Version": "96299372"
   },
   {
     "ID": "635",
@@ -23455,7 +23455,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94858577"
+    "Version": "96049308"
   },
   {
     "ID": "636",
@@ -23529,7 +23529,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93856475"
+    "Version": "96568695"
   },
   {
     "ID": "638",
@@ -23640,7 +23640,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94806846"
+    "Version": "96497226"
   },
   {
     "ID": "641",
@@ -23677,7 +23677,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94805653"
+    "Version": "96569227"
   },
   {
     "ID": "642",
@@ -23714,7 +23714,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95067773"
+    "Version": "96239326"
   },
   {
     "ID": "643",
@@ -23788,7 +23788,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94850914"
+    "Version": "96317455"
   },
   {
     "ID": "645",
@@ -23862,7 +23862,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95024804"
+    "Version": "95849053"
   },
   {
     "ID": "647",
@@ -23871,8 +23871,8 @@
     "Nombre": "BRENDA ELIZABETH",
     "Apellidos": "HERNANDEZ LOREDO",
     "Telefono": "0101010101",
-    "VigenciaInicio": "07/01/2025 13:00:00",
-    "VigenciaFin": "07/01/2027 13:00:00",
+    "VigenciaInicio": "07/01/2025 19:00:00",
+    "VigenciaFin": "07/01/2027 19:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "8a8e6329-2506-4ef1-85ac-4c3f2c556fc7",
@@ -23881,7 +23881,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "13/11/2026 16:45:08",
+    "Modificado": "13/11/2026 23:01:16",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "650",
@@ -23899,7 +23899,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95210780"
+    "Version": "95561093"
   },
   {
     "ID": "648",
@@ -23919,8 +23919,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "05/11/2026 20:52:08",
-    "IdModificadoPor": "1060",
-    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "651",
     "ClavePosicion": "POS-0660",
     "Posicion": "AUXILIAR DE OBRA TAMPICO",
@@ -23936,7 +23936,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94646988"
+    "Version": "96467977"
   },
   {
     "ID": "649",
@@ -24010,7 +24010,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95318398"
+    "Version": "95928856"
   },
   {
     "ID": "651",
@@ -24352,8 +24352,8 @@
     "Nombre": "ÁLVARO",
     "Apellidos": "ELIZALDE TORRES",
     "Telefono": "0101010101",
-    "VigenciaInicio": "02/08/2026 12:00:00",
-    "VigenciaFin": "02/02/2027 06:00:00",
+    "VigenciaInicio": "02/08/2026 18:00:00",
+    "VigenciaFin": "02/02/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "a7ad2727-0972-44d3-8c39-5c6496632df4",
@@ -24362,7 +24362,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "03/10/2026 16:45:02",
+    "Modificado": "17/11/2026 16:24:24",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "664",
@@ -24380,7 +24380,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95095458"
+    "Version": "96048590"
   },
   {
     "ID": "661",
@@ -24602,7 +24602,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93856321"
+    "Version": "96568704"
   },
   {
     "ID": "667",
@@ -24713,7 +24713,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "91343329"
+    "Version": "95847276"
   },
   {
     "ID": "670",
@@ -24935,7 +24935,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94619567"
+    "Version": "96426292"
   },
   {
     "ID": "676",
@@ -24972,7 +24972,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95061269"
+    "Version": "96569755"
   },
   {
     "ID": "677",
@@ -25083,7 +25083,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94883311"
+    "Version": "95808522"
   },
   {
     "ID": "680",
@@ -25120,7 +25120,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95064792"
+    "Version": "96569788"
   },
   {
     "ID": "681",
@@ -25157,7 +25157,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94820348"
+    "Version": "95840705"
   },
   {
     "ID": "682",
@@ -25166,8 +25166,8 @@
     "Nombre": "HILARIO",
     "Apellidos": "SANTIAGO FELIX",
     "Telefono": "0101010101",
-    "VigenciaInicio": "12/01/2025 08:00:00",
-    "VigenciaFin": "12/01/2027 02:00:00",
+    "VigenciaInicio": "12/01/2025 14:00:00",
+    "VigenciaFin": "05/11/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "b48d9bb1-6231-4e0f-a16c-9005b803531b",
@@ -25176,14 +25176,14 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "10/11/2026 16:50:22",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 16:04:16",
+    "IdModificadoPor": "975",
+    "ModificadoPor": "SANTOS PEREZ TOLENTINO",
     "IdPosicion": "1050",
     "ClavePosicion": "POS-1061",
     "Posicion": "CONTROL DE MATERIALES",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -25193,8 +25193,8 @@
     "Bloqueado": "0",
     "Comisionable": "",
     "ID_1": "",
-    "hasLicense": "True",
-    "Version": "94652555"
+    "hasLicense": "False",
+    "Version": "95885057"
   },
   {
     "ID": "683",
@@ -25231,7 +25231,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95063114"
+    "Version": "96069310"
   },
   {
     "ID": "684",
@@ -25240,8 +25240,8 @@
     "Nombre": "GRISELDA",
     "Apellidos": "GONZALEZ HERNANDEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "06/01/2025 19:00:00",
-    "VigenciaFin": "06/01/2027 19:00:00",
+    "VigenciaInicio": "07/01/2025 01:00:00",
+    "VigenciaFin": "07/01/2027 01:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "59caa1ca-f992-48cc-adc3-009c9d607e11",
@@ -25250,9 +25250,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "02/11/2026 16:04:51",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "18/11/2026 14:02:31",
+    "IdModificadoPor": "1060",
+    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "688",
     "ClavePosicion": "POS-0697",
     "Posicion": "COMPRADOR PDC",
@@ -25268,7 +25268,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94637693"
+    "Version": "96569095"
   },
   {
     "ID": "685",
@@ -25305,7 +25305,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94839701"
+    "Version": "95884122"
   },
   {
     "ID": "686",
@@ -25379,7 +25379,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94941201"
+    "Version": "96567428"
   },
   {
     "ID": "688",
@@ -25453,7 +25453,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95040496"
+    "Version": "96383034"
   },
   {
     "ID": "690",
@@ -25527,7 +25527,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93059370"
+    "Version": "96568307"
   },
   {
     "ID": "692",
@@ -25675,7 +25675,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95027952"
+    "Version": "96560578"
   },
   {
     "ID": "696",
@@ -25786,7 +25786,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95274195"
+    "Version": "96553274"
   },
   {
     "ID": "699",
@@ -25823,7 +25823,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95127385"
+    "Version": "96316988"
   },
   {
     "ID": "700",
@@ -25934,7 +25934,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95150866"
+    "Version": "96524436"
   },
   {
     "ID": "703",
@@ -25980,8 +25980,8 @@
     "Nombre": "ALEJANDRO",
     "Apellidos": "ROMO BALMORI",
     "Telefono": "0101010101",
-    "VigenciaInicio": "02/01/2025",
-    "VigenciaFin": "01/01/2027 06:00:00",
+    "VigenciaInicio": "02/01/2025 06:00:00",
+    "VigenciaFin": "31/03/2027 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "3480dd84-ab92-4522-abb8-f8a3a6a594c0",
@@ -25990,9 +25990,9 @@
     "IdDashBoard": "251",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "21/01/2026 19:03:32",
-    "IdModificadoPor": "4",
-    "ModificadoPor": "LUIS SOTERO CRUZ GOMEZ",
+    "Modificado": "13/11/2026 22:32:50",
+    "IdModificadoPor": "975",
+    "ModificadoPor": "SANTOS PEREZ TOLENTINO",
     "IdPosicion": "704",
     "ClavePosicion": "POS-0713",
     "Posicion": "ASESOR DE VENTA PDC",
@@ -26008,7 +26008,7 @@
     "Comisionable": "True",
     "ID_1": "530",
     "hasLicense": "True",
-    "Version": "21020908"
+    "Version": "95378220"
   },
   {
     "ID": "705",
@@ -28302,7 +28302,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "93711160"
+    "Version": "96094552"
   },
   {
     "ID": "769",
@@ -28598,7 +28598,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95054012"
+    "Version": "96303699"
   },
   {
     "ID": "777",
@@ -28635,7 +28635,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95061080"
+    "Version": "96562189"
   },
   {
     "ID": "778",
@@ -28672,7 +28672,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94898554"
+    "Version": "96471795"
   },
   {
     "ID": "779",
@@ -28709,7 +28709,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95263436"
+    "Version": "95556167"
   },
   {
     "ID": "780",
@@ -28931,7 +28931,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94798686"
+    "Version": "95817042"
   },
   {
     "ID": "786",
@@ -28968,7 +28968,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "89362677"
+    "Version": "95815993"
   },
   {
     "ID": "787",
@@ -29116,7 +29116,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94840950"
+    "Version": "96346404"
   },
   {
     "ID": "791",
@@ -29162,9 +29162,9 @@
     "Nombre": "RAUL IVAN",
     "Apellidos": "GARCIA GONZALEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "04/01/2026 14:00:00",
-    "VigenciaFin": "14/01/2027 20:00:00",
-    "InicioOperaciones": "04/01/2026 14:00:00",
+    "VigenciaInicio": "05/01/2026 02:00:00",
+    "VigenciaFin": "15/01/2027 08:00:00",
+    "InicioOperaciones": "05/01/2026 02:00:00",
     "IdCliente": "",
     "UUID": "87c300a9-3a66-48af-8b3b-1b556b3f1fe1",
     "IdAgente": "",
@@ -29172,9 +29172,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "05/11/2026 15:48:56",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 17:20:55",
+    "IdModificadoPor": "1060",
+    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "777",
     "ClavePosicion": "POS-0786",
     "Posicion": "CONTRALOR DE OBRA REYNOSA BIENESTAR",
@@ -29190,7 +29190,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95319903"
+    "Version": "96035701"
   },
   {
     "ID": "793",
@@ -29338,7 +29338,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95111761"
+    "Version": "96569220"
   },
   {
     "ID": "797",
@@ -29375,7 +29375,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94837994"
+    "Version": "96486185"
   },
   {
     "ID": "798",
@@ -29523,7 +29523,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94850986"
+    "Version": "96472427"
   },
   {
     "ID": "802",
@@ -29819,7 +29819,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95099663"
+    "Version": "96171927"
   },
   {
     "ID": "811",
@@ -30115,7 +30115,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238691"
+    "Version": "96443714"
   },
   {
     "ID": "819",
@@ -30494,8 +30494,8 @@
     "Nombre": "DULCE GUADALUPE",
     "Apellidos": "MEDINA AGUILAR",
     "Telefono": "0101010101",
-    "VigenciaInicio": "10/02/2026 02:00:00",
-    "VigenciaFin": "10/02/2027 02:00:00",
+    "VigenciaInicio": "10/02/2026 14:00:00",
+    "VigenciaFin": "10/02/2027 14:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "c19e6678-4971-4515-8cc8-93d64704b618",
@@ -30504,7 +30504,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "13/11/2026 21:43:17",
+    "Modificado": "14/11/2026 19:00:19",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "814",
@@ -30522,7 +30522,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95318417"
+    "Version": "96303764"
   },
   {
     "ID": "831",
@@ -30596,7 +30596,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94850992"
+    "Version": "96560211"
   },
   {
     "ID": "833",
@@ -30605,8 +30605,8 @@
     "Nombre": "GINER DEL ANGEL",
     "Apellidos": "PALOMINO MOLINA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "05/01/2026 12:00:00",
-    "VigenciaFin": "05/01/2027 12:00:00",
+    "VigenciaInicio": "05/01/2026 18:00:00",
+    "VigenciaFin": "05/01/2027 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "72b2313a-f051-436b-8693-e73f60c6f6b5",
@@ -30615,9 +30615,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "02/11/2026 21:23:33",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 16:06:53",
+    "IdModificadoPor": "904",
+    "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
     "IdPosicion": "816",
     "ClavePosicion": "POS-0825",
     "Posicion": "AUXILIAR DE OBRA JUAREZ",
@@ -30633,7 +30633,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94199881"
+    "Version": "95885694"
   },
   {
     "ID": "834",
@@ -30744,7 +30744,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94798608"
+    "Version": "96568710"
   },
   {
     "ID": "837",
@@ -30864,8 +30864,8 @@
     "Nombre": "AGLAE DE MARIA",
     "Apellidos": "ALONSO RAZO",
     "Telefono": "0101010101",
-    "VigenciaInicio": "05/01/2026 19:00:00",
-    "VigenciaFin": "05/01/2027 19:00:00",
+    "VigenciaInicio": "06/01/2026 01:00:00",
+    "VigenciaFin": "06/01/2027 01:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "7e972cfb-0d35-4f3f-ad6b-a80a372125aa",
@@ -30874,7 +30874,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "13/11/2026 21:45:37",
+    "Modificado": "18/11/2026 14:05:36",
     "IdModificadoPor": "1060",
     "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "822",
@@ -30892,7 +30892,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95292194"
+    "Version": "96569193"
   },
   {
     "ID": "841",
@@ -31077,7 +31077,7 @@
     "Comisionable": "True",
     "ID_1": "618",
     "hasLicense": "True",
-    "Version": "90318196"
+    "Version": "96568648"
   },
   {
     "ID": "846",
@@ -31225,7 +31225,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95178070"
+    "Version": "96038040"
   },
   {
     "ID": "850",
@@ -31410,7 +31410,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94858256"
+    "Version": "96524420"
   },
   {
     "ID": "856",
@@ -31678,8 +31678,8 @@
     "Nombre": "IRELDA",
     "Apellidos": "BERNABE VILLEGAS",
     "Telefono": "0101010101",
-    "VigenciaInicio": "27/03/2026 05:00:00",
-    "VigenciaFin": "27/03/2027 05:00:00",
+    "VigenciaInicio": "27/03/2026 17:00:00",
+    "VigenciaFin": "27/03/2027 17:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "add0aaca-55e9-43c6-97b8-19c7d82a215f",
@@ -31688,9 +31688,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "05/11/2026 17:06:04",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 17:20:24",
+    "IdModificadoPor": "1060",
+    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "845",
     "ClavePosicion": "POS-0853",
     "Posicion": "AUXILIAR DE OBRA REYNOSA BIENESTAR",
@@ -31706,7 +31706,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94806834"
+    "Version": "96035635"
   },
   {
     "ID": "864",
@@ -32409,7 +32409,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94884613"
+    "Version": "95817992"
   },
   {
     "ID": "883",
@@ -32483,7 +32483,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94837537"
+    "Version": "95847103"
   },
   {
     "ID": "885",
@@ -32816,7 +32816,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238739"
+    "Version": "96471382"
   },
   {
     "ID": "895",
@@ -33186,7 +33186,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95263511"
+    "Version": "96475749"
   },
   {
     "ID": "905",
@@ -33334,7 +33334,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94444914"
+    "Version": "96042139"
   },
   {
     "ID": "909",
@@ -35147,7 +35147,7 @@
     "Comisionable": "True",
     "ID_1": "686",
     "hasLicense": "True",
-    "Version": "94806457"
+    "Version": "96310662"
   },
   {
     "ID": "958",
@@ -35267,8 +35267,8 @@
     "Nombre": "Ana Michel",
     "Apellidos": "Trujillo Ramirez",
     "Telefono": "6565803260",
-    "VigenciaInicio": "02/06/2026",
-    "VigenciaFin": "01/08/2026",
+    "VigenciaInicio": "02/06/2026 18:00:00",
+    "VigenciaFin": "02/01/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "826b0970-a8a7-4c3d-8727-220a012eb667",
@@ -35277,14 +35277,14 @@
     "IdDashBoard": "",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "15/09/2026 15:53:54",
-    "IdModificadoPor": "1052",
-    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "Modificado": "17/11/2026 16:06:20",
+    "IdModificadoPor": "904",
+    "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
     "IdPosicion": "938",
     "ClavePosicion": "POS-0945",
     "Posicion": "CAPTURISTA DE ALMACEN",
-    "IdEstatus": "14",
-    "Estatus": "Inactivos",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -35294,8 +35294,8 @@
     "Bloqueado": "0",
     "Comisionable": "False",
     "ID_1": "690",
-    "hasLicense": "False",
-    "Version": "67531284"
+    "hasLicense": "True",
+    "Version": "95885649"
   },
   {
     "ID": "962",
@@ -35785,8 +35785,8 @@
     "Nombre": "SANTOS",
     "Apellidos": "PEREZ TOLENTINO",
     "Telefono": "8334533207",
-    "VigenciaInicio": "15/07/2026 06:00:00",
-    "VigenciaFin": "28/12/2026 12:00:00",
+    "VigenciaInicio": "16/07/2026",
+    "VigenciaFin": "29/12/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "6bb09386-dbd2-435d-beb5-05c3bcccebca",
@@ -35795,7 +35795,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "650",
     "CreadoPor": "PEDRO",
-    "Modificado": "13/11/2026 16:44:40",
+    "Modificado": "17/11/2026 18:49:12",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "948",
@@ -35813,7 +35813,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95067621"
+    "Version": "96495993"
   },
   {
     "ID": "976",
@@ -36109,7 +36109,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95264288"
+    "Version": "96569223"
   },
   {
     "ID": "998",
@@ -36257,7 +36257,7 @@
     "Comisionable": "True",
     "ID_1": "711",
     "hasLicense": "True",
-    "Version": "94772634"
+    "Version": "96569630"
   },
   {
     "ID": "1002",
@@ -36405,7 +36405,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94236745"
+    "Version": "96383286"
   },
   {
     "ID": "1008",
@@ -36488,8 +36488,8 @@
     "Nombre": "ROSARIO",
     "Apellidos": "PORTILLA FLORES",
     "Telefono": "0101010101",
-    "VigenciaInicio": "06/08/2026 06:00:00",
-    "VigenciaFin": "06/02/2027",
+    "VigenciaInicio": "06/08/2026 12:00:00",
+    "VigenciaFin": "13/11/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "e64bfe2e-9715-4260-9c81-d41e3978c7ce",
@@ -36498,14 +36498,14 @@
     "IdDashBoard": "",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "10/11/2026 06:43:20",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 16:05:21",
+    "IdModificadoPor": "975",
+    "ModificadoPor": "SANTOS PEREZ TOLENTINO",
     "IdPosicion": "964",
     "ClavePosicion": "POS-0971",
     "Posicion": "RESIDENTE DE OBRA TAMPICO BIENESTAR",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -36515,8 +36515,8 @@
     "Bloqueado": "0",
     "Comisionable": "",
     "ID_1": "",
-    "hasLicense": "True",
-    "Version": "94800762"
+    "hasLicense": "False",
+    "Version": "95885247"
   },
   {
     "ID": "1011",
@@ -37737,7 +37737,7 @@
     "Comisionable": "True",
     "ID_1": "733",
     "hasLicense": "True",
-    "Version": "94806557"
+    "Version": "96569104"
   },
   {
     "ID": "1044",
@@ -37811,7 +37811,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92879105"
+    "Version": "96445281"
   },
   {
     "ID": "1047",
@@ -37959,7 +37959,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94820650"
+    "Version": "96569387"
   },
   {
     "ID": "1051",
@@ -38005,8 +38005,8 @@
     "Nombre": "YEUDIEL ESTEBAN",
     "Apellidos": "RICHARD PEREZ",
     "Telefono": "9999999999",
-    "VigenciaInicio": "19/10/2026 06:00:00",
-    "VigenciaFin": "19/12/2026",
+    "VigenciaInicio": "19/10/2026 12:00:00",
+    "VigenciaFin": "19/12/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "f52ca2b4-2dc0-410b-8ddf-90b3b9392809",
@@ -38015,7 +38015,7 @@
     "IdDashBoard": "",
     "IdCreadoPor": "975",
     "CreadoPor": "SANTOS",
-    "Modificado": "13/11/2026 18:45:35",
+    "Modificado": "17/11/2026 23:12:01",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1000",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95320222"
+    "Version": "96570001"
   },
   {
     "ID": "1053",
@@ -38181,7 +38181,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95263453"
+    "Version": "96569383"
   },
   {
     "ID": "1057",
@@ -38329,7 +38329,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95235215"
+    "Version": "96569583"
   },
   {
     "ID": "1061",
@@ -38736,7 +38736,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94798279"
+    "Version": "95959330"
   },
   {
     "ID": "1072",
@@ -38810,7 +38810,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94584882"
+    "Version": "96569225"
   },
   {
     "ID": "1074",
@@ -38819,8 +38819,8 @@
     "Nombre": "ARNOL",
     "Apellidos": "CHAVEZ GUZMAN",
     "Telefono": "0101010101",
-    "VigenciaInicio": "22/09/2026 06:00:00",
-    "VigenciaFin": "24/11/2026 06:00:00",
+    "VigenciaInicio": "22/09/2026 12:00:00",
+    "VigenciaFin": "24/11/2026 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "6d40b25f-38a8-42d7-be50-ff2795dcfc9d",
@@ -38829,7 +38829,7 @@
     "IdDashBoard": "",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "22/10/2026 17:05:19",
+    "Modificado": "17/11/2026 15:27:06",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1024",
@@ -38847,7 +38847,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95176501"
+    "Version": "96569757"
   },
   {
     "ID": "1075",
@@ -39069,7 +39069,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95260002"
+    "Version": "96503948"
   },
   {
     "ID": "1081",
@@ -39143,7 +39143,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "89131919"
+    "Version": "96310110"
   },
   {
     "ID": "1083",
@@ -39587,7 +39587,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94837877"
+    "Version": "95852751"
   },
   {
     "ID": "1095",
@@ -39624,7 +39624,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94577446"
+    "Version": "96187800"
   },
   {
     "ID": "1096",
@@ -39633,8 +39633,8 @@
     "Nombre": "ANGELICA SARAI",
     "Apellidos": "VICENCIO MONTES",
     "Telefono": "0101010101",
-    "VigenciaInicio": "11/10/2026 06:00:00",
-    "VigenciaFin": "11/01/2027 06:00:00",
+    "VigenciaInicio": "11/10/2026 12:00:00",
+    "VigenciaFin": "11/01/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "ed3557cc-19dd-4ab4-9b37-63dfac1bc532",
@@ -39643,9 +39643,9 @@
     "IdDashBoard": "",
     "IdCreadoPor": "1052",
     "CreadoPor": "YEUDIEL ESTEBAN",
-    "Modificado": "05/11/2026 15:56:07",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "17/11/2026 23:07:50",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "1042",
     "ClavePosicion": "POS-1051",
     "Posicion": "COMPRADOR CABOS",
@@ -39661,7 +39661,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94874164"
+    "Version": "96496930"
   },
   {
     "ID": "1097",
@@ -39735,7 +39735,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94805591"
+    "Version": "95441688"
   },
   {
     "ID": "1099",
@@ -39846,7 +39846,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95238563"
+    "Version": "95817227"
   },
   {
     "ID": "1102",
@@ -40068,7 +40068,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "94436950"
+    "Version": "95848612"
   },
   {
     "ID": "1108",
@@ -40743,8 +40743,8 @@
     "Nombre": "ABEL",
     "Apellidos": "HERNANDEZ SOTO",
     "Telefono": "0101010101",
-    "VigenciaInicio": "13/11/2026 06:00:00",
-    "VigenciaFin": "11/02/2027 06:00:00",
+    "VigenciaInicio": "13/11/2026 12:00:00",
+    "VigenciaFin": "11/02/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "9eea1269-f55c-401d-9afa-599619c03203",
@@ -40753,12 +40753,12 @@
     "IdDashBoard": "",
     "IdCreadoPor": "1052",
     "CreadoPor": "YEUDIEL ESTEBAN",
-    "Modificado": "13/11/2026 21:53:08",
+    "Modificado": "13/11/2026 21:55:56",
     "IdModificadoPor": "1052",
     "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
-    "IdPosicion": "",
-    "ClavePosicion": "",
-    "Posicion": "",
+    "IdPosicion": "1072",
+    "ClavePosicion": "POS-1083",
+    "Posicion": "ASESOR DE VENTA JUAREZ",
     "IdEstatus": "13",
     "Estatus": "Activo",
     "IdTimeZone": "172",
@@ -40771,6 +40771,43 @@
     "Comisionable": "True",
     "ID_1": "755",
     "hasLicense": "True",
-    "Version": "95320063"
+    "Version": "95320281"
+  },
+  {
+    "ID": "1127",
+    "Clave": "lorenamirandacommunitymanager@gmail.com",
+    "Email": "lorenamirandacommunitymanager@gmail.com",
+    "Nombre": "TANIA LORENA",
+    "Apellidos": "MIRANDA ARZATE",
+    "Telefono": "0101010101",
+    "VigenciaInicio": "18/11/2026 06:00:00",
+    "VigenciaFin": "16/02/2027 06:00:00",
+    "InicioOperaciones": "",
+    "IdCliente": "",
+    "UUID": "44dd3350-f5c5-4989-b49a-a6f442358484",
+    "IdAgente": "",
+    "Creado": "18/11/2026 14:34:22",
+    "IdDashBoard": "",
+    "IdCreadoPor": "1060",
+    "CreadoPor": "CLAUDIA SARAÍ",
+    "Modificado": "18/11/2026 14:34:22",
+    "IdModificadoPor": "1060",
+    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
+    "IdPosicion": "",
+    "ClavePosicion": "",
+    "Posicion": "",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
+    "IdTimeZone": "172",
+    "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+    "IdIdioma": "384",
+    "Idioma": "Español (México)",
+    "IdAreaOrganizacion": "797",
+    "AreaOrganizacion": "VENTAS",
+    "Bloqueado": "0",
+    "Comisionable": "",
+    "ID_1": "",
+    "hasLicense": "False",
+    "Version": "96569587"
   }
 ]
