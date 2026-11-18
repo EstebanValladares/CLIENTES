@@ -1335,35 +1335,6 @@ createApp({
       }
     }, 3000);
 
-    // ==========================================
-    // MÓDULO: ASISTENTE CENTINELA TOASTIE (vue/static/js/modules/asistente.js)
-    // ==========================================
-    const asistenteModulo = window.createAsistenteModule ? window.createAsistenteModule(Vue, {
-      chatUsuarioActual,
-      chatAbierto,
-      abrirModalChat: () => {
-        chatAbierto.value = true;
-        chatMinimizado.value = false;
-      },
-      abrirConsultaFlotante: (tipo) => {
-        if (typeof abrirConsultaFlotante === 'function') abrirConsultaFlotante(tipo);
-      }
-    }) : {};
-    const {
-      asistenteNombrePersonalizado,
-      asistenteGloboVisible,
-      nombreUsuarioActivo,
-      chatAsistenteAbierto,
-      conversacionChat,
-      textoEntradaChat,
-      cargandoRespuestaChat,
-      sugerenciasPreguntas,
-      toggleChatAsistente,
-      enviarMensajeDesdeInput,
-      enviarPreguntaSugerida,
-      limpiarHistorialChat
-    } = asistenteModulo;
-
     return {
       // CHAT DE EQUIPO Y PRIVADOS 1 A 1 ESTILO WHATSAPP
       chatAbierto,
@@ -1739,20 +1710,7 @@ createApp({
       toggleMenuConsultas,
       abrirConsultaFlotante,
       cerrarConsultaFlotante,
-      toggleMaximizarConsulta,
-      // Asistente Centinela Toastie (Modo Chat Interactivo Limpio)
-      asistenteNombrePersonalizado,
-      asistenteGloboVisible,
-      nombreUsuarioActivo,
-      chatAsistenteAbierto,
-      conversacionChat,
-      textoEntradaChat,
-      cargandoRespuestaChat,
-      sugerenciasPreguntas,
-      toggleChatAsistente,
-      enviarMensajeDesdeInput,
-      enviarPreguntaSugerida,
-      limpiarHistorialChat
+      toggleMaximizarConsulta
     };
   }
 }).mount('#app');
