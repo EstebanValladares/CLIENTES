@@ -12,6 +12,8 @@ __pycache__/
 data/*
 !data/mapeo_lotes.db
 !data/ek10_homologacion_ubicaciones.sqlite
+!data/escalatorias.db
+!data/memoria_grafo.db
 *.sqlite
 !data/ek10_homologacion_ubicaciones.sqlite
 *.sqlite3

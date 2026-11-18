@@ -16,7 +16,9 @@ from ASISTENTE.cerebro.herramientas import (
     tool_consultar_obra,
     tool_buscar_lotes,
     tool_consultar_escalatorias,
-    tool_buscar_conocimiento
+    tool_buscar_conocimiento,
+    tool_explorar_carpetas,
+    tool_consultar_insumos
 )
 
 
@@ -195,6 +197,38 @@ class MotorRazonamiento:
             }
 
         # =============================================================
+        # F) Consultas sobre carpetas, estructura o archivos del sistema
+        # =============================================================
+        if any(w in p_lower for w in ["carpeta", "carpetas", "directorio", "directorios", "archivo", "archivos", "donde estan los datos", "dónde están los datos", "estructura del", "base de datos", "bases de datos"]):
+            exp = tool_explorar_carpetas(p_lower)
+            if exp.get("tema") != "GENERAL":
+                det = exp.get("detalle", {})
+                archivos_str = "\n".join([f"  • `{a}`" for a in det.get("archivos_clave", [])])
+                return {
+                    "ok": True,
+                    "motor": "Explorador de Archivos y Carpetas",
+                    "pregunta": pregunta,
+                    "respuesta": (
+                        f"📁 **Carpeta `{det.get('ruta')}` ({exp.get('tema')}):**\n"
+                        f"_{det.get('descripcion')}_\n\n"
+                        f"**Archivos principales:**\n{archivos_str}\n\n"
+                        f"**Datos que contiene:** {det.get('datos_disponibles')}"
+                    )
+                }
+            else:
+                carpetas = exp.get("carpetas", {})
+                lineas = ["🗂️ **Ecosistema de carpetas y datos conectados:**\n"]
+                for k, v in carpetas.items():
+                    lineas.append(f"• **`{v['ruta']}`** ({k}): {v['descripcion']}")
+                lineas.append("\n💡 *Puedes pedirme detalles de cualquier carpeta (ej. '¿Qué hay en OBRAS?' o '¿Qué hay en data?').*")
+                return {
+                    "ok": True,
+                    "motor": "Explorador de Archivos",
+                    "pregunta": pregunta,
+                    "respuesta": "\n".join(lineas)
+                }
+
+        # =============================================================
         # 2. BÚSQUEDA DE COLABORADORES POR ÁREA O DEPARTAMENTO
         # =============================================================
         areas_conocidas = ["sistemas", "ventas", "titulación", "titulacion", "postventa", "call center", "broker", "obra", "proyectos", "administracion", "administración"]
@@ -250,9 +284,26 @@ class MotorRazonamiento:
             }
 
         # =============================================================
-        # 4. DETECCIÓN DE ESCALATORIAS DE PRECIOS
+        # 4. DETECCIÓN DE ESCALATORIAS E INSUMOS DE PRECIOS
         # =============================================================
-        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS", "ACERO", "BLOCK", "TINACO", "CEMENTO"]):
+        # Búsqueda de materiales / insumos específicos
+        palabras_insumo = ["insumo", "insumos", "material", "materiales", "block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex"]
+        if any(w in p_lower for w in palabras_insumo) and not es_pregunta_conteo:
+            terminos_clave = [w for w in re.findall(r"\w+", p_lower) if w in ["block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex", "concreto", "tuberia", "cable", "pintura", "impermeabilizante"]]
+            term_search = terminos_clave[0] if terminos_clave else "material"
+            res_insumos = tool_consultar_insumos(term_search, limite=4)
+            if res_insumos.get("ok") and res_insumos.get("total", 0) > 0:
+                lineas = [f"🧱 **Resultados para '{term_search.upper()}':**"]
+                for item in res_insumos["resultados"]:
+                    lineas.append(f"• **{item['tipo']}**: {item['insumo']}\n  _{item['fuente']}_")
+                return {
+                    "ok": True,
+                    "motor": "Catálogo de Insumos y Escalatorias",
+                    "pregunta": pregunta,
+                    "respuesta": "\n".join(lineas)
+                }
+
+        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS"]):
             datos_esc = tool_consultar_escalatorias()
             if datos_esc.get("ok") and datos_esc.get("escalatorias_recientes"):
                 lista = datos_esc["escalatorias_recientes"]
@@ -277,6 +328,21 @@ class MotorRazonamiento:
                 continue
             diag = tool_consultar_obra(palabra)
             if diag.get("ok"):
+                if diag.get("es_catalogo_obras"):
+                    return {
+                        "ok": True,
+                        "motor": "Catálogo de Obras y Presupuestos",
+                        "pregunta": pregunta,
+                        "respuesta": (
+                            f"🏗️ **Obra: {diag.get('nombre')} (Clave {diag.get('obra')}):**\n"
+                            f"• **Presupuesto Clave:** `{diag.get('presupuesto_clave')}`\n"
+                            f"• **Importe Presupuestado:** ${diag.get('importe_total', 0):,.2f} {diag.get('moneda')}\n"
+                            f"• **Partidas Presupuestadas:** {diag.get('total_partidas')}\n"
+                            f"• **Frentes de Trabajo:** {diag.get('total_frentes')}\n"
+                            f"• **Tarjetas de Análisis:** {diag.get('total_tarjetas')}"
+                        )
+                    }
+
                 total_lt = diag.get("total_lotes_obra") or diag.get("total_lotes_registrados", 0)
                 lotes_hom = diag.get("lotes_con_suite_ek10") or diag.get("lotes_homologados_ek10", 0)
                 lotes_pend = diag.get("lotes_pendientes_homologar") or diag.get("lotes_pendientes", 0)

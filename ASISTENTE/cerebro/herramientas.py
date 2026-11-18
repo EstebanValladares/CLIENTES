@@ -15,6 +15,8 @@ from ASISTENTE.cerebro.aprendizaje import ModuloAprendizaje
 PATH_USUARIOS_JSON = os.path.join(BASE_DIR, "USUARIOS", "data", "Usuarios.json")
 PATH_PUESTOS_JSON = os.path.join(BASE_DIR, "USUARIOS", "data", "puestos.json")
 DB_EK10_PATH = os.path.join(BASE_DIR, "data", "ek10_homologacion_ubicaciones.sqlite")
+PATH_CATALOGO_OBRAS = os.path.join(BASE_DIR, "OBRAS", "catalogo_obras.json")
+PATH_GRUPO_INSUMOS = os.path.join(BASE_DIR, "OBRAS", "GRUPO_INSUMOS_TIPO.json")
 
 
 def tool_metricas_totales() -> Dict[str, Any]:
@@ -160,9 +162,139 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
         return {"ok": False, "error": str(e), "total": 0, "usuarios": []}
 
 
-def tool_consultar_obra(cc: str) -> Dict[str, Any]:
-    """Diagnostica la salud de una obra, sus lotes y su sincronización entre EK9 y EK10."""
-    return GrafoConocimiento.diagnosticar_obra(cc)
+def tool_consultar_obra(cc_o_nombre: str) -> Dict[str, Any]:
+    """Diagnostica una obra consultando MapeoService, lotes_mapeo o catalogo_obras.json."""
+    diag = GrafoConocimiento.diagnosticar_obra(cc_o_nombre)
+    if diag.get("ok"):
+        return diag
+
+    # Buscar en OBRAS/catalogo_obras.json por clave o nombre
+    if os.path.exists(PATH_CATALOGO_OBRAS):
+        try:
+            with open(PATH_CATALOGO_OBRAS, "r", encoding="utf-8") as f:
+                obras = json.load(f)
+            q = cc_o_nombre.strip().lower()
+            for ob in obras:
+                nom = str(ob.get("nombre", "")).lower()
+                cve = str(ob.get("clave", "")).lower()
+                if q in nom or q == cve:
+                    return {
+                        "ok": True,
+                        "obra": ob.get("clave"),
+                        "nombre": ob.get("nombre"),
+                        "presupuesto_clave": ob.get("presupuesto_clave"),
+                        "importe_total": ob.get("importe_total", 0),
+                        "moneda": ob.get("moneda", "MXN"),
+                        "total_partidas": ob.get("total_partidas", 0),
+                        "total_frentes": ob.get("total_frentes", 0),
+                        "total_tarjetas": ob.get("total_tarjetas", 0),
+                        "es_catalogo_obras": True
+                    }
+        except Exception:
+            pass
+
+    return diag
+
+
+def tool_explorar_carpetas(directorio_o_tema: str = "") -> Dict[str, Any]:
+    """Explora y reporta la estructura de carpetas, bases de datos y archivos disponibles."""
+    d_lower = directorio_o_tema.lower().strip()
+
+    estructura = {
+        "USUARIOS": {
+            "ruta": "USUARIOS/data/",
+            "descripcion": "Plantilla oficial de colaboradores de Grupo Velas",
+            "archivos_clave": ["Usuarios.json (1,104 usuarios)", "puestos.json (230 posiciones)", "Usuarios.csv"],
+            "datos_disponibles": "Nombres, puestos, áreas, correos, estatus y selectores"
+        },
+        "OBRAS": {
+            "ruta": "OBRAS/",
+            "descripcion": "Catálogo de proyectos, presupuestos e insumos",
+            "archivos_clave": ["catalogo_obras.json (100+ obras con presupuesto)", "GRUPO_INSUMOS_TIPO.json", "obras.db", "CAT_OBRAS.csv"],
+            "datos_disponibles": "Presupuestos, partidas, frentes, tipos de insumos, materiales y maquinaria"
+        },
+        "DATA": {
+            "ruta": "data/",
+            "descripcion": "Bases de datos operativas en SQLite",
+            "archivos_clave": [
+                "mapeo_lotes.db (116,483 lotes, 1,444 centros de costo)",
+                "ek10_homologacion_ubicaciones.sqlite (79,845 equivalencias)",
+                "escalatorias.db (98 escalatorias autorizadas en SOC)",
+                "chat_equipo.db (mensajes y canales de comunicación)",
+                "asistente.db y memoria_grafo.db (grafo y memoria del asistente)"
+            ],
+            "datos_disponibles": "Sincronización de lotes EK9-EK10, precios autorizados, mensajes"
+        },
+        "ASISTENTE": {
+            "ruta": "ASISTENTE/cerebro/conocimiento/",
+            "descripcion": "Cerebro cognitivo, grafo de conocimiento y documentos de autoaprendizaje",
+            "archivos_clave": ["guia_operacion_ek10.md", "motor_razonamiento.py", "herramientas.py", "memoria_grafo.db"],
+            "datos_disponibles": "Reglas de homologación, guías de operación y memoria aprendida"
+        }
+    }
+
+    if "usuario" in d_lower or "colaborador" in d_lower or "puesto" in d_lower:
+        return {"ok": True, "tema": "USUARIOS", "detalle": estructura["USUARIOS"]}
+    elif "obra" in d_lower or "presupuesto" in d_lower or "partida" in d_lower:
+        return {"ok": True, "tema": "OBRAS", "detalle": estructura["OBRAS"]}
+    elif "data" in d_lower or "base" in d_lower or "lote" in d_lower or "sqlite" in d_lower:
+        return {"ok": True, "tema": "DATA", "detalle": estructura["DATA"]}
+    elif "asistente" in d_lower or "cerebro" in d_lower or "conocimiento" in d_lower:
+        return {"ok": True, "tema": "ASISTENTE", "detalle": estructura["ASISTENTE"]}
+    else:
+        return {"ok": True, "tema": "GENERAL", "carpetas": estructura}
+
+
+def tool_consultar_insumos(termino: str, limite: int = 5) -> Dict[str, Any]:
+    """Busca insumos, materiales o grupos de insumos en el catálogo maestro y escalatorias."""
+    q = termino.strip().lower()
+    coincidencias = []
+
+    # 1. Buscar en GRUPO_INSUMOS_TIPO.json
+    if os.path.exists(PATH_GRUPO_INSUMOS):
+        try:
+            with open(PATH_GRUPO_INSUMOS, "r", encoding="utf-8") as f:
+                grupos = json.load(f).get("GRUPO_INSUMOS_TIPO", [])
+            for grp in grupos:
+                tipo = grp.get("tipo", "")
+                for d in grp.get("datos", []):
+                    if q in d.lower() or q in tipo.lower():
+                        coincidencias.append({
+                            "fuente": "Catálogo Maestro de Insumos",
+                            "tipo": tipo,
+                            "insumo": d
+                        })
+        except Exception:
+            pass
+
+    # 2. Buscar en escalatorias.db
+    if os.path.exists(DB_ESC_PATH):
+        try:
+            conn = sqlite3.connect(DB_ESC_PATH)
+            conn.row_factory = sqlite3.Row
+            cur = conn.cursor()
+            rows = cur.execute("""
+                SELECT clave, nombre, estatus_desc, fecha_autorizacion, numero_insumos
+                FROM escalatorias
+                WHERE LOWER(nombre) LIKE ? OR LOWER(clave) LIKE ?
+                LIMIT ?
+            """, (f"%{q}%", f"%{q}%", limite)).fetchall()
+            for r in rows:
+                coincidencias.append({
+                    "fuente": "Escalatoria de Precios (SOC)",
+                    "tipo": f"Escalatoria {r['clave']} [{r['estatus_desc']}]",
+                    "insumo": f"{r['nombre']} (Autorizada: {r['fecha_autorizacion']})"
+                })
+            conn.close()
+        except Exception:
+            pass
+
+    return {
+        "ok": True,
+        "termino": termino,
+        "total": len(coincidencias),
+        "resultados": coincidencias[:limite]
+    }
 
 
 def tool_buscar_lotes(cc: str, manzana: str = "", limite: int = 10) -> Dict[str, Any]:
