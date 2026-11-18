@@ -23788,7 +23788,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96317455"
+    "Version": "96570061"
   },
   {
     "ID": "645",
@@ -30115,7 +30115,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96443714"
+    "Version": "96570218"
   },
   {
     "ID": "819",
@@ -30522,7 +30522,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96303764"
+    "Version": "96570303"
   },
   {
     "ID": "831",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96570001"
+    "Version": "96572002"
   },
   {
     "ID": "1053",
@@ -38181,7 +38181,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96569383"
+    "Version": "96570026"
   },
   {
     "ID": "1057",
@@ -38329,7 +38329,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96569583"
+    "Version": "96570024"
   },
   {
     "ID": "1061",
@@ -40780,19 +40780,56 @@
     "Nombre": "TANIA LORENA",
     "Apellidos": "MIRANDA ARZATE",
     "Telefono": "0101010101",
-    "VigenciaInicio": "18/11/2026 06:00:00",
-    "VigenciaFin": "16/02/2027 06:00:00",
+    "VigenciaInicio": "18/11/2026 18:00:00",
+    "VigenciaFin": "16/02/2027 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "44dd3350-f5c5-4989-b49a-a6f442358484",
-    "IdAgente": "",
+    "IdAgente": "756",
     "Creado": "18/11/2026 14:34:22",
     "IdDashBoard": "",
     "IdCreadoPor": "1060",
     "CreadoPor": "CLAUDIA SARAÍ",
-    "Modificado": "18/11/2026 14:34:22",
+    "Modificado": "18/11/2026 14:58:59",
     "IdModificadoPor": "1060",
     "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
+    "IdPosicion": "1073",
+    "ClavePosicion": "POS-1084",
+    "Posicion": "BROKER QRO",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
+    "IdTimeZone": "172",
+    "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+    "IdIdioma": "384",
+    "Idioma": "Español (México)",
+    "IdAreaOrganizacion": "797",
+    "AreaOrganizacion": "VENTAS",
+    "Bloqueado": "0",
+    "Comisionable": "True",
+    "ID_1": "756",
+    "hasLicense": "True",
+    "Version": "96570118"
+  },
+  {
+    "ID": "1128",
+    "Clave": "yara.alvarez@grupovelas.com",
+    "Email": "yara.alvarez@grupovelas.com",
+    "Nombre": "YARA SORAIDA",
+    "Apellidos": "ALVAREZ ANAYA",
+    "Telefono": "0101010101",
+    "VigenciaInicio": "18/11/2026 06:00:00",
+    "VigenciaFin": "16/02/2027 06:00:00",
+    "InicioOperaciones": "",
+    "IdCliente": "",
+    "UUID": "87efd8e3-5b23-4c72-a916-00dea98abbc2",
+    "IdAgente": "757",
+    "Creado": "18/11/2026 15:01:10",
+    "IdDashBoard": "",
+    "IdCreadoPor": "1052",
+    "CreadoPor": "YEUDIEL ESTEBAN",
+    "Modificado": "18/11/2026 15:01:10",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "",
     "ClavePosicion": "",
     "Posicion": "",
@@ -40805,9 +40842,9 @@
     "IdAreaOrganizacion": "797",
     "AreaOrganizacion": "VENTAS",
     "Bloqueado": "0",
-    "Comisionable": "",
-    "ID_1": "",
-    "hasLicense": "False",
-    "Version": "96569587"
+    "Comisionable": "True",
+    "ID_1": "757",
+    "hasLicense": "True",
+    "Version": "96570180"
   }
 ]
