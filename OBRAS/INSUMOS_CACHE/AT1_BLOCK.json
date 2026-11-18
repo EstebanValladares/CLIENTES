@@ -1,0 +1,995 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AT1",
+    "nombre": "AT1 - 12 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-A)"
+  },
+  "metricas": {
+    "total_partidas": 8,
+    "total_frentes": 8,
+    "total_insumos_resumen": 2,
+    "presupuesto_real_total": 2794.25,
+    "requisitado_total": 2794.25,
+    "comprado_total": 1872.0,
+    "por_comprar_total": 922.25
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "COLIBRI FACHADA * A* LOTE 1",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "COLIBRI FACHADA * A* LOTE 1"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 60.125,
+              "importe_ppto": 977.0313,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 60.125,
+              "vigente_tarjetas": 120.25,
+              "diferencia": -60.125,
+              "requisitado": 60.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 60.125,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "COLIBRI FACHADA * B* LOTE 2",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "MUROS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "COLIBRI FACHADA * B* LOTE 2"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 293.375,
+              "importe_ppto": 4767.3438,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 293.375,
+              "vigente_tarjetas": 293.375,
+              "diferencia": 0,
+              "requisitado": 293.375,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 293.375,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            },
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 128.125,
+              "importe_ppto": 2050,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 128.125,
+              "vigente_tarjetas": 128.125,
+              "diferencia": 0,
+              "requisitado": 128.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 128.125,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "COLIBRI FACHADA * C* LOTE 3",
+      "partidas": [
+        {
+          "id": "1.3.1",
+          "codigo": "1.3.1",
+          "nombre": "MUROS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "COLIBRI FACHADA * C* LOTE 3"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 293.375,
+              "importe_ppto": 4767.3438,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 293.375,
+              "vigente_tarjetas": 293.375,
+              "diferencia": 0,
+              "requisitado": 293.375,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 293.375,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            },
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 128.125,
+              "importe_ppto": 2050,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 128.125,
+              "vigente_tarjetas": 128.125,
+              "diferencia": 0,
+              "requisitado": 128.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 128.125,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "COLIBRI FACHADA * D *  LOTE 4",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "MUROS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 293.375,
+              "importe_ppto": 4767.3438,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 293.375,
+              "vigente_tarjetas": 293.375,
+              "diferencia": 0,
+              "requisitado": 293.375,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 293.375,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            },
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 128.125,
+              "importe_ppto": 2050,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 128.125,
+              "vigente_tarjetas": 128.125,
+              "diferencia": 0,
+              "requisitado": 128.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 128.125,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "COLIBRI FACHADA * A* LOTE 5",
+      "partidas": [
+        {
+          "id": "1.5.1",
+          "codigo": "1.5.1",
+          "nombre": "MUROS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "COLIBRI FACHADA * A* LOTE 5"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 293.375,
+              "importe_ppto": 4767.3438,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 293.375,
+              "vigente_tarjetas": 293.375,
+              "diferencia": 0,
+              "requisitado": 293.375,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 293.375,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            },
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 128.125,
+              "importe_ppto": 2050,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 128.125,
+              "vigente_tarjetas": 128.125,
+              "diferencia": 0,
+              "requisitado": 128.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 128.125,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.6",
+      "codigo": "1.6",
+      "nombre": "COLIBRI FACHADA * B* LOTE 6",
+      "partidas": [
+        {
+          "id": "1.6.1",
+          "codigo": "1.6.1",
+          "nombre": "MUROS",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "COLIBRI FACHADA * B* LOTE 6"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 272.125,
+              "importe_ppto": 4422.0313,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 272.125,
+              "vigente_tarjetas": 272.125,
+              "diferencia": 0,
+              "requisitado": 272.125,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 272.125,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            },
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 335,
+              "importe_ppto": 5360,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 335,
+              "vigente_tarjetas": 335,
+              "diferencia": 0,
+              "requisitado": 335,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 335,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.17",
+      "codigo": "1.17",
+      "nombre": "TINACOS",
+      "partidas": [
+        {
+          "id": "1.17.1",
+          "codigo": "1.17.1",
+          "nombre": "BASES DE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.17",
+            "codigo": "1.17",
+            "nombre": "TINACOS"
+          },
+          "insumos": [
+            {
+              "clave": "1050004",
+              "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 180,
+              "importe_ppto": 2925,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 180,
+              "vigente_tarjetas": 180,
+              "diferencia": 0,
+              "requisitado": 180,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 161.125,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 18.875,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.23",
+      "codigo": "1.23",
+      "nombre": "OBRA EXTERIOR",
+      "partidas": [
+        {
+          "id": "1.23.1",
+          "codigo": "1.23.1",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.23",
+            "codigo": "1.23",
+            "nombre": "OBRA EXTERIOR"
+          },
+          "insumos": [
+            {
+              "clave": "1050022",
+              "nombre": "BLOCK 12 X 20 X 40 PESADO",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 261,
+              "importe_ppto": 4176,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 261,
+              "vigente_tarjetas": 261,
+              "diferencia": 0,
+              "requisitado": 261,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 260.75,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.25,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "COLIBRI FACHADA * A* LOTE 1"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 60.125,
+          "importe_ppto": 977.0313,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 60.125,
+          "vigente_tarjetas": 120.25,
+          "diferencia": -60.125,
+          "requisitado": 60.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 60.125,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "MUROS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "COLIBRI FACHADA * B* LOTE 2"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 293.375,
+          "importe_ppto": 4767.3438,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 293.375,
+          "vigente_tarjetas": 293.375,
+          "diferencia": 0,
+          "requisitado": 293.375,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 293.375,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        },
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 128.125,
+          "importe_ppto": 2050,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 128.125,
+          "vigente_tarjetas": 128.125,
+          "diferencia": 0,
+          "requisitado": 128.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 128.125,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.1",
+      "codigo": "1.3.1",
+      "nombre": "MUROS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "COLIBRI FACHADA * C* LOTE 3"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 293.375,
+          "importe_ppto": 4767.3438,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 293.375,
+          "vigente_tarjetas": 293.375,
+          "diferencia": 0,
+          "requisitado": 293.375,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 293.375,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        },
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 128.125,
+          "importe_ppto": 2050,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 128.125,
+          "vigente_tarjetas": 128.125,
+          "diferencia": 0,
+          "requisitado": 128.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 128.125,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "MUROS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "COLIBRI FACHADA * D *  LOTE 4"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 293.375,
+          "importe_ppto": 4767.3438,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 293.375,
+          "vigente_tarjetas": 293.375,
+          "diferencia": 0,
+          "requisitado": 293.375,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 293.375,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        },
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 128.125,
+          "importe_ppto": 2050,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 128.125,
+          "vigente_tarjetas": 128.125,
+          "diferencia": 0,
+          "requisitado": 128.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 128.125,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.1",
+      "codigo": "1.5.1",
+      "nombre": "MUROS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "COLIBRI FACHADA * A* LOTE 5"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 293.375,
+          "importe_ppto": 4767.3438,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 293.375,
+          "vigente_tarjetas": 293.375,
+          "diferencia": 0,
+          "requisitado": 293.375,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 293.375,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        },
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 128.125,
+          "importe_ppto": 2050,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 128.125,
+          "vigente_tarjetas": 128.125,
+          "diferencia": 0,
+          "requisitado": 128.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 128.125,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.1",
+      "codigo": "1.6.1",
+      "nombre": "MUROS",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "COLIBRI FACHADA * B* LOTE 6"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 272.125,
+          "importe_ppto": 4422.0313,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 272.125,
+          "vigente_tarjetas": 272.125,
+          "diferencia": 0,
+          "requisitado": 272.125,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 272.125,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        },
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 335,
+          "importe_ppto": 5360,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 335,
+          "vigente_tarjetas": 335,
+          "diferencia": 0,
+          "requisitado": 335,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 335,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.17.1",
+      "codigo": "1.17.1",
+      "nombre": "BASES DE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.17",
+        "codigo": "1.17",
+        "nombre": "TINACOS"
+      },
+      "insumos": [
+        {
+          "clave": "1050004",
+          "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 180,
+          "importe_ppto": 2925,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 180,
+          "vigente_tarjetas": 180,
+          "diferencia": 0,
+          "requisitado": 180,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 161.125,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 18.875,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.23.1",
+      "codigo": "1.23.1",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.23",
+        "codigo": "1.23",
+        "nombre": "OBRA EXTERIOR"
+      },
+      "insumos": [
+        {
+          "clave": "1050022",
+          "nombre": "BLOCK 12 X 20 X 40 PESADO",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 261,
+          "importe_ppto": 4176,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 261,
+          "vigente_tarjetas": 261,
+          "diferencia": 0,
+          "requisitado": 261,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 260.75,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.25,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1050004",
+      "nombre": "BLOCK 15 X 20 X 40 PESADO NMX-C-404-ONNCEE-2005",
+      "unidad": "PZA",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 1685.75,
+      "importe_ppto": 27393.4378,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 1685.75,
+      "vigente_tarjetas": 1745.875,
+      "diferencia": -60.125,
+      "requisitado": 1685.75,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 1020,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0,
+      "por_comprar": 665.75,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    },
+    {
+      "clave": "1050022",
+      "nombre": "BLOCK 12 X 20 X 40 PESADO",
+      "unidad": "PZA",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 1108.5,
+      "importe_ppto": 17736,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 1108.5,
+      "vigente_tarjetas": 1108.5,
+      "diferencia": 0,
+      "requisitado": 1108.5,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 852,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0,
+      "por_comprar": 256.5,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AT1",
+    "insumo": "",
+    "nombre": "BLOCK"
+  }
+}
