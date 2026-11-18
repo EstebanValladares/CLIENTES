@@ -1335,25 +1335,6 @@ createApp({
       }
     }, 3000);
 
-    // ==========================================
-    // MÓDULO: KHIARA AUTONOMOUS AGENT (vue/static/js/modules/khiara.js)
-    // ==========================================
-    const khiaraModulo = window.createKhiaraModule ? window.createKhiaraModule(Vue, {}) : {};
-    const {
-      khiaraOnline,
-      khiaraChatAbierto,
-      khiaraCargando,
-      khiaraInput,
-      khiaraMensajes,
-      khiaraNotificaciones,
-      khiaraNotifNoLeidas,
-      khiaraGloboAlerta,
-      toggleChatKhiara,
-      enviarMensajeKhiara,
-      limpiarHistorialKhiara,
-      formatearMarkdownKhiara
-    } = khiaraModulo;
-
     return {
       // CHAT DE EQUIPO Y PRIVADOS 1 A 1 ESTILO WHATSAPP
       chatAbierto,
