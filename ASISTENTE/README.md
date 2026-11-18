@@ -10,7 +10,16 @@ A diferencia de los chatbots convencionales donde el usuario debe abrir una vent
 ### 🎯 Icono y Personaje
 * Basado en la icónica tostada animada de **OMFG - Hello**.
 * Imagen transparente en alta definición ubicada en: `assets/toast.png` (y servida en `/static/img/toast.png`).
-* Animación suave en reposo (`animate-toast-idle`) y bote alegre al hablar o interactuar (`animate-toast-bounce`).
+
+### 🎬 Sistema de Estados y Animaciones CSS:
+1. **Saludo Inicial con la Manita (`saludando`):**  
+   Al arrancar el Dashboard o hacer clic en él, la tostada hace un balanceo alegre (`animate-toast-wave`) y agita su manita (`👋 animate-hand-wave`) de forma enérgica.
+2. **Alerta de Mensaje o Escalatoria (`alerta`):**  
+   Al llegar un nuevo mensaje de chat o escalatoria autorizada, da un brinco alto y elástico (`animate-toast-alert`) con manita agitada y sonido de burbuja.
+3. **Calma y Parpadeo Natural (`calma`):**  
+   En reposo, flota suavemente (`animate-toast-calma`) y sus ojos parpadean cada 3.8 segundos con una capa SVG adaptada a su tono de piel.
+4. **Modo Sueño tras Inactividad (`durmiendo`):**  
+   Si el usuario no interactúa durante 40 segundos, la tostada se inclina suavemente (`animate-toast-sleep`), cierra sus ojos y flotan letras **Zzz** hacia arriba. Al mover el mouse o teclear, ¡se despierta al instante con un pequeño estirón!
 
 ---
 
