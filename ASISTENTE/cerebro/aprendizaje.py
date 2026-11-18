@@ -13,6 +13,20 @@ from ASISTENTE.cerebro.grafo_conocimiento import GrafoConocimiento
 
 
 class ModuloAprendizaje:
+    _ultimo_escaneo_ts = 0.0
+
+    @classmethod
+    def asegurar_aprendizaje_al_dia(cls):
+        """Verifica de forma automática e imperceptible si hay archivos en la carpeta de conocimiento."""
+        import time
+        ahora = time.time()
+        if ahora - cls._ultimo_escaneo_ts > 15:
+            cls._ultimo_escaneo_ts = ahora
+            try:
+                cls.escanear_carpeta_conocimiento()
+            except Exception:
+                pass
+
     @classmethod
     def inicializar_tablas(cls):
         conn = GrafoConocimiento.get_db()

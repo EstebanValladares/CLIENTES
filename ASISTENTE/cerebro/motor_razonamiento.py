@@ -19,7 +19,8 @@ from ASISTENTE.cerebro.herramientas import (
     tool_buscar_conocimiento,
     tool_explorar_carpetas,
     tool_consultar_insumos,
-    tool_consultar_claves_posiciones
+    tool_consultar_claves_posiciones,
+    tool_consultar_insumo_en_obra
 )
 
 
@@ -30,6 +31,12 @@ class MotorRazonamiento:
         Punto de entrada principal para responder consultas con razonamiento.
         Usa Gemini API si la clave está configurada; de lo contrario usa el motor inteligente local.
         """
+        # Asegurar de forma automática que cualquier documento nuevo esté indexado
+        try:
+            ModuloAprendizaje.asegurar_aprendizaje_al_dia()
+        except Exception:
+            pass
+
         api_key = obtener_gemini_api_key()
 
         if api_key:
@@ -159,6 +166,22 @@ class MotorRazonamiento:
                         break
 
             if obra_detectada:
+                # Si específicamente preguntan por un material en esa obra (ej. block en AUS)
+                terminos_mat = [w for w in re.findall(r"\w+", p_lower) if w in ["acero", "block", "concreto", "tinaco", "alambre", "mortero", "varilla", "armex", "malla", "cemento"]]
+                if terminos_mat:
+                    mat = terminos_mat[0]
+                    res_mat = tool_consultar_insumo_en_obra(mat, obra_detectada)
+                    if res_mat.get("ok") and res_mat.get("total", 0) > 0:
+                        lineas = [f"🧱 **{mat.upper()} en Obra {obra_detectada}:**"]
+                        for i in res_mat["resultados"][:3]:
+                            lineas.append(f"• **{i['nombre']}**: ${i['precio']:,.2f} {i['moneda']} (Presupuesto original: ${i['precio_ppto']:,.2f}) [{i['escalatoria_clave']}]")
+                        return {
+                            "ok": True,
+                            "motor": "Insumo en Obra",
+                            "pregunta": pregunta,
+                            "respuesta": "\n".join(lineas)
+                        }
+
                 res_esc = tool_consultar_escalatorias(obra_o_cc=obra_detectada)
                 tot = res_esc.get("total_escalatorias", 0)
                 lista = res_esc.get("escalatorias", [])
@@ -350,7 +373,7 @@ class MotorRazonamiento:
         palabras_usuario = [
             "usuario", "colaborador", "compañero", "compañera", "quién es", "quien es",
             "sabes si", "conoces a", "persona", "correo", "email", "puesto", "trabaja",
-            "contacto", "encargado", "líder", "lider"
+            "contacto", "encargado", "líder", "lider", "id de", "id del", "cual es el id", "cuál es el id"
         ]
         es_pregunta_persona = any(w in p_lower for w in palabras_usuario)
 
@@ -360,17 +383,19 @@ class MotorRazonamiento:
             if len(lista) == 1:
                 u = lista[0]
                 texto = (
-                    f"👤 **¡Sí! Encontré a {u['nombre_completo']}:**\n"
+                    f"👤 **{u['nombre_completo']}:**\n"
+                    f"• **ID de Usuario:** {u.get('id', 'N/D')}\n"
+                    f"• **Clave Posición:** `{u.get('clave_posicion', 'N/D')}`\n"
                     f"• **Puesto:** {u['puesto']}\n"
                     f"• **Área:** {u['area']}\n"
                     f"• **Correo:** `{u['email']}`\n"
                     f"• **Estatus:** {u['estatus']}"
                 )
             else:
-                texto = f"👥 **Encontré {res_usuarios['total']} colaboradores que coinciden:**\n\n"
+                texto = f"👥 **{res_usuarios['total']} colaboradores encontrados:**\n\n"
                 for u in lista:
                     texto += (
-                        f"• **{u['nombre_completo']}**\n"
+                        f"• **{u['nombre_completo']}** (ID: {u.get('id')} | Posición: {u.get('clave_posicion')})\n"
                         f"  Puesto: {u['puesto']} ({u['area']})\n"
                         f"  Correo: `{u['email']}`\n\n"
                     )
@@ -385,10 +410,26 @@ class MotorRazonamiento:
         # 4. DETECCIÓN DE ESCALATORIAS E INSUMOS DE PRECIOS
         # =============================================================
         # Búsqueda de materiales / insumos específicos
-        palabras_insumo = ["insumo", "insumos", "material", "materiales", "block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex"]
+        palabras_insumo = ["insumo", "insumos", "material", "materiales", "block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex", "precio", "costo"]
         if any(w in p_lower for w in palabras_insumo) and not es_pregunta_conteo:
-            terminos_clave = [w for w in re.findall(r"\w+", p_lower) if w in ["block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex", "concreto", "tuberia", "cable", "pintura", "impermeabilizante"]]
+            terminos_clave = [w for w in re.findall(r"\w+", p_lower) if w in ["block", "acero", "cemento", "tinaco", "alambre", "mortero", "varilla", "armex", "concreto", "tuberia", "cable", "pintura", "impermeabilizante", "malla"]]
             term_search = terminos_clave[0] if terminos_clave else "material"
+
+            # Revisar si se menciona una obra en específico (ej. "precio del block en AUS")
+            coincidencias_cand = [w for w in re.findall(r"\b([A-Z0-9]{2,5})\b", p_upper) if w not in {"PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE", "CUAL", "CUAN", "DONDE", "COMO", "TIENE", "HAY", "LOS", "LAS", "DEL", "CON", "POR", "QUE", "MAS", "PRECIO", "COSTO"}]
+            for c_cand in coincidencias_cand:
+                res_ins_obra = tool_consultar_insumo_en_obra(term_search, c_cand)
+                if res_ins_obra.get("ok") and res_ins_obra.get("total", 0) > 0:
+                    lineas = [f"🧱 **{term_search.upper()} en Obra {c_cand}:**"]
+                    for i in res_ins_obra["resultados"][:3]:
+                        lineas.append(f"• **{i['nombre']}**: ${i['precio']:,.2f} {i['moneda']} (Presupuesto original: ${i['precio_ppto']:,.2f}) [{i['escalatoria_clave']}]")
+                    return {
+                        "ok": True,
+                        "motor": "Insumo en Obra",
+                        "pregunta": pregunta,
+                        "respuesta": "\n".join(lineas)
+                    }
+
             res_insumos = tool_consultar_insumos(term_search, limite=4)
             if res_insumos.get("ok") and res_insumos.get("total", 0) > 0:
                 lineas = [f"🧱 **Resultados para '{term_search.upper()}':**"]

@@ -130,7 +130,9 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
             "persona", "personas", "colaborador", "colaboradores", "compañero", "compañera",
             "quien", "quién", "es", "el", "la", "los", "las", "de", "en", "a", "por", "favor",
             "dime", "busca", "buscar", "contacto", "correo", "email", "trabaja", "cuantos",
-            "cuántos", "hay", "guardados", "registrados", "activos"
+            "cuántos", "hay", "guardados", "registrados", "activos", "cual", "cuál", "cuales",
+            "cuáles", "id", "clave", "numero", "número", "telefono", "teléfono", "dame", "muestra",
+            "muéstrame", "pasa", "pásame", "tiene", "tienen", "su", "sus", "del", "al", "para", "como", "cómo"
         }
 
         tokens = [w for w in re.findall(r"\w+", consulta.lower()) if w not in stop_words and len(w) > 2]
@@ -145,6 +147,7 @@ def tool_buscar_usuario(consulta: str, limite: int = 5) -> Dict[str, Any]:
             if all(t in texto_completo for t in tokens):
                 coincidencias.append({
                     "id": u.get("ID"),
+                    "clave_posicion": u.get("ClavePosicion") or "N/D",
                     "nombre_completo": nom_comp,
                     "puesto": u.get("Posicion") or "Sin puesto asignado",
                     "area": u.get("AreaOrganizacion") or "General",
@@ -369,6 +372,40 @@ def tool_consultar_insumos(termino: str, limite: int = 5) -> Dict[str, Any]:
         "total": len(coincidencias),
         "resultados": coincidencias[:limite]
     }
+
+
+def tool_consultar_insumo_en_obra(termino_insumo: str, obra_o_cc: str) -> Dict[str, Any]:
+    """Busca el costo y escalatoria de un insumo específico dentro de una obra determinada."""
+    if not os.path.exists(DB_ESC_PATH):
+        return {"ok": False, "error": "Base de datos de escalatorias no disponible"}
+
+    try:
+        conn = sqlite3.connect(DB_ESC_PATH)
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        c_obra = obra_o_cc.strip().upper()
+        q_ins = f"%{termino_insumo.strip().upper()}%"
+
+        rows = cur.execute("""
+            SELECT DISTINCT nombre, precio, precio_ppto, precio_anterior, moneda, escalatoria_clave, obra_nombre
+            FROM escalatoria_insumos
+            WHERE (UPPER(obra_clave) = ? OR UPPER(obra_nombre) LIKE ?)
+              AND UPPER(nombre) LIKE ?
+            ORDER BY id DESC
+            LIMIT 5
+        """, (c_obra, f"{c_obra} - %", q_ins)).fetchall()
+
+        conn.close()
+        return {
+            "ok": True,
+            "obra": obra_o_cc,
+            "insumo": termino_insumo,
+            "total": len(rows),
+            "resultados": [dict(r) for r in rows]
+        }
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
 
 
 def tool_buscar_lotes(cc: str, manzana: str = "", limite: int = 10) -> Dict[str, Any]:

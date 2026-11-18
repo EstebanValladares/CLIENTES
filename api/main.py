@@ -260,6 +260,13 @@ def _sondear_telemetria_oc():
 
 @app.on_event("startup")
 def startup_event():
+    # Autoaprendizaje del Asistente: Ingesta de archivos de conocimiento
+    try:
+        from ASISTENTE.cerebro.aprendizaje import ModuloAprendizaje
+        ModuloAprendizaje.escanear_carpeta_conocimiento()
+    except Exception:
+        pass
+
     # Solo ejecutar demonio de OC si estamos en el entorno MASTER
     if es_modo_master():
         iniciar_demonio_oc(intervalo_segundos=60)
