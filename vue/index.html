@@ -919,17 +919,6 @@
       animation: dockPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* ======================================================== */
-    /* ASISTENTE CENTINELA (TOASTIE) - EFECTOS LIMPIOS          */
-    /* ======================================================== */
-    @keyframes popSpeech {
-      0% { opacity: 0; transform: translateY(12px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .animate-pop-speech {
-      animation: popSpeech 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
     /* MODO CLARO: LIQUID FROSTED GLASS */
     .dock-glass-outer-light {
       background: rgba(255, 255, 255, 0.38) !important;
@@ -1644,11 +1633,6 @@
     <!-- COMPONENTE: VENTANA FLOTANTE DE CONSULTAS (MAPEO Y FUTURAS) -->
     <!-- ======================================================== -->
     <!-- INCLUDE: views/consultas_flotantes/modal_flotante.html -->
-    <!-- ======================================================== -->
-    <!-- COMPONENTE CENTINELA: ASISTENTE EN ESQUINA (TOASTIE)     -->
-    <!-- ======================================================== -->
-    <!-- INCLUDE: views/asistente_widget.html -->
-    <!-- ======================================================== -->
     <!-- (Los modales de Usuarios se encuentran modularizados en views/usuarios.html) -->
 
 
@@ -2248,7 +2232,6 @@
 <script src="/static/js/modules/escalatorias.js?v=20261112_1230"></script>
 <script src="/static/js/modules/consultas_flotantes.js?v=20261118_0938"></script>
 <script src="/static/js/modules/proveedores_contratistas.js?v=20261118_0938"></script>
-<script src="/static/js/modules/asistente.js?v=20261118_1105"></script>
 <!-- Orquestador Principal -->
 <script src="/static/js/app.js?v=20261118_0945"></script>
 
