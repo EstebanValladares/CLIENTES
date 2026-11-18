@@ -261,18 +261,84 @@
       {{ asistenteMetricas.dms_no_leidos }}
     </div>
 
-    <!-- Avatar de la Tostada (OMFG Hello) -->
+    <!-- Avatar de la Tostada (OMFG Hello) con Estados Animados -->
     <button @click="alHacerClicEnTostada"
-            class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center transition-transform transform active:scale-90 cursor-pointer focus:outline-none"
-            :class="asistenteAnimando ? 'animate-toast-bounce' : 'animate-toast-idle'"
-            :title="'¡Hola! Soy ' + (asistenteNombrePersonalizado || 'Toastie') + ', tu centinela de pantalla. Haz clic para interactuar.'">
+            class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center transition-all transform active:scale-90 cursor-pointer focus:outline-none"
+            :class="{
+              'animate-toast-alert': asistenteEstadoVisual === 'alerta',
+              'animate-toast-wave': asistenteEstadoVisual === 'saludando',
+              'animate-toast-sleep opacity-90': asistenteEstadoVisual === 'durmiendo',
+              'animate-toast-wake': asistenteEstadoVisual === 'despertando',
+              'animate-toast-calma': asistenteEstadoVisual === 'calma'
+            }"
+            :title="asistenteEstadoVisual === 'durmiendo' 
+              ? (asistenteNombrePersonalizado || 'Toastie') + ' está durmiendo (Zzz)... Mueve el mouse o haz clic para despertarlo.'
+              : '¡Hola! Soy ' + (asistenteNombrePersonalizado || 'Toastie') + ', tu centinela de pantalla. Haz clic para interactuar.'">
       
+      <!-- Manita saludando agitándose enérgicamente (en saludo inicial y al llegar mensaje) -->
+      <transition enter-active-class="transition-all duration-200"
+                  leave-active-class="transition-all duration-150"
+                  enter-from-class="opacity-0 scale-50"
+                  leave-to-class="opacity-0 scale-50">
+        <div v-if="asistenteEstadoVisual === 'saludando' || asistenteEstadoVisual === 'alerta'"
+             class="absolute -top-1 -right-1 z-30 text-2xl filter drop-shadow animate-hand-wave pointer-events-none select-none">
+          👋
+        </div>
+      </transition>
+
+      <!-- Letras Zzz flotando hacia arriba cuando duerme -->
+      <div v-if="asistenteEstadoVisual === 'durmiendo'"
+           class="absolute -top-7 -right-1 z-30 pointer-events-none select-none flex flex-col items-center">
+        <span class="text-xs font-black text-indigo-400 dark:text-cyan-400 animate-zzz-1">z</span>
+        <span class="text-sm font-black text-indigo-500 dark:text-cyan-300 animate-zzz-2">Z</span>
+        <span class="text-base font-black text-indigo-600 dark:text-cyan-200 animate-zzz-3">Z</span>
+      </div>
+
+      <!-- Imagen base de la Tostada HD -->
       <img src="/static/img/toast.png?v=20261118_1000" 
            alt="OMFG Hello Toast" 
-           class="w-full h-full object-contain filter drop-shadow-lg select-none pointer-events-none transition-transform group-hover:scale-110">
+           class="w-full h-full object-contain filter drop-shadow-lg select-none pointer-events-none transition-transform group-hover:scale-105">
 
-      <!-- Indicador de pulso activo -->
-      <span class="absolute bottom-1 right-3 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 shadow"></span>
+      <!-- ============================================== -->
+      <!-- CAPA DE OJOS: PARPADEO EN CALMA Y OJOS CERRADOS AL DORMIR -->
+      <!-- ============================================== -->
+      <!-- Ojo Izquierdo -->
+      <div class="absolute pointer-events-none select-none transition-all duration-150"
+           style="left: 30.5%; top: 15.2%; width: 17.2%; height: 19.5%;"
+           :class="{
+             'animate-eye-blink': asistenteEstadoVisual === 'calma',
+             'opacity-100 scale-y-100': asistenteEstadoVisual === 'durmiendo',
+             'opacity-0': asistenteEstadoVisual !== 'calma' && asistenteEstadoVisual !== 'durmiendo'
+           }">
+        <div class="w-full h-full rounded-full flex items-center justify-center relative"
+             style="background-color: #FBDFB7;">
+          <!-- Pestaña / línea de ojo cerrado feliz -->
+          <svg viewBox="0 0 40 30" class="w-full h-full fill-none stroke-black stroke-[4] stroke-linecap-round">
+            <path d="M 6 12 Q 20 26 34 12" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Ojo Derecho -->
+      <div class="absolute pointer-events-none select-none transition-all duration-150"
+           style="left: 52.2%; top: 15.2%; width: 17.2%; height: 17.5%;"
+           :class="{
+             'animate-eye-blink': asistenteEstadoVisual === 'calma',
+             'opacity-100 scale-y-100': asistenteEstadoVisual === 'durmiendo',
+             'opacity-0': asistenteEstadoVisual !== 'calma' && asistenteEstadoVisual !== 'durmiendo'
+           }">
+        <div class="w-full h-full rounded-full flex items-center justify-center relative"
+             style="background-color: #FBDFB7;">
+          <!-- Pestaña / línea de ojo cerrado feliz -->
+          <svg viewBox="0 0 40 30" class="w-full h-full fill-none stroke-black stroke-[4] stroke-linecap-round">
+            <path d="M 6 11 Q 20 24 34 11" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Indicador de pulso activo (Verde despierto / Azul suave durmiendo) -->
+      <span class="absolute bottom-1 right-3 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-slate-900 shadow transition-colors"
+            :class="asistenteEstadoVisual === 'durmiendo' ? 'bg-indigo-400 dark:bg-cyan-400' : 'bg-emerald-500'"></span>
     </button>
 
   </div>

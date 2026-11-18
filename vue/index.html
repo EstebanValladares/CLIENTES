@@ -922,26 +922,112 @@
     /* ======================================================== */
     /* ANIMACIONES DEL ASISTENTE CENTINELA (TOASTIE)            */
     /* ======================================================== */
-    @keyframes toastIdle {
+    /* 1. Calma / Flotación con parpadeo */
+    @keyframes toastIdleCalm {
       0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(1.5deg); }
+      50% { transform: translateY(-5px) rotate(1.2deg); }
     }
-    @keyframes toastBounce {
-      0% { transform: scale(1) translateY(0); }
-      30% { transform: scale(1.18) translateY(-14px) rotate(-4deg); }
-      50% { transform: scale(0.92) translateY(2px) rotate(3deg); }
-      70% { transform: scale(1.06) translateY(-5px) rotate(-1deg); }
-      100% { transform: scale(1) translateY(0); }
+    .animate-toast-calma {
+      animation: toastIdleCalm 3.6s ease-in-out infinite;
     }
+
+    /* 2. Saludo de bienvenida con manita y cuerpo */
+    @keyframes toastWave {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      15% { transform: translateY(-10px) rotate(-14deg) scale(1.08); }
+      30% { transform: translateY(-4px) rotate(14deg) scale(1.08); }
+      45% { transform: translateY(-10px) rotate(-12deg) scale(1.08); }
+      60% { transform: translateY(-4px) rotate(12deg) scale(1.08); }
+      75% { transform: translateY(-8px) rotate(-6deg) scale(1.04); }
+      90% { transform: translateY(-2px) rotate(4deg) scale(1.02); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+    .animate-toast-wave {
+      animation: toastWave 1.6s ease-in-out infinite;
+    }
+
+    /* 3. Brinco alegre de alerta cuando entra mensaje o escalatoria */
+    @keyframes toastAlertJump {
+      0% { transform: translateY(0) scale(1) rotate(0deg); }
+      20% { transform: translateY(-24px) scale(1.2) rotate(-9deg); }
+      40% { transform: translateY(4px) scale(0.9) rotate(7deg); }
+      60% { transform: translateY(-14px) scale(1.1) rotate(-6deg); }
+      80% { transform: translateY(2px) scale(0.98) rotate(3deg); }
+      100% { transform: translateY(0) scale(1) rotate(0deg); }
+    }
+    .animate-toast-alert {
+      animation: toastAlertJump 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* 4. Durmiendo (inclinado, respiración profunda lenta) */
+    @keyframes toastSleep {
+      0%, 100% { transform: translateY(4px) rotate(9deg) scale(0.97); }
+      50% { transform: translateY(-2px) rotate(7deg) scale(1.02); }
+    }
+    .animate-toast-sleep {
+      animation: toastSleep 3.8s ease-in-out infinite;
+    }
+
+    /* 5. Despertando con sorpresa y estirón */
+    @keyframes toastWake {
+      0% { transform: translateY(4px) rotate(9deg) scale(0.97); }
+      40% { transform: translateY(-12px) scale(1.15) rotate(0deg); }
+      70% { transform: translateY(2px) scale(0.95); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    .animate-toast-wake {
+      animation: toastWake 0.6s ease-out forwards;
+    }
+
+    /* 6. Parpadeo realista de ojos cada 3.8 segundos */
+    @keyframes eyeBlink {
+      0%, 91%, 100% { transform: scaleY(0); opacity: 0; }
+      93%, 97% { transform: scaleY(1); opacity: 1; }
+    }
+    .animate-eye-blink {
+      transform-origin: center;
+      animation: eyeBlink 3.8s ease-in-out infinite;
+    }
+
+    /* 7. Manita saludando agitándose enérgicamente */
+    @keyframes handWaveMotion {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-30deg) scale(1.15); }
+      50% { transform: rotate(15deg) scale(1.2); }
+      75% { transform: rotate(-25deg) scale(1.15); }
+    }
+    .animate-hand-wave {
+      transform-origin: bottom right;
+      animation: handWaveMotion 0.4s ease-in-out infinite;
+    }
+
+    /* 8. Letras Zzz flotando hacia arriba */
+    @keyframes zzzFly1 {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      30% { opacity: 0.9; transform: translate(4px, -10px) scale(0.8); }
+      70% { opacity: 0.6; transform: translate(10px, -22px) scale(1); }
+      100% { opacity: 0; transform: translate(16px, -34px) scale(1.2); }
+    }
+    @keyframes zzzFly2 {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      35% { opacity: 0.95; transform: translate(-4px, -14px) scale(0.85); }
+      75% { opacity: 0.5; transform: translate(-8px, -28px) scale(1.05); }
+      100% { opacity: 0; transform: translate(-12px, -42px) scale(1.25); }
+    }
+    @keyframes zzzFly3 {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      40% { opacity: 1; transform: translate(6px, -18px) scale(0.9); }
+      80% { opacity: 0.4; transform: translate(14px, -36px) scale(1.15); }
+      100% { opacity: 0; transform: translate(22px, -52px) scale(1.35); }
+    }
+    .animate-zzz-1 { animation: zzzFly1 2.8s ease-out infinite; }
+    .animate-zzz-2 { animation: zzzFly2 2.8s ease-out 0.9s infinite; }
+    .animate-zzz-3 { animation: zzzFly3 2.8s ease-out 1.8s infinite; }
+
+    /* Bocadillo flotante */
     @keyframes popSpeech {
       0% { opacity: 0; transform: translateY(14px) scale(0.92); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .animate-toast-idle {
-      animation: toastIdle 3.2s ease-in-out infinite;
-    }
-    .animate-toast-bounce {
-      animation: toastBounce 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .animate-pop-speech {
       animation: popSpeech 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
