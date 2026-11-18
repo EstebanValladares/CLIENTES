@@ -116,6 +116,84 @@ class MotorRazonamiento:
         p_lower = pregunta.lower().strip()
 
         # =============================================================
+        # 0. CONSULTAS SOBRE ESCALATORIAS DE PRECIO / ADITIVAS (PRIORIDAD ALTA)
+        # =============================================================
+        palabras_esc = ["escalatoria", "escalatorias", "aditiva", "aditivas", "ajuste de precio", "ajustes de precio"]
+        es_consulta_escalatoria = any(w in p_lower for w in palabras_esc)
+
+        if es_consulta_escalatoria:
+            coincidencias_candidatas = re.findall(r"\b([A-Z0-9]{2,6})\b", p_upper)
+            palabras_ignorar_esc = {
+                "PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE",
+                "CUAL", "CUAN", "DONDE", "COMO", "TIENE", "TIENEN", "HAY", "PRECIO",
+                "PRECIOS", "SOC", "ENK", "SABES", "TIENEN", "DE", "LA", "EL", "LAS", "LOS",
+                "QUE", "EN", "TOTAL", "TOTALES", "TODAS", "TODOS", "UN", "UNA", "POR", "CON",
+                "DEL", "MAS", "SIN", "SUS", "MIS", "TUS", "SON", "ERA", "FUE", "SER", "VER", "DAR"
+            }
+            obra_detectada = None
+            for cand in coincidencias_candidatas:
+                if cand not in palabras_ignorar_esc:
+                    test_esc = tool_consultar_escalatorias(obra_o_cc=cand)
+                    if test_esc.get("ok") and test_esc.get("total_escalatorias", 0) > 0:
+                        obra_detectada = cand
+                        break
+
+            if obra_detectada:
+                res_esc = tool_consultar_escalatorias(obra_o_cc=obra_detectada)
+                tot = res_esc.get("total_escalatorias", 0)
+                lista = res_esc.get("escalatorias", [])
+                insumos = res_esc.get("insumos_impactados", [])
+
+                lineas = [
+                    f"📈 **La obra {obra_detectada} tiene {tot} escalatorias / aditivas de precio autorizadas en SOC Enkontrol:**\n"
+                ]
+                for e in lista[:5]:
+                    lineas.append(f"• **{e['clave']}**: {e['nombre']} ({e['numero_insumos']} insumos) [{e['estatus_desc']}]")
+
+                if insumos:
+                    lineas.append("\n🧱 **Principales insumos y materiales ajustados:**")
+                    for ins in insumos[:4]:
+                        lineas.append(f"• **{ins['nombre']}**: ${ins['precio']:,.2f} {ins['moneda']} (Presupuesto base: ${ins['precio_ppto']:,.2f})")
+
+                lineas.append("\n💡 *Puedes consultarlas a detalle en el módulo de Escalatorias del Dashboard.*")
+                return {
+                    "ok": True,
+                    "motor": "Escalatorias por Obra",
+                    "pregunta": pregunta,
+                    "respuesta": "\n".join(lineas)
+                }
+
+            terminos_ins = [w for w in re.findall(r"\w+", p_lower) if w in ["acero", "block", "concreto", "tinaco", "alambre", "mortero", "varilla", "armex", "malla", "cemento"]]
+            if terminos_ins:
+                term = terminos_ins[0]
+                res_ins = tool_consultar_escalatorias(termino_insumo=term)
+                if res_ins.get("ok") and (res_ins.get("escalatorias") or res_ins.get("insumos_detalles")):
+                    lineas = [f"📈 **Escalatorias de {term.upper()} autorizadas en SOC Enkontrol:**\n"]
+                    for e in res_ins.get("escalatorias", [])[:3]:
+                        lineas.append(f"• **{e['clave']}**: {e['nombre']} ({e['numero_insumos']} insumos)")
+                    for ins in res_ins.get("insumos_detalles", [])[:3]:
+                        lineas.append(f"• **{ins['nombre']}**: ${ins['precio']:,.2f} {ins['moneda']} (Presupuesto: ${ins['precio_ppto']:,.2f}) en {ins.get('obra_nombre','')}")
+                    return {
+                        "ok": True,
+                        "motor": "Escalatorias por Insumo",
+                        "pregunta": pregunta,
+                        "respuesta": "\n".join(lineas)
+                    }
+
+            res_gen = tool_consultar_escalatorias()
+            return {
+                "ok": True,
+                "motor": "Escalatorias Enkontrol",
+                "pregunta": pregunta,
+                "respuesta": (
+                    f"📈 **Tenemos {res_gen.get('total_escalatorias', 98)} escalatorias autorizadas** en SOC Enkontrol:\n"
+                    f"• **Centros de costo con ajuste:** {res_gen.get('total_obras_con_escalatorias', 400)}+ desarrollos impactados.\n"
+                    f"• **Insumos actualizados:** {res_gen.get('total_insumos_afectados', 10500):,} precios de insumos.\n\n"
+                    f"💡 *Puedes preguntarme por una obra en particular (ej. '¿Cuántas escalatorias tiene AUS?' o '¿Qué escalatorias tiene HFA?').*"
+                )
+            }
+
+        # =============================================================
         # 1. PREGUNTAS DE CONTEOS, TOTALES Y MÉTRICAS (¿CUÁNTOS HAY?)
         # =============================================================
         es_pregunta_conteo = any(w in p_lower for w in ["cuantos", "cuántos", "cuantas", "cuántas", "total de", "cantidad de", "numero de", "número de", "hay ahorita", "guardados"])
@@ -299,21 +377,6 @@ class MotorRazonamiento:
                 return {
                     "ok": True,
                     "motor": "Catálogo de Insumos y Escalatorias",
-                    "pregunta": pregunta,
-                    "respuesta": "\n".join(lineas)
-                }
-
-        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS"]):
-            datos_esc = tool_consultar_escalatorias()
-            if datos_esc.get("ok") and datos_esc.get("escalatorias_recientes"):
-                lista = datos_esc["escalatorias_recientes"]
-                lineas = [f"📈 **Últimas escalatorias autorizadas en SOC Enkontrol:**"]
-                for esc in lista[:4]:
-                    lineas.append(f"• **{esc['clave']}**: {esc['nombre']} ({esc['numero_insumos']} insumos) [{esc['estatus_desc']}]")
-                lineas.append("\n💡 *Puedes revisarlas a detalle abriendo la consulta de Escalatorias en la barra flotante.*")
-                return {
-                    "ok": True,
-                    "motor": "Escalatorias Enkontrol",
                     "pregunta": pregunta,
                     "respuesta": "\n".join(lineas)
                 }

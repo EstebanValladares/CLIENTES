@@ -330,8 +330,11 @@ def tool_buscar_lotes(cc: str, manzana: str = "", limite: int = 10) -> Dict[str,
         return {"ok": False, "error": str(e)}
 
 
-def tool_consultar_escalatorias() -> Dict[str, Any]:
-    """Consulta las últimas escalatorias de precios autorizadas en Enkontrol SOC."""
+def tool_consultar_escalatorias(obra_o_cc: str = "", termino_insumo: str = "", limite: int = 8) -> Dict[str, Any]:
+    """
+    Consulta las escalatorias de precios autorizadas en Enkontrol SOC.
+    Puede filtrar por obra/desarrollo (ej. AUS, HFA, 226) o por insumo (ej. acero, block, concreto).
+    """
     if not os.path.exists(DB_ESC_PATH):
         return {"ok": False, "error": "Base de datos de escalatorias no disponible"}
 
@@ -339,15 +342,91 @@ def tool_consultar_escalatorias() -> Dict[str, Any]:
         conn = sqlite3.connect(DB_ESC_PATH)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        rows = [dict(r) for r in cur.execute("""
-            SELECT id, clave, nombre, estatus_desc, fecha_autorizacion, numero_insumos
-            FROM escalatorias
-            ORDER BY id DESC
-            LIMIT 5
-        """).fetchall()]
-        conn.close()
 
-        return {"ok": True, "escalatorias_recientes": rows}
+        # Caso A: Si se consulta por obra
+        if obra_o_cc:
+            c = obra_o_cc.strip().upper()
+            rows_obras = cur.execute("""
+                SELECT DISTINCT e.id, e.clave, e.nombre, e.estatus_desc, e.fecha_autorizacion, e.numero_insumos
+                FROM escalatorias e
+                WHERE e.id IN (
+                    SELECT DISTINCT id_escalatoria FROM escalatoria_insumos WHERE UPPER(obra_clave) = ?
+                )
+                OR e.id IN (
+                    SELECT DISTINCT id_escalatoria FROM escalatoria_obras WHERE UPPER(obra) LIKE ? OR UPPER(centro_costo) LIKE ?
+                )
+                ORDER BY e.id DESC
+            """, (c, f"{c} - %", f"{c} - %")).fetchall()
+
+            escalatorias_obra = [dict(r) for r in rows_obras]
+
+            # Insumos impactados en esa obra
+            insumos_obra = cur.execute("""
+                SELECT DISTINCT nombre, precio, precio_ppto, moneda, escalatoria_clave
+                FROM escalatoria_insumos
+                WHERE UPPER(obra_clave) = ? OR UPPER(obra_nombre) LIKE ?
+                ORDER BY id DESC
+                LIMIT 6
+            """, (c, f"{c} - %")).fetchall()
+
+            conn.close()
+            return {
+                "ok": True,
+                "obra": obra_o_cc,
+                "total_escalatorias": len(escalatorias_obra),
+                "escalatorias": escalatorias_obra[:limite],
+                "insumos_impactados": [dict(i) for i in insumos_obra]
+            }
+
+        # Caso B: Si se consulta por insumo / material
+        elif termino_insumo:
+            q_ins = f"%{termino_insumo.strip().upper()}%"
+            rows_ins = cur.execute("""
+                SELECT DISTINCT e.clave, e.nombre, e.estatus_desc, e.fecha_autorizacion, e.numero_insumos
+                FROM escalatorias e
+                WHERE UPPER(e.nombre) LIKE ? OR UPPER(e.clave) LIKE ?
+                ORDER BY e.id DESC
+                LIMIT ?
+            """, (q_ins, q_ins, limite)).fetchall()
+
+            detalles_ins = cur.execute("""
+                SELECT DISTINCT nombre, precio, precio_ppto, moneda, escalatoria_clave, obra_nombre
+                FROM escalatoria_insumos
+                WHERE UPPER(nombre) LIKE ? OR UPPER(clave) LIKE ?
+                ORDER BY id DESC
+                LIMIT ?
+            """, (q_ins, q_ins, limite)).fetchall()
+
+            conn.close()
+            return {
+                "ok": True,
+                "termino": termino_insumo,
+                "escalatorias": [dict(r) for r in rows_ins],
+                "insumos_detalles": [dict(r) for r in detalles_ins]
+            }
+
+        # Caso C: Resumen general de escalatorias
+        else:
+            total_esc = cur.execute("SELECT COUNT(*) FROM escalatorias").fetchone()[0]
+            total_obras_con_esc = cur.execute("SELECT COUNT(DISTINCT obra) FROM escalatoria_obras").fetchone()[0]
+            total_ins_afectados = cur.execute("SELECT COUNT(*) FROM escalatoria_insumos").fetchone()[0]
+
+            rows_recientes = cur.execute("""
+                SELECT id, clave, nombre, estatus_desc, fecha_autorizacion, numero_insumos
+                FROM escalatorias
+                ORDER BY id DESC
+                LIMIT 6
+            """).fetchall()
+
+            conn.close()
+            return {
+                "ok": True,
+                "total_escalatorias": total_esc,
+                "total_obras_con_escalatorias": total_obras_con_esc,
+                "total_insumos_afectados": total_ins_afectados,
+                "escalatorias_recientes": [dict(r) for r in rows_recientes]
+            }
+
     except Exception as e:
         return {"ok": False, "error": str(e)}
 
