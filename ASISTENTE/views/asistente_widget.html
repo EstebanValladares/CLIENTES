@@ -124,6 +124,10 @@
                 class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700">
             <i class="fa-solid fa-chart-line text-[10px]"></i> Escalatoria
           </span>
+          <span v-else-if="asistenteGloboActual.tipo === 'cerebro'" 
+                class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-violet-100 dark:bg-violet-950/80 text-violet-700 dark:text-violet-300 border border-violet-300 dark:border-violet-700">
+            <i class="fa-solid fa-lightbulb text-[10px]"></i> Consulta
+          </span>
           <span v-else-if="asistenteGloboActual.tipo === 'bautizo'" 
                 class="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
             <i class="fa-solid fa-sparkles text-[10px]"></i> Personalizado
@@ -149,7 +153,7 @@
         <h4 class="text-xs font-black tracking-tight text-indigo-900 dark:text-indigo-200 mb-1 flex items-center gap-1.5">
           <span>{{ asistenteGloboActual.titulo }}</span>
         </h4>
-        <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200 font-medium">
+        <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200 font-medium whitespace-pre-line">
           {{ asistenteGloboActual.texto }}
         </p>
         <p v-if="asistenteGloboActual.subtexto" class="text-[11px] text-slate-400 dark:text-slate-400 mt-1 italic">

@@ -10,6 +10,7 @@ from ASISTENTE.cerebro.config_cerebro import obtener_gemini_api_key, DEFAULT_MOD
 from ASISTENTE.cerebro.grafo_conocimiento import GrafoConocimiento
 from ASISTENTE.cerebro.aprendizaje import ModuloAprendizaje
 from ASISTENTE.cerebro.herramientas import (
+    tool_buscar_usuario,
     tool_consultar_obra,
     tool_buscar_lotes,
     tool_consultar_escalatorias,
@@ -22,44 +23,54 @@ class MotorRazonamiento:
     def procesar_consulta(cls, pregunta: str, usuario: str = "Esteban") -> Dict[str, Any]:
         """
         Punto de entrada principal para responder consultas con razonamiento.
-        Usa Gemini API si la clave está configurada; de lo contrario usa el motor de grafos local.
+        Usa Gemini API si la clave está configurada; de lo contrario usa el motor inteligente local.
         """
         api_key = obtener_gemini_api_key()
 
         if api_key:
             return cls._razonar_con_gemini(pregunta, usuario, api_key)
         else:
-            return cls._razonar_con_grafos_local(pregunta, usuario)
+            return cls._razonar_con_datos_locales(pregunta, usuario)
 
     @classmethod
     def _razonar_con_gemini(cls, pregunta: str, usuario: str, api_key: str) -> Dict[str, Any]:
-        """Razona utilizando el modelo Google Gemini con contexto de negocio y grafos."""
+        """Razona utilizando el modelo Google Gemini con contexto de negocio y herramientas."""
         try:
             from google import genai
             from google.genai import types
 
             client = genai.Client(api_key=api_key)
 
-            # Extraer contexto previo del grafo
-            stats = GrafoConocimiento.obtener_estadisticas_grafo()
+            # Extraer contexto previo relevante
             docs_relevantes = ModuloAprendizaje.buscar_en_conocimiento(pregunta, limite=3)
             resumen_docs = "\n".join([f"- {d['nombre_archivo']}: {d['resumen']}" for d in docs_relevantes])
 
+            # Si pregunta por un usuario, buscar en Usuarios.json
+            usuarios_rel = tool_buscar_usuario(pregunta, limite=3)
+            resumen_usuarios = ""
+            if usuarios_rel.get("ok") and usuarios_rel.get("usuarios"):
+                resumen_usuarios = "\n".join([
+                    f"- {u['nombre_completo']} | Puesto: {u['puesto']} | Área: {u['area']} | Email: {u['email']}"
+                    for u in usuarios_rel["usuarios"]
+                ])
+
             system_instruction = f"""
-            Eres el Asistente Centinela del Dashboard EK10 de Grupo Velas (la famosa tostada inteligente).
-            Tu rol es ayudar a {usuario} y al equipo operativo a auditar lotes, obras, escalatorias y procesos.
+            Eres el Asistente Centinela del Dashboard EK10 de Grupo Velas (la simpática y astuta tostada inteligente).
+            Estás hablando con {usuario}.
             
-            Información del Grafo de Conocimiento Local:
-            - Nodos registrados: {stats.get('total_nodos', 0)}
-            - Distribución: {stats.get('distribucion_tipos', {})}
-            
-            Conocimiento y Documentación aprendida:
-            {resumen_docs or "Sin documentos adicionales."}
+            Información disponible del sistema:
+            Usuarios encontrados:
+            {resumen_usuarios or "Ninguno específico para esta búsqueda."}
+
+            Documentación aprendida:
+            {resumen_docs or "Sin notas adicionales."}
 
             Instrucciones de Respuesta:
-            1. Sé claro, conciso, útil y amigable (con tono constructivo y profesional).
-            2. Usa viñetas breves y emojis oportunos (🍞, 📈, 🏗️, ✅).
-            3. Si preguntan por una obra específica (ej. HFA, DQA), enfócate en el estado de sus lotes y homologación.
+            1. Responde de forma muy natural, amistosa, directa y profesional (como un compañero de equipo de confianza).
+            2. NUNCA uses términos técnicos robóticos como "Grafo Local", "nodos", "aristas" o "tabla hash".
+            3. Si preguntan por una persona (ej. Claudia Padilla), di claramente quién es, su puesto, área y correo.
+            4. Si preguntan por una obra (ej. HFA), resume el total de lotes y el estado de homologación.
+            5. Usa viñetas limpias y emojis agradables.
             """
 
             response = client.models.generate_content(
@@ -75,42 +86,81 @@ class MotorRazonamiento:
 
             return {
                 "ok": True,
-                "motor": f"Gemini ({DEFAULT_MODEL})",
+                "motor": "Gemini 2.5 Flash",
                 "pregunta": pregunta,
-                "respuesta": texto_respuesta,
-                "documentos_usados": len(docs_relevantes)
+                "respuesta": texto_respuesta
             }
 
         except Exception as e:
-            # Si falla la llamada externa (red, cuota), hacer fallback elegante al motor de grafos
-            res_local = cls._razonar_con_grafos_local(pregunta, usuario)
-            res_local["aviso_fallback"] = f"Se usó el motor local de grafos por incidencia con la API: {str(e)}"
+            # Fallback elegante a datos locales
+            res_local = cls._razonar_con_datos_locales(pregunta, usuario)
             return res_local
 
     @classmethod
-    def _razonar_con_grafos_local(cls, pregunta: str, usuario: str) -> Dict[str, Any]:
-        """Motor de inferencia determinístico basado en grafos locales de SQLite (100% offline)."""
+    def _razonar_con_datos_locales(cls, pregunta: str, usuario: str) -> Dict[str, Any]:
+        """Motor inteligente local (100% offline) que consulta directamente las bases de datos del Dashboard."""
         p_upper = pregunta.upper()
+        p_lower = pregunta.lower()
 
-        # 1. Detección de consultas sobre Escalatorias de Precios
-        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO"]):
+        # 1. Búsqueda de Usuarios / Colaboradores / Puestos / Correos
+        palabras_usuario = [
+            "usuario", "colaborador", "compañero", "compañera", "quién es", "quien es",
+            "sabes si", "conoces a", "persona", "correo", "email", "puesto", "trabaja",
+            "contacto", "encargado", "líder", "lider", "broker"
+        ]
+        es_pregunta_usuario = any(w in p_lower for w in palabras_usuario)
+
+        # Buscar en la plantilla de usuarios de Grupo Velas
+        res_usuarios = tool_buscar_usuario(pregunta, limite=3)
+        if res_usuarios.get("ok") and res_usuarios.get("total", 0) > 0 and (es_pregunta_usuario or len(res_usuarios["usuarios"]) <= 3):
+            lista = res_usuarios["usuarios"]
+            if len(lista) == 1:
+                u = lista[0]
+                texto = (
+                    f"👤 **¡Sí! Encontré a {u['nombre_completo']}:**\n"
+                    f"• **Puesto:** {u['puesto']}\n"
+                    f"• **Área:** {u['area']}\n"
+                    f"• **Correo:** `{u['email']}`\n"
+                    f"• **Estatus:** {u['estatus']}"
+                )
+            else:
+                texto = f"👥 **Encontré {res_usuarios['total']} colaboradores que coinciden:**\n\n"
+                for u in lista:
+                    texto += (
+                        f"• **{u['nombre_completo']}**\n"
+                        f"  Puesto: {u['puesto']} ({u['area']})\n"
+                        f"  Correo: `{u['email']}`\n\n"
+                    )
+            return {
+                "ok": True,
+                "motor": "Plantilla de Usuarios",
+                "pregunta": pregunta,
+                "respuesta": texto.strip()
+            }
+
+        # 2. Detección de Escalatorias de Precios (SOC Enkontrol)
+        if any(w in p_upper for w in ["ESCALATORIA", "ESCALATORIAS", "PRECIO", "PRECIOS", "INSUMO", "ADITIVA", "ADITIVAS"]):
             datos_esc = tool_consultar_escalatorias()
             if datos_esc.get("ok") and datos_esc.get("escalatorias_recientes"):
                 lista = datos_esc["escalatorias_recientes"]
-                lineas = [f"📈 **Escalatorias recientes registradas en SOC Enkontrol:**"]
+                lineas = [f"📈 **Estas son las últimas escalatorias autorizadas en Enkontrol:**"]
                 for esc in lista[:4]:
-                    lineas.append(f"• **{esc['clave']}** - {esc['nombre']} ({esc['numero_insumos']} insumos) [{esc['estatus_desc']}]")
-                lineas.append("\nPuedes revisarlas a detalle abriendo la consulta flotante de Escalatorias.")
+                    lineas.append(f"• **{esc['clave']}**: {esc['nombre']} ({esc['numero_insumos']} insumos) [{esc['estatus_desc']}]")
+                lineas.append("\n💡 *Puedes revisarlas a detalle abriendo la consulta de Escalatorias en la barra flotante.*")
                 return {
                     "ok": True,
-                    "motor": "Grafo Local (Escalatorias)",
+                    "motor": "Escalatorias Enkontrol",
                     "pregunta": pregunta,
                     "respuesta": "\n".join(lineas)
                 }
 
-        # 2. Detección de consulta sobre Obras específicas (ej. HFA, DQA, DQC, C38, C39)
+        # 3. Detección de Obras específicas (ej. HFA, DQA, DQC, C38, C39, 008, 024, 045)
         coincidencias_obra = re.findall(r"\b([A-Z0-9]{3,4})\b", p_upper)
+        # Filtrar palabras comunes que coinciden con 3-4 letras
+        palabras_ignorar = {"PARA", "LOTE", "OBRA", "TODO", "ESTA", "BIEN", "HOLA", "HACE", "CUAL", "CUAN", "DONDE", "COMO"}
         for palabra in coincidencias_obra:
+            if palabra in palabras_ignorar:
+                continue
             diag = tool_consultar_obra(palabra)
             if diag.get("ok"):
                 total_lt = diag.get("total_lotes_obra") or diag.get("total_lotes_registrados", 0)
@@ -120,44 +170,52 @@ class MotorRazonamiento:
                 coinciden = diag.get("lotes_con_id_enk_coincidente", 0)
 
                 respuesta = (
-                    f"🏗️ **Diagnóstico Inteligente de Obra: {palabra}**\n"
-                    f"• **Total Lotes de la Obra:** {total_lt}\n"
-                    f"• **Lotes con Suite EK10 vinculada:** {lotes_hom}\n"
-                    f"• **Lotes con Coincidencia Oficial (Verde):** {coinciden}\n"
-                    f"• **Lotes Pendientes por Homologar:** {lotes_pend}\n"
+                    f"🏗️ **Estado de la Obra {palabra}:**\n"
+                    f"• **Total Lotes:** {total_lt}\n"
+                    f"• **Con Suite EK10 vinculada:** {lotes_hom}\n"
+                    f"• **Coincidencia Exacta (Clave en Verde):** {coinciden}\n"
+                    f"• **Lotes Pendientes por Vincular:** {lotes_pend}\n"
                     f"• **Índice de Sincronización:** {salud}\n\n"
-                    f"💡 *Tip:* Puedes consultar cada lote con sus claves Enkontrol abriendo la herramienta **Mapeo de Lotes**."
+                    f"💡 *Para ver cada lote con sus claves, abre el Mapeo de Lotes en la barra flotante.*"
                 )
                 return {
                     "ok": True,
-                    "motor": "Grafo Local (Diagnóstico de Obra)",
+                    "motor": "Diagnóstico de Obra",
                     "pregunta": pregunta,
                     "respuesta": respuesta
                 }
 
-        # 3. Búsqueda en documentación y memoria aprendida
+        # 4. Búsqueda en documentación y memoria aprendida
         docs = tool_buscar_conocimiento(pregunta)
         if docs.get("ok") and docs.get("documentos"):
             doc = docs["documentos"][0]
             return {
                 "ok": True,
-                "motor": "Grafo Local (Conocimiento Aprendido)",
+                "motor": "Base de Conocimiento",
                 "pregunta": pregunta,
-                "respuesta": f"📚 **De mi base de conocimiento ({doc['nombre_archivo']}):**\n\n{doc['resumen']}"
+                "respuesta": f"📚 **De las guías y reglas del sistema ({doc['nombre_archivo']}):**\n\n{doc['resumen']}"
             }
 
-        # 4. Respuesta general y estado del grafo
-        stats = GrafoConocimiento.obtener_estadisticas_grafo()
+        # 5. Si preguntó por un usuario pero no se encontró
+        if es_pregunta_usuario:
+            return {
+                "ok": True,
+                "motor": "Búsqueda de Usuarios",
+                "pregunta": pregunta,
+                "respuesta": "🔍 No encontré a ningún colaborador registrado con ese nombre en la plantilla de usuarios de Grupo Velas. Verifica que el nombre esté bien escrito o prueba con su apellido o correo."
+            }
+
+        # 6. Fallback conversacional limpio, humano y amigable (CERO texto técnico de grafos)
         return {
             "ok": True,
-            "motor": "Grafo Local (Estado General)",
+            "motor": "Asistente",
             "pregunta": pregunta,
             "respuesta": (
-                f"🍞 **Cerebro Centinela Activo**\n"
-                f"Tengo indexados **{stats.get('total_nodos', 0)} nodos** y **{stats.get('total_aristas', 0)} conexiones** en mi grafo de conocimiento.\n\n"
-                f"💡 **Puedes preguntarme cosas como:**\n"
-                f"• *'¿Cómo está la obra HFA?'* (Diagnostico lotes y homologación)\n"
-                f"• *'¿Hay escalatorias nuevas?'* (Reviso precios e insumos)\n"
-                f"• O déjame archivos en `ASISTENTE/cerebro/conocimiento/` para aprender de ellos."
+                f"🤔 No encontré datos sobre eso en el sistema por el momento.\n\n"
+                f"💡 **Puedes preguntarme por:**\n"
+                f"• **Colaboradores:** *'¿Quién es Claudia Padilla?'* o *'Busca al líder de ventas'*\n"
+                f"• **Obras y Lotes:** *'¿Cómo está la obra HFA?'* o *'Lotes de DQA'*\n"
+                f"• **Precios:** *'¿Qué escalatorias tenemos autorizadas?'*\n"
+                f"• **Reglas:** *'¿Cuándo se marca la clave en verde?'*"
             )
         }

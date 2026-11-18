@@ -286,15 +286,16 @@
           const res = await resp.json();
           if (res.ok && res.respuesta) {
             preguntaCerebroTexto.value = '';
+            const botNombre = asistenteNombrePersonalizado.value || 'Toastie';
             hablarAsistente({
               id: `cerebro_${Date.now()}`,
               tipo: 'cerebro',
-              titulo: `🧠 Diagnóstico (${res.motor || 'Cerebro'})`,
+              titulo: `💡 ${botNombre}`,
               texto: res.respuesta,
               subtexto: `Consulta: "${q}"`,
               hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
               accion: '',
-              duracion_segundos: 16
+              duracion_segundos: 18
             });
             enviandoPreguntaCerebro.value = false;
             return;
