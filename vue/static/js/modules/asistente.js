@@ -26,6 +26,11 @@
     });
     const asistenteSonidoHabilitado = ref(true);
 
+    // Estados visuales: 'calma' (parpadea) | 'saludando' (manita) | 'alerta' (brinco) | 'durmiendo' (Zzz) | 'despertando'
+    const asistenteEstadoVisual = ref('saludando');
+    let segundosInactivo = 0;
+    let temporizadorInactividad = null;
+
     // Sistema de personalización y bautizo
     const nombreGuardado = localStorage.getItem('asistente_nombre_personalizado') || 'Toastie';
     const asistenteNombrePersonalizado = ref(nombreGuardado);
@@ -107,7 +112,7 @@
     };
 
     /**
-     * Hace que la tostada hable de inmediato
+     * Hace que la tostada hable de inmediato y active la animación correspondiente
      */
     const hablarAsistente = (globo) => {
       if (!globo) return;
@@ -115,19 +120,63 @@
       asistenteGloboActual.value = globo;
       asistenteProgresoCierre.value = 100;
       asistentePausado.value = false;
+      segundosInactivo = 0;
 
-      // Animación de bote alegre
+      // Seleccionar animación según la naturaleza del evento
+      if (globo.tipo === 'chat' || globo.tipo === 'escalatoria' || globo.tipo === 'alerta') {
+        // Alerta: brinco con manita agitada
+        asistenteEstadoVisual.value = 'alerta';
+        setTimeout(() => {
+          if (asistenteEstadoVisual.value === 'alerta') asistenteEstadoVisual.value = 'calma';
+        }, 2600);
+      } else {
+        // Saludo / bienvenida / bautizo: saludo amigable con la manita
+        asistenteEstadoVisual.value = 'saludando';
+        setTimeout(() => {
+          if (asistenteEstadoVisual.value === 'saludando') asistenteEstadoVisual.value = 'calma';
+        }, 3200);
+      }
+
+      // Animación de bote alegre y sonido
       asistenteAnimando.value = true;
       setTimeout(() => {
         asistenteAnimando.value = false;
       }, 700);
 
-      // Sonido
       reproducirSonidoAsistente();
 
       // Autocierre
       iniciarTemporizadorCierre(globo.duracion_segundos || 8);
     };
+
+    /**
+     * Detección de Inactividad: Dormirse tras 40s sin interacción y despertar al mover el mouse
+     */
+    const registrarActividadUsuario = () => {
+      segundosInactivo = 0;
+      if (asistenteEstadoVisual.value === 'durmiendo') {
+        asistenteEstadoVisual.value = 'despertando';
+        reproducirSonidoAsistente();
+        setTimeout(() => {
+          asistenteEstadoVisual.value = 'calma';
+        }, 600);
+      }
+    };
+
+    window.addEventListener('mousemove', registrarActividadUsuario, { passive: true });
+    window.addEventListener('mousedown', registrarActividadUsuario, { passive: true });
+    window.addEventListener('keydown', registrarActividadUsuario, { passive: true });
+    window.addEventListener('scroll', registrarActividadUsuario, { passive: true });
+    window.addEventListener('touchstart', registrarActividadUsuario, { passive: true });
+
+    if (!temporizadorInactividad) {
+      temporizadorInactividad = setInterval(() => {
+        segundosInactivo++;
+        if (segundosInactivo >= 40 && asistenteEstadoVisual.value === 'calma' && !asistenteGloboActual.value && !modalNombrarAsistente.value) {
+          asistenteEstadoVisual.value = 'durmiendo';
+        }
+      }, 1000);
+    }
 
     const pausarAutoOcultarAsistente = () => {
       asistentePausado.value = true;
@@ -244,6 +293,10 @@
      * Clic en el avatar de la Tostada: Saludo o reporte interactivo
      */
     const alHacerClicEnTostada = async () => {
+      registrarActividadUsuario();
+      asistenteEstadoVisual.value = 'saludando';
+      setTimeout(() => { if (asistenteEstadoVisual.value === 'saludando') asistenteEstadoVisual.value = 'calma'; }, 2500);
+
       asistenteAnimando.value = true;
       setTimeout(() => { asistenteAnimando.value = false; }, 600);
       reproducirSonidoAsistente();
@@ -382,6 +435,7 @@
       asistenteProgresoCierre,
       asistentePausado,
       asistenteAnimando,
+      asistenteEstadoVisual,
       asistenteHistorialAbierto,
       asistenteHistorial,
       asistenteMetricas,
