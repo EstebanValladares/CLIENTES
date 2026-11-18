@@ -558,6 +558,37 @@ createApp({
     } = consultasFlotantesModulo;
 
     // ==========================================
+    // MÓDULO: ASISTENTE CENTINELA TOASTIE (vue/static/js/modules/asistente.js)
+    // ==========================================
+    const asistenteModulo = window.createAsistenteModule ? window.createAsistenteModule(Vue, {
+      chatUsuarioActual,
+      chatModalAbierto,
+      abrirModalChat: () => {
+        if (typeof chatModalAbierto !== 'undefined') chatModalAbierto.value = true;
+      },
+      abrirConsultaFlotante: (tipo) => {
+        if (typeof abrirConsultaFlotante === 'function') abrirConsultaFlotante(tipo);
+      }
+    }) : {};
+    const {
+      asistenteGloboActual,
+      asistenteProgresoCierre,
+      asistentePausado,
+      asistenteAnimando,
+      asistenteHistorialAbierto,
+      asistenteHistorial,
+      asistenteMetricas,
+      asistenteSonidoHabilitado,
+      hablarAsistente,
+      descartarGloboAsistente,
+      pausarAutoOcultarAsistente,
+      reanudarAutoOcultarAsistente,
+      alHacerClicEnTostada,
+      ejecutarAccionAsistente,
+      reproducirSonidoAsistente
+    } = asistenteModulo;
+
+    // ==========================================
     // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
     // ==========================================
     const catalogoVistas = computed(() => [
