@@ -257,6 +257,57 @@
     };
 
     /**
+     * Envía una pregunta al Cerebro Autónomo (ReAct + Grafos + Gemini)
+     */
+    const enviarPreguntaCerebro = async () => {
+      const q = (preguntaCerebroTexto.value || '').trim();
+      if (!q || enviandoPreguntaCerebro.value) return;
+
+      enviandoPreguntaCerebro.value = true;
+      asistenteHistorialAbierto.value = false;
+      registrarActividadUsuario();
+      asistenteEstadoVisual.value = 'saludando';
+      reproducirSonidoAsistente();
+
+      try {
+        const uVal = context?.chatUsuarioActual?.value || context?.chatUsuarioActual || {};
+        const nom = uVal.nombre ? uVal.nombre.split(' ')[0] : 'Esteban';
+
+        const resp = await fetch('/api/asistente/preguntar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pregunta: q,
+            usuario: nom
+          })
+        });
+
+        if (resp.ok) {
+          const res = await resp.json();
+          if (res.ok && res.respuesta) {
+            preguntaCerebroTexto.value = '';
+            hablarAsistente({
+              id: `cerebro_${Date.now()}`,
+              tipo: 'cerebro',
+              titulo: `🧠 Diagnóstico (${res.motor || 'Cerebro'})`,
+              texto: res.respuesta,
+              subtexto: `Consulta: "${q}"`,
+              hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              accion: '',
+              duracion_segundos: 16
+            });
+            enviandoPreguntaCerebro.value = false;
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('[Asistente] Error consultando cerebro:', e);
+      }
+
+      enviandoPreguntaCerebro.value = false;
+    };
+
+    /**
      * Consulta el backend para detectar si cayó un mensaje o escalatoria nueva
      */
     const verificarEventosAsistente = async () => {
@@ -419,6 +470,17 @@
         }
       } catch (e) {}
 
+      // Consultar estadísticas de nodos en el grafo de conocimiento
+      try {
+        const respG = await fetch('/api/asistente/grafo-stats');
+        if (respG.ok) {
+          const datG = await respG.json();
+          if (datG.grafo && datG.grafo.total_nodos) {
+            statsGrafoNodos.value = datG.grafo.total_nodos;
+          }
+        }
+      } catch (e) {}
+
       iniciarLoopMonitoreo();
     };
 
@@ -449,6 +511,10 @@
       modalNombrarAsistente,
       inputNuevoNombreAsistente,
       sugerenciasNombres,
+      preguntaCerebroTexto,
+      enviandoPreguntaCerebro,
+      statsGrafoNodos,
+      enviarPreguntaCerebro,
       abrirRenombrarAsistente,
       elegirSugerenciaNombre,
       guardarNombreAsistente,
