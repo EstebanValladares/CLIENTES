@@ -1710,20 +1710,7 @@ createApp({
       toggleMenuConsultas,
       abrirConsultaFlotante,
       cerrarConsultaFlotante,
-      toggleMaximizarConsulta,
-      // Agente Autónomo KHIARA
-      khiaraOnline,
-      khiaraChatAbierto,
-      khiaraCargando,
-      khiaraInput,
-      khiaraMensajes,
-      khiaraNotificaciones,
-      khiaraNotifNoLeidas,
-      khiaraGloboAlerta,
-      toggleChatKhiara,
-      enviarMensajeKhiara,
-      limpiarHistorialKhiara,
-      formatearMarkdownKhiara
+      toggleMaximizarConsulta
     };
   }
 }).mount('#app');
