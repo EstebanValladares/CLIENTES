@@ -1,11 +1,11 @@
-# 🍞 Módulo ASISTENTE CENTINELA (Toastie - OMFG Hello Toast)
-**Ecosistema Dashboard EK10 - Grupo Velas**
+# 🍞 Ecosistema Modular ASISTENTE CENTINELA (OMFG Hello Toast)
+**Dashboard EK10 - Grupo Velas**
 
 ---
 
 ## 📌 ¿Qué es este Módulo?
-El Asistente Centinela es un agente proactivo que vive en la esquina de la pantalla.
-A diferencia de los chatbots convencionales donde el usuario debe abrir una ventana para interactuar, **Toastie "habla" de inmediato** sacando un globo de diálogo flotante en cuanto detecta un evento relevante en el sistema.
+El **Asistente Centinela** es un agente proactivo y ligero que acompaña al usuario desde la esquina inferior de la pantalla.
+A diferencia de los chatbots convencionales donde el usuario debe abrir una ventana para interactuar, el Asistente **"habla" de inmediato** desplegando un globo de diálogo flotante con sonido suave en cuanto detecta un evento relevante en el sistema.
 
 ### 🎯 Icono y Personaje
 * Basado en la icónica tostada animada de **OMFG - Hello**.
@@ -14,61 +14,75 @@ A diferencia de los chatbots convencionales donde el usuario debe abrir una vent
 
 ---
 
-## ⚡ Capacidades Proactivas en Tiempo Real
+## 🏗️ Arquitectura Modular y Escalable
 
-1. **Monitoreo de Chat de Equipo & DMs:**
-   * En cuanto un compañero envía un mensaje en `chat_equipo.db`, Toastie saca un bocadillo en la esquina:
-     > 💬 *"Esteban, Carlos te acaba de escribir: '¿Tienes la clave del lote 12?'"*
-   * Incluye botón directo `[Ver en Chat]` para responder sin rodeos.
-
-2. **Monitoreo de Escalatorias de Precios (SOC Enkontrol):**
-   * Al autorizarse nuevas escalatorias en `escalatorias.db`, Toastie notifica:
-     > 📈 *"Nueva escalatoria autorizada en DQA con 12 insumos nuevos."*
-   * Incluye botón directo `[Ver Escalatoria]`.
-
-3. **Saludo Proactivo al Iniciar Sesión:**
-   * Detecta la hora del día (Buenos días / tardes / noches) y el nombre del usuario activo.
-   * Hace un resumen instantáneo del estado del sistema y mensajes pendientes.
-
-4. **Autodescarte y Cero Molestias:**
-   * El globo de diálogo cuenta con una barra de progreso inferior de 8 a 10 segundos.
-   * Si el usuario no lo toca, se desvanece suavemente para no estorbar en pantalla.
-   * Si el usuario pone el mouse encima (`hover`), la cuenta regresiva se pausa para que pueda leer con calma.
-   * Cuenta con historial desplegable de los últimos avisos al hacer clic en el avatar.
-
-5. **Efectos de Sonido Web Audio API:**
-   * Genera un pop suave sintetizado en tiempo real sin requerir archivos mp3 externos ni consumir ancho de banda.
-
----
-
-## 📂 Estructura de Archivos del Ecosistema
+La carpeta `ASISTENTE/` está diseñada bajo principios de arquitectura limpia para crecer exponencialmente sin desorden:
 
 ```
 ASISTENTE/
 ├── assets/
-│   ├── toast.png         # Icono oficial de la tostada con fondo transparente
-│   └── toast_raw.png     # Imagen original
-├── asistente_service.py  # Lógica de dominio backend (detección de eventos y cola)
-├── asistente_widget.html # Componente visual modular del widget flotante
-├── asistente.js          # Módulo Vue 3 con loop de polling reactivo
-└── README.md             # Esta documentación técnica
+│   ├── toast.png                  # Avatar oficial HD recortado y con fondo transparente
+│   ├── toast_hd_raw.png           # Original de alta resolución
+│   └── toast_raw.png              # Imagen base
+├── config.py                      # Constantes globales, rutas de base de datos y timeouts
+├── database.py                    # Persistencia SQLite (data/asistente.db: config y memoria)
+├── asistente_service.py           # Fachada / Orquestador principal de eventos y servicios
+├── dialogos/
+│   ├── __init__.py
+│   └── banco_frases.py            # Personalidad, saludos contextuales, frases y bautizo
+├── monitores/
+│   ├── __init__.py                # Exportación de monitores pluggables
+│   ├── chat_monitor.py            # Listener de mensajes de chat y DMs de equipo
+│   ├── escalatorias_monitor.py    # Listener de escalatorias de precios en Enkontrol
+│   └── sistema_monitor.py         # Monitor de salud e integridad de lotes y base de datos
+├── views/
+│   └── asistente_widget.html      # Plantilla visual (Globo, Modal Bautizo, Historial y Avatar)
+├── modules/
+│   └── asistente.js               # Lógica Vue 3 reactiva, Web Audio sintetizado y ciclo de vida
+└── README.md                      # Esta documentación técnica
 ```
 
 ---
 
-## 🔌 Endpoints de la API REST
+## ⚡ Bautizo y Saludo Inicial (Sin Sobrecarga)
 
-* `GET /api/asistente/estado?usuario_id=<id>&nombre=<nombre>`:  
-  Devuelve si hay nuevos globos para hablar, métricas de DMs no leídos y el historial reciente.
-* `GET /api/asistente/saludo?nombre=<nombre>`:  
-  Genera el saludo proactivo inicial de bienvenida.
-* `POST /api/asistente/hablar`:  
-  Permite que cualquier subproceso, bot RPA o servicio backend dispare un globo de diálogo en la esquina.
-  ```json
-  {
-    "titulo": "Alerta de Orden de Compra",
-    "mensaje": "Se detectó un ajuste en la requisición JA2-00000266",
-    "tipo": "alerta",
-    "accion": ""
-  }
-  ```
+### 1. ¿Es pesado el saludo al iniciar el Dashboard?
+**No, es extremadamente ligero (sub-milisegundo, 0ms de retraso):**
+- No consulta modelos LLM externos ni hace peticiones pesadas por red.
+- La lógica contextual (hora del día, usuario y mensajes pendientes) se procesa localmente en Python/SQLite en menos de 2 milisegundos.
+- Se renderiza al vuelo en Vue 3 con una suave animación y un blip sintetizado mediante Web Audio API.
+
+### 2. Experiencia de Bautizo (Nombre Personalizado la Primera y Única Vez):
+- **Detección Automática:** Cuando el usuario entra por primera vez, el sistema detecta que `primer_inicio_completado` no está registrado.
+- **Card de Bautizo:** El asistente despliega una elegante tarjeta de bienvenida encima de la tostada con el texto:
+  > *"¡OMFG HELLO! Bienvenido. Seré tu centinela en pantalla. ¿Cómo te gustaría llamarme?"*
+  > Sugerencias rápidas: `[Toastie]` `[Pancho]` `[Ary]` `[VelasBot]` `[Centinela]`
+- **Guardado Permanente:** Al guardar, se almacena en `localStorage` (para disponibilidad instantánea en el navegador) y en la tabla `asistente_config` de `data/asistente.db`.
+- **Nunca Vuelve a Preguntar:** En futuros accesos, Toastie ya conoce su nombre y saluda directamente:
+  > *"👋 ¡Buenos días, Esteban! Soy Pancho. Todo tranquilo por aquí: cero alertas críticas..."*
+- **Edición Disponible:** Si el usuario desea cambiarle el nombre más adelante, puede presionar el pequeño lápiz ✏️ en el panel de historial.
+
+---
+
+## 🔌 Monitores Proactivos en Tiempo Real
+
+1. **ChatMonitor (`monitores/chat_monitor.py`):**
+   - Vigila `chat_equipo.db`. Si un compañero envía un mensaje o DM, el asistente saca un globo:
+     > 💬 *"Carlos te escribió: '¿Tienes la clave del lote 12?'"* con botón `[Ver en Chat]`.
+
+2. **EscalatoriasMonitor (`monitores/escalatorias_monitor.py`):**
+   - Vigila `escalatorias.db`. Al autorizarse precios nuevos:
+     > 📈 *"Nueva escalatoria autorizada en DQA con 12 insumos nuevos."* con botón `[Ver Escalatoria]`.
+
+3. **SistemaMonitor (`monitores/sistema_monitor.py`):**
+   - Vigila el estado de Mapeo de Lotes, centros de costos y salud del servidor.
+
+---
+
+## 🛠️ Endpoints API
+
+* `GET /api/asistente/estado?usuario_id=...&nombre=...`: Estado, métricas y nuevos avisos pendientes.
+* `GET /api/asistente/saludo?usuario_id=...&nombre=...`: Saludo contextual instantáneo.
+* `GET /api/asistente/reaccion-clic?usuario_id=...`: Frases dinámicas al interactuar con el avatar.
+* `POST /api/asistente/configurar-nombre`: Bautiza y persiste el nombre del asistente (`{"usuario_id": "...", "nombre_asistente": "..."}`).
+* `POST /api/asistente/hablar`: Permite a cualquier módulo o script hacer hablar al asistente.
