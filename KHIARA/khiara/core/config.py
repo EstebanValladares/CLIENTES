@@ -30,8 +30,17 @@ if GEMINI_API_KEY:
     os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY
 
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "gemini-3.5-flash-lite")
+KHIARA_PROVIDER = os.getenv("KHIARA_PROVIDER", "gemini").lower().strip()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434").strip()
+
 GRAFO_DEFAULT_FILE = GRAFOS_DIR / "conocimiento_global.json"
 MEMORIA_DB_FILE = MEMORIA_DIR / "khiara_memoria.db"
+CONVERSACIONES_DB_FILE = MEMORIA_DIR / "khiara_conversaciones.db"
 
 def tiene_api_key() -> bool:
+    if KHIARA_PROVIDER == "groq":
+        return bool(GROQ_API_KEY)
+    elif KHIARA_PROVIDER == "ollama":
+        return True
     return bool(GEMINI_API_KEY)

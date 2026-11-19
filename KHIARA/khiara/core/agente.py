@@ -7,8 +7,16 @@ import os
 from typing import Optional
 from agno.agent import Agent
 from agno.models.google import Gemini
+from agno.db.sqlite import SqliteDb
 from agno.db.in_memory import InMemoryDb
-from khiara.core.config import GEMINI_API_KEY, DEFAULT_MODEL
+from khiara.core.config import (
+    GEMINI_API_KEY,
+    DEFAULT_MODEL,
+    KHIARA_PROVIDER,
+    GROQ_API_KEY,
+    OLLAMA_HOST,
+    CONVERSACIONES_DB_FILE
+)
 from khiara.herramientas.explorador import (
     tool_consultar_grafo,
     tool_consultar_sql_local,
@@ -57,17 +65,43 @@ from khiara.herramientas.conector_gmail import (
 )
 
 
-def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
-    """Crea e inicializa el agente KHIARA con sus herramientas y personalidad."""
+def crear_agente_khiara(
+    modelo_id: Optional[str] = None,
+    proveedor: Optional[str] = None,
+    session_id: Optional[str] = None
+) -> Agent:
+    """Crea e inicializa el agente KHIARA con soporte multi-proveedor (Gemini / Groq / Ollama) y persistencia SQLite."""
+    prov = (proveedor or KHIARA_PROVIDER).lower()
     model_name = modelo_id or DEFAULT_MODEL
     
-    if GEMINI_API_KEY and not os.getenv("GOOGLE_API_KEY"):
-        os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+    # Selección de proveedor LLM
+    if prov == "groq" and GROQ_API_KEY:
+        try:
+            from agno.models.groq import Groq
+            m_id = modelo_id or "llama-3.3-70b-versatile"
+            model = Groq(id=m_id, api_key=GROQ_API_KEY)
+        except Exception:
+            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
+    elif prov == "ollama":
+        try:
+            from agno.models.ollama import Ollama
+            m_id = modelo_id or "qwen2.5:7b"
+            model = Ollama(id=m_id, host=OLLAMA_HOST)
+        except Exception:
+            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
+    else:
+        if GEMINI_API_KEY and not os.getenv("GOOGLE_API_KEY"):
+            os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+        model = Gemini(
+            id=model_name,
+            api_key=GEMINI_API_KEY if GEMINI_API_KEY else None
+        )
 
-    model = Gemini(
-        id=model_name,
-        api_key=GEMINI_API_KEY if GEMINI_API_KEY else None
-    )
+    # Persistencia de conversaciones en SQLite (o memoria en contingencia)
+    try:
+        db = SqliteDb(db_file=str(CONVERSACIONES_DB_FILE))
+    except Exception:
+        db = InMemoryDb()
 
     instrucciones = [
         "Eres KHIARA: Asistente autónoma de ingeniería y soporte de DASHBOARD_EK10.",
@@ -113,7 +147,8 @@ def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
         name="KHIARA",
         model=model,
         instructions=instrucciones,
-        db=InMemoryDb(),
+        db=db,
+        session_id=session_id or "khiara_sesion_principal",
         add_history_to_context=True,
         num_history_messages=12,
         read_chat_history=True,

@@ -149,3 +149,6 @@ class MemoriaEvolutiva:
             self._guardar_reglas()
             return True
         return False
+
+
+memoria_evolutiva_global = MemoriaEvolutiva()
