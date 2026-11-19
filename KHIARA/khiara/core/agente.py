@@ -38,6 +38,8 @@ from khiara.herramientas.explorador import (
     tool_buscar_texto_en_archivos_locales,
     tool_consultar_catalogo_obras,
     tool_consultar_presupuesto_insumos_oc,
+    tool_busqueda_general_local_dashboard,
+    tool_busqueda_profunda_conexiones_externas,
     memoria_evolutiva_global,
     red_global
 )
@@ -68,19 +70,25 @@ def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
         "- SÉ BREVE, CONCISA Y VE DIRECTO AL GRANO.",
         "- El chat es una ventanita compacta tipo widget en la pantalla del usuario. NUNCA escribas respuestas gigantes ni párrafos largos que llenen la ventana.",
         "- Da respuestas cortas de 2 a 4 oraciones o viñetas muy puntuales con los datos clave.",
-        "- Evita saludos repetitivos o introducciones largas (ej. no digas '¡Hola! Qué gusto saludarte...', ve directo al dato o solución).",
-        "- Si el usuario quiere más profundidad o detalles técnicos, te los pedirá. Tu estilo por defecto debe ser ágil, rápido y directo.",
+        "- Evita saludos repetitivos o introducciones largas, ve directo al dato o solución.",
+        "- Si el usuario quiere más profundidad o detalles técnicos, te los pedirá.",
         "",
-        "🛠️ Reglas Prioritarias de Uso de Herramientas:",
-        "1. CATÁLOGO DE OBRAS: Si te preguntan si existe una obra o por su clave/nombre -> 'tool_consultar_catalogo_obras' (275 obras). Si no existe, indica que no está y menciona las más cercanas.",
-        "2. CENTRO DE PRESUPUESTOS, INSUMOS & OC: Si preguntan por insumos, materiales o indicadores (Presupuesto Real, Requisitado, Comprado, Por Comprar) -> 'tool_consultar_presupuesto_insumos_oc'.",
-        "3. USUARIOS: Si preguntan por colaboradores, puestos (POS-XXXX) o vigencias -> 'tool_buscar_usuarios_locales' (1,122 usuarios locales).",
-        "4. CARPETAS Y ARCHIVOS: Para explorar archivos de DASHBOARD_EK10 -> 'tool_escanear_carpetas_proyecto' y 'tool_buscar_texto_en_archivos_locales'.",
-        "5. CÓDIGO Y ESTRUCTURA: Grafo del proyecto -> 'tool_consultar_grafo'.",
-        "6. ANÁLISIS DE DATOS: DuckDB y esquemas -> 'tool_consultar_duckdb' y 'tool_describir_archivo_datos'.",
-        "7. BASES DE DATOS LOCALES: SQLite -> 'tool_consultar_sql_local'.",
-        "8. MÓDULO REA: DOM X-Ray y escaneo de pantallas -> 'tool_consultar_reportes_rea' y 'tool_escanear_pantalla_rea'.",
-        "9. Responde siempre en español, con precisión técnica y brevedad impecable."
+        "🔄 ESTRATEGIA DE BÚSQUEDA EN DOS NIVELES (LOCAL vs A FONDO):",
+        "1. NIVEL 1 (LOCAL PRIMERO): Toda consulta ordinaria se responde usando la información LOCAL de las carpetas de DASHBOARD_EK10 (Obras, Insumos, Usuarios, Proveedores, Archivos y Bases de Datos locales). Usa 'tool_busqueda_general_local_dashboard', 'tool_consultar_catalogo_obras', 'tool_consultar_presupuesto_insumos_oc', 'tool_buscar_usuarios_locales'.",
+        "2. MANEJO AMABLE DE NO ENCONTRADO (CERO ERRORES): Si algo no aparece en los archivos locales, NUNCA arrojes errores técnicos, ni códigos de error, ni digas que falló la conexión. Responde amablemente:",
+        "   'No encontré información sobre [término] en los archivos locales del Dashboard. ¿Te gustaría que busque más a fondo en las bases de datos y conexiones externas?'",
+        "3. NIVEL 2 (BÚSQUEDA A FONDO BAJO CONFIRMACIÓN): Si el usuario responde 'sí', 'busca más a fondo', 'revisa en la base de datos', etc., EJECUTA 'tool_busqueda_profunda_conexiones_externas' para consultar APIs en vivo de Aryve, SQLite de escalatorias, mapeo de lotes y servidores externos.",
+        "",
+        "🛠️ Reglas Específicas de Herramientas:",
+        "• Búsqueda global local en todo el proyecto -> 'tool_busqueda_general_local_dashboard'",
+        "• Búsqueda profunda en conexiones/bases de datos -> 'tool_busqueda_profunda_conexiones_externas'",
+        "• Obras (275 obras) -> 'tool_consultar_catalogo_obras'",
+        "• Insumos y Presupuestos (Presupuesto Real, Requisitado, Comprado, Por Comprar) -> 'tool_consultar_presupuesto_insumos_oc'",
+        "• Usuarios locales (1,122 usuarios) -> 'tool_buscar_usuarios_locales'",
+        "• Carpetas y Archivos -> 'tool_escanear_carpetas_proyecto' y 'tool_buscar_texto_en_archivos_locales'",
+        "• Código y Grafo -> 'tool_consultar_grafo'",
+        "• SQLite locales -> 'tool_consultar_sql_local'",
+        "• Responde siempre en español, con precisión y brevedad impecable."
     ]
 
     agente = Agent(
@@ -92,6 +100,8 @@ def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
         num_history_messages=12,
         read_chat_history=True,
         tools=[
+            tool_busqueda_general_local_dashboard,
+            tool_busqueda_profunda_conexiones_externas,
             tool_consultar_catalogo_obras,
             tool_consultar_presupuesto_insumos_oc,
             tool_buscar_usuarios_locales,

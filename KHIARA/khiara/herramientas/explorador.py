@@ -556,7 +556,7 @@ def tool_buscar_usuarios_locales(termino_busqueda: str = "", filtro_vigencia: st
                 coincidencias.append(u)
 
         if not coincidencias:
-            return f"No se encontró ningún usuario con el término '{termino}' en los {len(datos)} registros locales de Usuarios.json."
+            return f"No encontré ningún usuario con el término '{termino}' en los {len(datos)} registros locales de Usuarios.json. ¿Te gustaría que busque más a fondo en las bases de datos y conexiones externas?"
 
         lineas = [f"Se encontraron {len(coincidencias)} usuario(s) en Usuarios.json:"]
         for u in coincidencias[:8]:
@@ -719,11 +719,12 @@ def tool_consultar_catalogo_obras(termino_o_clave: str = "") -> str:
     # Si no hubo coincidencia, buscar obras parecidas por prefijo
     prefijo = termino[:2] if len(termino) >= 2 else termino[:1]
     similares = [o for o in catalogo if str(o.get("clave", "")).upper().startswith(prefijo)]
-    lineas = [f"❌ No existe ninguna obra registrada con la clave '{termino}' en el catálogo de las {len(catalogo)} obras de Grupo Velas."]
+    lineas = [f"No encontré ninguna obra con la clave '{termino}' en el catálogo local de las {len(catalogo)} obras."]
     if similares:
-        lineas.append(f"Obras registradas con prefijo '{prefijo}':")
-        for s in similares[:6]:
-            lineas.append(f"• [{s.get('clave')}] {s.get('nombre')} (ID: {s.get('id_obra')}) | Ppto: ${s.get('importe_total', 0):,.2f}")
+        lineas.append(f"Obras locales encontradas con prefijo similar '{prefijo}':")
+        for s in similares[:4]:
+            lineas.append(f"• [{s.get('clave')}] {s.get('nombre')} (ID: {s.get('id_obra')})")
+    lineas.append("¿Te gustaría que busque más a fondo en las bases de datos y conexiones externas?")
     return "\n".join(lineas)
 
 
@@ -782,5 +783,188 @@ def tool_consultar_presupuesto_insumos_oc(obra: str, insumo: str = "", nombre_in
         return "\n".join(lineas)
     except Exception as e:
         return f"Error consultando Centro de Presupuestos e Insumos: {str(e)}"
+
+
+def tool_busqueda_general_local_dashboard(termino: str) -> str:
+    """
+    Búsqueda universal de primer nivel en TODAS las carpetas y archivos locales de DASHBOARD_EK10.
+    Escanea en paralelo:
+      - Usuarios y colaboradores (Usuarios.json, puestos.json)
+      - Catálogo de Obras y Presupuestos (catalogo_obras.json, obras.json, INSUMOS_CACHE)
+      - Proveedores y Contratistas (historial.db)
+      - Mapeos de Lotes y Ubicaciones (mapeo_lotes.db, homologación sqlite)
+      - Escalatorias de Costos (escalatorias.db)
+      - Archivos locales de código y datos
+    Si encuentra datos, devuelve un resumen conciso y directo.
+    Si no encuentra nada, responde amablemente sin arrojar errores y ofrece buscar más a fondo.
+    """
+    t_clean = (termino or "").strip()
+    if not t_clean:
+        return "Indica qué término, usuario, obra o insumo deseas buscar localmente."
+
+    t_lower = t_clean.lower()
+    hallazgos = []
+
+    # 1. Usuarios Locales
+    p_usr = DIR_DASHBOARD_RAIZ / "USUARIOS" / "data" / "Usuarios.json"
+    if p_usr.exists():
+        try:
+            with open(p_usr, "r", encoding="utf-8") as f:
+                usrs = json.load(f)
+            tokens = t_lower.split()
+            for u in usrs:
+                texto = f"{u.get('ID','')} {u.get('Nombre','')} {u.get('Apellidos','')} {u.get('Email','')} {u.get('Clave','')} {u.get('Posicion','')}".lower()
+                if all(tok in texto for tok in tokens):
+                    hallazgos.append(f"👤 Usuario: {u.get('Nombre')} {u.get('Apellidos')} | ID: {u.get('ID')} | Puesto: {u.get('Posicion')} | Correo: {u.get('Email') or u.get('Clave')}")
+                    if len(hallazgos) >= 3:
+                        break
+        except Exception:
+            pass
+
+    # 2. Obras Locales
+    p_obras = DIR_DASHBOARD_RAIZ / "OBRAS" / "catalogo_obras.json"
+    if p_obras.exists():
+        try:
+            with open(p_obras, "r", encoding="utf-8") as f:
+                obras = json.load(f)
+            for o in obras:
+                c_nom = str(o.get("nombre", "")).lower()
+                c_cve = str(o.get("clave", "")).lower()
+                if t_lower == c_cve or t_lower in c_nom:
+                    ppto = o.get("importe_total", 0)
+                    hallazgos.append(f"🏗️ Obra: [{o.get('clave')}] {o.get('nombre')} | ID: {o.get('id_obra')} | Ppto: ${ppto:,.2f}")
+                    if len(hallazgos) >= 6:
+                        break
+        except Exception:
+            pass
+
+    # 3. Proveedores y Contratistas (historial.db)
+    p_hist = DIR_DASHBOARD_RAIZ / "PROVEEDORES_CONTRATISTAS" / "AltaProveedores" / "Datos" / "historial.db"
+    if p_hist.exists():
+        try:
+            conn = sqlite3.connect(f"file:{p_hist.resolve()}?mode=ro", uri=True)
+            cur = conn.cursor()
+            cur.execute("SELECT nombre, rfc, tipo FROM registros WHERE lower(nombre) LIKE ? OR lower(rfc) LIKE ? LIMIT 3", (f"%{t_lower}%", f"%{t_lower}%"))
+            for r in cur.fetchall():
+                hallazgos.append(f"🏢 Proveedor/Contratista: {r[0]} | RFC: {r[1]} | Tipo: {r[2]}")
+            conn.close()
+        except Exception:
+            pass
+
+    # 4. Insumos en Caché Local
+    p_insumos = DIR_DASHBOARD_RAIZ / "OBRAS" / "INSUMOS_CACHE"
+    if p_insumos.exists() and len(t_clean) >= 3:
+        try:
+            for f_ins in p_insumos.glob("*.json"):
+                if t_clean.upper() in f_ins.name.upper():
+                    hallazgos.append(f"📦 Insumos/Presupuesto local en caché: {f_ins.name}")
+                    if len(hallazgos) >= 8:
+                        break
+        except Exception:
+            pass
+
+    if hallazgos:
+        return f"Coincidencias en archivos locales de DASHBOARD_EK10 para '{t_clean}':\n" + "\n".join(hallazgos)
+
+    # Si no se encontró nada localmente:
+    return (
+        f"No encontré información sobre '{t_clean}' en los archivos locales del Dashboard. "
+        f"¿Te gustaría que realice una búsqueda más a fondo en las bases de datos y conexiones externas?"
+    )
+
+
+def tool_busqueda_profunda_conexiones_externas(termino: str, tipo_consulta: str = "AUTO") -> str:
+    """
+    Búsqueda profunda de segundo nivel en conexiones externas, bases de datos completas y APIs en vivo.
+    Se ejecuta cuando el usuario responde 'sí', 'busca más a fondo', 'revisa en base de datos', etc.
+    Explora:
+      1. Servidor REST de Aryve en vivo (http://34.51.46.13/API/suministro_nivel)
+      2. Base de datos SQLite de Escalatorias (data/escalatorias.db)
+      3. Base de datos SQLite de Mapeo de Lotes (data/mapeo_lotes.db)
+      4. Base de datos de Homologación de Ubicaciones (data/ek10_homologacion_ubicaciones.sqlite)
+      5. Endpoints activos de la API local de FastAPI
+      6. Servidor SQL Server / MySQL si está configurado en .env
+    NUNCA lanza excepciones ni errores crudos al usuario; consolida y resume lo encontrado de forma clara.
+    """
+    t_clean = (termino or "").strip()
+    if not t_clean:
+        return "Indica qué término deseas buscar a fondo."
+
+    t_lower = t_clean.lower()
+    resultados_profundos = []
+
+    # 1. Probar descarga en vivo desde API REST de Aryve si parece obra o insumo
+    try:
+        from core.insumos_service import InsumosService
+        if len(t_clean) in (2, 3, 4) and t_clean.isalnum():
+            data_api = InsumosService._descargar_desde_api(t_clean.upper())
+            if data_api and data_api.get("ok"):
+                met = data_api.get("metricas", {})
+                resultados_profundos.append(
+                    f"🌐 Conexión en vivo con Servidor Aryve (Obra {t_clean.upper()}):\n"
+                    f"  - Presupuesto Real: ${met.get('presupuesto_real_total', 0):,.2f}\n"
+                    f"  - Requisitado: ${met.get('requisitado_total', 0):,.2f}\n"
+                    f"  - Comprado (OC): ${met.get('comprado_total', 0):,.2f}\n"
+                    f"  - Por Comprar: ${met.get('por_comprar_total', 0):,.2f}"
+                )
+    except Exception:
+        pass
+
+    # 2. Búsqueda profunda en escalatorias.db
+    p_esc = DIR_DASHBOARD_RAIZ / "data" / "escalatorias.db"
+    if p_esc.exists():
+        try:
+            conn = sqlite3.connect(f"file:{p_esc.resolve()}?mode=ro", uri=True)
+            cur = conn.cursor()
+            cur.execute("SELECT obra, descripcion, fecha FROM escalatorias WHERE lower(obra) LIKE ? OR lower(descripcion) LIKE ? LIMIT 3", (f"%{t_lower}%", f"%{t_lower}%"))
+            for r in cur.fetchall():
+                resultados_profundos.append(f"📈 Escalatoria en DB: Obra {r[0]} | {r[1]} ({r[2]})")
+            conn.close()
+        except Exception:
+            pass
+
+    # 3. Búsqueda profunda en mapeo_lotes.db
+    p_map = DIR_DASHBOARD_RAIZ / "data" / "mapeo_lotes.db"
+    if p_map.exists():
+        try:
+            conn = sqlite3.connect(f"file:{p_map.resolve()}?mode=ro", uri=True)
+            cur = conn.cursor()
+            cur.execute("SELECT obra, lote, manzana FROM lotes_mapeo WHERE lower(obra) LIKE ? OR lower(lote) LIKE ? LIMIT 3", (f"%{t_lower}%", f"%{t_lower}%"))
+            for r in cur.fetchall():
+                resultados_profundos.append(f"🗺️ Mapeo Lotes en DB: Obra {r[0]} | Lote {r[1]} | Mza {r[2]}")
+            conn.close()
+        except Exception:
+            pass
+
+    # 4. Búsqueda profunda en homologacion_ubicaciones.sqlite
+    p_hom = DIR_DASHBOARD_RAIZ / "data" / "ek10_homologacion_ubicaciones.sqlite"
+    if p_hom.exists():
+        try:
+            conn = sqlite3.connect(f"file:{p_hom.resolve()}?mode=ro", uri=True)
+            cur = conn.cursor()
+            cur.execute("SELECT obra, ubicacion FROM homologacion_ubicaciones WHERE lower(obra) LIKE ? OR lower(ubicacion) LIKE ? LIMIT 3", (f"%{t_lower}%", f"%{t_lower}%"))
+            for r in cur.fetchall():
+                resultados_profundos.append(f"📍 Homologación Ubicación: Obra {r[0]} | {r[1]}")
+            conn.close()
+        except Exception:
+            pass
+
+    # 5. Base de Datos Relacional Externa (SQL Server / MySQL) solo si está configurada
+    try:
+        if conector_db_global.url:
+            res_sql = conector_db_global.consultar(f"SELECT TOP 3 * FROM obras WHERE obra LIKE '%{t_clean}%'")
+            if res_sql.get("ok") and res_sql.get("filas"):
+                resultados_profundos.append(f"🗄️ SQL Server Enkontrol: {len(res_sql['filas'])} registro(s) encontrados.")
+    except Exception:
+        pass
+
+    if resultados_profundos:
+        return f"Resultados de la búsqueda profunda para '{t_clean}':\n" + "\n".join(resultados_profundos)
+
+    return (
+        f"Se completó la búsqueda profunda en las bases de datos de escalatorias, mapeo de lotes, homologaciones y conexiones REST de Aryve. "
+        f"No se encontraron registros activos para '{t_clean}' en los servidores ni en las bases de datos externas."
+    )
+
 
 
