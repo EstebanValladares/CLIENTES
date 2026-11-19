@@ -174,7 +174,7 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
     if "obra" in msg_low and any(k in msg_low for k in ["existe", "catalogo", "catálogo"]):
         m_obra = re.search(r'\b[A-Za-z0-9]{3,4}\b', mensaje.upper())
         if m_obra and m_obra.group(0) not in {"OBRA", "PARA", "ESTA", "CUAL", "HOLA"}:
-            return tool_consultar_catalogo_obras(termino=m_obra.group(0))
+            return tool_consultar_catalogo_obras(termino_o_clave=m_obra.group(0))
 
     # 3. Usuarios locales
     if "usuario" in msg_low and "existe" in msg_low:
