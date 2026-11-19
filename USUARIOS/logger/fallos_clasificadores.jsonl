@@ -358,3 +358,18 @@
 {"fecha": "2026-11-18 09:00:41", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "EtapasVentas.ID", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-18 09:00:47", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Financiamiento", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-18 09:00:49", "usuario": "ASESOR DE VENTA MATAMOROS", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Prototipo.ID", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:20", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "Clasificador de Prospectos", "nombre_clasificador": "P-ASOCIACION-ESPECIAL-BOLETA", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:42", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:43", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "DESARROLLOS", "nombre_clasificador": "PDC-002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:49", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "CI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:50", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "V-EDICIONCONPP", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:06:53", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "PROCESOS DE VENTA", "nombre_clasificador": "GI", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:00", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0001", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:02", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0002", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:04", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0003", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:06", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0004", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:08", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0005", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:13", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETAPAS DE SEGUIMIENTO", "nombre_clasificador": "ET-0006", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:23", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "AUTORIZACIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:24", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:26", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
