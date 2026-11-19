@@ -1509,25 +1509,59 @@ def tool_consultar_db_ek9_ocs(
                 lineas.append(f"• **[{r[0]}] {r[1]}** | Puesto: {r[2]} | Email: `{r[3]}` | Plaza: {r[5]} ({r[6]})")
             return "\n".join(lineas)
 
-        # 2. Búsqueda por folio de OC
+        # 2. Búsqueda por folio de OC (soporta '73', 'ASR|73', 'ASR-00000052' o obra_o_cc + folio_oc)
         if folio_oc:
+            import re
             f_clean = folio_oc.strip().upper()
-            num_part = f_clean.split("-")[-1].lstrip("0") or "0"
-            cur.execute("""
-                SELECT empresa, centro_costos, numero_oc, fecha, proveedor, total, estatus, tipo_sugerido
-                FROM ordenes_compra_ek9
-                WHERE CAST(numero_oc AS TEXT) = ? OR UPPER(centro_costos || '-' || printf('%08d', numero_oc)) LIKE ?
-                ORDER BY fecha DESC LIMIT 5
-            """, (num_part, f"%{f_clean}%"))
+            cc_filtro = obra_o_cc.strip().upper() if obra_o_cc else ""
+            if "|" in f_clean:
+                partes_p = f_clean.split("|", 1)
+                cc_filtro = cc_filtro or partes_p[0].strip()
+                num_part = partes_p[1].strip().lstrip("0") or "0"
+            elif "-" in f_clean:
+                partes_g = f_clean.split("-", 1)
+                cc_filtro = cc_filtro or partes_g[0].strip()
+                num_part = partes_g[1].strip().lstrip("0") or "0"
+            else:
+                m_cc_num = re.match(r"^([A-Z0-9]{3,4})\s+(\d+)$", f_clean)
+                if m_cc_num:
+                    cc_filtro = cc_filtro or m_cc_num.group(1)
+                    num_part = m_cc_num.group(2).lstrip("0") or "0"
+                else:
+                    num_part = f_clean.lstrip("0") or "0"
+
+            if cc_filtro:
+                cur.execute("""
+                    SELECT empresa, centro_costos, numero_oc, fecha, proveedor, total, estatus,
+                           solicito_empleado, id_ek10, total_rec, total_fac, tipo_sugerido
+                    FROM ordenes_compra_ek9
+                    WHERE UPPER(centro_costos) = ? AND (CAST(numero_oc AS TEXT) = ? OR CAST(id_ek10 AS TEXT) = ?)
+                    ORDER BY fecha DESC LIMIT 5
+                """, (cc_filtro, num_part, num_part))
+            else:
+                cur.execute("""
+                    SELECT empresa, centro_costos, numero_oc, fecha, proveedor, total, estatus,
+                           solicito_empleado, id_ek10, total_rec, total_fac, tipo_sugerido
+                    FROM ordenes_compra_ek9
+                    WHERE CAST(numero_oc AS TEXT) = ? OR UPPER(centro_costos || '-' || printf('%08d', numero_oc)) LIKE ?
+                    ORDER BY fecha DESC LIMIT 5
+                """, (num_part, f"%{f_clean}%"))
             rows = cur.fetchall()
             conn.close()
             if not rows:
-                return f"No se encontró la OC '{folio_oc}' en `ordenes_compra_ek9`."
-            lineas = [f"🧾 **Detalle de OC en DB EK9:**"]
+                return f"No se encontró la OC '{folio_oc}' (CC `{cc_filtro or 'N/A'}`) en `ordenes_compra_ek9`."
+            lineas = [f"🧾 **Detalle de OC en Base de Datos EK9:**"]
             for r in rows:
+                tot = float(r[5] or 0)
+                fac = float(r[10] or 0)
+                rec = float(r[9] or 0)
+                est_txt = "Terminada (`T`)" if r[6] == "T" else ("Pendiente (`P`)" if r[6] == "P" else ("Cancelada (`C`)" if r[6] == "C" else f"`{r[6] or 'S/E'}`"))
+                alerta_fac = f" ⚠️ **(100% Facturada — bloquea reenvíos desde EK10)**" if (fac > 0 and fac >= tot) else (f" ⚠️ **(Con factura parcial en EK9 — bloquea reenvíos)**" if fac > 0 else "")
                 lineas.append(
-                    f"• **CC {r[1]} — OC #{r[2]}** ({r[3][:10] if r[3] else 'S/F'})\n"
-                    f"  Proveedor: **{r[4]}** | Total: **${(r[5] or 0):,.2f}** | Estatus: `{r[6] or 'N/A'}`"
+                    f"• **EK9: `{r[1]}|{r[2]}`** (ID EK10: `{r[8] or 'N/A'}` | Fecha: `{str(r[3] or '')[:10]}`)\n"
+                    f"  - **Proveedor:** {r[4]} | **Solicitó:** {r[7] or 'N/A'}\n"
+                    f"  - **Total OC:** **${tot:,.2f}** | **Facturado en EK9 (`total_fac`):** **${fac:,.2f}**{alerta_fac}\n"
+                    f"  - **Recibido (`total_rec`):** ${rec:,.2f} | **Estatus EK9:** {est_txt}"
                 )
             return "\n".join(lineas)
 

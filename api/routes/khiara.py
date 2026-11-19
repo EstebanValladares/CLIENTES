@@ -222,6 +222,9 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
 
     # 6. Base de Datos EK9 y Órdenes de Compra (ecosistema_oc.db)
     norm_ek = msg_low.replace("ó", "o").replace("á", "a")
+    m_pipe = re.search(r"\b([a-z0-9]{3,4})\s*\|\s*(\d+)\b", norm_ek)
+    if m_pipe:
+        return tool_consultar_db_ek9_ocs(obra_o_cc=m_pipe.group(1), folio_oc=f"{m_pipe.group(1)}|{m_pipe.group(2)}")
     if "ek9" in norm_ek or "ordenes de compra" in norm_ek or "ecosistema_oc" in norm_ek:
         m_cc = re.search(r"(?:obra|cc|centro de costos?)\s+([a-z0-9]{3,4})\b", norm_ek)
         if m_cc:
