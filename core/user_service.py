@@ -500,3 +500,167 @@ class UserService:
             except Exception:
                 pass
         return None
+
+    @classmethod
+    def extraer_y_guardar_plantilla_usuario(cls, id_usuario: int | str, guardar_en_puestos: bool = True) -> Dict[str, Any]:
+        """
+        Extrae en vivo desde la API de Aryve toda la información de un usuario por su ID:
+        - Datos generales, Posición (POS-XXXX) y Área en la Organización
+        - Niveles Asignados (Compañía + Nivel)
+        - Grupos (Nombre y Clave GPO-XXXX)
+        - Clasificadores completos (agrupados por Proceso y Tipo de Clasificador)
+        Y los guarda en USUARIOS/data/puestos.json bajo el nombre del puesto del usuario,
+        donde el bot de creación de usuarios toma las plantillas.
+        """
+        import base64
+        import urllib3
+        import requests
+        from dotenv import load_dotenv
+
+        urllib3.disable_warnings()
+        load_dotenv(os.path.join(BASE_DIR, ".env"))
+        user = os.getenv("EK10_USER", "").strip()
+        pwd = os.getenv("EK10_PASS", "").strip()
+
+        if not user or not pwd:
+            try:
+                from NUCLEO.config import obtener_credenciales_aryve
+                user, pwd = obtener_credenciales_aryve()
+            except Exception:
+                pass
+
+        if not user or not pwd:
+            return {"ok": False, "error": "Credenciales EK10 no encontradas en .env"}
+
+        uid = int(str(id_usuario).strip())
+        s = requests.Session()
+        s.verify = False
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Referer": "https://suite.ekloud.net:1445/Aryve/",
+        }
+
+        r_log = s.post(
+            "",
+            data={"username": user, "password": pwd, "returnUrl": "", "msj": ""},
+            headers=headers,
+            timeout=12,
+        )
+        if r_log.status_code != 200 or ".AspNet.ApplicationCookie" not in s.cookies:
+            return {"ok": False, "error": f"Fallo al autenticar en Aryve ({r_log.status_code})"}
+
+        def _b64(obj: dict) -> str:
+            return base64.b64encode(json.dumps(obj).encode()).decode()
+
+        # 1. Datos generales del usuario
+        r_u = s.post(
+            "https://suite.ekloud.net:1445/Aryve/base/kontrol/usuarios/usuarios/consultar",
+            json={"parametros": {"ID": uid}},
+            headers=headers,
+            timeout=15,
+        )
+        u_list = r_u.json() if r_u.status_code == 200 else []
+        if not u_list:
+            return {"ok": False, "error": f"No se encontró el usuario con ID {uid} en Aryve."}
+        u_info = u_list[0]
+
+        # 2. Niveles asignados
+        p_usr = _b64({"idUsuario": uid})
+        r_niv = s.get(f"https://suite.ekloud.net:1445/Aryve/kontrol/usuarios/niveles/{p_usr}", headers=headers, timeout=15).json()
+        niveles = []
+        for n in (r_niv if isinstance(r_niv, list) else []):
+            c_nom = (n.get("Compania") or {}).get("Nombre", "").strip()
+            n_nom = (n.get("Nivel") or {}).get("Nombre", "").strip()
+            if c_nom and n_nom:
+                niveles.append({"compania": c_nom, "nivel": n_nom})
+
+        # 3. Grupos
+        r_grp = s.get(f"https://suite.ekloud.net:1445/Aryve/base/kontrol/GruposUsuario/Get/GetGroupsDetailsUser/{p_usr}", headers=headers, timeout=15).json()
+        grupos = []
+        grupos_detalle = []
+        for g in (r_grp if isinstance(r_grp, list) else []):
+            g_obj = g.get("Grupo") or {}
+            g_nom = str(g_obj.get("Nombre") or "").strip()
+            g_cve = str(g_obj.get("Clave") or "").strip()
+            if g_nom and g_nom not in grupos:
+                grupos.append(g_nom)
+                grupos_detalle.append({"clave": g_cve, "nombre": g_nom})
+
+        # 4. Clasificadores
+        p_cls = _b64({"claveEntidad": "usuarios", "idEntidad": uid})
+        r_cls = s.get(f"https://suite.ekloud.net:1445/Aryve/base/kontrol/catalogoClasificador/Get/GetAllObject/{p_cls}", headers=headers, timeout=20).json()
+        clasificadores: Dict[str, Any] = {}
+        resumen_abuelo: Dict[str, int] = {}
+        for item in (r_cls if isinstance(r_cls, list) else []):
+            proc = ((item.get("Proceso") or {}).get("Nombre") or "").strip()
+            tipo = ((item.get("TipoClasificador") or {}).get("Nombre") or "").strip()
+            cls_obj = item.get("Clasificador") or {}
+            cve = str(cls_obj.get("Clave") or cls_obj.get("Nombre") or "").strip()
+            if not tipo or not cve:
+                continue
+            abuelo = proc if proc else tipo
+            resumen_abuelo[abuelo] = resumen_abuelo.get(abuelo, 0) + 1
+            if proc and proc.upper() != tipo.upper():
+                nodo = clasificadores.setdefault(proc, {})
+                if isinstance(nodo, dict):
+                    lista = nodo.setdefault(tipo, [])
+                    if cve not in lista:
+                        lista.append(cve)
+            else:
+                lista = clasificadores.setdefault(tipo, [])
+                if isinstance(lista, list) and cve not in lista:
+                    lista.append(cve)
+
+        pos_obj = u_info.get("Posicion") or {}
+        puesto_nom = str(pos_obj.get("Nombre") or "").strip().upper()
+        puesto_cve = str(pos_obj.get("Clave") or "").strip()
+        puesto_id = pos_obj.get("ID")
+        area_obj = u_info.get("AreaOrganizacion") or {}
+        area_nom = str(area_obj.get("Nombre") or "").strip()
+        tz_nom = str((u_info.get("TimeZone") or {}).get("Nombre") or "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey").strip()
+        nombre_completo = f"{u_info.get('Nombre', '')} {u_info.get('Apellidos', '')}".strip()
+
+        if guardar_en_puestos and puesto_nom and os.path.exists(PUESTOS_PATH):
+            with open(PUESTOS_PATH, "r", encoding="utf-8") as f:
+                p_data = json.load(f)
+            puestos_dict = p_data.setdefault("puestos", {})
+            actual = puestos_dict.get(puesto_nom, {})
+            actual.update({
+                "area_organizacion": area_nom,
+                "area_organizacional": area_nom,
+                "time_zone": tz_nom,
+                "id_posicion_cloud": puesto_id,
+                "clave_posicion_cloud": puesto_cve,
+                "niveles_asignados": niveles,
+                "grupos": grupos,
+                "clasificadores": clasificadores,
+                "resumen_clasificadores_por_abuelo": resumen_abuelo,
+                "total_clasificadores": len(r_cls) if isinstance(r_cls, list) else 0,
+                "usuario_referencia_id": uid,
+                "usuario_referencia_nombre": nombre_completo,
+            })
+            puestos_dict[puesto_nom] = actual
+            p_data["total_posiciones"] = len(puestos_dict)
+            p_data["ultima_actualizacion"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            with open(PUESTOS_PATH, "w", encoding="utf-8") as f:
+                json.dump(p_data, f, ensure_ascii=False, indent=2)
+            cls._cache_puestos = None
+
+        return {
+            "ok": True,
+            "id_usuario": uid,
+            "nombre_completo": nombre_completo,
+            "correo": u_info.get("Email") or u_info.get("Clave"),
+            "puesto": puesto_nom,
+            "clave_posicion": puesto_cve,
+            "id_posicion": puesto_id,
+            "area_organizacion": area_nom,
+            "time_zone": tz_nom,
+            "niveles_asignados": niveles,
+            "grupos": grupos,
+            "grupos_detalle": grupos_detalle,
+            "total_clasificadores": len(r_cls) if isinstance(r_cls, list) else 0,
+            "resumen_clasificadores": resumen_abuelo,
+            "clasificadores": clasificadores,
+            "guardado_en": f"USUARIOS/data/puestos.json -> '{puesto_nom}'" if guardar_en_puestos else None,
+        }

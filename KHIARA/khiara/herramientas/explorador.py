@@ -1597,6 +1597,34 @@ def tool_consultar_db_ek9_ocs(
         return f"Error consultando base de datos EK9: {str(e)}"
 
 
+def tool_extraer_plantilla_usuario_por_id(id_usuario: str, guardar_en_puestos: bool = True) -> str:
+    """
+    Extrae en vivo desde Aryve la información completa de un usuario por su ID numérico (ej. '907'):
+    Área en la Organización, Niveles Asignados (Compañía/Nivel), Grupos y todos sus Clasificadores,
+    y los guarda como plantilla en USUARIOS/data/puestos.json para usarse al crear nuevos usuarios.
+    """
+    try:
+        from core.user_service import UserService
+        res = UserService.extraer_y_guardar_plantilla_usuario(id_usuario=id_usuario, guardar_en_puestos=guardar_en_puestos)
+        if not res.get("ok"):
+            return f"❌ {res.get('error', 'No se pudo extraer el usuario.')}"
+        niv_str = ", ".join(f"{n['compania']} → {n['nivel']}" for n in res.get("niveles_asignados", [])) or "Ninguno"
+        grp_str = ", ".join(f"{g['nombre']} ({g['clave']})" for g in res.get("grupos_detalle", [])) or "Ninguno"
+        res_cls = ", ".join(f"{k}: {v}" for k, v in res.get("resumen_clasificadores", {}).items()) or "0"
+        return (
+            f"✅ **Plantilla extraída y guardada de Usuario ID `{res['id_usuario']}` ({res['nombre_completo']}):**\n"
+            f"• **Puesto:** `{res['puesto']}` (`{res['clave_posicion']}`)\n"
+            f"• **Área:** `{res['area_organizacion']}`\n"
+            f"• **Niveles Asignados:** {niv_str}\n"
+            f"• **Grupos:** {grp_str}\n"
+            f"• **Clasificadores ({res['total_clasificadores']}):** {res_cls}\n"
+            f"• **Guardado en:** `{res['guardado_en']}`"
+        )
+    except Exception as e:
+        registrar_falla(f"id_usuario={id_usuario}", "EXTRAER_PLANTILLA_USR", str(e))
+        return f"Error extrayendo plantilla del usuario {id_usuario}: {str(e)}"
+
+
 
 
 
