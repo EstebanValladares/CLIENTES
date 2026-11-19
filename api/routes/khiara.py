@@ -18,6 +18,7 @@ if KHIARA_DIR not in sys.path:
     sys.path.insert(0, KHIARA_DIR)
 
 from khiara.core.agente import crear_agente_khiara
+from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 
 router = APIRouter(tags=["KHIARA"])
 
@@ -44,6 +45,13 @@ def limpiar_sesion_chat():
     """Reinicia la memoria de sesión del agente KHIARA."""
     reiniciar_agente()
     return {"ok": True, "mensaje": "Sesión reiniciada con éxito"}
+
+
+@router.get("/api/khiara/logs")
+def ver_logs_fallas(limite: int = 30):
+    """Devuelve las últimas incidencias y errores registrados en fallas_khiara.log."""
+    fallas = obtener_ultimas_fallas(limite=limite)
+    return {"total": len(fallas), "logs": fallas}
 
 
 @router.get("/api/khiara/status")
@@ -80,30 +88,34 @@ async def chat_stream(req: ChatRequest):
             try:
                 respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
             except Exception as e_run:
-                # Si ocurrió una desincronización de turnos en el historial de Gemini (código 400), reiniciar sesión y reintentar
                 err_str = str(e_run)
-                if "function call turn" in err_str or "INVALID_ARGUMENT" in err_str or "400" in err_str:
-                    agente = reiniciar_agente()
+                registrar_falla(req.mensaje, "EXCEPTION_RUN", err_str)
+                agente = reiniciar_agente()
+                try:
                     respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
-                else:
-                    raise e_run
+                except Exception as e_reintentar:
+                    registrar_falla(req.mensaje, "RETRY_EXCEPTION", str(e_reintentar))
+                    respuesta = "Esa información o servicio no se encuentra disponible por el momento. He registrado la incidencia para darle seguimiento. ¿Hay algo más en lo que pueda apoyarte?"
             
             # Evento de habla
             texto = respuesta.content if hasattr(respuesta, "content") else str(respuesta)
             
             # Si Agno devolvió una cadena con el error 400/429 de la API en lugar de lanzar excepción:
             if '"error"' in texto and ('"code": 400' in texto or 'function call turn' in texto or 'INVALID_ARGUMENT' in texto or '"code": 429' in texto):
+                registrar_falla(req.mensaje, "API_RAW_ERROR", texto[:300])
                 agente = reiniciar_agente()
                 try:
                     respuesta = await loop.run_in_executor(None, lambda: agente.run(req.mensaje, stream=False))
                     texto = respuesta.content if hasattr(respuesta, "content") else str(respuesta)
-                except Exception:
-                    texto = "Detecté un parpadeo en la conexión con la IA. Ya he limpiado la memoria para sincronizar el historial. Por favor, reenvía tu mensaje."
+                except Exception as e_rec:
+                    registrar_falla(req.mensaje, "RECOVER_EXCEPTION", str(e_rec))
+                    texto = "Esa información o servicio no se encuentra disponible por el momento. He registrado el reporte. ¿Te gustaría consultar otro dato?"
             
             # Si aún después de reintentar sigue conteniendo un error crudo de Gemini:
             if '"error"' in texto and ('"code": 400' in texto or '"code": 429' in texto or 'INVALID_ARGUMENT' in texto):
+                registrar_falla(req.mensaje, "UNRESOLVED_API_ERROR", texto[:300])
                 reiniciar_agente()
-                texto = "Reinicié la memoria de la sesión para evitar desincronización de turnos. ¿Me repites tu consulta?"
+                texto = "Esa información o servicio no se encuentra disponible por el momento. Ya registré el detalle para revisarlo. ¿Deseas hacer otra consulta?"
 
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
             
@@ -122,8 +134,12 @@ async def chat_stream(req: ChatRequest):
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
             yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
         except Exception as e:
-            # En caso de error, limpiar la instancia para la siguiente pregunta
+            # En caso de error mayor o caída imprevista, registrar en el log y dar mensaje limpio
+            registrar_falla(req.mensaje, "CRITICAL_EXCEPTION", str(e))
             reiniciar_agente()
-            yield f"data: {json.dumps({'tipo': 'error', 'valor': f'Ocurrió un detalle: {str(e)}'})}\n\n"
+            msg_amable = "Esa información o servicio no se encuentra disponible por el momento. He guardado el reporte para verificarlo. ¿En qué más puedo ayudarte?"
+            yield f"data: {json.dumps({'tipo': 'texto', 'valor': msg_amable})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
 
     return StreamingResponse(generador(), media_type="text/event-stream")

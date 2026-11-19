@@ -419,13 +419,16 @@
                   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                   .replace(/\n/g, '<br>');
                 msgs.scrollTop = msgs.scrollHeight;
+              } else if (d.tipo === 'error') {
+                b.innerHTML = `<span style="color:#94a3b8;">${d.valor}</span>`;
+                msgs.scrollTop = msgs.scrollHeight;
               }
             } catch (err) {}
           }
         }
       }
     } catch (err) {
-      b.innerHTML = `<span style="color:#ef4444;">Error: ${err.message}</span>`;
+      b.innerHTML = `<span style="color:#94a3b8;">Esa información o servicio no está disponible por el momento.</span>`;
     }
   });
 })();

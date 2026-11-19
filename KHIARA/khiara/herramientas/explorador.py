@@ -22,6 +22,7 @@ from khiara.grafo.repo_map import RepoMap
 from khiara.cerebro.centinela import CentinelaProactivo
 from khiara.herramientas.conector_api import ConectorAPI
 from khiara.cerebro.ontologia import GlosarioNegocio
+from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 
 # Instancias globales para las herramientas
 red_global = RedConocimiento()
@@ -1211,7 +1212,23 @@ def tool_consultar_movimientos_insumo(obra: str, partida: str, insumo: str) -> s
 
         return "\n".join(lineas)
     except Exception as e:
+        registrar_falla(f"{obra} {partida} {insumo}", "MOVIMIENTOS", str(e))
         return f"Error consultando movimientos: {str(e)}"
+
+
+def tool_consultar_log_fallas(limite: int = 15) -> str:
+    """
+    Consulta el historial de errores e incidencias registradas en 'fallas_khiara.log'.
+    Muestra únicamente los fallos o consultas no resueltas para auditoría y diagnóstico técnico.
+    """
+    fallas = obtener_ultimas_fallas(limite)
+    if not fallas:
+        return "El registro de fallas está completamente limpio (0 incidencias registradas)."
+    lineas = [f"Últimas {len(fallas)} incidencias registradas en 'fallas_khiara.log':"]
+    for f in fallas:
+        lineas.append(f"• {f}")
+    return "\n".join(lineas)
+
 
 
 
