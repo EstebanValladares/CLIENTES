@@ -56,6 +56,7 @@ from khiara.herramientas.explorador import (
     tool_consultar_movimientos_insumo,
     tool_consultar_escalatoria_precios,
     tool_consultar_grupos_insumos,
+    tool_consultar_db_ek9_ocs,
     memoria_evolutiva_global,
     red_global
 )
@@ -194,6 +195,7 @@ def crear_agente_khiara(
             tool_consultar_movimientos_insumo,
             tool_consultar_escalatoria_precios,
             tool_consultar_grupos_insumos,
+            tool_consultar_db_ek9_ocs,
             tool_buscar_usuarios_locales,
             tool_escanear_carpetas_proyecto,
             tool_buscar_texto_en_archivos_locales,

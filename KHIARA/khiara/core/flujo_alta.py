@@ -241,6 +241,23 @@ def _construir_paso_posicion(estado: Dict[str, Any]) -> str:
     )
 
 
+def _parece_pregunta_o_consulta_sistema(msg: str) -> bool:
+    """Detecta si el usuario está haciendo una pregunta o consultando otro módulo para no atraparlo como nombre de usuario."""
+    m_low = msg.lower().strip()
+    norm = m_low.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+    if "?" in m_low or "¿" in m_low:
+        return True
+    palabras_sistema = [
+        "cuantas ", "cuantos ", "cual ", "cuales ", "como ", "donde ", "por que ", "porque ",
+        "que es ", "que son ", "existe ", "busca ", "consulta ", "dime ", "muestra ",
+        "orden de compra", "ordenes de compra", " base de datos", " db ", "ek9", "ek10",
+        "escalatoria", "insumo", "obras", "presupuesto", "lote", "manzana", "correo nuevo",
+        "correos", "gmail", "tipo 1", "tipo 2", "tipo 3", "tipo 4", "tipo 5", "grupo ",
+        "reporte", "explosion", "tabla", "sql", "aprende que", "recuerda que"
+    ]
+    return any(p in f" {norm} " for p in palabras_sistema)
+
+
 def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
     """
     Intercepta y resuelve de forma instantánea (<50ms) el flujo de alta de usuarios,
@@ -259,6 +276,15 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
             "Si deseas crearla ahora, dime **\"crea la posición\"**."
         )
 
+    # 0.5 Si pregunta si puede crear un usuario sin guardar, responder sin bloquear la sesión
+    if ("sin darle a guardar" in msg_low or "sin guardar" in msg_low) and ("usuario" in msg_low or "posicion" in msg_low or "posición" in msg_low):
+        limpiar_flujo_sesion(session_id)
+        return (
+            "¡Sí! Por defecto lleno todos los campos en Aryve en **Modo Revisión (sin guardar)** "
+            "para que tú verifiques en el navegador antes de confirmar.\n"
+            "Cuando quieras iniciar el proceso, dime **\"dar de alta usuario\"** o **\"crea la posición\"**."
+        )
+
     # A. Si ya hay un flujo activo para esta sesión
     if session_id in _ESTADOS_SESION:
         estado = _ESTADOS_SESION[session_id]
@@ -266,6 +292,11 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
         if _es_cancelacion(msg_low):
             limpiar_flujo_sesion(session_id)
             return "Entendido, cancelé el proceso. ¿En qué más puedo apoyarte?"
+
+        # Si el usuario cambió de tema y está haciendo una pregunta o consulta del sistema, salir del asistente
+        if not estado.get("esperando_confirmacion") and _parece_pregunta_o_consulta_sistema(msg):
+            limpiar_flujo_sesion(session_id)
+            return None
 
         # ---- FLUJO ACTIVO: POSICIÓN ----
         if estado.get("tipo") == "posicion":

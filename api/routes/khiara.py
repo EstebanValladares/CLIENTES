@@ -36,7 +36,8 @@ from khiara.herramientas.explorador import (
     tool_consultar_catalogo_obras,
     tool_buscar_usuarios_locales,
     tool_consultar_estado_creacion_usuario,
-    tool_consultar_grupos_insumos
+    tool_consultar_grupos_insumos,
+    tool_consultar_db_ek9_ocs
 )
 from khiara.herramientas.conector_gmail import (
     tool_consultar_correos_recientes,
@@ -218,6 +219,15 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
         termino_g = m_busq_grupo.group(1).strip(" ?¿.,")
         if termino_g not in {"el", "la", "los", "las", "un", "una", "ese", "este", "cual", "cuál"} and not re.search(r"\d", msg_low):
             return tool_consultar_grupos_insumos(buscar_nombre=termino_g)
+
+    # 6. Base de Datos EK9 y Órdenes de Compra (ecosistema_oc.db)
+    norm_ek = msg_low.replace("ó", "o").replace("á", "a")
+    if "ek9" in norm_ek or "ordenes de compra" in norm_ek or "ecosistema_oc" in norm_ek:
+        m_cc = re.search(r"(?:obra|cc|centro de costos?)\s+([a-z0-9]{3,4})\b", norm_ek)
+        if m_cc:
+            return tool_consultar_db_ek9_ocs(obra_o_cc=m_cc.group(1))
+        if any(k in norm_ek for k in ["cuantas", "total", "hay", "resumen", "db de ek9", "base de datos"]):
+            return tool_consultar_db_ek9_ocs()
 
     return None
 

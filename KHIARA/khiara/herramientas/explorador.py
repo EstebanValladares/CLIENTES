@@ -181,22 +181,56 @@ def tool_consultar_grafo(tema_o_entidad: str) -> str:
     return "\n".join(lineas)
 
 
+def _resolver_ruta_db_local(ruta_o_alias: str) -> Path:
+    raiz = Path(__file__).resolve().parent.parent.parent.parent
+    alias = ruta_o_alias.strip().lower()
+    mapa = {
+        "ek9": raiz.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db",
+        "ecosistema_oc": raiz.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db",
+        "ecosistema_oc.db": raiz.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db",
+        "ordenes_compra": raiz.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db",
+        "control_pagos": raiz.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db",
+        "escalatorias": raiz / "data" / "escalatorias.db",
+        "escalatorias.db": raiz / "data" / "escalatorias.db",
+        "mapeo_lotes": raiz / "data" / "mapeo_lotes.db",
+        "mapeo_lotes.db": raiz / "data" / "mapeo_lotes.db",
+        "lotes": raiz / "data" / "mapeo_lotes.db",
+        "homologacion": raiz / "data" / "ek10_homologacion_ubicaciones.sqlite",
+        "obras": raiz / "OBRAS" / "obras.db",
+        "obras.db": raiz / "OBRAS" / "obras.db",
+    }
+    if alias in mapa:
+        return mapa[alias]
+    p = Path(ruta_o_alias)
+    if p.exists():
+        return p
+    if (raiz / ruta_o_alias).exists():
+        return raiz / ruta_o_alias
+    return p
+
+
 def tool_consultar_sql_local(ruta_db: str, consulta_sql: str) -> str:
-    """Ejecuta consultas SQL de SOLO LECTURA (SELECT) en bases de datos SQLite del proyecto."""
+    """
+    Ejecuta consultas SQL de SOLO LECTURA (SELECT o PRAGMA) en cualquiera de las bases SQLite locales:
+    - 'ek9' o 'ecosistema_oc' (tablas: ordenes_compra_ek9, usuarios_ek9, cat_puestos_ek9, cat_semanas_ek9, programaciones_oc)
+    - 'escalatorias' (tablas: escalatorias, escalatoria_insumos, escalatoria_obras)
+    - 'mapeo_lotes' (tablas: lotes_mapeo, homologacion_ubicaciones)
+    - 'obras' (tablas: catalogo, arboles, obras)
+    """
     sql_clean = consulta_sql.strip()
     if not sql_clean.upper().startswith("SELECT") and not sql_clean.upper().startswith("PRAGMA"):
         return "ERROR: Solo se permiten consultas SELECT o PRAGMA de lectura."
     
-    p = Path(ruta_db)
+    p = _resolver_ruta_db_local(ruta_db)
     if not p.exists():
-        return f"ERROR: La base de datos '{ruta_db}' no existe."
+        return f"ERROR: La base de datos '{ruta_db}' no se encontró. Usa alias válidos: 'ek9', 'escalatorias', 'mapeo_lotes', 'obras'."
     
     try:
         conn = sqlite3.connect(f"file:{p.resolve()}?mode=ro", uri=True)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(sql_clean)
-        filas = [dict(r) for r in cursor.fetchmany(15)]
+        filas = [dict(r) for r in cursor.fetchmany(20)]
         conn.close()
         if not filas:
             return "La consulta no devolvió registros."
@@ -1432,6 +1466,135 @@ def tool_consultar_grupos_insumos(
     except Exception as e:
         registrar_falla(f"tipo={tipo} grupo={numero_grupo} nombre={buscar_nombre}", "GRUPOS_INSUMOS", str(e))
         return f"Error consultando grupos de insumos: {str(e)}"
+
+
+def tool_consultar_db_ek9_ocs(
+    obra_o_cc: str = "",
+    proveedor: str = "",
+    folio_oc: str = "",
+    usuario_ek9: str = ""
+) -> str:
+    """
+    Consulta la base de datos de Órdenes de Compra y Usuarios de EK9 (CONTROL_PAGOS_OC/datos/ecosistema_oc.db).
+    Permite:
+    - Sin parámetros: Resumen total de Órdenes de Compra (ordenes_compra_ek9), desglose por estatus, usuarios EK9 y puestos.
+    - obra_o_cc: Total de OCs, importe acumulado y últimas OCs de una obra o centro de costos (ej. '567', 'AT1', 'KB5').
+    - proveedor: Buscar OCs por nombre de proveedor.
+    - folio_oc: Buscar una OC específica por número o folio (ej. '14726' o '567-00000103').
+    - usuario_ek9: Buscar entre los 7,552 usuarios de EK9 en la tabla usuarios_ek9.
+    """
+    p_db = DIR_DASHBOARD_RAIZ.parent / "CONTROL_PAGOS_OC" / "datos" / "ecosistema_oc.db"
+    if not p_db.exists():
+        return "No se localizó la base de datos de EK9 (CONTROL_PAGOS_OC/datos/ecosistema_oc.db)."
+
+    try:
+        conn = sqlite3.connect(f"file:{p_db.resolve()}?mode=ro", uri=True)
+        cur = conn.cursor()
+
+        # 1. Búsqueda de usuarios en EK9
+        if usuario_ek9:
+            q = f"%{usuario_ek9.strip()}%"
+            cur.execute("""
+                SELECT empleado, nombre, puesto, email, empresa, plaza, estatus
+                FROM usuarios_ek9
+                WHERE nombre LIKE ? OR email LIKE ? OR CAST(empleado AS TEXT) LIKE ?
+                LIMIT 6
+            """, (q, q, q))
+            rows = cur.fetchall()
+            conn.close()
+            if not rows:
+                return f"No se encontraron usuarios en la DB de EK9 que coincidan con '{usuario_ek9}'."
+            lineas = [f"👤 **Usuarios encontrados en DB EK9 (`usuarios_ek9`):**"]
+            for r in rows:
+                lineas.append(f"• **[{r[0]}] {r[1]}** | Puesto: {r[2]} | Email: `{r[3]}` | Plaza: {r[5]} ({r[6]})")
+            return "\n".join(lineas)
+
+        # 2. Búsqueda por folio de OC
+        if folio_oc:
+            f_clean = folio_oc.strip().upper()
+            num_part = f_clean.split("-")[-1].lstrip("0") or "0"
+            cur.execute("""
+                SELECT empresa, centro_costos, numero_oc, fecha, proveedor, total, estatus, tipo_sugerido
+                FROM ordenes_compra_ek9
+                WHERE CAST(numero_oc AS TEXT) = ? OR UPPER(centro_costos || '-' || printf('%08d', numero_oc)) LIKE ?
+                ORDER BY fecha DESC LIMIT 5
+            """, (num_part, f"%{f_clean}%"))
+            rows = cur.fetchall()
+            conn.close()
+            if not rows:
+                return f"No se encontró la OC '{folio_oc}' en `ordenes_compra_ek9`."
+            lineas = [f"🧾 **Detalle de OC en DB EK9:**"]
+            for r in rows:
+                lineas.append(
+                    f"• **CC {r[1]} — OC #{r[2]}** ({r[3][:10] if r[3] else 'S/F'})\n"
+                    f"  Proveedor: **{r[4]}** | Total: **${(r[5] or 0):,.2f}** | Estatus: `{r[6] or 'N/A'}`"
+                )
+            return "\n".join(lineas)
+
+        # 3. Búsqueda por Obra / Centro de Costos
+        if obra_o_cc:
+            cc = obra_o_cc.strip().upper()
+            cur.execute("SELECT COUNT(*), SUM(total) FROM ordenes_compra_ek9 WHERE UPPER(centro_costos) = ?", (cc,))
+            tot_count, tot_sum = cur.fetchone()
+            if not tot_count:
+                conn.close()
+                return f"No hay Órdenes de Compra registradas para la obra/CC **`{cc}`** en la DB de EK9 (`ordenes_compra_ek9`)."
+            cur.execute("""
+                SELECT numero_oc, fecha, proveedor, total, estatus
+                FROM ordenes_compra_ek9
+                WHERE UPPER(centro_costos) = ?
+                ORDER BY fecha DESC, numero_oc DESC LIMIT 5
+            """, (cc,))
+            ultimas = cur.fetchall()
+            conn.close()
+            lineas = [
+                f"📊 **Órdenes de Compra en DB EK9 para Obra/CC `{cc}`:**",
+                f"• **Total de OCs:** **{tot_count:,}** | **Importe acumulado:** **${(tot_sum or 0):,.2f}**",
+                "• **Últimas OCs registradas:**"
+            ]
+            for u in ultimas:
+                lineas.append(f"  - OC **#{u[0]}** ({str(u[1] or '')[:10]}): {u[2]} — **${(u[3] or 0):,.2f}** (`{u[4] or 'S/E'}`)")
+            return "\n".join(lineas)
+
+        # 4. Búsqueda por proveedor
+        if proveedor:
+            p_q = f"%{proveedor.strip()}%"
+            cur.execute("SELECT COUNT(*), SUM(total) FROM ordenes_compra_ek9 WHERE proveedor LIKE ?", (p_q,))
+            c_prov, s_prov = cur.fetchone()
+            if not c_prov:
+                conn.close()
+                return f"No se encontraron OCs para el proveedor '{proveedor}' en la DB de EK9."
+            cur.execute("""
+                SELECT centro_costos, numero_oc, fecha, proveedor, total
+                FROM ordenes_compra_ek9
+                WHERE proveedor LIKE ?
+                ORDER BY fecha DESC LIMIT 5
+            """, (p_q,))
+            rows = cur.fetchall()
+            conn.close()
+            lineas = [f"🏢 **OCs del proveedor '{proveedor}' en DB EK9:** **{c_prov:,} OCs** (${(s_prov or 0):,.2f})"]
+            for r in rows:
+                lineas.append(f"• CC `{r[0]}` — OC #{r[1]} ({str(r[2] or '')[:10]}): **${(r[4] or 0):,.2f}** ({r[3]})")
+            return "\n".join(lineas)
+
+        # 5. Resumen general de la base de datos EK9
+        cur.execute("SELECT COUNT(*), SUM(total) FROM ordenes_compra_ek9")
+        total_ocs, monto_total = cur.fetchone()
+        cur.execute("SELECT estatus, COUNT(*) FROM ordenes_compra_ek9 GROUP BY estatus")
+        por_est = dict(cur.fetchall())
+        cur.execute("SELECT COUNT(*) FROM usuarios_ek9")
+        total_usr = cur.fetchone()[0]
+        conn.close()
+
+        return (
+            f"📊 **Resumen actual de la Base de Datos EK9 (`ecosistema_oc.db`):**\n"
+            f"• **Total de Órdenes de Compra (`ordenes_compra_ek9`):** **{total_ocs:,} OCs** (Importe acumulado: **${(monto_total or 0):,.2f}**)\n"
+            f"  - Terminadas/Autorizadas (`T`): **{por_est.get('T', 0):,}** | Pendientes (`P`): **{por_est.get('P', 0):,}** | Canceladas (`C`): **{por_est.get('C', 0):,}** | Históricas: **{por_est.get('', 0):,}**\n"
+            f"• **Usuarios EK9 (`usuarios_ek9`):** **{total_usr:,}** usuarios registrados."
+        )
+    except Exception as e:
+        registrar_falla(f"ek9 cc={obra_o_cc} prov={proveedor}", "EK9_DB", str(e))
+        return f"Error consultando base de datos EK9: {str(e)}"
 
 
 
