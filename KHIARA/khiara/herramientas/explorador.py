@@ -1335,6 +1335,7 @@ def tool_consultar_grupos_insumos(
         return "No se localizó el catálogo OBRAS/GRUPO_INSUMOS_TIPO.json."
 
     try:
+        import re
         data = json.loads(p_json.read_text(encoding="utf-8"))
         lista_tipos = data.get("GRUPO_INSUMOS_TIPO", [])
         if not lista_tipos:
