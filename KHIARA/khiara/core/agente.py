@@ -146,6 +146,30 @@ def crear_agente_khiara(
         "• Responde siempre en español, con precisión y brevedad impecable."
     ]
 
+    # Inyección automática de Conocimiento Operativo EK10 (conocimiento_ek10.md)
+    from khiara.core.config import MEMORIA_DIR
+    archivo_ek10 = MEMORIA_DIR / "conocimiento_ek10.md"
+    if archivo_ek10.exists():
+        try:
+            contenido_ek10 = archivo_ek10.read_text(encoding="utf-8").strip()
+            if contenido_ek10:
+                instrucciones.append("\n📚 CONOCIMIENTO OPERATIVO VERIFICADO EK10 / ARYVE:")
+                instrucciones.append(contenido_ek10)
+        except Exception:
+            pass
+
+    # Inyección automática de Reglas Evolutivas aprendidas (reglas_evolutivas.json)
+    try:
+        memoria_evolutiva_global._cargar_reglas()
+        reglas_guardadas = memoria_evolutiva_global.listar_todas()
+        if reglas_guardadas:
+            bloque_reglas = ["\n🧠 REGLAS Y APRENDIZAJES GUARDADOS POR EL EQUIPO:"]
+            for r in reglas_guardadas[-25:]:
+                bloque_reglas.append(f"• [{r.get('categoria', 'REGLA')}] {r.get('regla', '')}")
+            instrucciones.extend(bloque_reglas)
+    except Exception:
+        pass
+
     agente = Agent(
         name="KHIARA",
         model=model,

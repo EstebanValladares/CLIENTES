@@ -22,7 +22,10 @@ if KHIARA_DIR not in sys.path:
 from khiara.core.agente import crear_agente_khiara
 from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 from khiara.core.flujo_alta import procesar_flujo_alta, limpiar_flujo_sesion
-from khiara.cerebro.extractor_aprendizaje import analizar_y_aprender_de_turno
+from khiara.cerebro.extractor_aprendizaje import (
+    analizar_y_aprender_de_turno,
+    detectar_comando_aprendizaje
+)
 from khiara.herramientas.explorador import (
     tool_consultar_escalatoria_precios,
     tool_consultar_catalogo_obras,
@@ -213,7 +216,18 @@ async def chat_stream(req: ChatRequest):
         # 1. Animación inicial: pensativa
         yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'thinking'})}\n\n"
 
-        # ⚡ PASO 0 (INSTANTÁNEO < 50ms): Flujo conversacional de Alta de Usuarios
+        # ⚡ PASO 0 (INSTANTÁNEO < 10ms): Comandos de aprendizaje controlado ('aprende que...', 'qué has aprendido', 'olvida RULE_xxx')
+        resp_aprend = detectar_comando_aprendizaje(req.mensaje, usuario_id=user)
+        if resp_aprend:
+            if "✅" in resp_aprend or "🗑️" in resp_aprend:
+                agente = reiniciar_agente()
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_aprend})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+            return
+
+        # ⚡ PASO 0.5 (INSTANTÁNEO < 50ms): Flujo conversacional de Alta de Usuarios y Posiciones
         resp_flujo = procesar_flujo_alta(sess, req.mensaje)
         if resp_flujo:
             yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"

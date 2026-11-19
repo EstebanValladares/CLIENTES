@@ -1,7 +1,8 @@
 """
-Extractor Autónomo de Aprendizaje y Reflexión para KHIARA.
-Analiza las conversaciones en segundo plano para extraer hechos, preferencias de usuario
-y correcciones de datos, consolidándolos en la Memoria Evolutiva persistente.
+Extractor Controlado de Aprendizaje para KHIARA.
+Solo persiste reglas globales cuando el usuario lo indica explícitamente
+("aprende que...", "recuerda que...", "guarda que...", "ten en cuenta que..."),
+evitando contaminar la memoria colectiva con conversaciones casuales.
 """
 
 import re
@@ -11,28 +12,68 @@ from khiara.cerebro.memoria_evolutiva import memoria_evolutiva_global
 
 logger = logging.getLogger("khiara.aprendizaje")
 
-
-PATRONES_PREFERENCIA = [
-    r"(?:prefiero|me gusta|acostumbro|muestra|dame|responde)\s+(?:que|las|los|con|en)\s+(.+)",
-    r"(?:siempre|a partir de ahora|de ahora en adelante)\s+(.+)",
-    r"(?:no me muestres|evita)\s+(.+)"
+PATRONES_ENSENANZA_EXPLICITA = [
+    r"^(?:khiara[,\s]+)?(?:aprende|recuerda|guarda|memoriza|anota)\s+(?:que|esto:?)\s+(.+)$",
+    r"^(?:khiara[,\s]+)?ten\s+en\s+cuenta\s+que\s+(.+)$",
+    r"^(?:khiara[,\s]+)?guarda\s+(?:esta\s+)?regla:?\s+(.+)$",
 ]
 
-PATRONES_REGLA_NEGOCIO = [
-    r"(?:la obra|el proyecto)\s+([A-Z0-9]{3,4})\s+(?:tiene|es|usa|cuenta con|cambió a)\s+(.+)",
-    r"(?:el contratista|el proveedor|el residente)\s+(?:de|para)\s+([A-Za-z0-9\s]+)\s+es\s+(.+)",
-    r"(?:el insumo|el material)\s+([A-Za-z0-9\s]+)\s+se (?:usa|ubica|encuentra)\s+en\s+(.+)"
-]
 
-PATRONES_CORRECCION = [
-    r"(?:no es|no se llama|corrige|el dato correcto es|te equivocaste,? es)\s+(.+)",
-    r"(?:en realidad|de hecho)\s+(?:es|son)\s+(.+)"
-]
+def detectar_comando_aprendizaje(mensaje: str, usuario_id: str = "esteban") -> Optional[str]:
+    """
+    Comandos instantáneos (<10ms) para controlar explícitamente qué SÍ y qué NO aprende KHIARA:
+    - 'aprende que ...' / 'recuerda que ...' / 'guarda regla: ...' -> Guarda permanentemente
+    - 'qué has aprendido' / 'ver reglas' / 'lista tus aprendizajes' -> Lista reglas con su ID
+    - 'olvida RULE_xxxx' / 'borra RULE_xxxx' -> Elimina la regla indicada
+    """
+    msg = mensaje.strip()
+    msg_low = msg.lower()
+    norm = msg_low.replace("é", "e").replace("á", "a").replace("í", "i").replace("ó", "o").replace("ú", "u")
 
-PATRONES_HECHO_EXPLICITO = [
-    r"(?:recuerda que|ten en cuenta que|guarda que|memoriza que)\s+(.+)",
-    r"(?:mi nombre es|mi puesto es|mi correo es)\s+(.+)"
-]
+    # 1. Borrar / Olvidar una regla específica
+    m_del = re.match(r"^(?:olvida|borra|elimina)\s+(RULE_[a-zA-Z0-9]+)", msg, re.IGNORECASE)
+    if m_del:
+        id_regla = m_del.group(1).upper()
+        memoria_evolutiva_global._cargar_reglas()
+        if memoria_evolutiva_global.eliminar_regla(id_regla):
+            return f"🗑️ Listo, eliminé permanentemente la regla **`{id_regla}`** de mi memoria."
+        return f"No encontré ninguna regla guardada con el ID `{id_regla}`."
+
+    # 2. Listar aprendizajes guardados
+    if any(k in norm for k in [
+        "que has aprendido", "lista tus aprendizajes", "ver reglas",
+        "tus reglas", "que reglas sabes", "que sabes guardado", "ver aprendizajes"
+    ]):
+        memoria_evolutiva_global._cargar_reglas()
+        reglas = memoria_evolutiva_global.listar_todas()
+        if not reglas:
+            return "Aún no tengo reglas personalizadas guardadas. Puedes enseñarme diciendo: **\"aprende que ...\"**."
+        lineas = [f"🧠 **Reglas aprendidas guardadas ({len(reglas)}):**"]
+        for r in reglas[-15:]:
+            lineas.append(f"• **`{r['id']}`** [{r['categoria']}]: {r['regla']}")
+        lineas.append("\nPara borrar alguna, dime: `olvida RULE_xxxx`.")
+        return "\n".join(lineas)
+
+    # 3. Guardar nueva regla explícita
+    for pat in PATRONES_ENSENANZA_EXPLICITA:
+        m = re.match(pat, msg, re.IGNORECASE | re.DOTALL)
+        if m:
+            texto_regla = m.group(1).strip()
+            if len(texto_regla) < 4:
+                return "Dime qué dato o regla quieres que guarde (ej. *\"aprende que el insumo 1300001 va en compañía 20\"*)."
+            res = memoria_evolutiva_global.registrar_regla(
+                texto_regla=texto_regla,
+                categoria="REGLA_NEGOCIO",
+                proyecto_asociado=usuario_id
+            )
+            if res.get("ok"):
+                rid = res["id"]
+                return (
+                    f"✅ **¡Aprendido y guardado permanentemente!** (`{rid}`)\n"
+                    f"• *\"{texto_regla}\"*\n\n"
+                    f"Ya quedó integrado en mi memoria. Si algún día deseas quitarlo, escribe `olvida {rid}`."
+                )
+    return None
 
 
 def analizar_y_aprender_de_turno(
@@ -41,61 +82,7 @@ def analizar_y_aprender_de_turno(
     usuario_id: str = "esteban"
 ) -> Optional[Dict[str, Any]]:
     """
-    Analiza un mensaje de usuario para detectar intenciones de enseñanza o preferencias.
-    Si detecta un hecho o regla relevante, la persiste en Memoria Evolutiva.
-    Retorna los datos de la regla aprendida o None.
+    Se mantiene solo para registros explícitos; las charlas normales quedan
+    únicamente en el historial privado (conversaciones.db) sin ensuciar reglas globales.
     """
-    if not mensaje_usuario or len(mensaje_usuario.strip()) < 5:
-        return None
-
-    texto = mensaje_usuario.strip()
-
-    # 1. Hechos explícitos pedidos por el usuario
-    for pat in PATRONES_HECHO_EXPLICITO:
-        m = re.search(pat, texto, re.IGNORECASE)
-        if m:
-            regla = m.group(0).strip()
-            res = memoria_evolutiva_global.registrar_regla(
-                texto_regla=regla,
-                categoria="HECHO_SISTEMA",
-                proyecto_asociado=usuario_id
-            )
-            return res
-
-    # 2. Correcciones de datos
-    for pat in PATRONES_CORRECCION:
-        m = re.search(pat, texto, re.IGNORECASE)
-        if m:
-            regla = f"Corrección indicada por {usuario_id}: {m.group(0).strip()}"
-            res = memoria_evolutiva_global.registrar_regla(
-                texto_regla=regla,
-                categoria="CORRECCION_DATO",
-                proyecto_asociado=usuario_id
-            )
-            return res
-
-    # 3. Preferencias del usuario
-    for pat in PATRONES_PREFERENCIA:
-        m = re.search(pat, texto, re.IGNORECASE)
-        if m:
-            regla = f"Preferencia de {usuario_id}: {m.group(0).strip()}"
-            res = memoria_evolutiva_global.registrar_regla(
-                texto_regla=regla,
-                categoria="PREFERENCIA_USUARIO",
-                proyecto_asociado=usuario_id
-            )
-            return res
-
-    # 4. Reglas de negocio u obras
-    for pat in PATRONES_REGLA_NEGOCIO:
-        m = re.search(pat, texto, re.IGNORECASE)
-        if m:
-            regla = m.group(0).strip()
-            res = memoria_evolutiva_global.registrar_regla(
-                texto_regla=regla,
-                categoria="REGLA_NEGOCIO",
-                proyecto_asociado=usuario_id
-            )
-            return res
-
     return None
