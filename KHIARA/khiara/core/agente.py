@@ -44,6 +44,8 @@ from khiara.herramientas.explorador import (
     tool_consultar_estado_creacion_usuario,
     tool_iniciar_creacion_posicion,
     tool_consultar_estado_creacion_posicion,
+    tool_ubicar_insumo_en_obra,
+    tool_consultar_movimientos_insumo,
     memoria_evolutiva_global,
     red_global
 )
@@ -99,6 +101,7 @@ def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
         "• Búsqueda profunda en conexiones/bases de datos -> 'tool_busqueda_profunda_conexiones_externas'",
         "• Obras (275 obras) -> 'tool_consultar_catalogo_obras'",
         "• Insumos y Presupuestos (Presupuesto Real, Requisitado, Comprado, Por Comprar) -> 'tool_consultar_presupuesto_insumos_oc'",
+        "• DÓNDE SE ENCUENTRA UN INSUMO (Frentes, Partidas, Lotes y OCs) -> 'tool_ubicar_insumo_en_obra' y 'tool_consultar_movimientos_insumo'",
         "• Usuarios locales (1,122 usuarios) -> 'tool_buscar_usuarios_locales'",
         "• Carpetas y Archivos -> 'tool_escanear_carpetas_proyecto' y 'tool_buscar_texto_en_archivos_locales'",
         "• Código y Grafo -> 'tool_consultar_grafo'",
@@ -123,6 +126,8 @@ def crear_agente_khiara(modelo_id: Optional[str] = None) -> Agent:
             tool_busqueda_profunda_conexiones_externas,
             tool_consultar_catalogo_obras,
             tool_consultar_presupuesto_insumos_oc,
+            tool_ubicar_insumo_en_obra,
+            tool_consultar_movimientos_insumo,
             tool_buscar_usuarios_locales,
             tool_escanear_carpetas_proyecto,
             tool_buscar_texto_en_archivos_locales,

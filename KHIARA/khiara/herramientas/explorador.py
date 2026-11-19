@@ -1091,5 +1091,129 @@ def tool_consultar_estado_creacion_posicion() -> str:
         return f"Error consultando estado de posición: {str(e)}"
 
 
+# ==============================================================================
+# HERRAMIENTAS DE UBICACIÓN WBS Y MOVIMIENTOS (CENTRO DE PRESUPUESTOS Y OCS)
+# ==============================================================================
+
+def tool_ubicar_insumo_en_obra(obra: str, insumo_o_nombre: str) -> str:
+    """
+    Rastrea con precisión milimétrica DÓNDE SE ENCUENTRA un insumo dentro de una obra.
+    Desglosa el árbol WBS indicando:
+      - En qué FRENTES (ej. 'Lote 1', 'Manzana 2', 'Edificio A', etc.)
+      - En qué PARTIDAS (ej. 'Cimentación', 'Muros', 'Estructura', etc.)
+      - Cuánto hay presupuestado, requisitado, comprado (OC) y por comprar en cada partida y frente.
+    Parámetros:
+      - obra: Clave de la obra (ej. 'AT1', 'AUS', 'EY0', 'KB1').
+      - insumo_o_nombre: Código numérico (ej. '1040001') o nombre del material (ej. 'alambre', 'block', 'varilla').
+    """
+    obra_clean = (obra or "").strip().upper()
+    termino = (insumo_o_nombre or "").strip().upper()
+
+    if not obra_clean or not termino:
+        return "Indica la clave de la obra y el insumo a rastrear (ej. obra='AT1', insumo='alambre' o '1040001')."
+
+    try:
+        from core.insumos_service import InsumosService
+        res = InsumosService.consultar_reporte(obra_clean)
+        if not res or not res.get("ok"):
+            return f"No se encontró información de insumos para la obra '{obra_clean}'."
+
+        resumen = res.get("resumen", [])
+        insumos_coincidentes = []
+        for i in resumen:
+            clave = str(i.get("clave", "")).strip().upper()
+            nombre = str(i.get("nombre", "")).strip().upper()
+            if termino == clave or termino in nombre:
+                insumos_coincidentes.append(i)
+
+        if not insumos_coincidentes:
+            return f"No encontré el insumo '{termino}' en la obra {obra_clean}. Revisa si el nombre o código es correcto."
+
+        partidas = res.get("partidas", [])
+        salida = []
+        for ins in insumos_coincidentes[:2]:
+            cve = ins.get("clave")
+            nom = ins.get("nombre")
+            udm = ins.get("unidad", "")
+            tot_ppto = ins.get("presupuesto_real", 0)
+            tot_comp = ins.get("comprado", 0)
+            tot_pxc = ins.get("por_comprar", 0)
+
+            lineas = [
+                f"📦 Insumo: [{cve}] {nom}",
+                f"• Balance Global en {obra_clean}: {tot_ppto:,.2f} {udm} (Ppto Real) | Comprado: {tot_comp:,.2f} | Por Comprar: {tot_pxc:,.2f}",
+                f"📍 Ubicación exacta en Frentes y Partidas:"
+            ]
+
+            ubicaciones = []
+            for p in partidas:
+                for p_ins in p.get("insumos", []):
+                    if str(p_ins.get("clave", "")).strip().upper() == cve:
+                        fr = p.get("frente") or {}
+                        ubicaciones.append({
+                            "frente_cod": fr.get("codigo", ""),
+                            "frente_nom": fr.get("nombre", "Sin Frente"),
+                            "partida_cod": p.get("codigo", ""),
+                            "partida_nom": p.get("nombre", ""),
+                            "cant_ppto": p_ins.get("presupuesto_real", p_ins.get("ppto", 0)),
+                            "cant_comp": p_ins.get("comprado", 0),
+                            "cant_pxc": p_ins.get("por_comprar", 0)
+                        })
+
+            if ubicaciones:
+                for u in ubicaciones[:6]:
+                    lineas.append(
+                        f"  - Frente {u['frente_cod']} ({u['frente_nom']}) -> Partida {u['partida_cod']} {u['partida_nom']}: "
+                        f"Ppto: {u['cant_ppto']:,.2f} {udm} | Comprado: {u['cant_comp']:,.2f} | Por Comprar: {u['cant_pxc']:,.2f}"
+                    )
+                if len(ubicaciones) > 6:
+                    lineas.append(f"  ... y {len(ubicaciones) - 6} ubicaciones más.")
+            else:
+                lineas.append("  (No tiene partidas específicas desglosadas)")
+
+            salida.append("\n".join(lineas))
+
+        return "\n\n".join(salida)
+    except Exception as e:
+        return f"Error ubicando insumo en obra: {str(e)}"
+
+
+def tool_consultar_movimientos_insumo(obra: str, partida: str, insumo: str) -> str:
+    """
+    Consulta el desglose de Requisiciones y Órdenes de Compra (OCs) asociadas a un insumo en una partida específica.
+    Permite saber con qué folios de OC se compró y qué requisiciones están en proceso.
+    """
+    obra_clean = (obra or "").strip().upper()
+    partida_clean = (partida or "").strip()
+    insumo_clean = (insumo or "").strip()
+
+    try:
+        from core.insumos_service import InsumosService
+        res = InsumosService.consultar_movimientos(obra=obra_clean, partida=partida_clean, insumo=insumo_clean)
+        if not res or not res.get("ok"):
+            return f"No se encontraron movimientos registrados para el insumo {insumo_clean} en la partida {partida_clean} de {obra_clean}."
+
+        lineas = [f"📄 Movimientos de Insumo [{insumo_clean}] en Obra {obra_clean} (Partida {partida_clean}):"]
+        reqs = res.get("requisiciones", [])
+        ocs = res.get("ordenes_compra", [])
+
+        if ocs:
+            lineas.append(f"• Órdenes de Compra ({len(ocs)}):")
+            for oc in ocs[:4]:
+                lineas.append(f"  - Folio: {oc.get('folio')} | Cant: {oc.get('cantidad')} | P.U.: ${oc.get('precio_unitario', 0):,.2f} | Prov: {oc.get('proveedor', 'N/A')}")
+        else:
+            lineas.append("• Sin Órdenes de Compra registradas.")
+
+        if reqs:
+            lineas.append(f"• Requisiciones ({len(reqs)}):")
+            for rq in reqs[:4]:
+                lineas.append(f"  - Folio: {rq.get('folio')} | Cant: {rq.get('cantidad')} | Estatus: {rq.get('estatus', 'N/A')}")
+
+        return "\n".join(lineas)
+    except Exception as e:
+        return f"Error consultando movimientos: {str(e)}"
+
+
+
 
 
