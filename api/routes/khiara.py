@@ -22,6 +22,11 @@ if KHIARA_DIR not in sys.path:
 from khiara.core.agente import crear_agente_khiara
 from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 from khiara.cerebro.extractor_aprendizaje import analizar_y_aprender_de_turno
+from khiara.herramientas.explorador import (
+    tool_consultar_escalatoria_precios,
+    tool_consultar_catalogo_obras,
+    tool_buscar_usuarios_locales
+)
 from khiara.core.config import (
     DEFAULT_MODEL,
     KHIARA_PROVIDER,

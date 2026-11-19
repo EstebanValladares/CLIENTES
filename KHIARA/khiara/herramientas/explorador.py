@@ -917,9 +917,15 @@ def tool_busqueda_profunda_conexiones_externas(termino: str, tipo_consulta: str 
         try:
             conn = sqlite3.connect(f"file:{p_esc.resolve()}?mode=ro", uri=True)
             cur = conn.cursor()
-            cur.execute("SELECT obra, descripcion, fecha FROM escalatorias WHERE lower(obra) LIKE ? OR lower(descripcion) LIKE ? LIMIT 3", (f"%{t_lower}%", f"%{t_lower}%"))
+            cur.execute("""
+                SELECT clave, nombre, COUNT(DISTINCT obra_clave), GROUP_CONCAT(DISTINCT obra_clave)
+                FROM escalatoria_insumos
+                WHERE lower(clave) LIKE ? OR lower(nombre) LIKE ?
+                GROUP BY clave, nombre LIMIT 3
+            """, (f"%{t_lower}%", f"%{t_lower}%"))
             for r in cur.fetchall():
-                resultados_profundos.append(f"📈 Escalatoria en DB: Obra {r[0]} | {r[1]} ({r[2]})")
+                obras_preview = r[3][:40] + "..." if r[3] and len(r[3]) > 40 else (r[3] or "")
+                resultados_profundos.append(f"📈 Escalatoria Insumo: {r[0]} - {r[1]} presente en {r[2]} obras ({obras_preview})")
             conn.close()
         except Exception:
             pass
@@ -1228,6 +1234,87 @@ def tool_consultar_log_fallas(limite: int = 15) -> str:
     for f in fallas:
         lineas.append(f"• {f}")
     return "\n".join(lineas)
+
+
+def tool_consultar_escalatoria_precios(
+    termino_o_clave_insumo: str = "",
+    obra_clave: str = ""
+) -> str:
+    """
+    Consulta oficial de la base de datos de Escalatorias de Precios (data/escalatorias.db).
+    Permite:
+    1. Saber en cuántas y cuáles obras se encuentra un insumo escalado (ej. '1430001' o 'NUMERO DE EDIFICIO').
+    2. Consultar qué insumos y precios escalados tiene una obra específica (ej. 'KA4', 'KA1').
+    3. Saber precios escalados, monedas y folios de escalatoria.
+    """
+    p_esc = DIR_DASHBOARD_RAIZ / "data" / "escalatorias.db"
+    if not p_esc.exists():
+        return "No se localizó la base de datos de escalatorias (data/escalatorias.db)."
+
+    try:
+        conn = sqlite3.connect(f"file:{p_esc.resolve()}?mode=ro", uri=True)
+        cur = conn.cursor()
+
+        # 1. Búsqueda por clave o nombre de insumo
+        if termino_o_clave_insumo:
+            term = f"%{termino_o_clave_insumo.strip()}%"
+            cur.execute("""
+                SELECT clave, nombre, COUNT(DISTINCT obra_clave) as total_obras, GROUP_CONCAT(DISTINCT obra_clave) as obras, precio, moneda
+                FROM escalatoria_insumos
+                WHERE clave LIKE ? OR nombre LIKE ?
+                GROUP BY clave, nombre
+                ORDER BY total_obras DESC LIMIT 5
+            """, (term, term))
+            rows = cur.fetchall()
+            conn.close()
+
+            if not rows:
+                return f"No se encontraron escalatorias para el insumo '{termino_o_clave_insumo}' en escalatorias.db."
+
+            res = []
+            for r in rows:
+                obras_lista = r[3].split(",") if r[3] else []
+                obras_str = ", ".join(obras_lista[:10]) + (f" (+{len(obras_lista)-10} más)" if len(obras_lista) > 10 else "")
+                res.append(
+                    f"📈 Insumo {r[0]} ({r[1]}):\n"
+                    f"  • Total de obras con escalatoria: {r[2]} obras\n"
+                    f"  • Obras que lo tienen: {obras_str}\n"
+                    f"  • Precio escalado: ${r[4]:,.2f} {r[5]}"
+                )
+            return "\n\n".join(res)
+
+        # 2. Búsqueda por obra
+        if obra_clave:
+            ob = f"%{obra_clave.strip().upper()}%"
+            cur.execute("""
+                SELECT clave, nombre, precio, moneda, escalatoria_clave
+                FROM escalatoria_insumos
+                WHERE UPPER(obra_clave) LIKE ?
+                LIMIT 10
+            """, (ob,))
+            rows = cur.fetchall()
+            conn.close()
+
+            if not rows:
+                return f"No se encontraron insumos con escalatoria para la obra '{obra_clave}'."
+
+            res = [f"📈 Insumos en escalatoria para la obra {obra_clave.upper()}:"]
+            for r in rows:
+                res.append(f"  • [{r[0]}] {r[1]} - ${r[2]:,.2f} {r[3]} (Escalatoria: {r[4]})")
+            return "\n".join(res)
+
+        # 3. Resumen general
+        cur.execute("SELECT clave, nombre, estatus_desc, numero_insumos FROM escalatorias LIMIT 5")
+        rows = cur.fetchall()
+        conn.close()
+        res = ["📈 Resumen de Escalatorias registradas:"]
+        for r in rows:
+            res.append(f"  • {r[0]}: {r[1]} ({r[2]}, {r[3]} insumos)")
+        return "\n".join(res)
+
+    except Exception as e:
+        registrar_falla(f"{termino_o_clave_insumo} {obra_clave}", "ESCALATORIA_DB", str(e))
+        return f"Error consultando escalatorias: {str(e)}"
 
 
 
