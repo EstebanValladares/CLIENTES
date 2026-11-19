@@ -30,14 +30,15 @@ def detectar_comando_aprendizaje(mensaje: str, usuario_id: str = "esteban") -> O
     msg_low = msg.lower()
     norm = msg_low.replace("é", "e").replace("á", "a").replace("í", "i").replace("ó", "o").replace("ú", "u")
 
-    # 1. Borrar / Olvidar una regla específica
+    # 1. Borrar / Olvidar una regla específica (insensible a mayúsculas/minúsculas)
     m_del = re.match(r"^(?:olvida|borra|elimina)\s+(RULE_[a-zA-Z0-9]+)", msg, re.IGNORECASE)
     if m_del:
-        id_regla = m_del.group(1).upper()
+        id_buscado = m_del.group(1).lower()
         memoria_evolutiva_global._cargar_reglas()
-        if memoria_evolutiva_global.eliminar_regla(id_regla):
-            return f"🗑️ Listo, eliminé permanentemente la regla **`{id_regla}`** de mi memoria."
-        return f"No encontré ninguna regla guardada con el ID `{id_regla}`."
+        id_real = next((k for k in memoria_evolutiva_global.reglas.keys() if k.lower() == id_buscado), None)
+        if id_real and memoria_evolutiva_global.eliminar_regla(id_real):
+            return f"🗑️ Listo, eliminé permanentemente la regla **`{id_real}`** de mi memoria."
+        return f"No encontré ninguna regla guardada con el ID `{m_del.group(1)}`."
 
     # 2. Listar aprendizajes guardados
     if any(k in norm for k in [
