@@ -967,4 +967,129 @@ def tool_busqueda_profunda_conexiones_externas(termino: str, tipo_consulta: str 
     )
 
 
+# ==============================================================================
+# HERRAMIENTAS DE ESCRITURA Y ACCIÓN AUTÓNOMA (ALTA DE USUARIOS Y POSICIONES)
+# ==============================================================================
+
+def tool_iniciar_creacion_usuario(nombre: str, apellidos: str, correo: str, puesto: str, guardar_en_produccion: bool = False) -> str:
+    """
+    Inicia el bot autónomo de Selenium en segundo plano para dar de alta a un usuario en Aryve / Enkontrol.
+    Parámetros requeridos:
+      - nombre: Nombre(s) del colaborador (ej. 'CARLOS EDUARDO').
+      - apellidos: Apellidos del colaborador (ej. 'MARTINEZ LOPEZ').
+      - correo: Correo corporativo o personal (ej. 'cmartinez@grupovelas.com').
+      - puesto: Puesto o posición a asignar (ej. 'ASESOR DE VENTA MATAMOROS' o clave 'POS-1080').
+      - guardar_en_produccion: Si es False, solo llena los campos en el navegador para validación humana. Si es True, da clic en Guardar definitivo en Aryve.
+    """
+    try:
+        from core.user_creation_service import UserCreationService
+        datos = {
+            "nombre": nombre.strip().upper(),
+            "apellidos": apellidos.strip().upper(),
+            "correo": correo.strip(),
+            "clave": correo.strip(),
+            "puesto": puesto.strip()
+        }
+        ok, msg = UserCreationService.iniciar_alta_asincrona(datos, guardar_en_produccion=guardar_en_produccion)
+        if not ok:
+            return f"No se pudo iniciar el alta: {msg}"
+        modo = "Guardado automático en Producción" if guardar_en_produccion else "Modo Revisión (campos llenos en navegador para verificar antes de guardar)"
+        return (
+            f"🚀 Tarea de alta de usuario iniciada en segundo plano con éxito.\n"
+            f"• Colaborador: {datos['nombre']} {datos['apellidos']}\n"
+            f"• Correo: {datos['correo']}\n"
+            f"• Puesto: {datos['puesto']}\n"
+            f"• Modo: {modo}\n"
+            f"Puedes preguntarme '¿cómo va el alta?' en cualquier momento para ver el progreso del navegador."
+        )
+    except Exception as e:
+        return f"Error ejecutando bot de alta de usuario: {str(e)}"
+
+
+def tool_consultar_estado_creacion_usuario() -> str:
+    """
+    Consulta en tiempo real el progreso, estado y logs de Selenium del alta de usuario en Aryve.
+    """
+    try:
+        from core.user_creation_service import UserCreationService
+        est = UserCreationService.obtener_estado()
+        ejecutando = est.get("ejecutando", False)
+        ok = est.get("ok")
+        msg = est.get("mensaje", "")
+        logs = est.get("logs", [])
+        ultimos_logs = logs[-3:] if logs else []
+
+        estado_str = "⏳ En ejecución (navegador interactuando con Aryve)..." if ejecutando else ("✔ Finalizado exitosamente" if ok is True else ("❌ Finalizó con observaciones" if ok is False else "Listo"))
+        res = [
+            f"Estado del Alta de Usuario: {estado_str}",
+            f"Detalle: {msg}"
+        ]
+        if ultimos_logs:
+            res.append("Últimos eventos:")
+            for l in ultimos_logs:
+                res.append(f"• {l}")
+        return "\n".join(res)
+    except Exception as e:
+        return f"Error consultando estado: {str(e)}"
+
+
+def tool_iniciar_creacion_posicion(clave: str, nombre: str, categoria: str = "Operativa", puesto_padre: str = "", guardar_en_produccion: bool = False) -> str:
+    """
+    Inicia el bot autónomo de Selenium en segundo plano para dar de alta una nueva Posición / Puesto en Aryve.
+    Parámetros requeridos:
+      - clave: Clave única de la posición (ej. 'POS-1090').
+      - nombre: Nombre oficial del puesto (ej. 'COORDINADOR DE TITULACION CANCUN').
+      - categoria: Categoría organizacional (ej. 'VENTAS', 'OBRA', 'TITULACIÓN', 'SISTEMAS', 'ADMINISTRACION').
+      - puesto_padre: Puesto jerárquico superior si aplica (ej. 'GERENTE DE VENTAS').
+      - guardar_en_produccion: Si es False, solo llena los campos en el navegador. Si es True, guarda en Aryve.
+    """
+    try:
+        from core.user_position_service import UserPositionService
+        ok, msg = UserPositionService.iniciar_alta_asincrona(
+            clave=clave.strip().upper(),
+            nombre=nombre.strip().upper(),
+            categoria=categoria.strip(),
+            padre=puesto_padre.strip(),
+            guardar_en_produccion=guardar_en_produccion
+        )
+        if not ok:
+            return f"No se pudo iniciar el alta de posición: {msg}"
+        return (
+            f"🚀 Creación de posición iniciada en segundo plano con éxito.\n"
+            f"• Clave: {clave.upper()} | Nombre: {nombre.upper()}\n"
+            f"• Categoría: {categoria} | Puesto Superior: {puesto_padre or 'N/A'}\n"
+            f"El bot de Selenium está abriendo Aryve para registrar la posición."
+        )
+    except Exception as e:
+        return f"Error creando posición: {str(e)}"
+
+
+def tool_consultar_estado_creacion_posicion() -> str:
+    """
+    Consulta el estado y progreso del bot de creación de puestos y posiciones en Aryve.
+    """
+    try:
+        from core.user_position_service import UserPositionService
+        est = UserPositionService.obtener_estado()
+        ejecutando = est.get("ejecutando", False)
+        ok = est.get("ok")
+        msg = est.get("mensaje", "")
+        logs = est.get("logs", [])
+        ultimos_logs = logs[-3:] if logs else []
+
+        estado_str = "⏳ En ejecución..." if ejecutando else ("✔ Finalizado exitosamente" if ok is True else ("❌ Finalizó con observaciones" if ok is False else "Listo"))
+        res = [
+            f"Estado de Creación de Posición: {estado_str}",
+            f"Detalle: {msg}"
+        ]
+        if ultimos_logs:
+            res.append("Últimos eventos:")
+            for l in ultimos_logs:
+                res.append(f"• {l}")
+        return "\n".join(res)
+    except Exception as e:
+        return f"Error consultando estado de posición: {str(e)}"
+
+
+
 
