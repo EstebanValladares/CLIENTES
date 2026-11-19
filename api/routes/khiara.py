@@ -30,7 +30,8 @@ from khiara.herramientas.explorador import (
     tool_consultar_escalatoria_precios,
     tool_consultar_catalogo_obras,
     tool_buscar_usuarios_locales,
-    tool_consultar_estado_creacion_usuario
+    tool_consultar_estado_creacion_usuario,
+    tool_consultar_grupos_insumos
 )
 from khiara.herramientas.conector_gmail import (
     tool_consultar_correos_recientes,
@@ -189,6 +190,23 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
     if any(k in msg_low for k in ["correo nuevo", "correos nuevos", "hay correos", "tengo correo", "tenog un correo", "revisa mi correo", "revisar correo", "bandeja", "inbox", "correos recientes", "ultimos correos", "últimos correos"]):
         solo_no_leidos = not ("todos" in msg_low or "leidos" in msg_low or "leídos" in msg_low or "recientes" in msg_low or "ultimos" in msg_low or "últimos" in msg_low)
         return tool_consultar_correos_recientes(solo_no_leidos=solo_no_leidos, limite=3)
+
+    # 5. Catálogo de Tipos y Grupos de Insumos (Tipo 1..9, Grupos 01..68)
+    m_tg1 = re.search(r"tipo\s*(\d+)\D{1,15}(?:grupo|gruipo)\s*(\d+)", msg_low)
+    m_tg2 = re.search(r"(?:grupo|gruipo)\s*(\d+)\D{1,15}tipo\s*(\d+)", msg_low)
+    if m_tg1:
+        return tool_consultar_grupos_insumos(tipo=m_tg1.group(1), numero_grupo=m_tg1.group(2))
+    if m_tg2:
+        return tool_consultar_grupos_insumos(tipo=m_tg2.group(2), numero_grupo=m_tg2.group(1))
+    m_solo_tipo = re.search(r"grupos?\s+(?:del?\s+)?tipo\s*(\d+)|tipo\s*(\d+)\s+grupos?", msg_low)
+    if m_solo_tipo:
+        t_num = m_solo_tipo.group(1) or m_solo_tipo.group(2)
+        return tool_consultar_grupos_insumos(tipo=t_num)
+    if any(k in msg_low for k in ["tipos de insumo", "tipos de insumos", "lista de tipos"]):
+        return tool_consultar_grupos_insumos()
+    m_busq_grupo = re.search(r"(?:en qu[eé] grupo|qu[eé] grupo es|qu[eé] tipo y grupo es)\s+(?:est[aá]\s+)?([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,30})", msg_low)
+    if m_busq_grupo:
+        return tool_consultar_grupos_insumos(buscar_nombre=m_busq_grupo.group(1).strip(" ?¿"))
 
     return None
 

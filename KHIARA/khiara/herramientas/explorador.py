@@ -1317,6 +1317,130 @@ def tool_consultar_escalatoria_precios(
         return f"Error consultando escalatorias: {str(e)}"
 
 
+def tool_consultar_grupos_insumos(
+    tipo: str = "",
+    numero_grupo: str = "",
+    buscar_nombre: str = ""
+) -> str:
+    """
+    Consulta el catálogo oficial de los 9 Tipos de Insumo y sus 253 Grupos (OBRAS/GRUPO_INSUMOS_TIPO.json).
+    Permite:
+    - Consultar un Tipo y Número de Grupo exacto (ej. tipo='2', numero_grupo='10' -> 'Fierreros').
+    - Validar si un grupo existe o está fuera de rango (ej. tipo='2', numero_grupo='60' -> No existe).
+    - Listar todos los grupos de un Tipo (ej. tipo='5').
+    - Buscar por nombre en qué Tipo y número de Grupo se encuentra (ej. buscar_nombre='Fierreros' o 'Concretos').
+    """
+    p_json = DIR_DASHBOARD_RAIZ / "OBRAS" / "GRUPO_INSUMOS_TIPO.json"
+    if not p_json.exists():
+        return "No se localizó el catálogo OBRAS/GRUPO_INSUMOS_TIPO.json."
+
+    try:
+        data = json.loads(p_json.read_text(encoding="utf-8"))
+        lista_tipos = data.get("GRUPO_INSUMOS_TIPO", [])
+        if not lista_tipos:
+            return "El catálogo GRUPO_INSUMOS_TIPO.json está vacío."
+
+        companias_tipo = {
+            1: "20 CONSOLIDADORA",
+            2: "01 CONSTRUCCIONES ARYVE S.A. DE C.V.",
+            4: "01 CONSTRUCCIONES ARYVE S.A. DE C.V.",
+            5: "20 CONSOLIDADORA"
+        }
+
+        # Mapear por número de tipo 1..9
+        por_num = {}
+        for item in lista_tipos:
+            etiqueta = str(item.get("tipo", ""))
+            m_t = re.search(r"Tipo\s*(\d+)", etiqueta, re.IGNORECASE)
+            if m_t:
+                t_num = int(m_t.group(1))
+                por_num[t_num] = {
+                    "etiqueta": etiqueta,
+                    "nombre_tipo": etiqueta.split(":", 1)[1].strip() if ":" in etiqueta else etiqueta,
+                    "datos": item.get("datos", [])
+                }
+
+        # Resolver número de tipo si viene como texto (ej. '2', 'Tipo 2', 'MANO DE OBRA')
+        t_sel = None
+        if tipo:
+            m_num = re.search(r"\d+", str(tipo))
+            if m_num:
+                t_sel = int(m_num.group(0))
+            else:
+                t_low = str(tipo).strip().lower()
+                for num, info in por_num.items():
+                    if t_low in info["nombre_tipo"].lower():
+                        t_sel = num
+                        break
+
+        # Caso 1: Tipo + Número de Grupo específico
+        if t_sel is not None and numero_grupo:
+            if t_sel not in por_num:
+                return f"❌ El **Tipo {t_sel}** no existe. Los tipos válidos en EK10 van del **1 (MATERIALES)** al **9 (FACTURABLES)**."
+            info = por_num[t_sel]
+            datos = info["datos"]
+            m_g = re.search(r"\d+", str(numero_grupo))
+            if not m_g:
+                return f"Indica un número de grupo válido para el Tipo {t_sel} (del `01` al `{len(datos):02d}`)."
+            g_num = int(m_g.group(0))
+            if g_num < 1 or g_num > len(datos):
+                return (
+                    f"❌ El **Grupo {g_num:02d}** **NO existe** en el **Tipo {t_sel} ({info['nombre_tipo']})**.\n"
+                    f"Ese tipo únicamente tiene grupos del **`01` al `{len(datos):02d}`**."
+                )
+            nombre_grupo = datos[g_num - 1]
+            comp = companias_tipo.get(t_sel)
+            comp_str = f"\n• **Compañía EK10:** `{comp}`" if comp else ""
+            aviso = "\n⚠️ *Nota: Este espacio está marcado como disponible / no usar.*" if "disponible" in nombre_grupo.lower() or "no usar" in nombre_grupo.lower() else ""
+            return (
+                f"🏷️ **Tipo {t_sel} ({info['nombre_tipo']}) → Grupo `{g_num:02d}`:**\n"
+                f"• **Nombre:** **{nombre_grupo}**{comp_str}{aviso}"
+            )
+
+        # Caso 2: Búsqueda por nombre de grupo (en todos los tipos o en un tipo específico)
+        if buscar_nombre:
+            q = buscar_nombre.strip().lower()
+            hallazgos = []
+            tipos_a_revisar = [t_sel] if (t_sel in por_num) else sorted(por_num.keys())
+            for tn in tipos_a_revisar:
+                info = por_num[tn]
+                for idx, nom in enumerate(info["datos"], 1):
+                    if q in nom.lower():
+                        hallazgos.append(f"• **Tipo {tn} ({info['nombre_tipo']}) → Grupo `{idx:02d}`:** {nom}")
+            if not hallazgos:
+                return f"❌ No encontré ningún grupo de insumos que coincida con **'{buscar_nombre}'**."
+            extra = f"\n*(y {len(hallazgos) - 10} coincidencia(s) más)*" if len(hallazgos) > 10 else ""
+            return f"🔍 **Coincidencias para '{buscar_nombre}':**\n" + "\n".join(hallazgos[:10]) + extra
+
+        # Caso 3: Listar los grupos de un Tipo específico
+        if t_sel is not None:
+            if t_sel not in por_num:
+                return f"❌ El **Tipo {t_sel}** no existe. Los tipos válidos van del **1 al 9**."
+            info = por_num[t_sel]
+            datos = info["datos"]
+            comp = companias_tipo.get(t_sel)
+            comp_str = f" | Compañía EK10: `{comp}`" if comp else ""
+            lineas = [f"📦 **Tipo {t_sel}: {info['nombre_tipo']}** ({len(datos)} grupos{comp_str}):"]
+            for idx, nom in enumerate(datos[:20], 1):
+                lineas.append(f"• **`{idx:02d}`** — {nom}")
+            if len(datos) > 20:
+                lineas.append(f"*(Mostrando primeros 20 de {len(datos)}. Pregunta por un número específico, ej. 'tipo {t_sel} grupo 25')*")
+            return "\n".join(lineas)
+
+        # Caso 4: Resumen de los 9 tipos
+        lineas = ["📋 **Catálogo Oficial de Tipos de Insumo (EK10):**"]
+        for tn in sorted(por_num.keys()):
+            info = por_num[tn]
+            comp = companias_tipo.get(tn)
+            tag = f" → `{comp.split()[0]}`" if comp else ""
+            lineas.append(f"• **Tipo {tn} — {info['nombre_tipo']}** (`01` a `{len(info['datos']):02d}`){tag}")
+        return "\n".join(lineas)
+
+    except Exception as e:
+        registrar_falla(f"tipo={tipo} grupo={numero_grupo} nombre={buscar_nombre}", "GRUPOS_INSUMOS", str(e))
+        return f"Error consultando grupos de insumos: {str(e)}"
+
+
 
 
 

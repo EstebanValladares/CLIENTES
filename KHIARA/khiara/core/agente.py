@@ -55,6 +55,7 @@ from khiara.herramientas.explorador import (
     tool_ubicar_insumo_en_obra,
     tool_consultar_movimientos_insumo,
     tool_consultar_escalatoria_precios,
+    tool_consultar_grupos_insumos,
     memoria_evolutiva_global,
     red_global
 )
@@ -139,6 +140,7 @@ def crear_agente_khiara(
         "• Insumos y Presupuestos (Presupuesto Real, Requisitado, Comprado, Por Comprar) -> 'tool_consultar_presupuesto_insumos_oc'",
         "• DÓNDE SE ENCUENTRA UN INSUMO (Frentes, Partidas, Lotes y OCs) -> 'tool_ubicar_insumo_en_obra' y 'tool_consultar_movimientos_insumo'",
         "• ESCALATORIA DE PRECIOS E INSUMOS ESCALADOS (Obras, precios, insumos) -> 'tool_consultar_escalatoria_precios'",
+        "• TIPOS Y GRUPOS DE INSUMOS (Tipo 1 al 9, grupos 01..68, validar existencia) -> 'tool_consultar_grupos_insumos'",
         "• Usuarios locales (1,122 usuarios) -> 'tool_buscar_usuarios_locales'",
         "• Carpetas y Archivos -> 'tool_escanear_carpetas_proyecto' y 'tool_buscar_texto_en_archivos_locales'",
         "• Código y Grafo -> 'tool_consultar_grafo'",
@@ -191,6 +193,7 @@ def crear_agente_khiara(
             tool_ubicar_insumo_en_obra,
             tool_consultar_movimientos_insumo,
             tool_consultar_escalatoria_precios,
+            tool_consultar_grupos_insumos,
             tool_buscar_usuarios_locales,
             tool_escanear_carpetas_proyecto,
             tool_buscar_texto_en_archivos_locales,
