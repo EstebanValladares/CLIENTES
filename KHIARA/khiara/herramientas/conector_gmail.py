@@ -13,12 +13,17 @@ import imaplib
 from email.header import decode_header
 from pathlib import Path
 from typing import Dict, List, Optional, Any
-from agno.tools import tool
+from dotenv import load_dotenv
 
-CARPETA_DESCARGAS = Path("data/descargas_gmail")
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+load_dotenv(BASE_DIR / ".env", override=True)
+load_dotenv(BASE_DIR.parent / ".env", override=False)
+
+DATA_DIR = BASE_DIR / "data"
+CARPETA_DESCARGAS = DATA_DIR / "descargas_gmail"
 CARPETA_DESCARGAS.mkdir(parents=True, exist_ok=True)
 
-ARCHIVO_CREDENCIALES = Path("data/credenciales_gmail.json")
+ARCHIVO_CREDENCIALES = DATA_DIR / "credenciales_gmail.json"
 
 class ConectorGmail:
     """Administra la conexión y lectura de correos de Gmail."""
@@ -226,7 +231,6 @@ class ConectorGmail:
 # Instancia global
 gmail_manager = ConectorGmail()
 
-@tool
 def tool_guardar_credenciales_gmail(correo: str, clave_aplicacion: str) -> str:
     """Configura y valida la cuenta de Gmail del usuario para permitir que KHIARA lea sus correos.
     
@@ -250,7 +254,6 @@ def tool_guardar_credenciales_gmail(correo: str, clave_aplicacion: str) -> str:
             "2. Estés usando una Contraseña de Aplicación generada en https://myaccount.google.com/apppasswords (no tu contraseña normal de Gmail)."
         )
 
-@tool
 def tool_consultar_correos_recientes(
     remitente: Optional[str] = None,
     asunto: Optional[str] = None,
@@ -279,18 +282,28 @@ def tool_consultar_correos_recientes(
             limite=limite
         )
         if not correos:
-            estado = "no leídos" if solo_no_leidos else "totales"
-            return f"No se encontraron correos {estado} con los filtros proporcionados."
+            if solo_no_leidos:
+                # Si no hay correos no leídos, mostrar los últimos recibidos para confirmar conexión activa
+                ultimos = gmail_manager.listar_correos(limite=3, solo_no_leidos=False)
+                if ultimos:
+                    lineas = [
+                        f"📬 No tienes correos nuevos sin leer en tu cuenta ({gmail_manager.usuario}).",
+                        "\nÚltimos correos recibidos en tu bandeja:"
+                    ]
+                    for c in ultimos:
+                        lineas.append(f"• De: {c['remitente']} | Asunto: {c['asunto']}")
+                    return "\n".join(lineas)
+                return f"📬 No tienes correos nuevos sin leer en tu cuenta ({gmail_manager.usuario})."
+            return f"No se encontraron correos con los filtros proporcionados."
         
-        lineas = [f"Se encontraron {len(correos)} correo(s):"]
+        lineas = [f"📬 Tienes {len(correos)} correo(s) {'sin leer' if solo_no_leidos else 'encontrados'}:"]
         for c in correos:
-            lineas.append(f"- [ID: {c['id']}] De: {c['remitente']} | Asunto: {c['asunto']} | Fecha: {c['fecha']}")
-        lineas.append("\nPara leer el contenido de alguno, pide: 'lee el correo ID ...'")
+            lineas.append(f"• [ID: {c['id']}] De: {c['remitente']} | Asunto: {c['asunto']}")
+        lineas.append("\nPara leer el contenido completo, pide: 'lee el correo ID ...'")
         return "\n".join(lineas)
     except Exception as e:
         return f"Error consultando Gmail: {str(e)}"
 
-@tool
 def tool_leer_correo_completo(id_correo: str) -> str:
     """Lee el texto completo de un correo específico por su ID y lista sus adjuntos.
     
@@ -317,7 +330,6 @@ def tool_leer_correo_completo(id_correo: str) -> str:
     except Exception as e:
         return f"Error leyendo correo {id_correo}: {str(e)}"
 
-@tool
 def tool_descargar_adjunto_correo(id_correo: str, nombre_adjunto: Optional[str] = None) -> str:
     """Descarga un archivo adjunto (PDF, Excel, imagen) de un correo para analizarlo.
     

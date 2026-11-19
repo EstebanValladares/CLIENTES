@@ -27,6 +27,10 @@ from khiara.herramientas.explorador import (
     tool_consultar_catalogo_obras,
     tool_buscar_usuarios_locales
 )
+from khiara.herramientas.conector_gmail import (
+    tool_consultar_correos_recientes,
+    tool_leer_correo_completo
+)
 from khiara.core.config import (
     DEFAULT_MODEL,
     KHIARA_PROVIDER,
@@ -169,6 +173,11 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
         m_nom = re.search(r'llamado\s+([A-Za-z\s]+)', mensaje, re.IGNORECASE)
         if m_nom:
             return tool_buscar_usuarios_locales(termino_busqueda=m_nom.group(1).strip())
+
+    # 4. Correos / Gmail (con tolerancia a consultas y typos)
+    if any(k in msg_low for k in ["correo", "correos", "gmail", "email", "mail", "inbox", "bandeja"]):
+        solo_no_leidos = not ("todos" in msg_low or "leidos" in msg_low or "leídos" in msg_low or "recientes" in msg_low)
+        return tool_consultar_correos_recientes(solo_no_leidos=solo_no_leidos, limite=3)
 
     return None
 
