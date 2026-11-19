@@ -20,6 +20,11 @@ if KHIARA_DIR not in sys.path:
     sys.path.insert(0, KHIARA_DIR)
 
 from khiara.core.agente import crear_agente_khiara
+from khiara.core.cerebro_antigravity import (
+    stream_antigravity,
+    antigravity_disponible,
+    limpiar_sesion_antigravity
+)
 from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 from khiara.core.flujo_alta import procesar_flujo_alta, limpiar_flujo_sesion
 from khiara.cerebro.extractor_aprendizaje import (
@@ -52,6 +57,7 @@ _agente_instancia = None
 _sesion_actual = "khiara_sesion_principal"
 _proveedor_actual = KHIARA_PROVIDER
 _modelo_actual = DEFAULT_MODEL
+_cerebro_actual = os.getenv("KHIARA_BRAIN", "antigravity" if antigravity_disponible() else "agno").lower().strip()
 
 
 def get_agente():
@@ -74,14 +80,16 @@ def reiniciar_agente(nuevo_session_id: Optional[str] = None):
 
 
 class ChatRequest(BaseModel):
-    mensaje: str
+    mensaje: str = ""
     usuario_id: Optional[str] = "esteban"
     session_id: Optional[str] = None
+    imagen_base64: Optional[str] = None
 
 
 class ConfigModelRequest(BaseModel):
     proveedor: Optional[str] = None # "gemini", "groq", "ollama"
     modelo: Optional[str] = None
+    cerebro: Optional[str] = None   # "antigravity", "agno"
 
 
 @router.post("/api/chat/limpiar")
@@ -90,6 +98,7 @@ def limpiar_sesion_chat():
     import time
     from khiara.core.flujo_alta import _ESTADOS_SESION
     _ESTADOS_SESION.clear()
+    limpiar_sesion_antigravity()
     nuevo_id = f"sesion_{int(time.time())}"
     reiniciar_agente(nuevo_session_id=nuevo_id)
     return {"ok": True, "mensaje": "Sesión reiniciada con éxito", "session_id": nuevo_id}
@@ -108,49 +117,49 @@ def status_khiara():
     return {
         "nombre": "KHIARA",
         "avatar": "Gatita Rive Companion",
+        "cerebro": _cerebro_actual,
+        "antigravity_sdk": antigravity_disponible(),
+        "multimodal_imagenes": antigravity_disponible(),
         "proveedor": _proveedor_actual,
         "motor": _modelo_actual,
-        "persistencia": "SQLite (conversaciones.db)",
+        "persistencia": "Antigravity Sessions + SQLite",
         "aprendizaje_activo": True,
         "disponibles": {
+            "antigravity": antigravity_disponible(),
             "gemini": bool(GEMINI_API_KEY),
             "groq": bool(GROQ_API_KEY),
             "ollama_host": OLLAMA_HOST
         },
-        "capacidades": [
-            "Streaming Nativo de Tokens (SSE)",
-            "Tool Calling (38 herramientas)",
-            "Persistencia y Memoria Evolutiva (SQLite)",
-            "Extracción Autónoma de Aprendizaje",
-            "Grafo de Conocimiento (NetworkX)",
-            "DuckDB",
-            "REA Aryve"
-        ],
         "estado": "lista"
     }
 
 
 @router.post("/api/khiara/motor")
 def cambiar_motor(req: ConfigModelRequest):
-    """Permite alternar entre proveedores ultra-rápidos (groq, ollama, gemini) en caliente."""
-    global _proveedor_actual, _modelo_actual
+    """Permite alternar cerebro (antigravity / agno) y proveedor (gemini / groq / ollama) en caliente."""
+    global _proveedor_actual, _modelo_actual, _cerebro_actual
+    if req.cerebro:
+        _cerebro_actual = req.cerebro.lower().strip()
     if req.proveedor:
         _proveedor_actual = req.proveedor.lower().strip()
     if req.modelo:
         _modelo_actual = req.modelo.strip()
     elif _proveedor_actual == "groq":
         _modelo_actual = "llama-3.3-70b-versatile"
+        _cerebro_actual = "agno"
     elif _proveedor_actual == "ollama":
         _modelo_actual = "qwen2.5:7b"
+        _cerebro_actual = "agno"
     else:
         _modelo_actual = DEFAULT_MODEL
         
     reiniciar_agente()
     return {
         "ok": True,
+        "cerebro": _cerebro_actual,
         "proveedor": _proveedor_actual,
         "modelo": _modelo_actual,
-        "mensaje": f"KHIARA ahora está operando con {_proveedor_actual} ({_modelo_actual})"
+        "mensaje": f"KHIARA ahora está operando con cerebro {_cerebro_actual} / {_proveedor_actual} ({_modelo_actual})"
     }
 
 
@@ -236,34 +245,67 @@ async def chat_stream(req: ChatRequest):
         # 1. Animación inicial: pensativa
         yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'thinking'})}\n\n"
 
-        # ⚡ PASO 0 (INSTANTÁNEO < 10ms): Comandos de aprendizaje controlado ('aprende que...', 'qué has aprendido', 'olvida RULE_xxx')
-        resp_aprend = detectar_comando_aprendizaje(req.mensaje, usuario_id=user)
-        if resp_aprend:
-            if "✅" in resp_aprend or "🗑️" in resp_aprend:
-                agente = reiniciar_agente()
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_aprend})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
-            return
+        # Si NO trae imagen adjunta, correr Fast-Paths instantáneos (< 50 ms)
+        if not req.imagen_base64:
+            # ⚡ PASO 0 (INSTANTÁNEO < 10ms): Comandos de aprendizaje controlado
+            resp_aprend = detectar_comando_aprendizaje(req.mensaje, usuario_id=user)
+            if resp_aprend:
+                if "✅" in resp_aprend or "🗑️" in resp_aprend:
+                    agente = reiniciar_agente()
+                    limpiar_sesion_antigravity(sess)
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_aprend})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+                return
 
-        # ⚡ PASO 0.5 (INSTANTÁNEO < 50ms): Flujo conversacional de Alta de Usuarios y Posiciones
-        resp_flujo = procesar_flujo_alta(sess, req.mensaje)
-        if resp_flujo:
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_flujo})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
-            return
+            # ⚡ PASO 0.5 (INSTANTÁNEO < 50ms): Flujo conversacional de Alta de Usuarios y Posiciones
+            resp_flujo = procesar_flujo_alta(sess, req.mensaje)
+            if resp_flujo:
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_flujo})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+                return
 
-        # ⚡ PASO 1 (FAST-PATH LOCAL < 100ms): Consultas operativas directas (escalatorias, Gmail, obras, usuarios)
-        resp_rapida = await loop.run_in_executor(None, lambda: resolver_consulta_local_directa(req.mensaje))
-        if resp_rapida:
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_rapida})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
-            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
-            return
+            # ⚡ PASO 1 (FAST-PATH LOCAL < 100ms): Consultas operativas directas
+            resp_rapida = await loop.run_in_executor(None, lambda: resolver_consulta_local_directa(req.mensaje))
+            if resp_rapida:
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_rapida})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+                return
+
+        # 🚀 PASO 2A: CEREBRO GOOGLE ANTIGRAVITY SDK (Multimodal + Razonamiento Autónomo)
+        usar_agy = (bool(req.imagen_base64) or _cerebro_actual == "antigravity") and antigravity_disponible()
+        if usar_agy:
+            try:
+                async for tok in stream_antigravity(
+                    mensaje=req.mensaje,
+                    session_id=sess,
+                    imagen_base64=req.imagen_base64,
+                    modelo_id=_modelo_actual
+                ):
+                    if not empezo_hablar:
+                        yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                        empezo_hablar = True
+                    yield f"data: {json.dumps({'tipo': 'texto', 'valor': tok})}\n\n"
+
+                yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+                yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+                return
+            except Exception as e_agy:
+                registrar_falla(req.mensaje or "[IMAGEN]", "ANTIGRAVITY_STREAM_ERROR", str(e_agy)[:300])
+                limpiar_sesion_antigravity(sess)
+                if req.imagen_base64:
+                    msg_amable = "No pude analizar la imagen en este momento (alta demanda en el servidor de IA). Intenta nuevamente en unos segundos."
+                    yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                    yield f"data: {json.dumps({'tipo': 'texto', 'valor': msg_amable})}\n\n"
+                    yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+                    yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+                    return
+                # Si fue solo texto y falló Antigravity, continúa hacia Agno como respaldo
 
         await asyncio.sleep(0.01)
 

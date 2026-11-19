@@ -1,0 +1,4177 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AOO-ENCINOS",
+    "nombre": "CASAS DE ENCINOS AOO - AOR - AOS - AOP - AOQ"
+  },
+  "metricas": {
+    "total_partidas": 52,
+    "total_frentes": 10,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 51.8576,
+    "requisitado_total": 29.3177,
+    "comprado_total": 28.0,
+    "por_comprar_total": 1.3177
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.269,
+              "importe_ppto": 1156.7,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.269,
+              "vigente_tarjetas": 0.269,
+              "diferencia": 0,
+              "requisitado": 0.269,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.1536,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.1154,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.9488,
+              "importe_ppto": 4079.8314,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.9488,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.9488,
+              "requisitado": 0.9488,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.9488,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.5781,
+              "importe_ppto": 11085.6791,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.5781,
+              "vigente_tarjetas": 1.2815,
+              "diferencia": 1.2966,
+              "requisitado": 2.5781,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2.5781,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.7",
+          "codigo": "1.1.7",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3.535,
+              "importe_ppto": 15200.654,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3.535,
+              "vigente_tarjetas": 1.7611,
+              "diferencia": 1.7739,
+              "requisitado": 3.535,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 3.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.035,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.8",
+          "codigo": "1.1.8",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.8248,
+              "importe_ppto": 3546.8245,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.8248,
+              "vigente_tarjetas": 0.1559,
+              "diferencia": 0.669,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.8248,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.18",
+          "codigo": "1.1.18",
+          "nombre": "FACHADA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.1831,
+              "importe_ppto": 5087.4091,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.1831,
+              "vigente_tarjetas": 0,
+              "diferencia": 1.1831,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.1831,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.19",
+          "codigo": "1.1.19",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1404,
+              "importe_ppto": 603.72,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1404,
+              "vigente_tarjetas": 0.0324,
+              "diferencia": 0.108,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1404,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.21",
+          "codigo": "1.1.21",
+          "nombre": "CISTERNA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.616,
+              "importe_ppto": 2648.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.616,
+              "vigente_tarjetas": 0.616,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.616,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.22",
+          "codigo": "1.1.22",
+          "nombre": "BASE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1116,
+              "importe_ppto": 479.88,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1116,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.1116,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1116,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "(AOP) - (BARDA) - ENCINO *A*  BQUE JACARANDAS #150, LTE 26 MZA M",
+      "partidas": [
+        {
+          "id": "1.2.1",
+          "codigo": "1.2.1",
+          "nombre": "BARDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "(AOP) - (BARDA) - ENCINO *A*  BQUE JACARANDAS #150, LTE 26 MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.0736,
+              "importe_ppto": 4616.4529,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.0736,
+              "vigente_tarjetas": 0.709,
+              "diferencia": 0.3646,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.0736,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O",
+      "partidas": [
+        {
+          "id": "1.3.1",
+          "codigo": "1.3.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.269,
+              "importe_ppto": 1156.7,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.269,
+              "vigente_tarjetas": 0.269,
+              "diferencia": 0,
+              "requisitado": 0.269,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.269,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.2",
+          "codigo": "1.3.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.9488,
+              "importe_ppto": 4079.8314,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.9488,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.9488,
+              "requisitado": 0.9488,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.9488,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.6",
+          "codigo": "1.3.6",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.5781,
+              "importe_ppto": 11085.6791,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.5781,
+              "vigente_tarjetas": 1.2815,
+              "diferencia": 1.2966,
+              "requisitado": 2.5781,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2.57,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.0081,
+              "situacion": "COMPRADO EXCEDE REQUISITADO",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.7",
+          "codigo": "1.3.7",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3.535,
+              "importe_ppto": 15200.654,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3.535,
+              "vigente_tarjetas": 1.7611,
+              "diferencia": 1.7739,
+              "requisitado": 3.535,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 3.43,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.105,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.8",
+          "codigo": "1.3.8",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.8248,
+              "importe_ppto": 3546.8245,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.8248,
+              "vigente_tarjetas": 0.1559,
+              "diferencia": 0.669,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.8248,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.18",
+          "codigo": "1.3.18",
+          "nombre": "FACHADA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.1831,
+              "importe_ppto": 5087.4091,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.1831,
+              "vigente_tarjetas": 0,
+              "diferencia": 1.1831,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.1831,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.19",
+          "codigo": "1.3.19",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1404,
+              "importe_ppto": 603.72,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1404,
+              "vigente_tarjetas": 0.0324,
+              "diferencia": 0.108,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1404,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.21",
+          "codigo": "1.3.21",
+          "nombre": "CISTERNA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.616,
+              "importe_ppto": 2648.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.616,
+              "vigente_tarjetas": 0.616,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.616,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.3.22",
+          "codigo": "1.3.22",
+          "nombre": "BASE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1116,
+              "importe_ppto": 479.88,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1116,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.1116,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1116,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "(AOQ)- (BARDA) -  ENCINO *A*  BQE TABACHINES #205, LTE3, MZA O",
+      "partidas": [
+        {
+          "id": "1.4.1",
+          "codigo": "1.4.1",
+          "nombre": "BARDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "(AOQ)- (BARDA) -  ENCINO *A*  BQE TABACHINES #205, LTE3, MZA O"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.7418,
+              "importe_ppto": 3189.7594,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.7418,
+              "vigente_tarjetas": 0.4899,
+              "diferencia": 0.2519,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.7418,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M",
+      "partidas": [
+        {
+          "id": "1.5.1",
+          "codigo": "1.5.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.269,
+              "importe_ppto": 1156.7,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.269,
+              "vigente_tarjetas": 0.269,
+              "diferencia": 0,
+              "requisitado": 0.269,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.269,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.2",
+          "codigo": "1.5.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.9488,
+              "importe_ppto": 4079.8314,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.9488,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.9488,
+              "requisitado": 0.9488,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.9488,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.6",
+          "codigo": "1.5.6",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.5781,
+              "importe_ppto": 11085.6791,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.5781,
+              "vigente_tarjetas": 1.2815,
+              "diferencia": 1.2966,
+              "requisitado": 2.5781,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2,
+              "en_proceso_compra": 0.5781,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.5781,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.7",
+          "codigo": "1.5.7",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3.535,
+              "importe_ppto": 15200.654,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3.535,
+              "vigente_tarjetas": 1.7611,
+              "diferencia": 1.7739,
+              "requisitado": 3.535,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 3.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.035,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.8",
+          "codigo": "1.5.8",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.8248,
+              "importe_ppto": 3546.8245,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.8248,
+              "vigente_tarjetas": 0.1559,
+              "diferencia": 0.669,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.8248,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.18",
+          "codigo": "1.5.18",
+          "nombre": "FACHADA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.0095,
+              "importe_ppto": 4340.979,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.0095,
+              "vigente_tarjetas": 0.085,
+              "diferencia": 0.9246,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.0095,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.19",
+          "codigo": "1.5.19",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1404,
+              "importe_ppto": 603.72,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1404,
+              "vigente_tarjetas": 0.0324,
+              "diferencia": 0.108,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1404,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.21",
+          "codigo": "1.5.21",
+          "nombre": "CISTERNA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.616,
+              "importe_ppto": 2648.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.616,
+              "vigente_tarjetas": 0.616,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.616,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.5.22",
+          "codigo": "1.5.22",
+          "nombre": "BASE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1116,
+              "importe_ppto": 479.88,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1116,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.1116,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1116,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.6",
+      "codigo": "1.6",
+      "nombre": "(AOS) - (BARDA ) - ENCINO *B* BQE. JACARANDAS 108 L5, MZA M",
+      "partidas": [
+        {
+          "id": "1.6.1",
+          "codigo": "1.6.1",
+          "nombre": "BARDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "(AOS) - (BARDA ) - ENCINO *B* BQE. JACARANDAS 108 L5, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.6967,
+              "importe_ppto": 2995.8254,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.6967,
+              "vigente_tarjetas": 0.4513,
+              "diferencia": 0.2454,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.6967,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.7",
+      "codigo": "1.7",
+      "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M",
+      "partidas": [
+        {
+          "id": "1.7.1",
+          "codigo": "1.7.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.269,
+              "importe_ppto": 1156.7,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.269,
+              "vigente_tarjetas": 0.269,
+              "diferencia": 0,
+              "requisitado": 0.269,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.269,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.2",
+          "codigo": "1.7.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.2155,
+              "importe_ppto": 5226.822,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.2155,
+              "vigente_tarjetas": 0,
+              "diferencia": 1.2155,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.2155,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.6",
+          "codigo": "1.7.6",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.4068,
+              "importe_ppto": 10349.4112,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.4068,
+              "vigente_tarjetas": 1.2634,
+              "diferencia": 1.1435,
+              "requisitado": 2.4068,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2.3459,
+              "en_proceso_compra": 0.0609,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.0609,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.7",
+          "codigo": "1.7.7",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.1901,
+              "importe_ppto": 9417.3917,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.1901,
+              "vigente_tarjetas": 0.5751,
+              "diferencia": 1.615,
+              "requisitado": 2.1901,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2,
+              "en_proceso_compra": 0.1901,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.1901,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.8",
+          "codigo": "1.7.8",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.6159,
+              "importe_ppto": 2648.2728,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.6159,
+              "vigente_tarjetas": 0.073,
+              "diferencia": 0.5428,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.6159,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.10",
+          "codigo": "1.7.10",
+          "nombre": "ACABADOS PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.2887,
+              "importe_ppto": 1241.5523,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.2887,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.2887,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.2887,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.18",
+          "codigo": "1.7.18",
+          "nombre": "FACHADA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.7157,
+              "importe_ppto": 3077.424,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.7157,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.7157,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.7157,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.19",
+          "codigo": "1.7.19",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.2512,
+              "importe_ppto": 1080.16,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.2512,
+              "vigente_tarjetas": 0.0352,
+              "diferencia": 0.216,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.2512,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.21",
+          "codigo": "1.7.21",
+          "nombre": "CISTERNA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.616,
+              "importe_ppto": 2648.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.616,
+              "vigente_tarjetas": 0.616,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.616,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.7.22",
+          "codigo": "1.7.22",
+          "nombre": "BASE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.7",
+            "codigo": "1.7",
+            "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1116,
+              "importe_ppto": 479.88,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1116,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.1116,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1116,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.8",
+      "codigo": "1.8",
+      "nombre": "(AOO) - (BARDA) -  MARSELLA *C* BQE. JACARANDAS 148 L25, MZA M",
+      "partidas": [
+        {
+          "id": "1.8.1",
+          "codigo": "1.8.1",
+          "nombre": "BARDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.8",
+            "codigo": "1.8",
+            "nombre": "(AOO) - (BARDA) -  MARSELLA *C* BQE. JACARANDAS 148 L25, MZA M"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.6967,
+              "importe_ppto": 2995.8254,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.6967,
+              "vigente_tarjetas": 0.4513,
+              "diferencia": 0.2454,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.6967,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.9",
+      "codigo": "1.9",
+      "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P",
+      "partidas": [
+        {
+          "id": "1.9.1",
+          "codigo": "1.9.1",
+          "nombre": "PRELIMINARES",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.269,
+              "importe_ppto": 1156.7,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.269,
+              "vigente_tarjetas": 0.269,
+              "diferencia": 0,
+              "requisitado": 0.269,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0.269,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.2",
+          "codigo": "1.9.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.2155,
+              "importe_ppto": 5226.822,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.2155,
+              "vigente_tarjetas": 0,
+              "diferencia": 1.2155,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 1.2155,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.6",
+          "codigo": "1.9.6",
+          "nombre": "ALBAÑILERIA PLANTA BAJA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.4068,
+              "importe_ppto": 10349.4112,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.4068,
+              "vigente_tarjetas": 1.2634,
+              "diferencia": 1.1435,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 2.4068,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.7",
+          "codigo": "1.9.7",
+          "nombre": "ALBAÑILERIA PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2.1901,
+              "importe_ppto": 9417.3917,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2.1901,
+              "vigente_tarjetas": 0.5751,
+              "diferencia": 1.615,
+              "requisitado": 2.1901,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 2,
+              "en_proceso_compra": 0.1901,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.1901,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.8",
+          "codigo": "1.9.8",
+          "nombre": "ALBAÑILERIA AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.6159,
+              "importe_ppto": 2648.2728,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.6159,
+              "vigente_tarjetas": 0.073,
+              "diferencia": 0.5428,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.6159,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.10",
+          "codigo": "1.9.10",
+          "nombre": "ACABADOS PLANTA ALTA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.2887,
+              "importe_ppto": 1241.5523,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.2887,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.2887,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.2887,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.18",
+          "codigo": "1.9.18",
+          "nombre": "FACHADA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.7157,
+              "importe_ppto": 3077.424,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.7157,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.7157,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.7157,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.19",
+          "codigo": "1.9.19",
+          "nombre": "OBRA EXTERIOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.2512,
+              "importe_ppto": 1080.16,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.2512,
+              "vigente_tarjetas": 0.0352,
+              "diferencia": 0.216,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.2512,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.21",
+          "codigo": "1.9.21",
+          "nombre": "CISTERNA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.616,
+              "importe_ppto": 2648.8,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.616,
+              "vigente_tarjetas": 0.616,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.616,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.9.22",
+          "codigo": "1.9.22",
+          "nombre": "BASE TINACO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.9",
+            "codigo": "1.9",
+            "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.1116,
+              "importe_ppto": 479.88,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.1116,
+              "vigente_tarjetas": 0,
+              "diferencia": 0.1116,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.1116,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.10",
+      "codigo": "1.10",
+      "nombre": "(AOR) - (BARDA)  MARSELLA *C* BQE COLORINES #303, LTE 2,MZA P",
+      "partidas": [
+        {
+          "id": "1.10.1",
+          "codigo": "1.10.1",
+          "nombre": "BARDA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.10",
+            "codigo": "1.10",
+            "nombre": "(AOR) - (BARDA)  MARSELLA *C* BQE COLORINES #303, LTE 2,MZA P"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.8407,
+              "importe_ppto": 3615.0603,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.8407,
+              "vigente_tarjetas": 0.5552,
+              "diferencia": 0.2855,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.8407,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.269,
+          "importe_ppto": 1156.7,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.269,
+          "vigente_tarjetas": 0.269,
+          "diferencia": 0,
+          "requisitado": 0.269,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.1536,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.1154,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.9488,
+          "importe_ppto": 4079.8314,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.9488,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.9488,
+          "requisitado": 0.9488,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.9488,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.5781,
+          "importe_ppto": 11085.6791,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.5781,
+          "vigente_tarjetas": 1.2815,
+          "diferencia": 1.2966,
+          "requisitado": 2.5781,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2.5781,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.7",
+      "codigo": "1.1.7",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3.535,
+          "importe_ppto": 15200.654,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3.535,
+          "vigente_tarjetas": 1.7611,
+          "diferencia": 1.7739,
+          "requisitado": 3.535,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 3.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.035,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.8",
+      "codigo": "1.1.8",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.8248,
+          "importe_ppto": 3546.8245,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.8248,
+          "vigente_tarjetas": 0.1559,
+          "diferencia": 0.669,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.8248,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.18",
+      "codigo": "1.1.18",
+      "nombre": "FACHADA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.1831,
+          "importe_ppto": 5087.4091,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.1831,
+          "vigente_tarjetas": 0,
+          "diferencia": 1.1831,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.1831,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.19",
+      "codigo": "1.1.19",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1404,
+          "importe_ppto": 603.72,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1404,
+          "vigente_tarjetas": 0.0324,
+          "diferencia": 0.108,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1404,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.21",
+      "codigo": "1.1.21",
+      "nombre": "CISTERNA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.616,
+          "importe_ppto": 2648.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.616,
+          "vigente_tarjetas": 0.616,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.616,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.22",
+      "codigo": "1.1.22",
+      "nombre": "BASE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "(AOP) - ENCINO *A*  BOSQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1116,
+          "importe_ppto": 479.88,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1116,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.1116,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1116,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.1",
+      "codigo": "1.2.1",
+      "nombre": "BARDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "(AOP) - (BARDA) - ENCINO *A*  BQUE JACARANDAS #150, LTE 26 MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.0736,
+          "importe_ppto": 4616.4529,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.0736,
+          "vigente_tarjetas": 0.709,
+          "diferencia": 0.3646,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.0736,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.1",
+      "codigo": "1.3.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.269,
+          "importe_ppto": 1156.7,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.269,
+          "vigente_tarjetas": 0.269,
+          "diferencia": 0,
+          "requisitado": 0.269,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.269,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.2",
+      "codigo": "1.3.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.9488,
+          "importe_ppto": 4079.8314,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.9488,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.9488,
+          "requisitado": 0.9488,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.9488,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.6",
+      "codigo": "1.3.6",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.5781,
+          "importe_ppto": 11085.6791,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.5781,
+          "vigente_tarjetas": 1.2815,
+          "diferencia": 1.2966,
+          "requisitado": 2.5781,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2.57,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.0081,
+          "situacion": "COMPRADO EXCEDE REQUISITADO",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.7",
+      "codigo": "1.3.7",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3.535,
+          "importe_ppto": 15200.654,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3.535,
+          "vigente_tarjetas": 1.7611,
+          "diferencia": 1.7739,
+          "requisitado": 3.535,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 3.43,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.105,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.8",
+      "codigo": "1.3.8",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.8248,
+          "importe_ppto": 3546.8245,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.8248,
+          "vigente_tarjetas": 0.1559,
+          "diferencia": 0.669,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.8248,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.18",
+      "codigo": "1.3.18",
+      "nombre": "FACHADA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.1831,
+          "importe_ppto": 5087.4091,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.1831,
+          "vigente_tarjetas": 0,
+          "diferencia": 1.1831,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.1831,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.19",
+      "codigo": "1.3.19",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1404,
+          "importe_ppto": 603.72,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1404,
+          "vigente_tarjetas": 0.0324,
+          "diferencia": 0.108,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1404,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.21",
+      "codigo": "1.3.21",
+      "nombre": "CISTERNA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.616,
+          "importe_ppto": 2648.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.616,
+          "vigente_tarjetas": 0.616,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.616,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.3.22",
+      "codigo": "1.3.22",
+      "nombre": "BASE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "(AOQ) - ENCINO *A*  BOSQUE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1116,
+          "importe_ppto": 479.88,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1116,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.1116,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1116,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.1",
+      "codigo": "1.4.1",
+      "nombre": "BARDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "(AOQ)- (BARDA) -  ENCINO *A*  BQE TABACHINES #205, LTE3, MZA O"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.7418,
+          "importe_ppto": 3189.7594,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.7418,
+          "vigente_tarjetas": 0.4899,
+          "diferencia": 0.2519,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.7418,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.1",
+      "codigo": "1.5.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.269,
+          "importe_ppto": 1156.7,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.269,
+          "vigente_tarjetas": 0.269,
+          "diferencia": 0,
+          "requisitado": 0.269,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.269,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.2",
+      "codigo": "1.5.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.9488,
+          "importe_ppto": 4079.8314,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.9488,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.9488,
+          "requisitado": 0.9488,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.9488,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.6",
+      "codigo": "1.5.6",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.5781,
+          "importe_ppto": 11085.6791,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.5781,
+          "vigente_tarjetas": 1.2815,
+          "diferencia": 1.2966,
+          "requisitado": 2.5781,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2,
+          "en_proceso_compra": 0.5781,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.5781,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.7",
+      "codigo": "1.5.7",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3.535,
+          "importe_ppto": 15200.654,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3.535,
+          "vigente_tarjetas": 1.7611,
+          "diferencia": 1.7739,
+          "requisitado": 3.535,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 3.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.035,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.8",
+      "codigo": "1.5.8",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.8248,
+          "importe_ppto": 3546.8245,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.8248,
+          "vigente_tarjetas": 0.1559,
+          "diferencia": 0.669,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.8248,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.18",
+      "codigo": "1.5.18",
+      "nombre": "FACHADA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.0095,
+          "importe_ppto": 4340.979,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.0095,
+          "vigente_tarjetas": 0.085,
+          "diferencia": 0.9246,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.0095,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.19",
+      "codigo": "1.5.19",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1404,
+          "importe_ppto": 603.72,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1404,
+          "vigente_tarjetas": 0.0324,
+          "diferencia": 0.108,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1404,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.21",
+      "codigo": "1.5.21",
+      "nombre": "CISTERNA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.616,
+          "importe_ppto": 2648.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.616,
+          "vigente_tarjetas": 0.616,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.616,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.22",
+      "codigo": "1.5.22",
+      "nombre": "BASE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "(AOS) - ENCINO *B* BQE. JACARANDAS 108 LTE 5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1116,
+          "importe_ppto": 479.88,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1116,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.1116,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1116,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.1",
+      "codigo": "1.6.1",
+      "nombre": "BARDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "(AOS) - (BARDA ) - ENCINO *B* BQE. JACARANDAS 108 L5, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.6967,
+          "importe_ppto": 2995.8254,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.6967,
+          "vigente_tarjetas": 0.4513,
+          "diferencia": 0.2454,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.6967,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.1",
+      "codigo": "1.7.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.269,
+          "importe_ppto": 1156.7,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.269,
+          "vigente_tarjetas": 0.269,
+          "diferencia": 0,
+          "requisitado": 0.269,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.269,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.2",
+      "codigo": "1.7.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.2155,
+          "importe_ppto": 5226.822,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.2155,
+          "vigente_tarjetas": 0,
+          "diferencia": 1.2155,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.2155,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.6",
+      "codigo": "1.7.6",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.4068,
+          "importe_ppto": 10349.4112,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.4068,
+          "vigente_tarjetas": 1.2634,
+          "diferencia": 1.1435,
+          "requisitado": 2.4068,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2.3459,
+          "en_proceso_compra": 0.0609,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.0609,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.7",
+      "codigo": "1.7.7",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.1901,
+          "importe_ppto": 9417.3917,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.1901,
+          "vigente_tarjetas": 0.5751,
+          "diferencia": 1.615,
+          "requisitado": 2.1901,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2,
+          "en_proceso_compra": 0.1901,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.1901,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.8",
+      "codigo": "1.7.8",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.6159,
+          "importe_ppto": 2648.2728,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.6159,
+          "vigente_tarjetas": 0.073,
+          "diferencia": 0.5428,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.6159,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.10",
+      "codigo": "1.7.10",
+      "nombre": "ACABADOS PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.2887,
+          "importe_ppto": 1241.5523,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.2887,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.2887,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.2887,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.18",
+      "codigo": "1.7.18",
+      "nombre": "FACHADA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.7157,
+          "importe_ppto": 3077.424,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.7157,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.7157,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.7157,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.19",
+      "codigo": "1.7.19",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.2512,
+          "importe_ppto": 1080.16,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.2512,
+          "vigente_tarjetas": 0.0352,
+          "diferencia": 0.216,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.2512,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.21",
+      "codigo": "1.7.21",
+      "nombre": "CISTERNA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.616,
+          "importe_ppto": 2648.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.616,
+          "vigente_tarjetas": 0.616,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.616,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.7.22",
+      "codigo": "1.7.22",
+      "nombre": "BASE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.7",
+        "codigo": "1.7",
+        "nombre": "(AOO) - MARSELLA *C* BQE. JACARANDAS 148 LTE 25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1116,
+          "importe_ppto": 479.88,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1116,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.1116,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1116,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.8.1",
+      "codigo": "1.8.1",
+      "nombre": "BARDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.8",
+        "codigo": "1.8",
+        "nombre": "(AOO) - (BARDA) -  MARSELLA *C* BQE. JACARANDAS 148 L25, MZA M"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.6967,
+          "importe_ppto": 2995.8254,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.6967,
+          "vigente_tarjetas": 0.4513,
+          "diferencia": 0.2454,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.6967,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.1",
+      "codigo": "1.9.1",
+      "nombre": "PRELIMINARES",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.269,
+          "importe_ppto": 1156.7,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.269,
+          "vigente_tarjetas": 0.269,
+          "diferencia": 0,
+          "requisitado": 0.269,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0.269,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.2",
+      "codigo": "1.9.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.2155,
+          "importe_ppto": 5226.822,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.2155,
+          "vigente_tarjetas": 0,
+          "diferencia": 1.2155,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 1.2155,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.6",
+      "codigo": "1.9.6",
+      "nombre": "ALBAÑILERIA PLANTA BAJA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.4068,
+          "importe_ppto": 10349.4112,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.4068,
+          "vigente_tarjetas": 1.2634,
+          "diferencia": 1.1435,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 2.4068,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.7",
+      "codigo": "1.9.7",
+      "nombre": "ALBAÑILERIA PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2.1901,
+          "importe_ppto": 9417.3917,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2.1901,
+          "vigente_tarjetas": 0.5751,
+          "diferencia": 1.615,
+          "requisitado": 2.1901,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 2,
+          "en_proceso_compra": 0.1901,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.1901,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.8",
+      "codigo": "1.9.8",
+      "nombre": "ALBAÑILERIA AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.6159,
+          "importe_ppto": 2648.2728,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.6159,
+          "vigente_tarjetas": 0.073,
+          "diferencia": 0.5428,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.6159,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.10",
+      "codigo": "1.9.10",
+      "nombre": "ACABADOS PLANTA ALTA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.2887,
+          "importe_ppto": 1241.5523,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.2887,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.2887,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.2887,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.18",
+      "codigo": "1.9.18",
+      "nombre": "FACHADA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.7157,
+          "importe_ppto": 3077.424,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.7157,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.7157,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.7157,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.19",
+      "codigo": "1.9.19",
+      "nombre": "OBRA EXTERIOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.2512,
+          "importe_ppto": 1080.16,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.2512,
+          "vigente_tarjetas": 0.0352,
+          "diferencia": 0.216,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.2512,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.21",
+      "codigo": "1.9.21",
+      "nombre": "CISTERNA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.616,
+          "importe_ppto": 2648.8,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.616,
+          "vigente_tarjetas": 0.616,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.616,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.9.22",
+      "codigo": "1.9.22",
+      "nombre": "BASE TINACO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.9",
+        "codigo": "1.9",
+        "nombre": "(AOR) - MARSELLA *C* BOSQUE COLORINES #303, LTE 2, MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.1116,
+          "importe_ppto": 479.88,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.1116,
+          "vigente_tarjetas": 0,
+          "diferencia": 0.1116,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.1116,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.10.1",
+      "codigo": "1.10.1",
+      "nombre": "BARDA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.10",
+        "codigo": "1.10",
+        "nombre": "(AOR) - (BARDA)  MARSELLA *C* BQE COLORINES #303, LTE 2,MZA P"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.8407,
+          "importe_ppto": 3615.0603,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.8407,
+          "vigente_tarjetas": 0.5552,
+          "diferencia": 0.2855,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.8407,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1080003",
+      "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+      "unidad": "TON",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 51.8576,
+      "importe_ppto": 222987.8156,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 51.8576,
+      "vigente_tarjetas": 20.7527,
+      "diferencia": 31.105,
+      "requisitado": 29.3177,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 28,
+      "en_proceso_compra": 1.0192,
+      "recibido": 0,
+      "por_requisitar": 22.5399,
+      "por_comprar": 1.3177,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "AOO-ENCINOS",
+    "insumo": "1080003",
+    "nombre": ""
+  }
+}

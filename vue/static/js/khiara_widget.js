@@ -253,8 +253,16 @@
         </div>
       </div>
 
+      <div id="khiara-img-preview-bar" style="display:none; padding:6px 10px; background:#0f172a; border-top:1px solid #1e293b; align-items:center; gap:8px;">
+        <img id="khiara-img-thumb" style="max-height:46px; max-width:90px; border-radius:6px; border:1px solid #334155;" />
+        <span style="font-size:11px; color:#94a3b8; flex:1;">Captura lista para enviar</span>
+        <button type="button" id="khiara-img-remove" style="background:none; border:none; color:#f87171; cursor:pointer; font-size:15px;">&times;</button>
+      </div>
+
       <form class="khiara-input-bar" id="khiara-chat-form">
-        <input type="text" class="khiara-input-field" id="khiara-text-input" placeholder="Escribe a KHIARA..." autocomplete="off" />
+        <input type="file" id="khiara-file-input" accept="image/*" style="display:none;" />
+        <button type="button" id="khiara-img-btn" title="Adjuntar o pegar captura (Ctrl+V)" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); color:#38bdf8; border-radius:8px; padding:6px 8px; cursor:pointer; font-size:13px;">📷</button>
+        <input type="text" class="khiara-input-field" id="khiara-text-input" placeholder="Escribe o pega captura (Ctrl+V)..." autocomplete="off" />
         <button type="submit" class="khiara-send-btn">➤</button>
       </form>
     </div>
@@ -390,24 +398,83 @@
     }
   }
 
+  // Soporte multimodal: adjuntar o pegar capturas de pantalla (Ctrl+V)
+  const imgBtn = document.getElementById('khiara-img-btn');
+  const fileInput = document.getElementById('khiara-file-input');
+  const previewBar = document.getElementById('khiara-img-preview-bar');
+  const imgThumb = document.getElementById('khiara-img-thumb');
+  const imgRemove = document.getElementById('khiara-img-remove');
+  let imagenPendienteB64 = null;
+
+  function setImagenPendiente(b64) {
+    imagenPendienteB64 = b64;
+    if (b64) {
+      imgThumb.src = b64;
+      previewBar.style.display = 'flex';
+    } else {
+      imgThumb.src = '';
+      previewBar.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+    }
+  }
+
+  function leerArchivoImagen(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setImagenPendiente(ev.target.result);
+    reader.readAsDataURL(file);
+  }
+
+  if (imgBtn && fileInput) {
+    imgBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (ev) => {
+      if (ev.target.files && ev.target.files[0]) leerArchivoImagen(ev.target.files[0]);
+    });
+  }
+  if (imgRemove) {
+    imgRemove.addEventListener('click', () => setImagenPendiente(null));
+  }
+  input.addEventListener('paste', (ev) => {
+    const items = (ev.clipboardData || ev.originalEvent?.clipboardData)?.items || [];
+    for (const item of items) {
+      if (item.type && item.type.startsWith('image/')) {
+        ev.preventDefault();
+        leerArchivoImagen(item.getAsFile());
+        break;
+      }
+    }
+  });
+
   // Enviar mensaje a KHIARA
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const txt = input.value.trim();
-    if (!txt) return;
+    const imgEnviar = imagenPendienteB64;
+    if (!txt && !imgEnviar) return;
 
     // Mensaje de usuario
     const u = document.createElement('div');
     u.className = 'khiara-msg-user';
-    u.textContent = txt;
+    if (imgEnviar) {
+      const pic = document.createElement('img');
+      pic.src = imgEnviar;
+      pic.style.cssText = 'max-width:100%; max-height:140px; border-radius:6px; display:block; margin-bottom:5px;';
+      u.appendChild(pic);
+    }
+    if (txt) {
+      const spanTxt = document.createElement('span');
+      spanTxt.textContent = txt;
+      u.appendChild(spanTxt);
+    }
     msgs.appendChild(u);
     input.value = '';
+    setImagenPendiente(null);
     msgs.scrollTop = msgs.scrollHeight;
 
     // Estado pensando de la gatita
     const b = document.createElement('div');
     b.className = 'khiara-msg-bot';
-    b.innerHTML = '<em>KHIARA pensando... 🐾</em>';
+    b.innerHTML = imgEnviar ? '<em>KHIARA analizando captura... 🐾</em>' : '<em>KHIARA pensando... 🐾</em>';
     msgs.appendChild(b);
     msgs.scrollTop = msgs.scrollHeight;
 
@@ -421,7 +488,8 @@
         body: JSON.stringify({ 
           mensaje: txt,
           session_id: sesionId,
-          usuario_id: usuarioId
+          usuario_id: usuarioId,
+          imagen_base64: imgEnviar
         })
       });
       const reader = res.body.getReader();
