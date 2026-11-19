@@ -95,7 +95,9 @@ def crear_agente_khiara(
             os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
         model = Gemini(
             id=model_name,
-            api_key=GEMINI_API_KEY if GEMINI_API_KEY else None
+            api_key=GEMINI_API_KEY if GEMINI_API_KEY else None,
+            thinking_budget=0,
+            client_params={"http_options": {"retry_options": {"attempts": 2}}}
         )
 
     # Persistencia de conversaciones en SQLite (o memoria en contingencia)
@@ -152,7 +154,7 @@ def crear_agente_khiara(
         db=db,
         session_id=session_id or "khiara_sesion_principal",
         add_history_to_context=True,
-        num_history_messages=12,
+        num_history_messages=8,
         read_chat_history=True,
         tools=[
             tool_iniciar_creacion_usuario,
@@ -169,33 +171,13 @@ def crear_agente_khiara(
             tool_buscar_usuarios_locales,
             tool_escanear_carpetas_proyecto,
             tool_buscar_texto_en_archivos_locales,
-            tool_consultar_grafo,
-            tool_buscar_memoria_semantica,
-            tool_guardar_recuerdo_memoria,
             tool_registrar_regla_evolutiva,
             tool_consultar_reglas_evolutivas,
-            tool_trazar_camino_multi_repo,
-            tool_generar_repo_map,
-            tool_consultar_alertas_centinela,
-            tool_consultar_glosario_negocio,
-            tool_interpretar_consulta_negocio,
-            tool_cargar_openapi,
-            tool_buscar_endpoints_api,
-            tool_consultar_endpoint_api,
-            tool_consultar_duckdb,
-            tool_describir_archivo_datos,
-            tool_consultar_bd_relacional,
-            tool_listar_tablas_bd_relacional,
             tool_consultar_sql_local,
-            tool_calcular_formula,
             tool_consultar_reportes_rea,
-            tool_escanear_pantalla_rea,
-            tool_ejecutar_codigo_python,
-            tool_crear_o_editar_archivo,
             tool_guardar_credenciales_gmail,
             tool_consultar_correos_recientes,
-            tool_leer_correo_completo,
-            tool_descargar_adjunto_correo
+            tool_leer_correo_completo
         ],
         markdown=True
     )

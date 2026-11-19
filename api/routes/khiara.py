@@ -21,11 +21,13 @@ if KHIARA_DIR not in sys.path:
 
 from khiara.core.agente import crear_agente_khiara
 from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
+from khiara.core.flujo_alta import procesar_flujo_alta, limpiar_flujo_sesion
 from khiara.cerebro.extractor_aprendizaje import analizar_y_aprender_de_turno
 from khiara.herramientas.explorador import (
     tool_consultar_escalatoria_precios,
     tool_consultar_catalogo_obras,
-    tool_buscar_usuarios_locales
+    tool_buscar_usuarios_locales,
+    tool_consultar_estado_creacion_usuario
 )
 from khiara.herramientas.conector_gmail import (
     tool_consultar_correos_recientes,
@@ -80,8 +82,10 @@ class ConfigModelRequest(BaseModel):
 
 @router.post("/api/chat/limpiar")
 def limpiar_sesion_chat():
-    """Reinicia la memoria de sesión del agente KHIARA."""
+    """Reinicia la memoria de sesión y cualquier flujo activo de alta de KHIARA."""
     import time
+    from khiara.core.flujo_alta import _ESTADOS_SESION
+    _ESTADOS_SESION.clear()
     nuevo_id = f"sesion_{int(time.time())}"
     reiniciar_agente(nuevo_session_id=nuevo_id)
     return {"ok": True, "mensaje": "Sesión reiniciada con éxito", "session_id": nuevo_id}
@@ -147,9 +151,13 @@ def cambiar_motor(req: ConfigModelRequest):
 
 
 def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
-    """Resuelve consultas clave directamente desde SQLite local si la API externa experimenta saturación (503/429)."""
+    """Fast-Path local (<100ms): resuelve consultas operativas directas sin esperar a APIs externas."""
     import re
     msg_low = mensaje.lower()
+
+    # 0. Estado / progreso de alta de usuario
+    if any(k in msg_low for k in ["como va el alta", "cómo va el alta", "estado del alta", "progreso del alta", "estatus del alta"]):
+        return tool_consultar_estado_creacion_usuario()
     
     # 1. Escalatorias de precios e insumos
     if any(k in msg_low for k in ["escalatoria", "escalado", "escalatorias"]):
@@ -163,20 +171,20 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
                 return res
 
     # 2. Catálogo de obras
-    if "obra" in msg_low and any(k in msg_low for k in ["existe", "catalogo", "obras"]):
+    if "obra" in msg_low and any(k in msg_low for k in ["existe", "catalogo", "catálogo"]):
         m_obra = re.search(r'\b[A-Za-z0-9]{3,4}\b', mensaje.upper())
-        if m_obra and m_obra.group(0) not in {"OBRA", "PARA", "ESTA", "CUAL"}:
+        if m_obra and m_obra.group(0) not in {"OBRA", "PARA", "ESTA", "CUAL", "HOLA"}:
             return tool_consultar_catalogo_obras(termino=m_obra.group(0))
 
     # 3. Usuarios locales
     if "usuario" in msg_low and "existe" in msg_low:
-        m_nom = re.search(r'llamado\s+([A-Za-z\s]+)', mensaje, re.IGNORECASE)
+        m_nom = re.search(r'llamado\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+)', mensaje, re.IGNORECASE)
         if m_nom:
             return tool_buscar_usuarios_locales(termino_busqueda=m_nom.group(1).strip())
 
-    # 4. Correos / Gmail (con tolerancia a consultas y typos)
-    if any(k in msg_low for k in ["correo", "correos", "gmail", "email", "mail", "inbox", "bandeja"]):
-        solo_no_leidos = not ("todos" in msg_low or "leidos" in msg_low or "leídos" in msg_low or "recientes" in msg_low)
+    # 4. Correos / Gmail (evitar interceptar si el usuario está escribiendo un correo en medio de otro contexto)
+    if any(k in msg_low for k in ["correo nuevo", "correos nuevos", "hay correos", "tengo correo", "tenog un correo", "revisa mi correo", "revisar correo", "bandeja", "inbox", "correos recientes", "ultimos correos", "últimos correos"]):
+        solo_no_leidos = not ("todos" in msg_low or "leidos" in msg_low or "leídos" in msg_low or "recientes" in msg_low or "ultimos" in msg_low or "últimos" in msg_low)
         return tool_consultar_correos_recientes(solo_no_leidos=solo_no_leidos, limite=3)
 
     return None
@@ -186,12 +194,14 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
 async def chat_stream(req: ChatRequest):
     """
     Genera streaming nativo token por token de KHIARA para el widget de la gatita.
-    - Primer token en < 800ms
+    - Fast-Path instantáneo (<100ms) para alta de usuarios, escalatorias, obras, usuarios y Gmail
+    - Streaming real de tokens para consultas abiertas con IA
     - Escudo visual contra errores 400/429/503 con autorrecuperación local directa
-    - Extracción de aprendizaje y guardado persistente en SQLite
     """
     agente = get_agente()
     loop = asyncio.get_running_loop()
+    user = req.usuario_id or "esteban"
+    sess = req.session_id or f"sesion_{user}"
     
     async def generador():
         nonlocal agente
@@ -202,12 +212,29 @@ async def chat_stream(req: ChatRequest):
 
         # 1. Animación inicial: pensativa
         yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'thinking'})}\n\n"
+
+        # ⚡ PASO 0 (INSTANTÁNEO < 50ms): Flujo conversacional de Alta de Usuarios
+        resp_flujo = procesar_flujo_alta(sess, req.mensaje)
+        if resp_flujo:
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_flujo})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+            return
+
+        # ⚡ PASO 1 (FAST-PATH LOCAL < 100ms): Consultas operativas directas (escalatorias, Gmail, obras, usuarios)
+        resp_rapida = await loop.run_in_executor(None, lambda: resolver_consulta_local_directa(req.mensaje))
+        if resp_rapida:
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'texto', 'valor': resp_rapida})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'idle'})}\n\n"
+            yield f"data: {json.dumps({'tipo': 'fin', 'valor': True})}\n\n"
+            return
+
         await asyncio.sleep(0.01)
 
         def worker():
             try:
-                user = req.usuario_id or "esteban"
-                sess = req.session_id or f"sesion_{user}"
                 gen = agente.run(req.mensaje, stream=True, user_id=user, session_id=sess)
                 for chunk in gen:
                     c = getattr(chunk, "content", None)
