@@ -192,21 +192,23 @@ def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
         return tool_consultar_correos_recientes(solo_no_leidos=solo_no_leidos, limite=3)
 
     # 5. Catálogo de Tipos y Grupos de Insumos (Tipo 1..9, Grupos 01..68)
-    m_tg1 = re.search(r"tipo\s*(\d+)\D{1,15}(?:grupo|gruipo)\s*(\d+)", msg_low)
-    m_tg2 = re.search(r"(?:grupo|gruipo)\s*(\d+)\D{1,15}tipo\s*(\d+)", msg_low)
+    m_tg1 = re.search(r"tipo\s*(\d+)\b.{0,25}(?:grupo|gruipo)(?:\s+(?:es|el|numero|número|no\.?|#))*\s*(\d+)\b", msg_low)
+    m_tg2 = re.search(r"(?:grupo|gruipo)(?:\s+(?:es|el|numero|número|no\.?|#))*\s*(\d+)\b.{0,25}tipo\s*(\d+)\b", msg_low)
     if m_tg1:
         return tool_consultar_grupos_insumos(tipo=m_tg1.group(1), numero_grupo=m_tg1.group(2))
     if m_tg2:
         return tool_consultar_grupos_insumos(tipo=m_tg2.group(2), numero_grupo=m_tg2.group(1))
-    m_solo_tipo = re.search(r"grupos?\s+(?:del?\s+)?tipo\s*(\d+)|tipo\s*(\d+)\s+grupos?", msg_low)
-    if m_solo_tipo:
+    m_solo_tipo = re.search(r"(?:qu[eé]\s+)?grupos?\s+(?:tiene\s+el\s+|del?\s+)?tipo\s*(\d+)\b|tipo\s*(\d+)\s+grupos?\b", msg_low)
+    if m_solo_tipo and not re.search(r"(?:grupo|gruipo).{0,15}\d+", msg_low):
         t_num = m_solo_tipo.group(1) or m_solo_tipo.group(2)
         return tool_consultar_grupos_insumos(tipo=t_num)
     if any(k in msg_low for k in ["tipos de insumo", "tipos de insumos", "lista de tipos"]):
         return tool_consultar_grupos_insumos()
-    m_busq_grupo = re.search(r"(?:en qu[eé] grupo|qu[eé] grupo es|qu[eé] tipo y grupo es)\s+(?:est[aá]\s+)?([a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,30})", msg_low)
+    m_busq_grupo = re.search(r"(?:en qu[eé] grupo|qu[eé] grupo es|qu[eé] tipo y grupo es)\s+(?:est[aá]\s+|el\s+|la\s+)?([a-zA-ZáéíóúÁÉÍÓÚñÑ][a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,28})", msg_low)
     if m_busq_grupo:
-        return tool_consultar_grupos_insumos(buscar_nombre=m_busq_grupo.group(1).strip(" ?¿"))
+        termino_g = m_busq_grupo.group(1).strip(" ?¿.,")
+        if termino_g not in {"el", "la", "los", "las", "un", "una", "ese", "este", "cual", "cuál"} and not re.search(r"\d", msg_low):
+            return tool_consultar_grupos_insumos(buscar_nombre=termino_g)
 
     return None
 

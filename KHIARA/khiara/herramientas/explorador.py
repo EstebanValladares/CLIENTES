@@ -1374,31 +1374,23 @@ def tool_consultar_grupos_insumos(
                         t_sel = num
                         break
 
-        # Caso 1: Tipo + Número de Grupo específico
+        # Caso 1: Tipo + Número de Grupo específico (respuesta breve y directa)
         if t_sel is not None and numero_grupo:
             if t_sel not in por_num:
-                return f"❌ El **Tipo {t_sel}** no existe. Los tipos válidos en EK10 van del **1 (MATERIALES)** al **9 (FACTURABLES)**."
+                return f"❌ El **Tipo {t_sel}** no existe (solo hay del **1 al 9**)."
             info = por_num[t_sel]
             datos = info["datos"]
             m_g = re.search(r"\d+", str(numero_grupo))
             if not m_g:
-                return f"Indica un número de grupo válido para el Tipo {t_sel} (del `01` al `{len(datos):02d}`)."
+                return f"Indica un número de grupo válido para el Tipo {t_sel} (`01` al `{len(datos):02d}`)."
             g_num = int(m_g.group(0))
             if g_num < 1 or g_num > len(datos):
-                return (
-                    f"❌ El **Grupo {g_num:02d}** **NO existe** en el **Tipo {t_sel} ({info['nombre_tipo']})**.\n"
-                    f"Ese tipo únicamente tiene grupos del **`01` al `{len(datos):02d}`**."
-                )
+                return f"❌ El **Tipo {t_sel} ({info['nombre_tipo']})** no tiene grupo **`{g_num:02d}`** (solo tiene del `01` al `{len(datos):02d}`)."
             nombre_grupo = datos[g_num - 1]
-            comp = companias_tipo.get(t_sel)
-            comp_str = f"\n• **Compañía EK10:** `{comp}`" if comp else ""
-            aviso = "\n⚠️ *Nota: Este espacio está marcado como disponible / no usar.*" if "disponible" in nombre_grupo.lower() or "no usar" in nombre_grupo.lower() else ""
-            return (
-                f"🏷️ **Tipo {t_sel} ({info['nombre_tipo']}) → Grupo `{g_num:02d}`:**\n"
-                f"• **Nombre:** **{nombre_grupo}**{comp_str}{aviso}"
-            )
+            aviso = " ⚠️ *(Disponible / No usar)*" if "disponible" in nombre_grupo.lower() or "no usar" in nombre_grupo.lower() else ""
+            return f"**Tipo {t_sel} ({info['nombre_tipo']}) → Grupo `{g_num:02d}`:** **{nombre_grupo}**{aviso}"
 
-        # Caso 2: Búsqueda por nombre de grupo (en todos los tipos o en un tipo específico)
+        # Caso 2: Búsqueda por nombre de grupo (máx 5 resultados breves)
         if buscar_nombre:
             q = buscar_nombre.strip().lower()
             hallazgos = []
@@ -1407,11 +1399,11 @@ def tool_consultar_grupos_insumos(
                 info = por_num[tn]
                 for idx, nom in enumerate(info["datos"], 1):
                     if q in nom.lower():
-                        hallazgos.append(f"• **Tipo {tn} ({info['nombre_tipo']}) → Grupo `{idx:02d}`:** {nom}")
+                        hallazgos.append(f"• Tipo {tn} → Grupo `{idx:02d}`: **{nom}**")
             if not hallazgos:
-                return f"❌ No encontré ningún grupo de insumos que coincida con **'{buscar_nombre}'**."
-            extra = f"\n*(y {len(hallazgos) - 10} coincidencia(s) más)*" if len(hallazgos) > 10 else ""
-            return f"🔍 **Coincidencias para '{buscar_nombre}':**\n" + "\n".join(hallazgos[:10]) + extra
+                return f"❌ No encontré ningún grupo con **'{buscar_nombre}'**."
+            extra = f"\n*(+{len(hallazgos) - 5} más)*" if len(hallazgos) > 5 else ""
+            return "\n".join(hallazgos[:5]) + extra
 
         # Caso 3: Listar los grupos de un Tipo específico
         if t_sel is not None:
