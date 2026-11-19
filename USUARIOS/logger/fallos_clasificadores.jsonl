@@ -373,3 +373,4 @@
 {"fecha": "2026-11-19 11:07:23", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "AUTORIZACIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-19 11:07:24", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN EN ESPECIE", "detalle_error": "Hijo no encontrado en la tabla"}
 {"fecha": "2026-11-19 11:07:26", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "ETIQUETA DE EXPEDIENTE", "nombre_clasificador": "CON PROMOCIÓN ESPECIAL", "detalle_error": "Hijo no encontrado en la tabla"}
+{"fecha": "2026-11-19 11:07:45", "usuario": "ASESOR DE VENTA PDC", "tipo_clasificador": "Vistas GIS", "nombre_clasificador": "Ubicacion.ID", "detalle_error": "Hijo no encontrado en la tabla"}

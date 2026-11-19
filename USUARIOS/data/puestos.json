@@ -1,6 +1,6 @@
 {
   "_comentario": "Catálogo integral de 230 puestos y posiciones sincronizado desde Aryve Cloud",
-  "ultima_actualizacion": "2026-11-18 09:02:42",
+  "ultima_actualizacion": "2026-11-19 11:12:15",
   "total_posiciones": 230,
   "puestos": {
     "ASESOR CALL CENTER CABOS": {
@@ -8661,100 +8661,15 @@
       "clave_posicion_cloud": "POS-0919"
     },
     "ASESOR DE VENTA PDC": {
-      "total_clasificadores": 29,
-      "area_organizacional": "VENTAS",
-      "niveles_asignados": [
-        {
-          "compania": "CONSTRUCCIONES ARYVE S.A. DE C.V.",
-          "nivel": "ASESORES DE VENTA"
-        },
-        {
-          "compania": "VELAHOGARES SA DE CV",
-          "nivel": "ASESORES DE VENTA"
-        },
-        {
-          "compania": "GRUPO VELAS DIVISION CONSTRUCCION SA DE CV",
-          "nivel": "ASESORES DE VENTA"
-        }
-      ],
       "categoria": "ASESOR DE VENTA PDC",
-      "puesto_origen": "ASESOR",
-      "clasificadores": {
-        "Boletas de Prospección": {
-          "Clasificador de Prospectos": [
-            "P-ASOCIACION-ESPECIAL-BOLETA",
-            "P-ASOCIAR-BOLETA",
-            "P-DESCARTAR-BOLETA",
-            "P-REGISTRO-BOLETA"
-          ]
-        },
-        "Prospectos Clientes": {
-          "PROSPECTOS CLIENTES": [
-            "P-PROSPECTO-EDICION"
-          ]
-        },
-        "Comercial": {
-          "PLAZAS": [
-            "PDC"
-          ],
-          "DESARROLLOS": [
-            "PDC-001",
-            "PDC-002"
-          ]
-        },
-        "Cotización-Venta": {
-          "PROCESOS DE VENTA": [
-            "CI",
-            "V-EDICIONCONPP",
-            "GI"
-          ]
-        },
-        "Seguimiento del Expediente": {
-          "ETAPAS DE SEGUIMIENTO": [
-            "ET-0001",
-            "ET-0002",
-            "ET-0003",
-            "ET-0004",
-            "ET-0005",
-            "ET-0006"
-          ],
-          "ETIQUETA DE EXPEDIENTE": [
-            "EXPEDIENTE INCOMPLETO",
-            "AUTORIZACIÓN ESPECIAL",
-            "CON PROMOCIÓN EN ESPECIE",
-            "CON PROMOCIÓN ESPECIAL"
-          ]
-        },
-        "Clasificador de Autorizaciones": [
-          "BTN-REENVIO-AUTORIZACION"
-        ],
-        "Vistas GIS": [
-          "Estatus.ID",
-          "PorcentajeAvance.ID",
-          "Ubicacion.ID",
-          "EntregaServicioCliente.ID",
-          "EtapasVentas.ID",
-          "Financiamiento.ID",
-          "Prototipo.ID"
-        ]
-      },
+      "clasificadores": {},
+      "puesto_origen": "POS-0727",
       "time_zone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
-      "id_posicion_cloud": 134,
-      "resumen_clasificadores_por_abuelo": {
-        "Boletas de Prospección": 4,
-        "Prospectos Clientes": 1,
-        "Comercial": 3,
-        "Cotización-Venta": 3,
-        "Seguimiento del Expediente": 10,
-        "Clasificador de Autorizaciones": 1,
-        "Vistas GIS": 7
-      },
-      "clave_posicion_cloud": "POS-0140",
-      "area_organizacion": "VENTAS",
-      "grupos": [
-        "BROKERS",
-        "VENTAS-PDC"
-      ]
+      "id_posicion_cloud": null,
+      "total_clasificadores": 0,
+      "area_organizacion": "ASESOR DE VENTA PDC",
+      "clave_posicion_cloud": "POS-1086",
+      "padre": "POS-0727"
     },
     "GERENTE DE VENTAS QUERETARO": {
       "total_clasificadores": 93,
@@ -14730,6 +14645,13 @@
       "categoria": "ASESOR DE VENTA MATAMOROS",
       "padre": "POS-0270",
       "fecha_registro": "2026-11-18 09:02:42"
+    },
+    {
+      "clave": "POS-1086",
+      "nombre": "ASESOR DE VENTA PDC",
+      "categoria": "ASESOR DE VENTA PDC",
+      "padre": "POS-0727",
+      "fecha_registro": "2026-11-19 11:12:15"
     }
   ]
 }

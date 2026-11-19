@@ -14,6 +14,8 @@ ARCHIVO_PUESTOS = BASE_DASHBOARD / "USUARIOS" / "data" / "puestos.json"
 
 # Estado de flujo aislado por session_id
 _ESTADOS_SESION: Dict[str, Dict[str, Any]] = {}
+# Recuerda el último puesto usado en un alta de usuario por sesión (para "crea su posicion")
+_ULTIMO_PUESTO_SESION: Dict[str, str] = {}
 
 
 def limpiar_flujo_sesion(session_id: str):
@@ -24,14 +26,53 @@ def tiene_flujo_activo(session_id: str) -> bool:
     return session_id in _ESTADOS_SESION
 
 
-def _cargar_puestos() -> Dict[str, Any]:
+def _cargar_json_puestos() -> Dict[str, Any]:
     if not ARCHIVO_PUESTOS.exists():
         return {}
     try:
-        data = json.loads(ARCHIVO_PUESTOS.read_text(encoding="utf-8"))
-        return data.get("puestos", {}) if isinstance(data, dict) else {}
+        return json.loads(ARCHIVO_PUESTOS.read_text(encoding="utf-8"))
     except Exception:
         return {}
+
+
+def _cargar_puestos() -> Dict[str, Any]:
+    data = _cargar_json_puestos()
+    return data.get("puestos", {}) if isinstance(data, dict) else {}
+
+
+def obtener_info_ultima_posicion() -> Dict[str, Any]:
+    """Devuelve la última clave POS-XXXX registrada y sugiere la siguiente disponible."""
+    data = _cargar_json_puestos()
+    claves: List[Tuple[int, str, str]] = []
+
+    for nombre, info in data.get("puestos", {}).items():
+        c = str(info.get("clave_posicion_cloud", "")).strip()
+        m = re.match(r"POS-(\d+)", c, re.IGNORECASE)
+        if m:
+            claves.append((int(m.group(1)), c.upper(), nombre))
+
+    for reg in data.get("posiciones_registradas", []):
+        c = str(reg.get("clave", "")).strip()
+        m = re.match(r"POS-(\d+)", c, re.IGNORECASE)
+        if m:
+            claves.append((int(m.group(1)), c.upper(), reg.get("nombre", "")))
+
+    claves.sort(key=lambda x: x[0], reverse=True)
+    if not claves:
+        return {
+            "ultima_clave": "POS-1084",
+            "ultimo_nombre": "N/A",
+            "siguiente_clave": "POS-1085",
+            "total": len(data.get("puestos", {}))
+        }
+
+    top_num, top_clave, top_nombre = claves[0]
+    return {
+        "ultima_clave": top_clave,
+        "ultimo_nombre": top_nombre,
+        "siguiente_clave": f"POS-{top_num + 1:04d}",
+        "total": len(data.get("puestos", {}))
+    }
 
 
 def _buscar_puesto(termino: str) -> List[Tuple[str, str]]:
@@ -70,13 +111,17 @@ def _separar_nombre_apellidos(texto: str) -> Tuple[str, str]:
         return partes[0].upper(), partes[1].upper()
     if len(partes) == 3:
         return partes[0].upper(), " ".join(partes[1:]).upper()
-    # 4 o más palabras: últimos 2 son apellidos, el resto nombres
     return " ".join(partes[:-2]).upper(), " ".join(partes[-2:]).upper()
 
 
 def _extraer_correo(texto: str) -> Optional[str]:
     m = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", texto)
     return m.group(0).lower() if m else None
+
+
+def _extraer_clave_pos(texto: str) -> Optional[str]:
+    m = re.search(r"\bPOS-\d{3,5}\b", texto, re.IGNORECASE)
+    return m.group(0).upper() if m else None
 
 
 def _es_intencion_alta_usuario(msg_low: str) -> bool:
@@ -86,7 +131,28 @@ def _es_intencion_alta_usuario(msg_low: str) -> bool:
         "registrar usuario", "alta de colaborador", "nuevo colaborador",
         "llenar usuario", "alta usuario"
     ]
+    if "posicion" in msg_low or "posición" in msg_low or "puesto" in msg_low:
+        if "usuario" not in msg_low and "colaborador" not in msg_low:
+            return False
     return any(d in msg_low for d in disparadores)
+
+
+def _es_intencion_alta_posicion(msg_low: str) -> bool:
+    norm = msg_low.replace("ó", "o")
+    disparadores = [
+        "crear posicion", "crea posicion", "crea la posicion", "crear la posicion",
+        "crear su posicion", "crea su posicion", "nueva posicion", "alta de posicion",
+        "alta posicion", "registrar posicion", "dar de alta posicion", "dar de alta una posicion",
+        "crear puesto", "nuevo puesto", "alta de puesto", "alta puesto"
+    ]
+    return any(d in norm for d in disparadores)
+
+
+def _es_consulta_ultima_clave_pos(msg_low: str) -> bool:
+    norm = msg_low.replace("ó", "o").replace("ú", "u")
+    tiene_pos = "posicion" in norm or "puesto" in norm or "pos-" in norm
+    tiene_clave = any(k in norm for k in ["ultima clave", "ultimo pos", "siguiente clave", "clave mas alta", "ultima posicion", "ultimo numero"])
+    return tiene_pos and tiene_clave
 
 
 def _es_cancelacion(msg_low: str) -> bool:
@@ -96,8 +162,7 @@ def _es_cancelacion(msg_low: str) -> bool:
 
 
 def _es_confirmacion(msg_low: str) -> Tuple[bool, bool]:
-    """Retorna (es_confirmacion, guardar_en_produccion)."""
-    limpio = msg_low.strip().replace("í", "i")
+    limpio = msg_low.strip().replace("í", "i").replace("ó", "o")
     guardar = any(k in limpio for k in ["guardar", "produccion", "definitivo", "directo"])
     afirmativos = ["si", "adelante", "confirmo", "dale", "inicia", "crear", "llena", "procede", "ok", "va"]
     es_si = any(limpio == a or limpio.startswith(a + " ") for a in afirmativos)
@@ -107,37 +172,30 @@ def _es_confirmacion(msg_low: str) -> Tuple[bool, bool]:
 def _sugerir_correo(nombre: str, apellidos: str) -> str:
     n = nombre.split()[0].lower() if nombre else "usuario"
     a = apellidos.split()[0].lower() if apellidos else "velas"
-    # Quitar acentos básicos
     for orig, rep in [("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u"), ("ñ", "n")]:
         n = n.replace(orig, rep)
         a = a.replace(orig, rep)
     return f"{n}.{a}@grupovelas.com"
 
 
-def _construir_siguiente_paso(session_id: str, estado: Dict[str, Any]) -> str:
-    # 1. Falta nombre o apellidos
+def _construir_paso_usuario(estado: Dict[str, Any]) -> str:
     if not estado.get("nombre") or not estado.get("apellidos"):
         return (
             "¡Con gusto te ayudo a dar de alta al nuevo usuario! 🚀\n"
             "Dime su **Nombre y Apellidos completos** (o envíame nombre, correo y puesto juntos)."
         )
-
-    # 2. Falta correo
     if not estado.get("correo"):
         sug = _sugerir_correo(estado["nombre"], estado["apellidos"])
         return (
             f"Perfecto, anoté a **{estado['nombre']} {estado['apellidos']}**.\n"
             f"Ahora dime su **correo corporativo** (ej. `{sug}`)."
         )
-
-    # 3. Falta puesto
     if not estado.get("puesto"):
         return (
             f"Anotado el correo `{estado['correo']}`.\n"
             f"¿Qué **Puesto o Posición** ocupará? (Puedes escribir el nombre o clave `POS-XXXX`, ej. *Asesor de Venta Tampico*)."
         )
 
-    # 4. Todos los datos completos -> Pedir confirmación
     estado["esperando_confirmacion"] = True
     return (
         "📋 **Confirma los datos para iniciar el llenado en Aryve:**\n"
@@ -150,13 +208,56 @@ def _construir_siguiente_paso(session_id: str, estado: Dict[str, Any]) -> str:
     )
 
 
+def _construir_paso_posicion(estado: Dict[str, Any]) -> str:
+    info_ult = obtener_info_ultima_posicion()
+    if not estado.get("clave"):
+        return (
+            f"¡Con gusto te ayudo a crear la nueva posición! 🏗️\n"
+            f"La última clave registrada es **`{info_ult['ultima_clave']}`** (*{info_ult['ultimo_nombre']}*).\n"
+            f"¿Usamos la siguiente clave **`{info_ult['siguiente_clave']}`** o prefieres otra clave `POS-XXXX`?"
+        )
+    if not estado.get("nombre"):
+        sug_puesto = estado.get("puesto_sugerido", "")
+        extra = f" (o responde **\"mismo\"** para usar *{sug_puesto}*)" if sug_puesto else ""
+        return (
+            f"Anotada la clave **`{estado['clave']}`**.\n"
+            f"¿Cuál es el **Nombre oficial del puesto/posición**?{extra}"
+        )
+    if not estado.get("categoria"):
+        return (
+            f"Anotado el puesto **{estado['nombre']}**.\n"
+            f"¿Qué **Categoría** le asignamos? (ej. `VENTAS`, `OBRA`, `TITULACIÓN`, `SISTEMAS`, `ADMINISTRACION`)."
+        )
+
+    estado["esperando_confirmacion"] = True
+    return (
+        "📋 **Confirma los datos de la nueva Posición en Aryve:**\n"
+        f"• **Clave:** `{estado['clave']}`\n"
+        f"• **Nombre:** {estado['nombre']}\n"
+        f"• **Categoría:** {estado['categoria']}\n"
+        f"• **Puesto Superior:** {estado.get('padre') or 'N/A'}\n\n"
+        "Responde **\"sí\"** para abrir Aryve y llenar la posición (revisión), "
+        "**\"sí guardar\"** para guardar definitivo, o **\"cancelar\"**."
+    )
+
+
 def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
     """
-    Intercepta y resuelve de forma instantánea (<50ms) el flujo de alta de usuarios.
-    Retorna la respuesta lista para enviar al widget, o None si el mensaje no pertenece al flujo.
+    Intercepta y resuelve de forma instantánea (<50ms) el flujo de alta de usuarios,
+    creación de posiciones y consultas de última clave POS-XXXX.
     """
     msg = mensaje.strip()
     msg_low = msg.lower()
+
+    # 0. Consulta directa de última clave POS-XXXX
+    if _es_consulta_ultima_clave_pos(msg_low):
+        info = obtener_info_ultima_posicion()
+        return (
+            f"🏷️ **Catálogo de Posiciones ({info['total']} registradas):**\n"
+            f"• **Última clave registrada:** `{info['ultima_clave']}` (*{info['ultimo_nombre']}*)\n"
+            f"• **Siguiente clave disponible:** **`{info['siguiente_clave']}`**\n\n"
+            "Si deseas crearla ahora, dime **\"crea la posición\"**."
+        )
 
     # A. Si ya hay un flujo activo para esta sesión
     if session_id in _ESTADOS_SESION:
@@ -164,14 +265,61 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
 
         if _es_cancelacion(msg_low):
             limpiar_flujo_sesion(session_id)
-            return "Entendido, cancelé el proceso de alta de usuario. ¿En qué más puedo apoyarte?"
+            return "Entendido, cancelé el proceso. ¿En qué más puedo apoyarte?"
 
-        # Si está esperando confirmación final
+        # ---- FLUJO ACTIVO: POSICIÓN ----
+        if estado.get("tipo") == "posicion":
+            if estado.get("esperando_confirmacion"):
+                es_si, guardar = _es_confirmacion(msg_low)
+                if es_si:
+                    from khiara.herramientas.explorador import tool_iniciar_creacion_posicion
+                    datos = dict(estado)
+                    limpiar_flujo_sesion(session_id)
+                    return tool_iniciar_creacion_posicion(
+                        clave=datos["clave"],
+                        nombre=datos["nombre"],
+                        categoria=datos["categoria"],
+                        puesto_padre=datos.get("padre", ""),
+                        guardar_en_produccion=guardar
+                    )
+                elif msg_low in {"no", "corregir", "cambiar"}:
+                    estado["esperando_confirmacion"] = False
+                    return "¿Qué dato deseas corregir? (Escribe la nueva clave POS-XXXX, nombre o categoría)."
+
+            if not estado.get("clave"):
+                clave_det = _extraer_clave_pos(msg)
+                if clave_det:
+                    estado["clave"] = clave_det
+                else:
+                    es_si, _ = _es_confirmacion(msg_low)
+                    if es_si or "siguiente" in msg_low or "esa" in msg_low:
+                        estado["clave"] = obtener_info_ultima_posicion()["siguiente_clave"]
+                    else:
+                        # Si escribió directo el nombre del puesto, asignar siguiente clave y ese nombre
+                        estado["clave"] = obtener_info_ultima_posicion()["siguiente_clave"]
+                        estado["nombre"] = msg.upper()
+                return _construir_paso_posicion(estado)
+
+            if not estado.get("nombre"):
+                if msg_low in {"mismo", "el mismo", "igual", "si", "sí"} and estado.get("puesto_sugerido"):
+                    estado["nombre"] = estado["puesto_sugerido"]
+                else:
+                    estado["nombre"] = msg.upper()
+                return _construir_paso_posicion(estado)
+
+            if not estado.get("categoria"):
+                estado["categoria"] = msg.upper()
+                return _construir_paso_posicion(estado)
+
+            return _construir_paso_posicion(estado)
+
+        # ---- FLUJO ACTIVO: USUARIO ----
         if estado.get("esperando_confirmacion"):
             es_si, guardar = _es_confirmacion(msg_low)
             if es_si:
                 from khiara.herramientas.explorador import tool_iniciar_creacion_usuario
                 datos = dict(estado)
+                _ULTIMO_PUESTO_SESION[session_id] = datos["puesto"]
                 limpiar_flujo_sesion(session_id)
                 return tool_iniciar_creacion_usuario(
                     nombre=datos["nombre"],
@@ -184,12 +332,10 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
                 estado["esperando_confirmacion"] = False
                 return "¿Qué dato deseas corregir? (Escribe el nuevo correo, puesto o nombre completo)."
 
-        # Extraer correo si viene en el mensaje
         correo_det = _extraer_correo(msg)
         if correo_det:
             estado["correo"] = correo_det
 
-        # Si faltaba nombre y apellidos
         if not estado.get("nombre") or not estado.get("apellidos"):
             sin_correo = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "", msg).strip()
             nom, ape = _separar_nombre_apellidos(sin_correo)
@@ -199,18 +345,15 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
             elif nom and not ape:
                 estado["nombre"] = nom
                 return f"Anoté el nombre **{nom}**. ¿Cuáles son sus **apellidos**?"
-            return _construir_siguiente_paso(session_id, estado)
+            return _construir_paso_usuario(estado)
 
-        # Si ya tenía nombre y correo, este mensaje es el puesto
         if estado.get("correo") and not estado.get("puesto"):
-            # Evitar tomar el correo recién enviado como puesto
             sin_correo = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "", msg).strip()
             if sin_correo:
                 coincidencias = _buscar_puesto(sin_correo)
                 if len(coincidencias) == 1:
                     estado["puesto"] = coincidencias[0][0]
                 elif len(coincidencias) > 1:
-                    # Si el usuario escribió exacto o casi exacto, o mostrar opciones rápidas
                     primero = coincidencias[0][0]
                     if sin_correo.upper() == primero.upper() or sin_correo.upper() == coincidencias[0][1]:
                         estado["puesto"] = primero
@@ -221,17 +364,30 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
                             "Escribe el nombre exacto o clave `POS-XXXX` que deseas asignar."
                         )
                 else:
-                    # Aceptar el texto tal cual si es un puesto personalizado
                     estado["puesto"] = sin_correo.upper()
-            return _construir_siguiente_paso(session_id, estado)
+            return _construir_paso_usuario(estado)
 
-        # Si faltaba correo pero no trajo '@'
         if not estado.get("correo"):
             return "No detecté un correo válido. Por favor escríbelo con `@` (ej. `nombre.apellido@grupovelas.com`)."
 
-        return _construir_siguiente_paso(session_id, estado)
+        return _construir_paso_usuario(estado)
 
-    # B. Si NO hay flujo activo, verificar si el usuario quiere iniciar un alta de usuario
+    # B. Iniciar flujo de CREACIÓN DE POSICIÓN
+    if _es_intencion_alta_posicion(msg_low):
+        clave_det = _extraer_clave_pos(msg) or ""
+        estado = {
+            "tipo": "posicion",
+            "clave": clave_det,
+            "nombre": "",
+            "categoria": "",
+            "padre": "",
+            "puesto_sugerido": _ULTIMO_PUESTO_SESION.get(session_id, ""),
+            "esperando_confirmacion": False
+        }
+        _ESTADOS_SESION[session_id] = estado
+        return _construir_paso_posicion(estado)
+
+    # C. Iniciar flujo de ALTA DE USUARIO
     if _es_intencion_alta_usuario(msg_low):
         estado = {
             "tipo": "usuario",
@@ -241,12 +397,10 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
             "puesto": "",
             "esperando_confirmacion": False
         }
-        # Intentar extraer correo si ya viene en el primer mensaje
         correo_det = _extraer_correo(msg)
         if correo_det:
             estado["correo"] = correo_det
 
-        # Intentar extraer nombre si dice "llamado X" o "a X"
         m_nom = re.search(r"(?:llamado|llamada|alta a)\s+([A-Za-zÁÉÍÓÚáéíóúÑñ\s]+?)(?:,|correo|puesto|$)", msg, re.IGNORECASE)
         if m_nom:
             nom, ape = _separar_nombre_apellidos(m_nom.group(1))
@@ -255,6 +409,6 @@ def procesar_flujo_alta(session_id: str, mensaje: str) -> Optional[str]:
                 estado["apellidos"] = ape
 
         _ESTADOS_SESION[session_id] = estado
-        return _construir_siguiente_paso(session_id, estado)
+        return _construir_paso_usuario(estado)
 
     return None

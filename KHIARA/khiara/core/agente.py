@@ -96,7 +96,6 @@ def crear_agente_khiara(
         model = Gemini(
             id=model_name,
             api_key=GEMINI_API_KEY if GEMINI_API_KEY else None,
-            thinking_budget=0,
             client_params={"http_options": {"retry_options": {"attempts": 2}}}
         )
 
