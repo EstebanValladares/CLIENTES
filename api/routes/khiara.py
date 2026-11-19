@@ -161,7 +161,9 @@ async def chat_stream(req: ChatRequest):
 
         def worker():
             try:
-                gen = agente.run(req.mensaje, stream=True)
+                user = req.usuario_id or "esteban"
+                sess = req.session_id or f"sesion_{user}"
+                gen = agente.run(req.mensaje, stream=True, user_id=user, session_id=sess)
                 for chunk in gen:
                     c = getattr(chunk, "content", None)
                     if c:

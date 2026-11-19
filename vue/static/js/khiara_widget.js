@@ -332,9 +332,28 @@
     e.stopPropagation();
   });
 
+  // Obtener o generar sesión única por usuario y navegador para aislamiento de historial
+  function getSesionInfo() {
+    let sesionId = localStorage.getItem('khiara_session_id');
+    if (!sesionId) {
+      sesionId = 'khiara_ses_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
+      localStorage.setItem('khiara_session_id', sesionId);
+    }
+    let usuarioId = 'esteban';
+    try {
+      const perfilRaw = localStorage.getItem('chat_perfil_usuario');
+      if (perfilRaw) {
+        const perfil = JSON.parse(perfilRaw);
+        usuarioId = perfil.correo || perfil.nombre || perfil.id || 'usuario';
+      }
+    } catch (e) {}
+    return { sesionId, usuarioId };
+  }
+
   const limpiarBtn = document.getElementById('khiara-btn-limpiar');
   if (limpiarBtn) {
     limpiarBtn.addEventListener('click', async () => {
+      localStorage.removeItem('khiara_session_id');
       try { await fetch(`${HOST}/api/chat/limpiar`, { method: 'POST' }); } catch(e){}
       msgs.innerHTML = `
         <div class="khiara-msg-bot">
@@ -395,10 +414,15 @@
     triggerCatAction(['Forehead click', 'Click Meow hitbox']);
 
     try {
+      const { sesionId, usuarioId } = getSesionInfo();
       const res = await fetch(`${HOST}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mensaje: txt })
+        body: JSON.stringify({ 
+          mensaje: txt,
+          session_id: sesionId,
+          usuario_id: usuarioId
+        })
       });
       const reader = res.body.getReader();
       const dec = new TextDecoder();
