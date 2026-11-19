@@ -142,12 +142,43 @@ def cambiar_motor(req: ConfigModelRequest):
     }
 
 
+def resolver_consulta_local_directa(mensaje: str) -> Optional[str]:
+    """Resuelve consultas clave directamente desde SQLite local si la API externa experimenta saturación (503/429)."""
+    import re
+    msg_low = mensaje.lower()
+    
+    # 1. Escalatorias de precios e insumos
+    if any(k in msg_low for k in ["escalatoria", "escalado", "escalatorias"]):
+        m_insumo = re.search(r'\b\d{5,8}\b', mensaje)
+        if m_insumo:
+            return tool_consultar_escalatoria_precios(termino_o_clave_insumo=m_insumo.group(0))
+        m_obra = re.search(r'\b[A-Za-z0-9]{3,4}\b', mensaje)
+        if m_obra and m_obra.group(0).lower() not in {"obra", "para", "como", "esta", "quien"}:
+            res = tool_consultar_escalatoria_precios(obra_clave=m_obra.group(0))
+            if "No se encontraron" not in res:
+                return res
+
+    # 2. Catálogo de obras
+    if "obra" in msg_low and any(k in msg_low for k in ["existe", "catalogo", "obras"]):
+        m_obra = re.search(r'\b[A-Za-z0-9]{3,4}\b', mensaje.upper())
+        if m_obra and m_obra.group(0) not in {"OBRA", "PARA", "ESTA", "CUAL"}:
+            return tool_consultar_catalogo_obras(termino=m_obra.group(0))
+
+    # 3. Usuarios locales
+    if "usuario" in msg_low and "existe" in msg_low:
+        m_nom = re.search(r'llamado\s+([A-Za-z\s]+)', mensaje, re.IGNORECASE)
+        if m_nom:
+            return tool_buscar_usuarios_locales(termino_busqueda=m_nom.group(1).strip())
+
+    return None
+
+
 @router.post("/api/chat")
 async def chat_stream(req: ChatRequest):
     """
     Genera streaming nativo token por token de KHIARA para el widget de la gatita.
     - Primer token en < 800ms
-    - Escudo visual contra errores 400/429
+    - Escudo visual contra errores 400/429/503 con autorrecuperación local directa
     - Extracción de aprendizaje y guardado persistente en SQLite
     """
     agente = get_agente()
@@ -191,6 +222,17 @@ async def chat_stream(req: ChatRequest):
                 is_error = True
                 registrar_falla(req.mensaje, "STREAM_EXCEPTION", valor)
                 agente = reiniciar_agente()
+                
+                # Intentar autorrecuperación directa con base de datos local
+                res_directa = resolver_consulta_local_directa(req.mensaje)
+                if res_directa:
+                    registrar_falla(req.mensaje, "FALLBACK_LOCAL_AUTO_RECOVERED", "503/400 resuelto por base de datos local")
+                    if not empezo_hablar:
+                        yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                        empezo_hablar = True
+                    yield f"data: {json.dumps({'tipo': 'texto', 'valor': res_directa})}\n\n"
+                    break
+
                 msg_amable = "Esa información o servicio no se encuentra disponible por el momento. He registrado la incidencia para darle seguimiento. ¿Hay algo más en lo que pueda apoyarte?"
                 if not empezo_hablar:
                     yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
@@ -202,10 +244,21 @@ async def chat_stream(req: ChatRequest):
                 texto_total = "".join(tokens_acumulados)
 
                 # Detección preventiva de errores crudos devueltos por el LLM en formato JSON
-                if len(tokens_acumulados) <= 5 and ('"error":' in texto_total or '"code": 400' in texto_total or '"code": 429' in texto_total or 'INVALID_ARGUMENT' in texto_total):
+                if len(tokens_acumulados) <= 5 and ('"error":' in texto_total or '"code": 400' in texto_total or '"code": 429' in texto_total or '"code": 503' in texto_total or 'INVALID_ARGUMENT' in texto_total or 'high demand' in texto_total):
                     is_error = True
                     registrar_falla(req.mensaje, "STREAM_RAW_API_ERROR", texto_total[:300])
                     agente = reiniciar_agente()
+                    
+                    # Intentar autorrecuperación directa con base de datos local
+                    res_directa = resolver_consulta_local_directa(req.mensaje)
+                    if res_directa:
+                        registrar_falla(req.mensaje, "FALLBACK_LOCAL_AUTO_RECOVERED", "503/400 resuelto por base de datos local")
+                        if not empezo_hablar:
+                            yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
+                            empezo_hablar = True
+                        yield f"data: {json.dumps({'tipo': 'texto', 'valor': res_directa})}\n\n"
+                        break
+
                     msg_amable = "Esa información o servicio no se encuentra disponible por el momento. Ya registré la consulta para revisarla. ¿Deseas preguntar otro dato?"
                     if not empezo_hablar:
                         yield f"data: {json.dumps({'tipo': 'estado', 'valor': 'speaking'})}\n\n"
