@@ -30,12 +30,43 @@ window.createProyectosModule = function(Vue) {
   });
   const desasigCargando = ref(false);
   const ejecutandoDesasignacion = ref(false);
+  const desasigModoPrueba = ref(true);
+  const desasigLimiteObras = ref(1);
   const filtroDesasigUsuario = ref('');
   const filtroDesasigObra = ref('');
   const desasigUsuarioSeleccionado = ref('');
   const nuevoUsuarioDesasig = ref('');
   const nuevaObraDesasigClave = ref('');
   const nuevaObraDesasigNombre = ref('');
+
+  // Cargar configuración de desasignación (Modo Prueba y Límite)
+  const cargarConfigDesasignacion = async () => {
+    try {
+      const res = await fetch('/api/operaciones/desasignacion/config');
+      if (res.ok) {
+        const cfg = await res.json();
+        if (cfg.modo_prueba !== undefined) desasigModoPrueba.value = Boolean(cfg.modo_prueba);
+        if (cfg.limite_obras !== undefined) desasigLimiteObras.value = Number(cfg.limite_obras);
+      }
+    } catch (e) {
+      console.error('Error cargando config desasignación:', e);
+    }
+  };
+
+  const guardarConfigDesasignacion = async () => {
+    try {
+      await fetch('/api/operaciones/desasignacion/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          modo_prueba: desasigModoPrueba.value,
+          limite_obras: desasigLimiteObras.value
+        })
+      });
+    } catch (e) {
+      console.error('Error guardando config desasignación:', e);
+    }
+  };
 
   // Cargar datos de desasignación
   const cargarDesasignacion = async () => {
@@ -45,6 +76,7 @@ window.createProyectosModule = function(Vue) {
       if (res.ok) {
         desasigData.value = await res.json();
       }
+      await cargarConfigDesasignacion();
     } catch (e) {
       console.error('Error cargando desasignación:', e);
     } finally {

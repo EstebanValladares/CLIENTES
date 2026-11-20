@@ -12,6 +12,7 @@ RUTA_OBRAS_JSON = os.path.join(DIR_PERMISOS, "obras_permisos.json")
 RUTA_ENKONTROL_TXT = os.path.join(DIR_PERMISOS, "ENKONTROL.TXT")
 RUTA_LOG_DEPURACION = os.path.join(DIR_PERMISOS, "log_depuracion.txt")
 RUTA_DESASIGNACION_JSON = os.path.join(DIR_PERMISOS, "desasignacion_usuarios_obras.json")
+RUTA_CONFIG_DESASIGNACION = os.path.join(DIR_PERMISOS, "desasignacion_config.json")
 
 class PermisosService:
     @classmethod
@@ -85,3 +86,52 @@ class PermisosService:
         except Exception as e:
             print(f"[PermisosService] Error guardando desasignacion: {e}")
             return False
+
+    @classmethod
+    def obtener_config_desasignacion(cls) -> Dict[str, Any]:
+        if os.path.exists(RUTA_CONFIG_DESASIGNACION):
+            try:
+                with open(RUTA_CONFIG_DESASIGNACION, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+        return {"modo_prueba": True, "limite_obras": 1}
+
+    @classmethod
+    def guardar_config_desasignacion(cls, config: Dict[str, Any]) -> bool:
+        try:
+            with open(RUTA_CONFIG_DESASIGNACION, "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2, ensure_ascii=False)
+            return True
+        except Exception as e:
+            print(f"[PermisosService] Error guardando config desasignacion: {e}")
+            return False
+
+    @classmethod
+    def remover_obra_cumplida(cls, clave_obra: str) -> bool:
+        """Remueve una obra procesada y guardada del archivo de desasignación."""
+        clave = str(clave_obra).strip().upper()
+        data = cls.obtener_desasignacion()
+        lista_obras = data.get("lista_obras", [])
+        por_obra = data.get("por_obra", {})
+        por_usuario = data.get("por_usuario", {})
+
+        modificado = False
+        if clave in por_obra:
+            del por_obra[clave]
+            modificado = True
+
+        if clave in lista_obras:
+            data["lista_obras"] = [o for o in lista_obras if o != clave]
+            modificado = True
+
+        for usr, obras_usr in por_usuario.items():
+            antes = len(obras_usr)
+            filtradas = [o for o in obras_usr if (o.get("proyecto") or "").upper() != clave]
+            if len(filtradas) != antes:
+                por_usuario[usr] = filtradas
+                modificado = True
+
+        if modificado:
+            return cls.guardar_desasignacion(data)
+        return True

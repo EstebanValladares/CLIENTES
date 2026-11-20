@@ -39,6 +39,7 @@ from PROYECTOS.logger.bitacora import ProjectLogger
 from PROYECTOS.selectores import (
     ECOSYSTEM_DIR,
     ProyectoDetalleSelectors,
+    RUTA_CONFIG_DESASIGNACION,
     RUTA_DESASIGNACION_JSON,
     RUTA_LOG_DESASIGNACION,
     TIMEOUT_LARGO,
@@ -98,6 +99,7 @@ def procesar_desasignacion_obra(
     clave_obra: str,
     info_obra: Dict[str, Any],
     logger: ProjectLogger,
+    modo_prueba: bool = False,
 ) -> Tuple[int, str]:
     """
     Navega directamente a una obra, edita y elimina las posiciones de los usuarios objetivo.
@@ -203,13 +205,29 @@ def procesar_desasignacion_obra(
             # Ya no hay más usuarios de la lista en las posiciones
             break
 
-    # Si se eliminó al menos uno, guardar cambios del proyecto
+    # Si se eliminó al menos uno, guardar cambios del proyecto (o simular en modo prueba)
     if eliminados_en_esta_obra:
-        logger.info(f"   Guardando cambios en obra '{clave_obra}'...")
-        guardar_proyecto_general(driver, logger=logger)
-        time.sleep(1.0)
-        esperar_fin_carga(driver)
-        return len(eliminados_en_esta_obra), f"Se eliminaron {len(eliminados_en_esta_obra)} usuarios y se guardó."
+        if modo_prueba:
+            logger.info(f"   [MODO PRUEBA ACTIVO]: Se eliminaron {len(eliminados_en_esta_obra)} usuarios de la vista.")
+            logger.info(f"   [MODO PRUEBA]: Pausando 4 segundos para inspección visual en pantalla...")
+            time.sleep(4.0)
+            logger.info(f"   [MODO PRUEBA]: Se OMITE clic en Guardar (Alt+G). La obra '{clave_obra}' permanece INTACTA en Aryve.")
+            return len(eliminados_en_esta_obra), f"Prueba completada: {len(eliminados_en_esta_obra)} usuarios removidos visualmente (SIN GUARDAR)."
+        else:
+            logger.info(f"   Guardando cambios en obra '{clave_obra}'...")
+            guardar_proyecto_general(driver, logger=logger)
+            time.sleep(1.2)
+            esperar_fin_carga(driver)
+
+            # Quitar la obra de la lista pendiente en el Dashboard
+            try:
+                from core.permisos_service import PermisosService
+                PermisosService.remover_obra_cumplida(clave_obra)
+                logger.info(f"   [LISTA DASHBOARD]: Obra '{clave_obra}' removida exitosamente de las obras pendientes.")
+            except Exception as e_rem:
+                logger.aviso(f"No se pudo actualizar lista JSON: {e_rem}")
+
+            return len(eliminados_en_esta_obra), f"Se eliminaron {len(eliminados_en_esta_obra)} usuarios y se guardó."
     else:
         logger.info(f"   [INFO] Ninguno de los {len(usuarios_objetivo)} usuarios objetivo estaba asignado en esta obra.")
         return 0, "No se requirió eliminar usuarios."
@@ -226,6 +244,18 @@ def ejecutar_desasignacion_automatica(
     logger = ProjectLogger(ruta_log=ruta_log or RUTA_LOG_DESASIGNACION, callback_log=callback_log)
     logger.iniciar_sesion_log()
 
+    # Leer configuración (modo prueba y límite)
+    config = {}
+    if RUTA_CONFIG_DESASIGNACION.exists():
+        try:
+            with open(RUTA_CONFIG_DESASIGNACION, "r", encoding="utf-8") as f_cfg:
+                config = json.load(f_cfg)
+        except Exception:
+            pass
+
+    modo_prueba = bool(config.get("modo_prueba", True))
+    limite_obras = int(config.get("limite_obras", 1))
+
     if not RUTA_DESASIGNACION_JSON.exists():
         msg = f"No existe el archivo de desasignación: {RUTA_DESASIGNACION_JSON}"
         logger.error(msg)
@@ -241,7 +271,7 @@ def ejecutar_desasignacion_automatica(
 
     por_obra: Dict[str, Any] = data_desasig.get("por_obra", {})
     if not por_obra:
-        msg = "No hay obras configuradas en el archivo de desasignación."
+        msg = "No hay obras pendientes en el archivo de desasignación."
         logger.aviso(msg)
         return False, msg
 
@@ -252,10 +282,16 @@ def ejecutar_desasignacion_automatica(
     else:
         obras_a_procesar = por_obra
 
+    # Aplicar límite de obras si está configurado (> 0)
+    if limite_obras > 0 and not obras_especificas:
+        claves_recortadas = list(obras_a_procesar.keys())[:limite_obras]
+        obras_a_procesar = {k: obras_a_procesar[k] for k in claves_recortadas}
+
     total_obras = len(obras_a_procesar)
     logger.info("=" * 60)
     logger.info("   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO")
-    logger.info(f"   Total de Obras a procesar: {total_obras}")
+    logger.info(f"   MODO PRUEBA (Sin Guardar): {'SÍ (ACTIVADO)' if modo_prueba else 'NO (MODO REAL CON GUARDADO)'}")
+    logger.info(f"   Total de Obras a procesar en esta tanda: {total_obras}")
     logger.info("=" * 60)
 
     exito_cred, res_cred = _resolver_credenciales()
@@ -281,6 +317,7 @@ def ejecutar_desasignacion_automatica(
                     clave_obra=cve,
                     info_obra=info,
                     logger=logger,
+                    modo_prueba=modo_prueba,
                 )
                 if removidos > 0:
                     total_removidos_global += removidos

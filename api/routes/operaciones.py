@@ -33,3 +33,14 @@ def guardar_desasignacion(payload: Dict[str, Any] = Body(...)):
     if not ok:
         raise HTTPException(status_code=500, detail="Error guardando datos de desasignación")
     return {"ok": True, "mensaje": "Datos de desasignación actualizados"}
+
+@router.get("/desasignacion/config")
+def obtener_config_desasignacion():
+    return PermisosService.obtener_config_desasignacion()
+
+@router.post("/desasignacion/config")
+def guardar_config_desasignacion(payload: Dict[str, Any] = Body(...)):
+    ok = PermisosService.guardar_config_desasignacion(payload)
+    if not ok:
+        raise HTTPException(status_code=500, detail="Error guardando configuración de desasignación")
+    return {"ok": True, "mensaje": "Configuración de desasignación actualizada"}

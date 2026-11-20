@@ -24,6 +24,7 @@ RUTA_USUARIOS_TXT: Path = BASE_DIR / "ENKONTROL.TXT"
 RUTA_LOG: Path = BASE_DIR / "log_depuracion.txt"
 RUTA_DESASIGNACION_JSON: Path = BASE_DIR / "desasignacion_usuarios_obras.json"
 RUTA_LOG_DESASIGNACION: Path = BASE_DIR / "log_desasignacion.txt"
+RUTA_CONFIG_DESASIGNACION: Path = BASE_DIR / "desasignacion_config.json"
 
 # --- URLS DE ARYVE ---
 URL_BASE_ARYVE: str = os.getenv("ARYVE_BASE_URL", "https://suite.ekloud.net:1445/Aryve/")
@@ -99,8 +100,7 @@ class ProyectoDetalleSelectors:
     )
     BTN_GUARDAR_GENERAL = (
         By.XPATH,
-        "//div[contains(@class, 'page-bar-buttons')]"
-        "//button[contains(@class, 'btn-editing') or contains(@class, 'yellow-casablanca') or @title='Guardar (Alt+G)']",
+        "//button[contains(@class, 'btn-editing') or contains(@class, 'yellow-casablanca') or @aria-label='Guardar (Alt+G)' or @title='Guardar (Alt+G)' or @data-tip='Guardar (Alt+G)' or .//i[contains(@class, 'icon-cloud-upload')]]",
     )
     BTN_REGRESAR = (
         By.XPATH,
