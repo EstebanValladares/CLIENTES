@@ -21,3 +21,15 @@ def guardar_permisos(payload: Dict[str, Any] = Body(...)):
 @router.get("/permisos/historial")
 def historial_permisos():
     return {"log": PermisosService.obtener_log_historial()}
+
+# --- DESASIGNACIÓN DE USUARIOS POR PROYECTO ---
+@router.get("/desasignacion")
+def obtener_desasignacion():
+    return PermisosService.obtener_desasignacion()
+
+@router.post("/desasignacion")
+def guardar_desasignacion(payload: Dict[str, Any] = Body(...)):
+    ok = PermisosService.guardar_desasignacion(payload)
+    if not ok:
+        raise HTTPException(status_code=500, detail="Error guardando datos de desasignación")
+    return {"ok": True, "mensaje": "Datos de desasignación actualizados"}

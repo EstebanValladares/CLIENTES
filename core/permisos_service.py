@@ -11,6 +11,7 @@ DIR_PERMISOS = os.path.join(BASE_DIR, "PROYECTOS")
 RUTA_OBRAS_JSON = os.path.join(DIR_PERMISOS, "obras_permisos.json")
 RUTA_ENKONTROL_TXT = os.path.join(DIR_PERMISOS, "ENKONTROL.TXT")
 RUTA_LOG_DEPURACION = os.path.join(DIR_PERMISOS, "log_depuracion.txt")
+RUTA_DESASIGNACION_JSON = os.path.join(DIR_PERMISOS, "desasignacion_usuarios_obras.json")
 
 class PermisosService:
     @classmethod
@@ -58,3 +59,29 @@ class PermisosService:
             except Exception:
                 pass
         return ""
+
+    @classmethod
+    def obtener_desasignacion(cls) -> Dict[str, Any]:
+        if os.path.exists(RUTA_DESASIGNACION_JSON):
+            try:
+                with open(RUTA_DESASIGNACION_JSON, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"[PermisosService] Error leyendo {RUTA_DESASIGNACION_JSON}: {e}")
+        return {
+            "metadata": {},
+            "usuarios": [],
+            "lista_obras": [],
+            "por_obra": {},
+            "por_usuario": {}
+        }
+
+    @classmethod
+    def guardar_desasignacion(cls, data: Dict[str, Any]) -> bool:
+        try:
+            with open(RUTA_DESASIGNACION_JSON, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            return True
+        except Exception as e:
+            print(f"[PermisosService] Error guardando desasignacion: {e}")
+            return False
