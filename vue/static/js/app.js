@@ -54,6 +54,7 @@ createApp({
       vistaActiva.value = vista;
       if (vista === 'PROYECTOS') {
         cargarPermisos();
+        if (typeof cargarDesasignacion === 'function') cargarDesasignacion();
       } else if (vista === 'PROV_CONTRA') {
         cargarProvContraRegistros();
       } else if (vista === 'USUARIOS') {
@@ -265,7 +266,25 @@ createApp({
       agregarObra,
       eliminarObra,
       cargarObrasDesdeJSON,
-      iniciarDepuracionPermisos
+      iniciarDepuracionPermisos,
+      // Desasignación
+      desasigData,
+      desasigCargando,
+      filtroDesasigUsuario,
+      filtroDesasigObra,
+      desasigUsuarioSeleccionado,
+      nuevoUsuarioDesasig,
+      nuevaObraDesasigClave,
+      nuevaObraDesasigNombre,
+      cargarDesasignacion,
+      guardarDesasignacionServidor,
+      agregarUsuarioDesasig,
+      eliminarUsuarioDesasig,
+      agregarObraDesasig,
+      eliminarObraDesasig,
+      toggleUsuarioFiltro,
+      usuariosFiltradosDesasig,
+      obrasFiltradasDesasig
     } = proyectosModulo;
 
     // VISTA MODULAR: PROVEEDORES & CONTRATISTAS (vue/static/js/modules/proveedores_contratistas.js)
@@ -1523,6 +1542,24 @@ createApp({
       eliminarObra,
       cargarObrasDesdeJSON,
       iniciarDepuracionPermisos,
+      // Desasignación de Usuarios
+      desasigData,
+      desasigCargando,
+      filtroDesasigUsuario,
+      filtroDesasigObra,
+      desasigUsuarioSeleccionado,
+      nuevoUsuarioDesasig,
+      nuevaObraDesasigClave,
+      nuevaObraDesasigNombre,
+      cargarDesasignacion,
+      guardarDesasignacionServidor,
+      agregarUsuarioDesasig,
+      eliminarUsuarioDesasig,
+      agregarObraDesasig,
+      eliminarObraDesasig,
+      toggleUsuarioFiltro,
+      usuariosFiltradosDesasig,
+      obrasFiltradasDesasig,
       
       // Proveedores y Contratistas Unificado (EK10 / Aryve)
       provContraRegistros,
