@@ -416,12 +416,51 @@
                       {{ o.nombre || '(Sin nombre)' }}
                     </div>
                     <!-- Tags de usuarios asignados a remover en esta obra -->
-                    <div v-if="o.usuarios && o.usuarios.length" class="flex flex-wrap gap-1 pt-1 border-t border-slate-800/80">
+                    <div class="flex flex-wrap items-center gap-1.5 pt-1.5 border-t border-slate-800/80">
                       <span v-for="uNom in o.usuarios" :key="o.proyecto + '-' + uNom"
-                            class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50 truncate max-w-[140px]"
+                            class="inline-flex items-center gap-1 text-[10px] pl-2 pr-1 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700/60 shadow-sm"
                             :title="uNom">
-                        {{ uNom.split(' ')[0] }} {{ uNom.split(' ')[1] || '' }}
+                        <span class="truncate max-w-[120px]">{{ uNom.split(' ')[0] }} {{ uNom.split(' ')[1] || '' }}</span>
+                        <button @click.stop="quitarUsuarioDeObra(o.proyecto, uNom)" 
+                                class="text-slate-400 hover:text-rose-400 hover:bg-rose-950/60 rounded-full w-3.5 h-3.5 flex items-center justify-center transition"
+                                title="Quitar usuario de esta obra">
+                          <i class="fa-solid fa-xmark text-[9px]"></i>
+                        </button>
                       </span>
+
+                      <span v-if="!o.usuarios || o.usuarios.length === 0" class="text-[10px] text-amber-400/80 italic">
+                        (Sin usuarios asignados)
+                      </span>
+
+                      <!-- Botón Toggle Asignar Usuario -->
+                      <button @click.stop="toggleMenuAgregarUsuarioObra(o.proyecto)" 
+                              class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-950/70 text-indigo-300 border border-indigo-700/60 hover:bg-indigo-900/80 hover:text-white transition shadow-sm"
+                              title="Asignar un usuario a esta obra">
+                        <i class="fa-solid fa-user-plus text-[9px]"></i>
+                        <span>Asignar</span>
+                      </button>
+                    </div>
+
+                    <!-- Panel inline para asignar usuario -->
+                    <div v-if="obraSeleccionadaParaAgregarUsuario === o.proyecto" 
+                         class="mt-1.5 p-2 rounded-lg bg-indigo-950/40 border border-indigo-700/50 flex flex-col gap-1.5">
+                      <div class="flex items-center justify-between text-[10px] font-bold text-indigo-300">
+                        <span><i class="fa-solid fa-user-plus mr-1"></i> Selecciona usuario a asignar:</span>
+                        <button @click.stop="obraSeleccionadaParaAgregarUsuario = ''" class="text-slate-400 hover:text-slate-200">
+                          <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                      </div>
+                      <div class="flex flex-wrap gap-1">
+                        <button v-for="uDisp in usuariosDisponiblesParaObra(o)" :key="'disp-' + o.proyecto + '-' + uDisp"
+                                @click.stop="agregarUsuarioAObra(o.proyecto, uDisp)"
+                                class="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded bg-indigo-900/60 hover:bg-indigo-600 text-slate-200 hover:text-white border border-indigo-700/50 transition">
+                          <i class="fa-solid fa-plus text-[9px]"></i>
+                          <span>{{ uDisp }}</span>
+                        </button>
+                        <div v-if="usuariosDisponiblesParaObra(o).length === 0" class="text-[10px] text-slate-400 italic py-1">
+                          Todos los usuarios ya están asignados a esta obra.
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div v-if="obrasFiltradasDesasig.length === 0" class="text-center py-12 text-slate-500 text-xs">
