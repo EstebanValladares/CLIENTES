@@ -17,6 +17,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from PROYECTOS.automation.browser import (
     cerrar_driver_activo,
+    click_eventos_mouse,
+    click_js,
     crear_driver,
     registrar_driver_activo,
 )
@@ -102,16 +104,17 @@ def procesar_desasignacion_obra(
     modo_prueba: bool = False,
 ) -> Tuple[int, str]:
     """
-    Navega directamente a una obra, edita y elimina las posiciones de los usuarios objetivo.
-    Retorna (cantidad_eliminados, mensaje).
+    Navega directamente a una obra, edita y analiza los usuarios uno por uno
+    dentro de la tabla de Posiciones (id='datagrid_SOCProyectos_Posiciones').
     """
     id_proyecto = info_obra.get("id_proyecto")
     usuarios_objetivo: List[str] = info_obra.get("usuarios", [])
     if not usuarios_objetivo:
         return 0, "Sin usuarios asignados para remover."
 
-    # Conjunto de nombres normalizados a remover
+    # Normalizar usuarios objetivo
     set_usuarios_remover = {normalizar_texto(u) for u in usuarios_objetivo}
+    logger.info(f"   Usuarios objetivo en esta obra ({len(set_usuarios_remover)}): {', '.join(usuarios_objetivo)}")
 
     # Navegación directa
     if id_proyecto:
@@ -123,87 +126,117 @@ def procesar_desasignacion_obra(
 
     logger.info(f"\n[{clave_obra}] Navegando a obra ID {id_proyecto or 'N/A'}: {url_obra}")
     driver.get(url_obra)
+    time.sleep(1.5)
     esperar_fin_carga(driver)
 
-    # Esperar y presionar botón de Editar
+    # Esperar a que la página y el contenedor de Posiciones existan
+    time.sleep(1.8)
+    esperar_fin_carga(driver, timeout=12.0)
+
     try:
         wait_driver(driver, TIMEOUT_LARGO).until(
-            EC.element_to_be_clickable(ProyectoDetalleSelectors.BTN_EDITAR)
+            EC.presence_of_element_located((By.ID, "datagrid_SOCProyectos_Posiciones"))
         )
     except Exception:
-        logger.aviso(f"[{clave_obra}] No apareció el botón Editar. Reintentando espera...")
+        logger.aviso(f"[{clave_obra}] Esperando estabilización de pantalla...")
         time.sleep(2.0)
 
-    click_editar_proyecto(driver, logger=logger)
-    time.sleep(1.0)
-    esperar_fin_carga(driver)
+    # Activar modo edición mediante inyección JavaScript directa (evita bloqueos de overlay)
+    modo_edicion_ok = False
+    for int_edit in range(1, 4):
+        try:
+            btn_editar = wait_driver(driver, TIMEOUT_CORTO).until(
+                EC.presence_of_element_located(ProyectoDetalleSelectors.BTN_EDITAR)
+            )
+            scroll_al_centro(driver, btn_editar)
+            time.sleep(0.3)
+            driver.execute_script("arguments[0].click();", btn_editar)
+            time.sleep(1.5)
+            esperar_fin_carga(driver)
+            logger.info("   [MODO EDICIÓN]: Botón Editar activado.")
+            modo_edicion_ok = True
+            break
+        except Exception:
+            logger.info(f"   [Cargando]: Esperando que los controles de la obra estén listos (intento {int_edit}/3)...")
+            time.sleep(1.5)
+            esperar_fin_carga(driver)
 
+    if not modo_edicion_ok:
+        logger.error(f"[{clave_obra}] No se pudo activar el modo edición.")
+        return 0, "No se pudo activar el modo edición."
+
+    # Recorrido uno por uno en la tabla de Posiciones (#datagrid_SOCProyectos_Posiciones)
     eliminados_en_esta_obra = []
-    max_intentos_escaneo = 40  # Evita bucle infinito si una fila se resiste
-    intento = 0
+    indice_fila = 1
+    max_filas_revisar = 60
+    filas_vacias = 0
 
-    while intento < max_intentos_escaneo:
-        intento += 1
-        filas = driver.find_elements(
-            By.XPATH,
-            "//div[contains(@class, 'dx-datagrid-rowsview')]//tr[contains(@class, 'dx-data-row')]"
-        )
+    while indice_fila <= max_filas_revisar and filas_vacias < 3:
+        xpath_fila = f"//*[@id='datagrid_SOCProyectos_Posiciones']//div[contains(@class, 'dx-datagrid-rowsview')]//tbody/tr[contains(@class, 'dx-data-row')][{indice_fila}]"
+        filas = driver.find_elements(By.XPATH, xpath_fila)
+
         if not filas:
-            break
+            filas_vacias += 1
+            indice_fila += 1
+            continue
 
-        encontrado_en_esta_vuelta = False
+        fila = filas[0]
+        nombre_en_fila = ""
+        try:
+            badges = fila.find_elements(By.XPATH, ".//td[@aria-colindex='2']//div[contains(@class, 'badge')] | .//span[contains(@class, 'badge')]")
+            if badges and badges[0].text:
+                nombre_en_fila = normalizar_texto(badges[0].text)
+            else:
+                celdas = fila.find_elements(By.XPATH, ".//td[@aria-colindex='2']")
+                if celdas and celdas[0].text:
+                    nombre_en_fila = normalizar_texto(celdas[0].text)
+        except Exception:
+            pass
 
-        for f_idx, fila in enumerate(filas, start=1):
-            try:
-                # Localizar el nombre en el badge o en la celda
-                badges = fila.find_elements(By.XPATH, ".//span[contains(@class, 'badge')]")
-                nombre_en_fila = ""
-                if badges and badges[0].text:
-                    nombre_en_fila = normalizar_texto(badges[0].text)
-                else:
-                    celdas = fila.find_elements(By.XPATH, ".//td[@aria-colindex='2' or contains(@class, 'dx-pointer-events-none')]")
-                    if celdas and celdas[0].text:
-                        nombre_en_fila = normalizar_texto(celdas[0].text)
+        if not nombre_en_fila:
+            filas_vacias += 1
+            indice_fila += 1
+            continue
 
-                if not nombre_en_fila:
-                    continue
+        filas_vacias = 0
+        logger.info(f"   [Fila {indice_fila}] Usuario: '{nombre_en_fila}'")
 
-                # Evaluar coincidencia
-                coincide = False
-                for u_rem in set_usuarios_remover:
-                    if u_rem in nombre_en_fila or nombre_en_fila in u_rem:
-                        coincide = True
-                        break
+        # Comprobar coincidencia con la lista objetivo
+        coincide = False
+        for u_rem in set_usuarios_remover:
+            if u_rem in nombre_en_fila or nombre_en_fila in u_rem:
+                coincide = True
+                break
 
-                if coincide:
-                    # Buscar el ícono del basurero (fa fa-trash)
-                    iconos_trash = fila.find_elements(
-                        By.XPATH,
-                        ".//td[contains(@class, 'dx-command-edit')]//span[contains(@class, 'fa-trash')]"
-                    )
-                    if not iconos_trash:
-                        continue
+        if coincide:
+            logger.info(f"   >>> ¡COINCIDENCIA ENCONTRADA! Eliminando: '{nombre_en_fila}'")
+            iconos_trash = fila.find_elements(
+                By.XPATH,
+                ".//td[contains(@class, 'dx-command-edit')]//span[contains(@class, 'fa-trash')]"
+            )
+            if iconos_trash:
+                btn_trash = iconos_trash[0]
+                scroll_al_centro(driver, btn_trash)
+                time.sleep(0.3)
+                try:
+                    click_eventos_mouse(driver, btn_trash)
+                except Exception:
+                    click_js(driver, btn_trash)
 
-                    btn_trash = iconos_trash[0]
-                    scroll_al_centro(driver, btn_trash)
-                    time.sleep(0.3)
-                    click_seguro(driver, btn_trash)
-                    time.sleep(0.5)
+                time.sleep(0.6)
+                confirmar_modal_si_existe(driver)
+                time.sleep(0.6)
+                esperar_fin_carga(driver)
 
-                    confirmar_modal_si_existe(driver)
-                    time.sleep(0.5)
-                    esperar_fin_carga(driver)
-
-                    logger.info(f"   [-] Eliminado de Posiciones: '{nombre_en_fila}'")
-                    eliminados_en_esta_obra.append(nombre_en_fila)
-                    encontrado_en_esta_vuelta = True
-                    break  # Romper ciclo de filas para re-escanear desde el DOM fresco
-            except Exception as e_fila:
+                logger.info(f"   [-] Eliminado con éxito de la tabla: '{nombre_en_fila}'")
+                eliminados_en_esta_obra.append(nombre_en_fila)
+                # Al eliminarse la fila, la siguiente fila toma su lugar (no incrementar indice_fila)
                 continue
-
-        if not encontrado_en_esta_vuelta:
-            # Ya no hay más usuarios de la lista en las posiciones
-            break
+            else:
+                logger.aviso(f"   No se encontró el ícono de basurero para '{nombre_en_fila}' en fila {indice_fila}.")
+                indice_fila += 1
+        else:
+            indice_fila += 1
 
     # Si se eliminó al menos uno, guardar cambios del proyecto (o simular en modo prueba)
     if eliminados_en_esta_obra:
@@ -323,8 +356,8 @@ def ejecutar_desasignacion_automatica(
                     total_removidos_global += removidos
                     obras_modificadas += 1
             except Exception as err_obra:
-                logger.error(f"Fallo al procesar obra {cve}: {err_obra}")
-                traceback.print_exc()
+                msg_limpio = str(err_obra).splitlines()[0] if str(err_obra) else "Error desconocido"
+                logger.error(f"Fallo al procesar obra {cve}: {msg_limpio}")
 
         logger.info("\n" + "=" * 60)
         resumen = (

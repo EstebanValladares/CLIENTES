@@ -1,0 +1,357 @@
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:39:13
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 1
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/1] Procesando Obra: 001 - ADMINISTRACION ---
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 1
+- Obras modificadas y guardadas: 0
+- Total de asignaciones removidas: 0
+============================================================
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:40:05
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 1
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/1] Procesando Obra: 001 - ADMINISTRACION ---
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 1
+- Obras modificadas y guardadas: 0
+- Total de asignaciones removidas: 0
+============================================================
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:40:46
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 1
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/1] Procesando Obra: 001 - ADMINISTRACION ---
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 1
+- Obras modificadas y guardadas: 0
+- Total de asignaciones removidas: 0
+============================================================
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:43:07
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 3
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/3] Procesando Obra: 001 - ADMINISTRACION ---
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+--- [2/3] Procesando Obra: 027 - 027 - COSTO DE VENTAS CASAS JRZ ---
+
+[027] Navegando a obra ID 574: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/574
+[AVISO]: [027] No apareció el botón Editar. Reintentando espera...
+Buscando el botón 'Editar (Alt+E)'...
+[ERROR]: Error al hacer clic en el botón Editar: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+[ERROR]: Fallo al procesar obra 027: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+
+--- [3/3] Procesando Obra: 205 - FIJOS NOMINA TAMPICO ---
+
+[205] Navegando a obra ID 602: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/602
+[AVISO]: [205] No apareció el botón Editar. Reintentando espera...
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 1 usuarios objetivo estaba asignado en esta obra.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 3
+- Obras modificadas y guardadas: 0
+- Total de asignaciones removidas: 0
+============================================================
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:45:19
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 3
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/3] Procesando Obra: 001 - ADMINISTRACION ---
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+--- [2/3] Procesando Obra: 027 - 027 - COSTO DE VENTAS CASAS JRZ ---
+
+[027] Navegando a obra ID 574: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/574
+[AVISO]: [027] No apareció el botón Editar. Reintentando espera...
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 2 usuarios objetivo estaba asignado en esta obra.
+
+--- [3/3] Procesando Obra: 205 - FIJOS NOMINA TAMPICO ---
+
+[205] Navegando a obra ID 602: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/602
+[AVISO]: [205] No apareció el botón Editar. Reintentando espera...
+Buscando el botón 'Editar (Alt+E)'...
+¡Clic realizado en el botón Editar!
+   [INFO] Ninguno de los 1 usuarios objetivo estaba asignado en esta obra.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 3
+- Obras modificadas y guardadas: 0
+- Total de asignaciones removidas: 0
+============================================================
+
+==================================================
+EJECUCIÓN: 2026-11-20 14:59:14
+==================================================
+============================================================
+   INICIANDO DESASIGNACIÓN DE USUARIOS POR PROYECTO
+   MODO PRUEBA (Sin Guardar): SÍ (ACTIVADO)
+   Total de Obras a procesar en esta tanda: 3
+============================================================
+Iniciando sesión en el sistema...
+¡Logeo exitoso en Aryve!
+
+--- [1/3] Procesando Obra: 001 - ADMINISTRACION ---
+   Usuarios objetivo en esta obra (3): SANTOS PEREZ TOLENTINO, LUIS GUSTAVO LOPEZ ZACARIAS, LEONARDO SAULI ANDRADE LERMA
+
+[001] Navegando a obra ID 227: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/227
+   [MODO EDICIÓN]: Botón Editar presionado.
+   [Fila 1] Usuario: 'ADMINISTRADOR EK10'
+   [Fila 2] Usuario: 'LUIS SOTERO CRUZ GOMEZ'
+   [Fila 3] Usuario: 'PEDRO PEREZ GUZMAN'
+   [Fila 4] Usuario: 'ARTURO VILLANUEVA GUERRERO'
+   [Fila 5] Usuario: 'MARTIN ENRIQUE TEJEDA DOMINGUEZ'
+   [Fila 6] Usuario: 'ROXANA MARGARITA MILLAN RUIZ'
+   [Fila 7] Usuario: 'JOSE ARTURO ALVAREZ GARCIA'
+   [Fila 8] Usuario: 'LEXY REYES MARES'
+   [Fila 9] Usuario: 'NATOLIO MENDEZ CAMACHO'
+   [Fila 10] Usuario: 'ALICIA LIZETH REYES SUSTAITA'
+   [Fila 11] Usuario: 'CHRISTIAN HERNANDEZ CANDELAS'
+   [Fila 12] Usuario: 'CLAUDIA SARAI PADILLA RAMIREZ'
+   [Fila 13] Usuario: 'YEUDIEL ESTEBAN RICHARD PEREZ'
+   [INFO] Ninguno de los 3 usuarios objetivo estaba asignado en esta obra.
+
+--- [2/3] Procesando Obra: 027 - 027 - COSTO DE VENTAS CASAS JRZ ---
+   Usuarios objetivo en esta obra (2): SANTOS PEREZ TOLENTINO, LEONARDO SAULI ANDRADE LERMA
+
+[027] Navegando a obra ID 574: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/574
+[AVISO]: [027] Intento 1 de presionar Editar: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+[AVISO]: [027] Intento 2 de presionar Editar: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+[AVISO]: [027] Intento 3 de presionar Editar: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+[ERROR]: [027] No se pudo activar el modo edición.
+
+--- [3/3] Procesando Obra: 205 - FIJOS NOMINA TAMPICO ---
+   Usuarios objetivo en esta obra (1): SANTOS PEREZ TOLENTINO
+
+[205] Navegando a obra ID 602: https://suite.ekloud.net:1445/Aryve/#/scco/Proyectos/602
+[AVISO]: [205] Intento 1 de presionar Editar: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	(No symbol) [0x7ff6d094d655]
+	(No symbol) [0x7ff6d0844790]
+	(No symbol) [0x7ff6d06b2fb3]
+	(No symbol) [0x7ff6d0ef61e1]
+	(No symbol) [0x7ff6d0ef643c]
+	(No symbol) [0x7ff6d0f24337]
+	(No symbol) [0x7ff6d06e6bf1]
+	(No symbol) [0x7ff6d06cc109]
+	(No symbol) [0x7ff6d06cd433]
+	(No symbol) [0x7ff6d0de7041]
+	(No symbol) [0x7ff6d0e05c76]
+	(No symbol) [0x7ff6d0dfc340]
+	(No symbol) [0x7ff6d0a7c9be]
+	(No symbol) [0x7ff6d0852fa5]
+	(No symbol) [0x7ff6d084e2d4]
+	(No symbol) [0x7ff6d084e464]
+	(No symbol) [0x7ff6d083731c]
+	(No symbol) [0x7ff8e9f6dda7]
+	(No symbol) [0x7ff8ebd29c5c]
+
+   [MODO EDICIÓN]: Botón Editar presionado.
+   [Fila 1] Usuario: 'AGLAE DE MARIA ALONSO RAZO'
+   [Fila 2] Usuario: 'LUIS SOTERO CRUZ GOMEZ'
+   [Fila 3] Usuario: 'PEDRO PEREZ GUZMAN'
+   [Fila 4] Usuario: 'ARTURO VILLANUEVA GUERRERO'
+   [Fila 5] Usuario: 'CLAUDIA SARAI PADILLA RAMIREZ'
+   [Fila 6] Usuario: 'DALAY QUINTERO'
+   [Fila 7] Usuario: 'BRENDA ELIZABETH HERNANDEZ LOREDO'
+   [Fila 8] Usuario: 'SANTOS PEREZ TOLENTINO'
+   >>> ¡COINCIDENCIA ENCONTRADA! Eliminando: 'SANTOS PEREZ TOLENTINO'
+   [-] Eliminado con éxito de la tabla: 'SANTOS PEREZ TOLENTINO'
+   [Fila 8] Usuario: 'MICHELLE ROSELLO RODRIGUEZ'
+   [MODO PRUEBA ACTIVO]: Se eliminaron 1 usuarios de la vista.
+   [MODO PRUEBA]: Pausando 4 segundos para inspección visual en pantalla...
+   [MODO PRUEBA]: Se OMITE clic en Guardar (Alt+G). La obra '205' permanece INTACTA en Aryve.
+
+============================================================
+PROCESO DE DESASIGNACIÓN FINALIZADO:
+- Obras revisadas: 3
+- Obras modificadas y guardadas: 1
+- Total de asignaciones removidas: 1
+============================================================

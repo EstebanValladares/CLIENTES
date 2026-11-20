@@ -38,6 +38,7 @@ window.createProyectosModule = function(Vue) {
   const nuevoUsuarioDesasig = ref('');
   const nuevaObraDesasigClave = ref('');
   const nuevaObraDesasigNombre = ref('');
+  const obraSeleccionadaParaAgregarUsuario = ref('');
 
   // Cargar configuración de desasignación (Modo Prueba y Límite)
   const cargarConfigDesasignacion = async () => {
