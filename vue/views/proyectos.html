@@ -149,7 +149,7 @@
       </div>
 
       <!-- DOBLE CONSOLA COMPACTA CON SCROLL INTERNO (NO EXTIENDE PANTALLA) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         
         <!-- Consola en Tiempo Real -->
         <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 shadow-sm flex flex-col">
@@ -175,6 +175,224 @@
             </button>
           </div>
           <pre class="h-48 max-h-48 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs text-slate-400 overflow-y-auto custom-scrollbar leading-relaxed whitespace-pre-wrap select-text">{{ historialPermisosContenido || '(Historial vacío)' }}</pre>
+        </div>
+
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- SECCIÓN: DESASIGNACIÓN DE USUARIOS POR OBRA              -->
+      <!-- ======================================================== -->
+      <div class="pt-6 border-t border-slate-700/80">
+        
+        <!-- SUB-HEADER DE DESASIGNACIÓN -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+          <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-user-xmark text-rose-400"></i>
+              <span>Desasignación de Usuarios por Proyecto (Quitar Acceso)</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Administra los usuarios a remover y las obras destino mapeadas con su ID de URL directo.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">
+              <i class="fa-solid fa-users text-[10px]"></i> {{ desasigData.usuarios ? desasigData.usuarios.length : 0 }} Usuarios
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+              <i class="fa-solid fa-city text-[10px]"></i> {{ desasigData.lista_obras ? desasigData.lista_obras.length : 0 }} Obras
+            </span>
+            <button @click="cargarDesasignacion" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-lg text-xs font-medium border border-slate-700 transition" title="Recargar JSON">
+              <i class="fa-solid fa-rotate-right" :class="{ 'fa-spin': desasigCargando }"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- WORKSPACE DE DESASIGNACIÓN (GRID DE 12 COLS) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-6">
+          
+          <!-- PANEL DE CAPTURA / ACCIONES (5 COLS) -->
+          <div class="lg:col-span-5 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-700/60">
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle text-rose-400"></i> Agregar a la Lista
+              </h4>
+              <span class="text-[10px] text-slate-500 font-mono">DESASIGNACIÓN</span>
+            </div>
+
+            <!-- Form Agregar Usuario -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+                Usuario a Remover de Obras:
+              </label>
+              <div class="flex gap-2">
+                <input type="text" 
+                       v-model="nuevoUsuarioDesasig" 
+                       @keyup.enter="agregarUsuarioDesasig"
+                       placeholder="Ej. NOMBRE APELLIDO PATERNO" 
+                       class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500">
+                <button @click="agregarUsuarioDesasig" 
+                        class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+                  Guardar
+                </button>
+              </div>
+            </div>
+
+            <!-- Form Agregar Obra -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">
+                Agregar Obra (Clave y Nombre):
+              </label>
+              <div class="space-y-2">
+                <div class="flex gap-2">
+                  <input type="text" 
+                         v-model="nuevaObraDesasigClave" 
+                         placeholder="Clave ej. 001, AT1" 
+                         class="w-1/3 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500">
+                  <input type="text" 
+                         v-model="nuevaObraDesasigNombre" 
+                         @keyup.enter="agregarObraDesasig"
+                         placeholder="Nombre del proyecto (opcional)" 
+                         class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500">
+                  <button @click="agregarObraDesasig" 
+                          class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer">
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Banner Filtro Activo por Usuario -->
+            <div v-if="desasigUsuarioSeleccionado" class="p-3 rounded-xl bg-indigo-950/60 border border-indigo-700/50 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2 text-indigo-300">
+                <i class="fa-solid fa-filter text-indigo-400"></i>
+                <span>Filtrando obras de: <strong class="text-white">{{ desasigUsuarioSeleccionado }}</strong></span>
+              </div>
+              <button @click="desasigUsuarioSeleccionado = ''" class="text-xs text-indigo-400 hover:text-white underline cursor-pointer">
+                Ver todas ({{ desasigData.lista_obras ? desasigData.lista_obras.length : 0 }})
+              </button>
+            </div>
+
+            <!-- Info Box de Optimización -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-700/50 space-y-1.5 text-xs text-slate-400">
+              <div class="flex items-center gap-2 text-amber-400 font-semibold">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Optimización para Selenium Activa</span>
+              </div>
+              <p class="text-[11px] leading-relaxed text-slate-400">
+                Las <strong>{{ desasigData.lista_obras ? desasigData.lista_obras.length : 0 }} obras</strong> cuentan con su <strong>ID numérico oficial</strong> mapeado. Selenium abrirá cada URL directa una sola vez, desmarcando a todos sus usuarios asignados en lote.
+              </p>
+            </div>
+
+            <!-- Botón de Ejecución (En preparación para Selenium) -->
+            <div class="pt-2">
+              <button disabled 
+                      class="w-full bg-slate-800 border border-slate-700 text-slate-400 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 opacity-80 cursor-not-allowed">
+                <i class="fa-solid fa-robot"></i>
+                <span>Ejecutar Desasignación Automática (Próximamente)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- LISTAS DE VISUALIZACIÓN (7 COLS) -->
+          <div class="lg:col-span-7 bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 shadow-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              
+              <!-- LISTA DE USUARIOS (Con conteo de obras) -->
+              <div class="flex flex-col h-[380px]">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
+                  <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-users text-rose-400"></i> Usuarios ({{ usuariosFiltradosDesasig.length }})
+                  </span>
+                </div>
+                <!-- Buscador de Usuario -->
+                <div class="mb-2">
+                  <input type="text" 
+                         v-model="filtroDesasigUsuario" 
+                         placeholder="Buscar usuario..." 
+                         class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500">
+                </div>
+                <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
+                  <div v-for="u in usuariosFiltradosDesasig" :key="'usr-desasig-' + u"
+                       :class="{'ring-2 ring-rose-500 bg-rose-950/30': desasigUsuarioSeleccionado === u}"
+                       class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex flex-col gap-1 text-xs transition hover:border-slate-600">
+                    <div class="flex items-center justify-between">
+                      <span class="font-bold text-slate-100 truncate flex-1 cursor-pointer" @click="toggleUsuarioFiltro(u)">
+                        {{ u }}
+                      </span>
+                      <button @click="eliminarUsuarioDesasig(u)" class="text-slate-500 hover:text-rose-400 transition p-1 ml-2" title="Eliminar de la lista">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                      </button>
+                    </div>
+                    <div class="flex items-center justify-between pt-1 border-t border-slate-800/80">
+                      <span class="text-[11px] text-slate-400">
+                        <i class="fa-solid fa-folder text-[10px] text-indigo-400 mr-1"></i>
+                        {{ desasigData.por_usuario && desasigData.por_usuario[u] ? desasigData.por_usuario[u].length : 0 }} obras
+                      </span>
+                      <button @click="toggleUsuarioFiltro(u)" 
+                              class="text-[10px] px-2 py-0.5 rounded font-medium transition cursor-pointer"
+                              :class="desasigUsuarioSeleccionado === u ? 'bg-rose-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'">
+                        {{ desasigUsuarioSeleccionado === u ? 'Viendo obras' : 'Filtrar obras' }}
+                      </button>
+                    </div>
+                  </div>
+                  <div v-if="usuariosFiltradosDesasig.length === 0" class="text-center py-12 text-slate-500 text-xs">
+                    No se encontraron usuarios.
+                  </div>
+                </div>
+              </div>
+
+              <!-- LISTA DE OBRAS A PROCESAR -->
+              <div class="flex flex-col h-[380px]">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
+                  <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-city text-indigo-400"></i> Obras ({{ obrasFiltradasDesasig.length }})
+                  </span>
+                </div>
+                <!-- Buscador de Obra -->
+                <div class="mb-2">
+                  <input type="text" 
+                         v-model="filtroDesasigObra" 
+                         placeholder="Buscar por clave, nombre o ID..." 
+                         class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1">
+                  <div v-for="o in obrasFiltradasDesasig" :key="'desasig-obra-' + o.proyecto"
+                       class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 flex flex-col gap-1.5 text-xs">
+                    <div class="flex items-start justify-between gap-2">
+                      <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="font-mono font-bold text-indigo-300 bg-indigo-950/60 px-1.5 py-0.5 rounded border border-indigo-800/50">
+                          {{ o.proyecto }}
+                        </span>
+                        <span v-if="o.id_proyecto" class="font-mono text-[10px] text-emerald-300 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-800/50" title="ID de URL en Aryve">
+                          ID: {{ o.id_proyecto }}
+                        </span>
+                      </div>
+                      <button @click="eliminarObraDesasig(o.proyecto)" class="text-slate-500 hover:text-rose-400 transition p-1" title="Eliminar obra">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                      </button>
+                    </div>
+                    <div class="text-[11px] text-slate-300 font-medium leading-snug">
+                      {{ o.nombre || '(Sin nombre)' }}
+                    </div>
+                    <!-- Tags de usuarios asignados a remover en esta obra -->
+                    <div v-if="o.usuarios && o.usuarios.length" class="flex flex-wrap gap-1 pt-1 border-t border-slate-800/80">
+                      <span v-for="uNom in o.usuarios" :key="o.proyecto + '-' + uNom"
+                            class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50 truncate max-w-[140px]"
+                            :title="uNom">
+                        {{ uNom.split(' ')[0] }} {{ uNom.split(' ')[1] || '' }}
+                      </span>
+                    </div>
+                  </div>
+                  <div v-if="obrasFiltradasDesasig.length === 0" class="text-center py-12 text-slate-500 text-xs">
+                    No se encontraron obras.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
       </div>

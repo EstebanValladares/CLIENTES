@@ -636,6 +636,7 @@ createApp({
 
       // Carga en diferido de vistas secundarias
       setTimeout(cargarPermisos, 350);
+      if (typeof cargarDesasignacion === 'function') setTimeout(cargarDesasignacion, 380);
       setTimeout(cargarProvContraRegistros, 450);
       setTimeout(cargarCatalogoObras, 650);
       setTimeout(cargarGruposInsumosTipo, 750);
