@@ -270,6 +270,7 @@ createApp({
       // Desasignación
       desasigData,
       desasigCargando,
+      ejecutandoDesasignacion,
       filtroDesasigUsuario,
       filtroDesasigObra,
       desasigUsuarioSeleccionado,
@@ -284,7 +285,10 @@ createApp({
       eliminarObraDesasig,
       toggleUsuarioFiltro,
       usuariosFiltradosDesasig,
-      obrasFiltradasDesasig
+      obrasFiltradasDesasig,
+      ejecutandoDesasignacion,
+      iniciarDesasignacion,
+      iniciarDesasignacion
     } = proyectosModulo;
 
     // VISTA MODULAR: PROVEEDORES & CONTRATISTAS (vue/static/js/modules/proveedores_contratistas.js)
@@ -1561,6 +1565,8 @@ createApp({
       toggleUsuarioFiltro,
       usuariosFiltradosDesasig,
       obrasFiltradasDesasig,
+      ejecutandoDesasignacion,
+      iniciarDesasignacion,
       
       // Proveedores y Contratistas Unificado (EK10 / Aryve)
       provContraRegistros,

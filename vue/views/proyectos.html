@@ -284,12 +284,14 @@
               </p>
             </div>
 
-            <!-- Botón de Ejecución (En preparación para Selenium) -->
+            <!-- Botón de Ejecución Automática con Selenium -->
             <div class="pt-2">
-              <button disabled 
-                      class="w-full bg-slate-800 border border-slate-700 text-slate-400 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 opacity-80 cursor-not-allowed">
-                <i class="fa-solid fa-robot"></i>
-                <span>Ejecutar Desasignación Automática (Próximamente)</span>
+              <button @click="iniciarDesasignacion" 
+                      :disabled="ejecutandoDesasignacion || !desasigData.lista_obras || desasigData.lista_obras.length === 0"
+                      class="w-full bg-rose-600 hover:bg-rose-500 disabled:bg-slate-800 disabled:text-slate-500 text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition cursor-pointer">
+                <i v-if="ejecutandoDesasignacion" class="fa-solid fa-circle-notch fa-spin"></i>
+                <i v-else class="fa-solid fa-play"></i>
+                <span>{{ ejecutandoDesasignacion ? 'Desasignación en Curso...' : 'Comenzar Desasignación de Usuarios' }}</span>
               </button>
             </div>
           </div>
