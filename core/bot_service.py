@@ -16,6 +16,7 @@ PROYECTOS_PATH = os.path.join(BASE_DIR, "NUCLEO", "proyectos.json")
 ALIAS_BOTS = {
     "CREACION_USUARIOS": "USUARIOS",
     "DEPURACION_PERMISOS": "PROYECTOS",
+    "DESASIGNACION": "DESASIGNACION_PROYECTOS",
 }
 
 class BotRunnerService:
@@ -36,13 +37,14 @@ class BotRunnerService:
                 with open(PROYECTOS_PATH, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     for bot_id, info in data.get("proyectos", {}).items():
+                        carpeta = info.get("carpeta", bot_id)
                         catalogo[bot_id] = {
                             "id": bot_id,
                             "nombre": bot_id.replace("_", " ").title(),
                             "descripcion": info.get("descripcion", ""),
                             "tipo": "RPA_SELENIUM",
                             "archivos_requeridos": info.get("requiere_archivos", []),
-                            "ruta_script": os.path.join(BASE_DIR, bot_id, info.get("script", "main.py"))
+                            "ruta_script": os.path.join(BASE_DIR, carpeta, info.get("script", "main.py"))
                         }
             except Exception as e:
                 print(f"[BotRunner] Error leyendo proyectos.json: {e}")

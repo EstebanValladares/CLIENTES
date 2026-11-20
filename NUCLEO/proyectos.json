@@ -18,6 +18,15 @@
         "ENKONTROL.TXT"
       ],
       "usa_portal": true
+    },
+    "DESASIGNACION_PROYECTOS": {
+      "descripcion": "Desasignación y eliminación de usuarios por proyecto en Aryve",
+      "carpeta": "PROYECTOS",
+      "script": "desasignar_main.py",
+      "requiere_archivos": [
+        "desasignacion_usuarios_obras.json"
+      ],
+      "usa_portal": true
     }
   }
 }

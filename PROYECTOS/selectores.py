@@ -22,6 +22,8 @@ ECOSYSTEM_DIR: Path = BASE_DIR.parent
 RUTA_OBRAS_JSON: Path = BASE_DIR / "obras_permisos.json"
 RUTA_USUARIOS_TXT: Path = BASE_DIR / "ENKONTROL.TXT"
 RUTA_LOG: Path = BASE_DIR / "log_depuracion.txt"
+RUTA_DESASIGNACION_JSON: Path = BASE_DIR / "desasignacion_usuarios_obras.json"
+RUTA_LOG_DESASIGNACION: Path = BASE_DIR / "log_desasignacion.txt"
 
 # --- URLS DE ARYVE ---
 URL_BASE_ARYVE: str = os.getenv("ARYVE_BASE_URL", "https://suite.ekloud.net:1445/Aryve/")

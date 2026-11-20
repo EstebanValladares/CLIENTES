@@ -29,6 +29,7 @@ window.createProyectosModule = function(Vue) {
     por_usuario: {}
   });
   const desasigCargando = ref(false);
+  const ejecutandoDesasignacion = ref(false);
   const filtroDesasigUsuario = ref('');
   const filtroDesasigObra = ref('');
   const desasigUsuarioSeleccionado = ref('');
@@ -290,6 +291,50 @@ window.createProyectosModule = function(Vue) {
     }
   };
 
+  // Iniciar proceso de Desasignación Automática con Selenium
+  const iniciarDesasignacion = async () => {
+    const totalObras = (desasigData.value.lista_obras || []).length;
+    if (totalObras === 0) {
+      alert('No hay obras configuradas en la lista de desasignación.');
+      return;
+    }
+
+    if (!confirm(`¿Iniciar la desasignación de usuarios para las ${totalObras} obras mapeadas en Aryve?`)) {
+      return;
+    }
+
+    ejecutandoDesasignacion.value = true;
+    terminalLiveContenido.value = `[Iniciando Selenium: Desasignación de usuarios en ${totalObras} proyectos...]\n`;
+
+    try {
+      const resInit = await fetch('/api/bots/ejecutar/DESASIGNACION_PROYECTOS', { method: 'POST' });
+      const initData = await resInit.json();
+      if (!resInit.ok) {
+        terminalLiveContenido.value += `\n[ERROR]: ${initData.detail || 'Fallo al iniciar el bot de desasignación.'}`;
+        ejecutandoDesasignacion.value = false;
+        return;
+      }
+
+      const interval = setInterval(async () => {
+        const res = await fetch('/api/bots/logs/DESASIGNACION_PROYECTOS');
+        const data = await res.json();
+        if (data.logs && data.logs.length) {
+          terminalLiveContenido.value = data.logs.join('\n');
+          const el = document.getElementById('terminal-live');
+          if (el) el.scrollTop = el.scrollHeight;
+        }
+        if (data.estado !== 'EJECUTANDO') {
+          clearInterval(interval);
+          ejecutandoDesasignacion.value = false;
+          await cargarDesasignacion();
+        }
+      }, 1000);
+    } catch (e) {
+      terminalLiveContenido.value += `\n[ERROR]: No se pudo conectar con el bot de desasignación.`;
+      ejecutandoDesasignacion.value = false;
+    }
+  };
+
   return {
     permisosUsuarios,
     permisosObras,
@@ -310,6 +355,7 @@ window.createProyectosModule = function(Vue) {
     // Desasignación de usuarios por proyecto
     desasigData,
     desasigCargando,
+    ejecutandoDesasignacion,
     filtroDesasigUsuario,
     filtroDesasigObra,
     desasigUsuarioSeleccionado,
@@ -324,6 +370,7 @@ window.createProyectosModule = function(Vue) {
     eliminarObraDesasig,
     toggleUsuarioFiltro,
     usuariosFiltradosDesasig,
-    obrasFiltradasDesasig
+    obrasFiltradasDesasig,
+    iniciarDesasignacion
   };
 };
