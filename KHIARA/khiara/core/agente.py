@@ -4,11 +4,8 @@ Combina razonamiento ReAct, llamadas a funciones y grafos de conocimiento.
 """
 
 import os
-from typing import Optional
-from agno.agent import Agent
-from agno.models.google import Gemini
-from agno.db.sqlite import SqliteDb
-from agno.db.in_memory import InMemoryDb
+import requests
+from typing import Optional, List, Dict, Any
 from khiara.core.config import (
     GEMINI_API_KEY,
     DEFAULT_MODEL,
@@ -17,6 +14,68 @@ from khiara.core.config import (
     OLLAMA_HOST,
     CONVERSACIONES_DB_FILE
 )
+
+
+class _ChunkLigero:
+    def __init__(self, content: str):
+        self.content = content
+
+
+class AgenteLigeroREST:
+    """
+    Agente de respaldo 100% Python puro (usa solo `requests`) para equipos CLIENTES
+    donde no esté instalado `agno` o `google-antigravity` (ej. Python 3.14).
+    Mantiene historial por sesión, instrucciones completas de EK10 y soporte de streaming.
+    """
+    def __init__(self, modelo_id: str, api_key: str, instructions: List[str]):
+        self.modelo_id = modelo_id or "gemini-3.5-flash-lite"
+        self.api_key = api_key
+        self.system_text = "\n".join(instructions)
+        self._historial: Dict[str, List[Dict[str, Any]]] = {}
+
+    def _generar_texto(self, mensaje: str, session_id: str = "default") -> str:
+        if not self.api_key:
+            return "KHIARA activa en modo local (configura GEMINI_API_KEY en .env para consultas abiertas con IA)."
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.modelo_id}:generateContent?key={self.api_key}"
+        hist = self._historial.setdefault(session_id, [])
+        hist.append({"role": "user", "parts": [{"text": str(mensaje)}]})
+        if len(hist) > 12:
+            hist[:] = hist[-12:]
+        payload = {
+            "systemInstruction": {"parts": [{"text": self.system_text}]},
+            "contents": hist,
+        }
+        try:
+            r = requests.post(url, json=payload, timeout=20)
+            if r.status_code == 200:
+                data = r.json()
+                cands = data.get("candidates") or []
+                if cands:
+                    parts = (cands[0].get("content") or {}).get("parts") or []
+                    texto = "".join(str(p.get("text", "")) for p in parts).strip()
+                    if texto:
+                        hist.append({"role": "model", "parts": [{"text": texto}]})
+                        return texto
+            return f'{{"error": {{"code": {r.status_code}, "message": "HTTP {r.status_code}"}}}}'
+        except Exception as e:
+            return f'{{"error": {{"code": 503, "message": "{str(e)}"}}}}'
+
+    def run(self, mensaje: str, stream: bool = False, user_id: Optional[str] = None, session_id: Optional[str] = None, **kwargs):
+        sid = session_id or user_id or "default"
+        texto = self._generar_texto(mensaje, session_id=sid)
+        if stream:
+            def _gen():
+                palabras = texto.split(" ")
+                bloque = []
+                for p in palabras:
+                    bloque.append(p)
+                    if len(bloque) >= 4:
+                        yield _ChunkLigero(" ".join(bloque) + " ")
+                        bloque = []
+                if bloque:
+                    yield _ChunkLigero(" ".join(bloque))
+            return _gen()
+        return _ChunkLigero(texto)
 from khiara.herramientas.explorador import (
     tool_consultar_grafo,
     tool_consultar_sql_local,
@@ -72,40 +131,10 @@ def crear_agente_khiara(
     modelo_id: Optional[str] = None,
     proveedor: Optional[str] = None,
     session_id: Optional[str] = None
-) -> Agent:
-    """Crea e inicializa el agente KHIARA con soporte multi-proveedor (Gemini / Groq / Ollama) y persistencia SQLite."""
+) -> Any:
+    """Crea e inicializa el agente KHIARA con soporte multi-proveedor y fallback 100% Python puro si Agno no está instalado."""
     prov = (proveedor or KHIARA_PROVIDER).lower()
     model_name = modelo_id or DEFAULT_MODEL
-    
-    # Selección de proveedor LLM
-    if prov == "groq" and GROQ_API_KEY:
-        try:
-            from agno.models.groq import Groq
-            m_id = modelo_id or "llama-3.3-70b-versatile"
-            model = Groq(id=m_id, api_key=GROQ_API_KEY)
-        except Exception:
-            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
-    elif prov == "ollama":
-        try:
-            from agno.models.ollama import Ollama
-            m_id = modelo_id or "qwen2.5:7b"
-            model = Ollama(id=m_id, host=OLLAMA_HOST)
-        except Exception:
-            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
-    else:
-        if GEMINI_API_KEY and not os.getenv("GOOGLE_API_KEY"):
-            os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
-        model = Gemini(
-            id=model_name,
-            api_key=GEMINI_API_KEY if GEMINI_API_KEY else None,
-            client_params={"http_options": {"retry_options": {"attempts": 2}}}
-        )
-
-    # Persistencia de conversaciones en SQLite (o memoria en contingencia)
-    try:
-        db = SqliteDb(db_file=str(CONVERSACIONES_DB_FILE))
-    except Exception:
-        db = InMemoryDb()
 
     instrucciones = [
         "Eres KHIARA: Asistente autónoma de ingeniería y soporte de DASHBOARD_EK10.",
@@ -172,6 +201,44 @@ def crear_agente_khiara(
             instrucciones.extend(bloque_reglas)
     except Exception:
         pass
+
+    try:
+        from agno.agent import Agent
+        from agno.models.google import Gemini
+        from agno.db.in_memory import InMemoryDb
+    except ImportError:
+        return AgenteLigeroREST(modelo_id=model_name, api_key=GEMINI_API_KEY, instructions=instrucciones)
+
+    # Selección de proveedor LLM
+    if prov == "groq" and GROQ_API_KEY:
+        try:
+            from agno.models.groq import Groq
+            m_id = modelo_id or "llama-3.3-70b-versatile"
+            model = Groq(id=m_id, api_key=GROQ_API_KEY)
+        except Exception:
+            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
+    elif prov == "ollama":
+        try:
+            from agno.models.ollama import Ollama
+            m_id = modelo_id or "qwen2.5:7b"
+            model = Ollama(id=m_id, host=OLLAMA_HOST)
+        except Exception:
+            model = Gemini(id=model_name, api_key=GEMINI_API_KEY if GEMINI_API_KEY else None)
+    else:
+        if GEMINI_API_KEY and not os.getenv("GOOGLE_API_KEY"):
+            os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+        model = Gemini(
+            id=model_name,
+            api_key=GEMINI_API_KEY if GEMINI_API_KEY else None,
+            client_params={"http_options": {"retry_options": {"attempts": 2}}}
+        )
+
+    # Persistencia de conversaciones en SQLite (o memoria en contingencia)
+    try:
+        from agno.db.sqlite import SqliteDb
+        db = SqliteDb(db_file=str(CONVERSACIONES_DB_FILE))
+    except Exception:
+        db = InMemoryDb()
 
     agente = Agent(
         name="KHIARA",

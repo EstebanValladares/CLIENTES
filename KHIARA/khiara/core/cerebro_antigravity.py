@@ -127,8 +127,39 @@ async def stream_antigravity(
 ) -> AsyncGenerator[str, None]:
     """
     Ejecuta un turno de conversación usando el Google Antigravity SDK con streaming nativo.
-    Soporta texto puro o multimodal (texto + imagen/captura de Aryve).
+    Si en un equipo cliente (ej. Python 3.14) no está instalado `google-antigravity`,
+    hace fallback transparente a Gemini REST API con soporte multimodal (`requests`).
     """
+    if not antigravity_disponible():
+        import requests
+        modelo = modelo_id or DEFAULT_MODEL or "gemini-3.5-flash-lite"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={GEMINI_API_KEY}"
+        parts = []
+        if imagen_base64:
+            mime = "image/png"
+            datos = imagen_base64.strip()
+            if "," in datos and datos.startswith("data:image/"):
+                header, datos = datos.split(",", 1)
+                if "jpeg" in header or "jpg" in header:
+                    mime = "image/jpeg"
+                elif "webp" in header:
+                    mime = "image/webp"
+            parts.append({"inline_data": {"mime_type": mime, "data": datos}})
+        parts.append({"text": mensaje.strip() or "Analiza esta captura de pantalla y dime qué ocurre y cómo resolverlo."})
+        payload = {
+            "systemInstruction": {"parts": [{"text": _construir_instrucciones_khiara()}]},
+            "contents": [{"role": "user", "parts": parts}],
+        }
+        r = requests.post(url, json=payload, timeout=25)
+        if r.status_code == 200:
+            cands = r.json().get("candidates") or []
+            if cands:
+                txt = "".join(str(p.get("text", "")) for p in (cands[0].get("content") or {}).get("parts") or [])
+                if txt:
+                    yield txt
+                    return
+        raise RuntimeError(f"Gemini REST HTTP {r.status_code}")
+
     from google.antigravity import Agent, LocalAgentConfig
     from google.antigravity.types import Image, RetryConfig
 

@@ -10,30 +10,67 @@ import json
 import subprocess
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from khiara.grafo.red import RedConocimiento
-from khiara.cerebro.matematicas import MotorMatematico
-from khiara.cerebro.motor_duckdb import MotorDuckDB
-from khiara.cerebro.conector_db import ConectorDBRelacional
-from khiara.cerebro.memoria_vectorial import MemoriaVectorial
-from khiara.cerebro.sandbox_python import SandboxPython
 from khiara.cerebro.memoria_evolutiva import MemoriaEvolutiva
-from khiara.grafo.cruce_repos import CruceMultiRepositorio
-from khiara.grafo.repo_map import RepoMap
-from khiara.cerebro.centinela import CentinelaProactivo
 from khiara.herramientas.conector_api import ConectorAPI
 from khiara.cerebro.ontologia import GlosarioNegocio
 from khiara.core.logger_fallas import registrar_falla, obtener_ultimas_fallas
 
-# Instancias globales para las herramientas
-red_global = RedConocimiento()
-motor_duckdb_global = MotorDuckDB()
-conector_db_global = ConectorDBRelacional()
-memoria_vectorial_global = MemoriaVectorial()
-sandbox_python_global = SandboxPython()
+# Importaciones opcionales blindadas (para equipos CLIENTES con Python 3.14 sin duckdb/networkx/numpy/sqlalchemy)
+try:
+    from khiara.grafo.red import RedConocimiento
+    red_global = RedConocimiento()
+except Exception:
+    red_global = None
+
+try:
+    from khiara.cerebro.matematicas import MotorMatematico
+except Exception:
+    MotorMatematico = None
+
+try:
+    from khiara.cerebro.motor_duckdb import MotorDuckDB
+    motor_duckdb_global = MotorDuckDB()
+except Exception:
+    motor_duckdb_global = None
+
+try:
+    from khiara.cerebro.conector_db import ConectorDBRelacional
+    conector_db_global = ConectorDBRelacional()
+except Exception:
+    conector_db_global = None
+
+try:
+    from khiara.cerebro.memoria_vectorial import MemoriaVectorial
+    memoria_vectorial_global = MemoriaVectorial()
+except Exception:
+    memoria_vectorial_global = None
+
+try:
+    from khiara.cerebro.sandbox_python import SandboxPython
+    sandbox_python_global = SandboxPython()
+except Exception:
+    sandbox_python_global = None
+
 memoria_evolutiva_global = MemoriaEvolutiva()
-cruce_repos_global = CruceMultiRepositorio(red_global)
-repo_map_global = RepoMap(red_global)
-centinela_global = CentinelaProactivo()
+
+try:
+    from khiara.grafo.cruce_repos import CruceMultiRepositorio
+    cruce_repos_global = CruceMultiRepositorio(red_global) if red_global else None
+except Exception:
+    cruce_repos_global = None
+
+try:
+    from khiara.grafo.repo_map import RepoMap
+    repo_map_global = RepoMap(red_global) if red_global else None
+except Exception:
+    repo_map_global = None
+
+try:
+    from khiara.cerebro.centinela import CentinelaProactivo
+    centinela_global = CentinelaProactivo()
+except Exception:
+    centinela_global = None
+
 conector_api_global = ConectorAPI()
 glosario_negocio_global = GlosarioNegocio()
 
