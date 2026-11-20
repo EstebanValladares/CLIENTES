@@ -271,6 +271,8 @@ createApp({
       desasigData,
       desasigCargando,
       ejecutandoDesasignacion,
+      desasigModoPrueba,
+      desasigLimiteObras,
       filtroDesasigUsuario,
       filtroDesasigObra,
       desasigUsuarioSeleccionado,
@@ -279,6 +281,7 @@ createApp({
       nuevaObraDesasigNombre,
       cargarDesasignacion,
       guardarDesasignacionServidor,
+      guardarConfigDesasignacion,
       agregarUsuarioDesasig,
       eliminarUsuarioDesasig,
       agregarObraDesasig,
@@ -286,8 +289,6 @@ createApp({
       toggleUsuarioFiltro,
       usuariosFiltradosDesasig,
       obrasFiltradasDesasig,
-      ejecutandoDesasignacion,
-      iniciarDesasignacion,
       iniciarDesasignacion
     } = proyectosModulo;
 
@@ -1566,6 +1567,9 @@ createApp({
       usuariosFiltradosDesasig,
       obrasFiltradasDesasig,
       ejecutandoDesasignacion,
+      desasigModoPrueba,
+      desasigLimiteObras,
+      guardarConfigDesasignacion,
       iniciarDesasignacion,
       
       // Proveedores y Contratistas Unificado (EK10 / Aryve)

@@ -327,16 +327,26 @@ window.createProyectosModule = function(Vue) {
   const iniciarDesasignacion = async () => {
     const totalObras = (desasigData.value.lista_obras || []).length;
     if (totalObras === 0) {
-      alert('No hay obras configuradas en la lista de desasignación.');
+      alert('No hay obras pendientes en la lista de desasignación.');
       return;
     }
 
-    if (!confirm(`¿Iniciar la desasignación de usuarios para las ${totalObras} obras mapeadas en Aryve?`)) {
+    await guardarConfigDesasignacion();
+
+    const cantObrasTexto = desasigLimiteObras.value === 0 
+      ? `todas las ${totalObras} obras pendientes` 
+      : `${Math.min(desasigLimiteObras.value, totalObras)} obra(s)`;
+
+    const msgConfirm = desasigModoPrueba.value
+      ? `[MODO PRUEBA ACTIVO]\n\n¿Deseas ejecutar la prueba en ${cantObrasTexto} SIN GUARDAR cambios en Aryve?\n\nEl bot entrará a la obra, eliminará a los usuarios en pantalla para que lo compruebes visualmente, pero NO presionará Guardar.`
+      : `[MODO REAL CON GUARDADO]\n\n¿Deseas ejecutar la desasignación en ${cantObrasTexto} GUARDANDO cambios en Aryve?\n\nLas obras procesadas exitosamente se eliminarán de la lista del Dashboard automáticamente.`;
+
+    if (!confirm(msgConfirm)) {
       return;
     }
 
     ejecutandoDesasignacion.value = true;
-    terminalLiveContenido.value = `[Iniciando Selenium: Desasignación de usuarios en ${totalObras} proyectos...]\n`;
+    terminalLiveContenido.value = `[Iniciando Selenium: Desasignación de usuarios en ${cantObrasTexto} (${desasigModoPrueba.value ? 'MODO PRUEBA / SIN GUARDAR' : 'MODO REAL'})...]\n`;
 
     try {
       const resInit = await fetch('/api/bots/ejecutar/DESASIGNACION_PROYECTOS', { method: 'POST' });
@@ -355,12 +365,16 @@ window.createProyectosModule = function(Vue) {
           const el = document.getElementById('terminal-live');
           if (el) el.scrollTop = el.scrollHeight;
         }
+        // En modo real, refrescamos el listado para ver las obras desaparecer
+        if (!desasigModoPrueba.value) {
+          await cargarDesasignacion();
+        }
         if (data.estado !== 'EJECUTANDO') {
           clearInterval(interval);
           ejecutandoDesasignacion.value = false;
           await cargarDesasignacion();
         }
-      }, 1000);
+      }, 1200);
     } catch (e) {
       terminalLiveContenido.value += `\n[ERROR]: No se pudo conectar con el bot de desasignación.`;
       ejecutandoDesasignacion.value = false;
@@ -388,6 +402,8 @@ window.createProyectosModule = function(Vue) {
     desasigData,
     desasigCargando,
     ejecutandoDesasignacion,
+    desasigModoPrueba,
+    desasigLimiteObras,
     filtroDesasigUsuario,
     filtroDesasigObra,
     desasigUsuarioSeleccionado,
@@ -396,6 +412,8 @@ window.createProyectosModule = function(Vue) {
     nuevaObraDesasigNombre,
     cargarDesasignacion,
     guardarDesasignacionServidor,
+    cargarConfigDesasignacion,
+    guardarConfigDesasignacion,
     agregarUsuarioDesasig,
     eliminarUsuarioDesasig,
     agregarObraDesasig,
