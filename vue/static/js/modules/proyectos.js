@@ -156,6 +156,47 @@ window.createProyectosModule = function(Vue) {
     await guardarDesasignacionServidor();
   };
 
+  const toggleMenuAgregarUsuarioObra = (clave) => {
+    obraSeleccionadaParaAgregarUsuario.value = (obraSeleccionadaParaAgregarUsuario.value === clave ? '' : clave);
+  };
+
+  const usuariosDisponiblesParaObra = (obra) => {
+    const todos = desasigData.value.usuarios || [];
+    const asignados = (obra && obra.usuarios) ? obra.usuarios : [];
+    return todos.filter(u => !asignados.includes(u));
+  };
+
+  const agregarUsuarioAObra = async (claveObra, usuario) => {
+    if (!claveObra || !usuario) return;
+    const obra = desasigData.value.por_obra ? desasigData.value.por_obra[claveObra] : null;
+    if (!obra) return;
+    if (!obra.usuarios) obra.usuarios = [];
+    if (!obra.usuarios.includes(usuario)) {
+      obra.usuarios.push(usuario);
+    }
+    if (!desasigData.value.por_usuario) desasigData.value.por_usuario = {};
+    if (!desasigData.value.por_usuario[usuario]) desasigData.value.por_usuario[usuario] = [];
+    if (!desasigData.value.por_usuario[usuario].some(o => o.proyecto === claveObra)) {
+      desasigData.value.por_usuario[usuario].push({
+        proyecto: claveObra,
+        nombre: obra.nombre || claveObra
+      });
+    }
+    obraSeleccionadaParaAgregarUsuario.value = '';
+    await guardarDesasignacionServidor();
+  };
+
+  const quitarUsuarioDeObra = async (claveObra, usuario) => {
+    const obra = desasigData.value.por_obra ? desasigData.value.por_obra[claveObra] : null;
+    if (obra && obra.usuarios) {
+      obra.usuarios = obra.usuarios.filter(u => u !== usuario);
+    }
+    if (desasigData.value.por_usuario && desasigData.value.por_usuario[usuario]) {
+      desasigData.value.por_usuario[usuario] = desasigData.value.por_usuario[usuario].filter(o => o.proyecto !== claveObra);
+    }
+    await guardarDesasignacionServidor();
+  };
+
   const toggleUsuarioFiltro = (usr) => {
     if (desasigUsuarioSeleccionado.value === usr) {
       desasigUsuarioSeleccionado.value = '';
@@ -433,6 +474,11 @@ window.createProyectosModule = function(Vue) {
     eliminarUsuarioDesasig,
     agregarObraDesasig,
     eliminarObraDesasig,
+    obraSeleccionadaParaAgregarUsuario,
+    toggleMenuAgregarUsuarioObra,
+    usuariosDisponiblesParaObra,
+    agregarUsuarioAObra,
+    quitarUsuarioDeObra,
     toggleUsuarioFiltro,
     usuariosFiltradosDesasig,
     obrasFiltradasDesasig,
