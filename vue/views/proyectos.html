@@ -197,10 +197,10 @@
           </div>
           <div class="flex items-center gap-2 flex-wrap">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/20">
-              <i class="fa-solid fa-users text-[10px]"></i> {{ desasigData.usuarios ? desasigData.usuarios.length : 0 }} Usuarios
+              <i class="fa-solid fa-users text-[10px]"></i> {{ (desasigData && desasigData.usuarios) ? desasigData.usuarios.length : 0 }} Usuarios
             </span>
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-              <i class="fa-solid fa-city text-[10px]"></i> {{ desasigData.lista_obras ? desasigData.lista_obras.length : 0 }} Obras
+              <i class="fa-solid fa-city text-[10px]"></i> {{ (desasigData && desasigData.lista_obras) ? desasigData.lista_obras.length : 0 }} Obras
             </span>
             <button @click="cargarDesasignacion" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-lg text-xs font-medium border border-slate-700 transition" title="Recargar JSON">
               <i class="fa-solid fa-rotate-right" :class="{ 'fa-spin': desasigCargando }"></i>
@@ -269,7 +269,7 @@
                 <span>Filtrando obras de: <strong class="text-white">{{ desasigUsuarioSeleccionado }}</strong></span>
               </div>
               <button @click="desasigUsuarioSeleccionado = ''" class="text-xs text-indigo-400 hover:text-white underline cursor-pointer">
-                Ver todas ({{ desasigData.lista_obras ? desasigData.lista_obras.length : 0 }})
+                Ver todas ({{ (desasigData && desasigData.lista_obras) ? desasigData.lista_obras.length : 0 }})
               </button>
             </div>
 
@@ -329,13 +329,7 @@
                         : 'bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-600/25 border border-rose-500/30'">
                 <i v-if="ejecutandoDesasignacion" class="fa-solid fa-circle-notch fa-spin"></i>
                 <i v-else :class="desasigModoPrueba ? 'fa-solid fa-vial' : 'fa-solid fa-play'"></i>
-                <span>
-                  {{ ejecutandoDesasignacion 
-                      ? 'Desasignación en Curso...' 
-                      : (desasigModoPrueba 
-                          ? (desasigLimiteObras === 1 ? 'Ejecutar Prueba en 1 Obra (Sin Guardar)' : `Ejecutar Prueba (${desasigLimiteObras || 'Todas'} Obras - Sin Guardar)`) 
-                          : 'Comenzar Desasignación Real (Guardar y Quitar)') }}
-                </span>
+                <span>{{ textoBotonDesasignacion }}</span>
               </button>
             </div>
           </div>
