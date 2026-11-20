@@ -289,6 +289,7 @@ createApp({
       toggleUsuarioFiltro,
       usuariosFiltradosDesasig,
       obrasFiltradasDesasig,
+      textoBotonDesasignacion,
       iniciarDesasignacion
     } = proyectosModulo;
 
@@ -1570,6 +1571,7 @@ createApp({
       desasigModoPrueba,
       desasigLimiteObras,
       guardarConfigDesasignacion,
+      textoBotonDesasignacion,
       iniciarDesasignacion,
       
       // Proveedores y Contratistas Unificado (EK10 / Aryve)

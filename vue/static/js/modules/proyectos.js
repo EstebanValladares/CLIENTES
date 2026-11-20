@@ -191,6 +191,20 @@ window.createProyectosModule = function(Vue) {
     return entries;
   });
 
+  const textoBotonDesasignacion = computed(() => {
+    if (ejecutandoDesasignacion.value) {
+      return 'Desasignación en Curso...';
+    }
+    if (desasigModoPrueba.value) {
+      if (desasigLimiteObras.value === 1) {
+        return 'Ejecutar Prueba en 1 Obra (Sin Guardar)';
+      }
+      const cant = desasigLimiteObras.value === 0 ? 'Todas las' : desasigLimiteObras.value;
+      return 'Ejecutar Prueba (' + cant + ' Obras - Sin Guardar)';
+    }
+    return 'Comenzar Desasignación Real (Guardar y Quitar)';
+  });
+
   // Cargar permisos desde la API
   const cargarPermisos = async (intentos = 3) => {
     try {
@@ -421,6 +435,7 @@ window.createProyectosModule = function(Vue) {
     toggleUsuarioFiltro,
     usuariosFiltradosDesasig,
     obrasFiltradasDesasig,
+    textoBotonDesasignacion,
     iniciarDesasignacion
   };
 };
