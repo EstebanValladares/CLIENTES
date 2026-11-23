@@ -1,0 +1,391 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "KB1",
+    "nombre": "KB1 - 196-A - 12PACK 2 R MOLDE VISTA LAGUNA BIENESTAR TAM"
+  },
+  "metricas": {
+    "total_partidas": 4,
+    "total_frentes": 4,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 2000.0,
+    "requisitado_total": 1500.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 1500.0
+  },
+  "frentes": [
+    {
+      "id": "1.3",
+      "codigo": "1.3",
+      "nombre": "NIVEL 1",
+      "partidas": [
+        {
+          "id": "1.3.2",
+          "codigo": "1.3.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.3",
+            "codigo": "1.3",
+            "nombre": "NIVEL 1"
+          },
+          "insumos": [
+            {
+              "clave": "1331442",
+              "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 500,
+              "importe_ppto": 2945,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 500,
+              "vigente_tarjetas": 500,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 500,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.4",
+      "codigo": "1.4",
+      "nombre": "NIVEL 2",
+      "partidas": [
+        {
+          "id": "1.4.2",
+          "codigo": "1.4.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.4",
+            "codigo": "1.4",
+            "nombre": "NIVEL 2"
+          },
+          "insumos": [
+            {
+              "clave": "1331442",
+              "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 500,
+              "importe_ppto": 2945,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 500,
+              "vigente_tarjetas": 500,
+              "diferencia": 0,
+              "requisitado": 500,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 500,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.5",
+      "codigo": "1.5",
+      "nombre": "NIVEL 3",
+      "partidas": [
+        {
+          "id": "1.5.2",
+          "codigo": "1.5.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.5",
+            "codigo": "1.5",
+            "nombre": "NIVEL 3"
+          },
+          "insumos": [
+            {
+              "clave": "1331442",
+              "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 500,
+              "importe_ppto": 2945,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 500,
+              "vigente_tarjetas": 500,
+              "diferencia": 0,
+              "requisitado": 500,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 500,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.6",
+      "codigo": "1.6",
+      "nombre": "NIVEL 4",
+      "partidas": [
+        {
+          "id": "1.6.2",
+          "codigo": "1.6.2",
+          "nombre": "MUROS MOLDE NIVEL 1",
+          "nivel": 2,
+          "frente": {
+            "id": "1.6",
+            "codigo": "1.6",
+            "nombre": "NIVEL 4"
+          },
+          "insumos": [
+            {
+              "clave": "1331442",
+              "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 500,
+              "importe_ppto": 2945,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 500,
+              "vigente_tarjetas": 500,
+              "diferencia": 0,
+              "requisitado": 500,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 500,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.3.2",
+      "codigo": "1.3.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.3",
+        "codigo": "1.3",
+        "nombre": "NIVEL 1"
+      },
+      "insumos": [
+        {
+          "clave": "1331442",
+          "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 500,
+          "importe_ppto": 2945,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 500,
+          "vigente_tarjetas": 500,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 500,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.4.2",
+      "codigo": "1.4.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.4",
+        "codigo": "1.4",
+        "nombre": "NIVEL 2"
+      },
+      "insumos": [
+        {
+          "clave": "1331442",
+          "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 500,
+          "importe_ppto": 2945,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 500,
+          "vigente_tarjetas": 500,
+          "diferencia": 0,
+          "requisitado": 500,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 500,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.5.2",
+      "codigo": "1.5.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.5",
+        "codigo": "1.5",
+        "nombre": "NIVEL 3"
+      },
+      "insumos": [
+        {
+          "clave": "1331442",
+          "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 500,
+          "importe_ppto": 2945,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 500,
+          "vigente_tarjetas": 500,
+          "diferencia": 0,
+          "requisitado": 500,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 500,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.6.2",
+      "codigo": "1.6.2",
+      "nombre": "MUROS MOLDE NIVEL 1",
+      "nivel": 2,
+      "frente": {
+        "id": "1.6",
+        "codigo": "1.6",
+        "nombre": "NIVEL 4"
+      },
+      "insumos": [
+        {
+          "clave": "1331442",
+          "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 500,
+          "importe_ppto": 2945,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 500,
+          "vigente_tarjetas": 500,
+          "diferencia": 0,
+          "requisitado": 500,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 500,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1331442",
+      "nombre": "SEPARADOR PLASTICO 12 CMS (GALLETA)",
+      "unidad": "PZA",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 2000,
+      "importe_ppto": 11780,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 2000,
+      "vigente_tarjetas": 2000,
+      "diferencia": 0,
+      "requisitado": 1500,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 500,
+      "por_comprar": 1500,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "KB1",
+    "insumo": "1331442",
+    "nombre": "CONCRETO"
+  }
+}

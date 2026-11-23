@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "HCP",
+    "nombre": "HCP - LOTE 171 COTO2 ARTEMISA, 1V MAGNOLIA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 42.0,
+    "requisitado_total": 37.5,
+    "comprado_total": 37.5,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR",
+      "partidas": [
+        {
+          "id": "1.1.4",
+          "codigo": "1.1.4",
+          "nombre": "COLUMNAS Y MUROS PB",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14,
+              "importe_ppto": 4060,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14,
+              "vigente_tarjetas": 14,
+              "diferencia": 0,
+              "requisitado": 14,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 14,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "LOSA DE ENTREPISO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14,
+              "importe_ppto": 4060,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14,
+              "vigente_tarjetas": 14,
+              "diferencia": 0,
+              "requisitado": 14,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 14,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "COLUMNAS Y MUROS PA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14,
+              "importe_ppto": 4060,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14,
+              "vigente_tarjetas": 14,
+              "diferencia": 0,
+              "requisitado": 9.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 9.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 4.5,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.4",
+      "codigo": "1.1.4",
+      "nombre": "COLUMNAS Y MUROS PB",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14,
+          "importe_ppto": 4060,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14,
+          "vigente_tarjetas": 14,
+          "diferencia": 0,
+          "requisitado": 14,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 14,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "LOSA DE ENTREPISO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14,
+          "importe_ppto": 4060,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14,
+          "vigente_tarjetas": 14,
+          "diferencia": 0,
+          "requisitado": 14,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 14,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "COLUMNAS Y MUROS PA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 171 COTO2 ARTEMISA VELASUR"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14,
+          "importe_ppto": 4060,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14,
+          "vigente_tarjetas": 14,
+          "diferencia": 0,
+          "requisitado": 9.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 9.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 4.5,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1100006",
+      "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 42,
+      "importe_ppto": 12180,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 42,
+      "vigente_tarjetas": 42,
+      "diferencia": 0,
+      "requisitado": 37.5,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 37.5,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 4.5,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "HCP",
+    "insumo": "1100006",
+    "nombre": ""
+  }
+}

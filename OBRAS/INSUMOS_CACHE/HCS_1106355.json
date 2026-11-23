@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "HCS",
+    "nombre": "HCS - L150, COTO 2 ARTEMISA 1V MAGNOLIA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 43.0,
+    "requisitado_total": 33.5,
+    "comprado_total": 22.1489,
+    "por_comprar_total": 11.3511
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "LOTE 150 PROTOTIPO MAGNOLIA",
+      "partidas": [
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1106355",
+              "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 20,
+              "importe_ppto": 42241.4,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 20,
+              "vigente_tarjetas": 20,
+              "diferencia": 0,
+              "requisitado": 10.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 9.5,
+              "por_comprar": 10.5,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.4",
+          "codigo": "1.1.4",
+          "nombre": "LOSA DE ENTREPISO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1106355",
+              "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14.5,
+              "importe_ppto": 30625.015,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14.5,
+              "vigente_tarjetas": 14.5,
+              "diferencia": 0,
+              "requisitado": 14.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 13.6489,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.8511,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "LOSA DE AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1106355",
+              "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 8.5,
+              "importe_ppto": 17952.595,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 8.5,
+              "vigente_tarjetas": 8.5,
+              "diferencia": 0,
+              "requisitado": 8.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 8.5,
+              "comprado": 8.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1106355",
+          "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 20,
+          "importe_ppto": 42241.4,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 20,
+          "vigente_tarjetas": 20,
+          "diferencia": 0,
+          "requisitado": 10.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 9.5,
+          "por_comprar": 10.5,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.4",
+      "codigo": "1.1.4",
+      "nombre": "LOSA DE ENTREPISO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1106355",
+          "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14.5,
+          "importe_ppto": 30625.015,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14.5,
+          "vigente_tarjetas": 14.5,
+          "diferencia": 0,
+          "requisitado": 14.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 13.6489,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.8511,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "LOSA DE AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1106355",
+          "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 8.5,
+          "importe_ppto": 17952.595,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 8.5,
+          "vigente_tarjetas": 8.5,
+          "diferencia": 0,
+          "requisitado": 8.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 8.5,
+          "comprado": 8.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1106355",
+      "nombre": "CONCRETO F'C=200 KG/CM2 TMA 3/4 R14",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 43,
+      "importe_ppto": 90819.01,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 43,
+      "vigente_tarjetas": 43,
+      "diferencia": 0,
+      "requisitado": 33.5,
+      "cancelado": 0,
+      "req_sin_autorizar": 8.5,
+      "comprado": 22.1489,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 9.5,
+      "por_comprar": 11.3511,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "HCS",
+    "insumo": "1106355",
+    "nombre": ""
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "HCS",
+    "nombre": "HCS - L150, COTO 2 ARTEMISA 1V MAGNOLIA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 29.0,
+    "requisitado_total": 28.5,
+    "comprado_total": 28.5,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "LOTE 150 PROTOTIPO MAGNOLIA",
+      "partidas": [
+        {
+          "id": "1.1.4",
+          "codigo": "1.1.4",
+          "nombre": "LOSA DE ENTREPISO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 15,
+              "importe_ppto": 3879.3,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 15,
+              "vigente_tarjetas": 15,
+              "diferencia": 0,
+              "requisitado": 14.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 14.5,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.5,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.6",
+          "codigo": "1.1.6",
+          "nombre": "LOSA DE AZOTEA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+          },
+          "insumos": [
+            {
+              "clave": "1100006",
+              "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14,
+              "importe_ppto": 3620.68,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14,
+              "vigente_tarjetas": 14,
+              "diferencia": 0,
+              "requisitado": 14,
+              "cancelado": 0,
+              "req_sin_autorizar": 14,
+              "comprado": 14,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.4",
+      "codigo": "1.1.4",
+      "nombre": "LOSA DE ENTREPISO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 15,
+          "importe_ppto": 3879.3,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 15,
+          "vigente_tarjetas": 15,
+          "diferencia": 0,
+          "requisitado": 14.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 14.5,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.5,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.6",
+      "codigo": "1.1.6",
+      "nombre": "LOSA DE AZOTEA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "LOTE 150 PROTOTIPO MAGNOLIA"
+      },
+      "insumos": [
+        {
+          "clave": "1100006",
+          "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14,
+          "importe_ppto": 3620.68,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14,
+          "vigente_tarjetas": 14,
+          "diferencia": 0,
+          "requisitado": 14,
+          "cancelado": 0,
+          "req_sin_autorizar": 14,
+          "comprado": 14,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1100006",
+      "nombre": "SERVICIO DE BOMBEO DE CONCRETO NMX-C-155-ONNCEE",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 29,
+      "importe_ppto": 7499.98,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 29,
+      "vigente_tarjetas": 29,
+      "diferencia": 0,
+      "requisitado": 28.5,
+      "cancelado": 0,
+      "req_sin_autorizar": 14,
+      "comprado": 28.5,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0.5,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "HCS",
+    "insumo": "1100006",
+    "nombre": ""
+  }
+}

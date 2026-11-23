@@ -1,0 +1,694 @@
+<!-- ======================================================== -->
+<!-- VISTA: TRAZABILIDAD OC, CONTRATOS & INSUMOS (SOC ARYVE)   -->
+<!-- Archivo Modular: vue/views/oc_contratos.html (Flotante)   -->
+<!-- ======================================================== -->
+<div v-show="consultaFlotanteActiva === 'OC_CONTRATOS'" class="flex flex-col flex-1 pb-16 animate-fade-in">
+
+  <!-- SUB-HEADER DE OC & CONTRATOS -->
+  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+    <div>
+      <h2 class="text-lg font-bold flex items-center gap-2.5"
+          :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
+        <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+          <i class="fa-solid fa-file-contract text-sm"></i>
+        </span>
+        <span>Trazabilidad OC, Contratos & Insumos</span>
+      </h2>
+      <p class="text-xs text-slate-400 mt-1">
+        Buscador integral por <b>Folio de OC</b> o por <b>Clave de Contrato</b> (ej. <i>ELEC, MYM, PLOM, MARY</i>) con detalle de estimaciones e insumos.
+      </p>
+    </div>
+  </div>
+
+  <!-- PANEL DE FORMULARIO DE BÚSQUEDA -->
+  <div class="border rounded-2xl p-4 sm:p-5 mb-6 transition shadow-sm"
+       :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+    
+    <form @submit.prevent="consultarOcContrato()" class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end">
+      
+      <!-- Campo 1: Folio o Número de OC -->
+      <div class="md:col-span-4">
+        <label class="block text-xs font-bold mb-1.5 flex items-center justify-between"
+               :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
+          <span>Folio o Número de OC</span>
+          <span class="text-[10px] font-normal text-slate-400">Ej. KBN-00000014 o 14</span>
+        </label>
+        <div class="relative">
+          <i class="fa-solid fa-barcode absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input v-model="filtroOcFolio"
+                 type="text"
+                 placeholder="Ej. KBN-00000014 o 14"
+                 @keydown.enter.prevent="consultarOcContrato()"
+                 class="w-full pl-9 pr-3 py-2.5 rounded-xl border text-sm font-mono font-semibold transition outline-none"
+                 :class="temaActual === 'claro'
+                   ? 'bg-slate-50 border-slate-300 text-slate-900 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                   : 'bg-slate-950/70 border-slate-700 text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20'">
+        </div>
+      </div>
+
+      <!-- Campo 2: CLAVE DEL CONTRATO (FUNDAMENTAL) -->
+      <div class="md:col-span-3">
+        <label class="block text-xs font-bold mb-1.5 flex items-center justify-between"
+               :class="temaActual === 'claro' ? 'text-indigo-700' : 'text-indigo-300'">
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-tag text-indigo-500 text-[11px]"></i>
+            <span>Clave de Contrato</span>
+          </span>
+          <span class="text-[10px] font-bold text-indigo-500">Fundamental</span>
+        </label>
+        <div class="relative">
+          <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-indigo-400 text-xs"></i>
+          <input v-model="filtroOcClave"
+                 type="text"
+                 placeholder="Ej. ELEC, MYM, PLOM..."
+                 @keydown.enter.prevent="consultarOcContrato()"
+                 class="w-full pl-9 pr-3 py-2.5 rounded-xl border text-sm font-mono uppercase font-black tracking-wider transition outline-none"
+                 :class="temaActual === 'claro'
+                   ? 'bg-indigo-50/50 border-indigo-200 text-indigo-900 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20'
+                   : 'bg-indigo-950/40 border-indigo-500/40 text-indigo-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20'">
+        </div>
+      </div>
+
+      <!-- Campo 3: Obra / Centro de Costos -->
+      <div class="md:col-span-2">
+        <label class="block text-xs font-bold mb-1.5 flex items-center justify-between"
+               :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
+          <span>Obra / CC</span>
+          <span class="text-[10px] font-normal text-slate-400">Opcional</span>
+        </label>
+        <div class="relative">
+          <i class="fa-solid fa-helmet-safety absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input v-model="filtroOcObra"
+                 type="text"
+                 placeholder="Ej. KBN"
+                 @keydown.enter.prevent="consultarOcContrato()"
+                 class="w-full pl-9 pr-3 py-2.5 rounded-xl border text-sm font-mono uppercase transition outline-none"
+                 :class="temaActual === 'claro'
+                   ? 'bg-slate-50 border-slate-300 text-slate-900 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+                   : 'bg-slate-950/70 border-slate-700 text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20'">
+        </div>
+      </div>
+
+      <!-- Campo 4: Compañía -->
+      <div class="md:col-span-1">
+        <label class="block text-xs font-bold mb-1.5"
+               :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
+          Cía
+        </label>
+        <select v-model="filtroOcCompania"
+                class="w-full px-2 py-2.5 rounded-xl border text-xs transition outline-none cursor-pointer"
+                :class="temaActual === 'claro'
+                  ? 'bg-slate-50 border-slate-300 text-slate-900 focus:border-emerald-500'
+                  : 'bg-slate-950/70 border-slate-700 text-white focus:border-emerald-400'">
+          <option value="">Todas</option>
+          <option value="1">01 Aryve</option>
+          <option value="2">14 Velas</option>
+          <option value="7">20 Consolidadora</option>
+        </select>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="md:col-span-2 flex items-center gap-2">
+        <button type="submit"
+                :disabled="cargandoOcContrato"
+                class="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 shadow-md shadow-emerald-600/30 transition flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <i v-if="cargandoOcContrato" class="fa-solid fa-spinner fa-spin text-sm"></i>
+          <i v-else class="fa-solid fa-magnifying-glass text-xs"></i>
+          <span>{{ cargandoOcContrato ? 'Buscando...' : 'Consultar' }}</span>
+        </button>
+
+        <button v-if="resultadoOcContrato || filtroOcFolio || filtroOcClave"
+                @click="limpiarConsultaOc()"
+                type="button"
+                title="Limpiar búsqueda"
+                class="p-2.5 rounded-xl border transition cursor-pointer"
+                :class="temaActual === 'claro'
+                  ? 'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- MENSAJE DE ERROR SI OCURRE -->
+  <div v-if="errorOcContrato" class="mb-6 p-4 rounded-2xl border flex items-start gap-3 bg-rose-500/10 border-rose-500/30 text-rose-500">
+    <i class="fa-solid fa-circle-exclamation text-base mt-0.5 shrink-0"></i>
+    <div class="flex-1 text-xs sm:text-sm font-medium">
+      {{ errorOcContrato }}
+    </div>
+  </div>
+
+  <!-- SKELETON / CARGANDO -->
+  <div v-if="cargandoOcContrato" class="space-y-4 animate-pulse">
+    <div class="h-28 rounded-2xl border" :class="temaActual === 'claro' ? 'bg-slate-200 border-slate-300' : 'bg-slate-800 border-slate-700'"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div v-for="i in 4" :key="i" class="h-32 rounded-2xl border" :class="temaActual === 'claro' ? 'bg-slate-200 border-slate-300' : 'bg-slate-800 border-slate-700'"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADOS ENCONTRADOS -->
+  <div v-else-if="resultadoOcContrato" class="space-y-6">
+
+    <!-- 1. BANNER PRINCIPAL DE LA OC (CON CLAVE DESTACADA) -->
+    <div class="border rounded-2xl p-5 relative overflow-hidden transition shadow-md"
+         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
+      
+      <!-- Fondo decorativo pastel -->
+      <div class="absolute -right-8 -top-8 w-44 h-44 rounded-full blur-2xl opacity-15 pointer-events-none"
+           :class="resultadoOcContrato.es_estimacion ? 'bg-emerald-500' : 'bg-cyan-500'"></div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+        <div>
+          <!-- Badges de cabecera -->
+          <div class="flex items-center gap-2.5 flex-wrap mb-2">
+            <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full"
+                  :class="temaActual === 'claro' ? 'bg-slate-100 text-slate-800' : 'bg-slate-800 text-slate-200'">
+              {{ resultadoOcContrato.oc.compania.nombre }}
+            </span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full"
+                  :class="resultadoOcContrato.es_estimacion 
+                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30' 
+                    : 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30'">
+              {{ resultadoOcContrato.oc.origen }}
+            </span>
+            <span v-if="resultadoOcContrato.oc.estatus_autorizacion"
+                  class="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+                  :class="resultadoOcContrato.oc.estatus_autorizacion === 'Autorizada'
+                    ? 'bg-teal-500/15 text-teal-600 dark:text-teal-400 border border-teal-500/30'
+                    : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'">
+              {{ resultadoOcContrato.oc.estatus_autorizacion }}
+            </span>
+
+            <!-- ORIGEN DE DATOS (SNAPSHOT vs ENKONTROL CLOUD EN VIVO) -->
+            <span v-if="resultadoOcContrato.origen_datos"
+                  class="text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 border"
+                  :class="resultadoOcContrato.origen_datos.includes('En Vivo') 
+                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' 
+                    : 'bg-slate-500/10 text-slate-500 border-slate-500/20'">
+              <span class="w-1.5 h-1.5 rounded-full" 
+                    :class="resultadoOcContrato.origen_datos.includes('En Vivo') ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'"></span>
+              <span>{{ resultadoOcContrato.origen_datos }}</span>
+            </span>
+
+            <!-- BADGE XL DE LA CLAVE DEL CONTRATO (FUNDAMENTAL) -->
+            <div v-if="resultadoOcContrato.contrato && resultadoOcContrato.contrato.clave" 
+                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 border border-indigo-500/40 shadow-xs">
+              <i class="fa-solid fa-tag text-indigo-400 text-xs"></i>
+              <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">CLAVE:</span>
+              <span class="font-mono font-black text-sm text-indigo-500 dark:text-indigo-300 tracking-wider">
+                {{ resultadoOcContrato.contrato.clave }}
+              </span>
+              <span class="text-[11px] font-mono text-slate-400 ml-1">Ref: #{{ resultadoOcContrato.contrato.id }}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 flex-wrap">
+            <h3 class="text-xl sm:text-2xl font-black font-mono tracking-tight"
+                :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
+              {{ resultadoOcContrato.oc.folio }}
+            </h3>
+
+            <!-- Indicador Clave Contrato Grande -->
+            <span v-if="resultadoOcContrato.contrato && resultadoOcContrato.contrato.clave"
+                  class="font-mono font-black text-sm px-3 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 tracking-wider">
+              CONTRATO: {{ resultadoOcContrato.contrato.clave }}
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-slate-400"></i>
+            <span>{{ resultadoOcContrato.oc.obra.nombre }}</span>
+          </p>
+        </div>
+
+        <!-- Total de la OC -->
+        <div class="flex flex-col md:items-end justify-center border-t md:border-t-0 md:border-l pt-3 md:pt-0 md:pl-6"
+             :class="temaActual === 'claro' ? 'border-slate-200' : 'border-slate-800'">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Orden de Compra</span>
+          <div class="text-2xl sm:text-3xl font-black font-mono mt-0.5"
+               :class="resultadoOcContrato.oc.total < 0 
+                 ? 'text-rose-500' 
+                 : (temaActual === 'claro' ? 'text-emerald-600' : 'text-emerald-400')">
+            {{ formatearMoneda(resultadoOcContrato.oc.total) }}
+          </div>
+          <span v-if="resultadoOcContrato.oc.total < 0" 
+                class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-500 mt-1 border border-rose-500/30">
+            Deducciones superan el avance
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 2. GRID DE 4 TARJETAS TÉCNICAS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+      <!-- TARJETA 1: DATOS DE LA OC -->
+      <div class="border rounded-2xl p-4 transition shadow-xs flex flex-col justify-between"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">
+            <i class="fa-solid fa-receipt text-emerald-500"></i>
+            <span>Orden de Compra</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">Fecha de Generación:</span>
+              <span class="font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ formatearFecha(resultadoOcContrato.oc.fecha) }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Comprador:</span>
+              <span class="font-semibold truncate block" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.oc.comprador }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Solicitante:</span>
+              <span class="font-semibold truncate block" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.oc.solicitante }}
+              </span>
+            </div>
+            <div v-if="resultadoOcContrato.oc.autorizador">
+              <span class="text-slate-400 block text-[11px]">Autorizado por:</span>
+              <span class="font-semibold truncate block" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.oc.autorizador }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 pt-2 border-t text-[11px] flex justify-between items-center"
+             :class="temaActual === 'claro' ? 'border-slate-100 text-slate-400' : 'border-slate-800 text-slate-500'">
+          <span>Surtido:</span>
+          <span class="font-bold" :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
+            {{ resultadoOcContrato.oc.estatus_surtido }}
+          </span>
+        </div>
+      </div>
+
+      <!-- TARJETA 2: CONTRATO / SUBCONTRATO VINCULADO (CLAVE DESTACADA) -->
+      <div class="border rounded-2xl p-4 transition shadow-xs flex flex-col justify-between"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">
+            <i class="fa-solid fa-file-signature text-indigo-500"></i>
+            <span>Contrato / Convenio</span>
+          </div>
+
+          <div v-if="resultadoOcContrato.contrato" class="space-y-2 text-xs">
+            
+            <!-- RECUADRO ESPECIAL CLAVE -->
+            <div class="p-2.5 rounded-xl border flex items-center justify-between"
+                 :class="temaActual === 'claro' ? 'bg-indigo-50 border-indigo-200' : 'bg-indigo-950/40 border-indigo-500/30'">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-500">Clave Oficial:</span>
+              <span class="font-mono font-black text-base text-indigo-600 dark:text-indigo-300 tracking-wider">
+                {{ resultadoOcContrato.contrato.clave }}
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-slate-400">
+              <span>Referencia: <b>#{{ resultadoOcContrato.contrato.id }}</b></span>
+              <span>Correlativo: <b>{{ resultadoOcContrato.contrato.correlativo }}</b></span>
+            </div>
+
+            <div>
+              <span class="text-slate-400 block text-[11px]">Nombre del Contrato:</span>
+              <span class="font-bold leading-tight block" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.contrato.nombre }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Tipo de Contratación:</span>
+              <span class="font-semibold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.contrato.tipo }}
+              </span>
+            </div>
+            <div v-if="resultadoOcContrato.contrato.fecha_creado">
+              <span class="text-slate-400 block text-[11px]">Fecha de Alta Contrato:</span>
+              <span class="font-semibold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ formatearFecha(resultadoOcContrato.contrato.fecha_creado) }}
+              </span>
+            </div>
+          </div>
+
+          <div v-else class="p-3 rounded-xl text-xs bg-amber-500/10 border border-amber-500/20 text-amber-500">
+            <i class="fa-solid fa-info-circle mr-1"></i>
+            Esta OC proviene de <b>Requisición directa</b> de almacén o compra directa (no tiene subcontrato legal vinculado).
+          </div>
+        </div>
+
+        <div v-if="resultadoOcContrato.contrato" class="mt-3 pt-2 border-t text-[11px] flex justify-between items-center"
+             :class="temaActual === 'claro' ? 'border-slate-100 text-slate-400' : 'border-slate-800 text-slate-500'">
+          <span>Estatus Contrato:</span>
+          <span class="font-bold text-emerald-500">Autorizado / Activo</span>
+        </div>
+      </div>
+
+      <!-- TARJETA 3: CONTRATISTA / PROVEEDOR -->
+      <div class="border rounded-2xl p-4 transition shadow-xs flex flex-col justify-between"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">
+            <i class="fa-solid fa-user-tie text-amber-500"></i>
+            <span>Contratista / Proveedor</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">Razón Social:</span>
+              <span class="font-bold block leading-tight text-sm" :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
+                {{ resultadoOcContrato.oc.contratista.nombre }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">RFC:</span>
+              <span class="font-mono font-semibold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.oc.contratista.rfc || 'Sin RFC registrado' }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Clave de Proveedor EK:</span>
+              <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                {{ resultadoOcContrato.oc.contratista.clave || resultadoOcContrato.oc.contratista.id || 'N/D' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 pt-2 border-t text-[11px] flex justify-between items-center"
+             :class="temaActual === 'claro' ? 'border-slate-100 text-slate-400' : 'border-slate-800 text-slate-500'">
+          <span>Vínculo EK:</span>
+          <span class="font-bold text-emerald-500">Asignado Oficial</span>
+        </div>
+      </div>
+
+      <!-- TARJETA 4: ESTIMACIÓN DE OBRA -->
+      <div class="border rounded-2xl p-4 transition shadow-xs flex flex-col justify-between"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">
+            <i class="fa-solid fa-calculator text-cyan-500"></i>
+            <span>Estimación de Obra</span>
+          </div>
+
+          <div v-if="resultadoOcContrato.estimacion" class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-slate-400 block text-[11px]">No. Estimación:</span>
+                <span class="font-mono font-black text-base text-cyan-500">
+                  #{{ resultadoOcContrato.estimacion.numero }}
+                </span>
+              </div>
+              <span class="text-[11px] font-mono px-2 py-1 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-bold">
+                {{ resultadoOcContrato.estimacion.folio_completo }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Fecha de Cálculo:</span>
+              <span class="font-semibold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ formatearFecha(resultadoOcContrato.estimacion.fecha_calculo) }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Calculado por:</span>
+              <span class="font-semibold truncate block" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ resultadoOcContrato.estimacion.usuario_calculo || resultadoOcContrato.estimacion.usuario_creo || 'N/D' }}
+              </span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Monto Bruto Avance:</span>
+              <span class="font-mono font-bold" :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
+                {{ formatearMoneda(resultadoOcContrato.estimacion.monto_avance) }}
+              </span>
+            </div>
+          </div>
+
+          <div v-else class="p-3 rounded-xl text-xs bg-slate-100 dark:bg-slate-800/60 text-slate-400">
+            Esta OC no tiene estimación de avance asociada.
+          </div>
+        </div>
+
+        <div v-if="resultadoOcContrato.estimacion" class="mt-3 pt-2 border-t text-[11px] flex justify-between items-center"
+             :class="temaActual === 'claro' ? 'border-slate-100 text-slate-400' : 'border-slate-800 text-slate-500'">
+          <span>Estatus:</span>
+          <span class="font-bold text-teal-400">{{ resultadoOcContrato.estimacion.estatus }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3. BARRA DE RESUMEN FINANCIERO -->
+    <div class="border rounded-2xl p-4 transition shadow-xs"
+         :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/60 border-slate-800'">
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
+        <div>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Importe Estimado</span>
+          <span class="text-base sm:text-lg font-mono font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-white'">
+            {{ formatearMoneda(resultadoOcContrato.oc.importe) }}
+          </span>
+        </div>
+        <div>
+          <span class="text-[11px] font-bold text-rose-400 uppercase tracking-wider block">(-) Amortizaciones</span>
+          <span class="text-base sm:text-lg font-mono font-bold text-rose-500">
+            {{ formatearMoneda(resultadoOcContrato.oc.amortizaciones) }}
+          </span>
+        </div>
+        <div>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">SubTotal</span>
+          <span class="text-base sm:text-lg font-mono font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-white'">
+            {{ formatearMoneda(resultadoOcContrato.oc.subtotal) }}
+          </span>
+        </div>
+        <div>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">IVA Trasladado</span>
+          <span class="text-base sm:text-lg font-mono font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-white'">
+            {{ formatearMoneda(resultadoOcContrato.oc.iva) }}
+          </span>
+        </div>
+        <div class="col-span-2 sm:col-span-1 border-t sm:border-t-0 sm:border-l pt-2 sm:pt-0"
+             :class="temaActual === 'claro' ? 'border-slate-200' : 'border-slate-800'">
+          <span class="text-[11px] font-black uppercase tracking-wider block"
+                :class="resultadoOcContrato.oc.total < 0 ? 'text-rose-500' : 'text-emerald-500'">
+            Total Neto OC
+          </span>
+          <span class="text-lg sm:text-xl font-mono font-black"
+                :class="resultadoOcContrato.oc.total < 0 ? 'text-rose-500' : (temaActual === 'claro' ? 'text-slate-900' : 'text-white')">
+            {{ formatearMoneda(resultadoOcContrato.oc.total) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. TABS: INSUMOS DETALLE | DEDUCCIONES | COINCIDENCIAS -->
+    <div class="border rounded-2xl overflow-hidden transition shadow-sm"
+         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
+      
+      <!-- HEADER DE TABS -->
+      <div class="px-5 pt-3 border-b flex items-center gap-3 overflow-x-auto"
+           :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        
+        <button @click="tabActivaOc = 'insumos'"
+                type="button"
+                class="pb-3 px-2 border-b-2 font-bold text-xs sm:text-sm flex items-center gap-2 transition cursor-pointer"
+                :class="tabActivaOc === 'insumos'
+                  ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                  : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>Insumos & Conceptos</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-500 font-extrabold">
+            {{ resultadoOcContrato.insumos.length }}
+          </span>
+        </button>
+
+        <button @click="tabActivaOc = 'deducciones'"
+                type="button"
+                class="pb-3 px-2 border-b-2 font-bold text-xs sm:text-sm flex items-center gap-2 transition cursor-pointer"
+                :class="tabActivaOc === 'deducciones'
+                  ? 'border-rose-500 text-rose-600 dark:text-rose-400'
+                  : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+          <span>Deducciones & Anticipos</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-500 font-extrabold">
+            {{ resultadoOcContrato.deducciones.length }}
+          </span>
+        </button>
+
+        <button v-if="resultadoOcContrato.otras_coincidencias && resultadoOcContrato.otras_coincidencias.length > 0"
+                @click="tabActivaOc = 'coincidencias'"
+                type="button"
+                class="pb-3 px-2 border-b-2 font-bold text-xs sm:text-sm flex items-center gap-2 transition cursor-pointer"
+                :class="tabActivaOc === 'coincidencias'
+                  ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
+                  : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'">
+          <i class="fa-solid fa-tags"></i>
+          <span>Otras OCs / Claves</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-500 font-extrabold">
+            {{ resultadoOcContrato.otras_coincidencias.length }}
+          </span>
+        </button>
+
+      </div>
+
+      <!-- TAB 1: TABLA DE INSUMOS -->
+      <div v-show="tabActivaOc === 'insumos'" class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b text-[11px] uppercase tracking-wider font-bold text-slate-400"
+                :class="temaActual === 'claro' ? 'bg-slate-50/70 border-slate-200' : 'bg-slate-950/40 border-slate-800'">
+              <th class="py-3 px-4 w-12 text-center">#</th>
+              <th class="py-3 px-4">Clave Insumo</th>
+              <th class="py-3 px-4 min-w-[260px]">Descripción del Insumo / Concepto</th>
+              <th class="py-3 px-4 text-center">U.M.</th>
+              <th class="py-3 px-4 text-right">Cantidad / Avance</th>
+              <th class="py-3 px-4 text-right">P. Unitario</th>
+              <th class="py-3 px-4 text-right">Importe Total</th>
+              <th class="py-3 px-4">Capturó</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y" :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
+            <tr v-for="(ins, idx) in resultadoOcContrato.insumos" :key="ins.id"
+                class="hover:bg-emerald-500/5 transition">
+              <td class="py-3 px-4 text-center font-mono text-slate-400">{{ idx + 1 }}</td>
+              <td class="py-3 px-4 font-mono font-bold text-emerald-500">
+                {{ ins.insumo_clave }}
+              </td>
+              <td class="py-3 px-4 font-semibold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ ins.insumo_nombre }}
+              </td>
+              <td class="py-3 px-4 text-center font-mono text-[11px] text-slate-400">
+                {{ ins.unidad }}
+              </td>
+              <td class="py-3 px-4 text-right font-mono font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ Number(ins.cantidad).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }}
+              </td>
+              <td class="py-3 px-4 text-right font-mono text-slate-400">
+                {{ formatearMoneda(ins.precio) }}
+              </td>
+              <td class="py-3 px-4 text-right font-mono font-bold text-emerald-500">
+                {{ formatearMoneda(ins.importe) }}
+              </td>
+              <td class="py-3 px-4 text-[11px] text-slate-400 truncate max-w-[150px]">
+                {{ ins.capturo || 'N/D' }}
+              </td>
+            </tr>
+
+            <tr v-if="resultadoOcContrato.insumos.length === 0">
+              <td colspan="8" class="py-8 text-center text-slate-400 text-xs">
+                No se encontraron insumos detallados para esta Orden de Compra.
+              </td>
+            </tr>
+          </tbody>
+          <tfoot v-if="resultadoOcContrato.insumos.length > 0"
+                 class="border-t font-bold text-xs"
+                 :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950/60 border-slate-800 text-white'">
+            <tr>
+              <td colspan="6" class="py-3 px-4 text-right uppercase tracking-wider text-slate-400 text-[11px]">
+                Suma de Insumos:
+              </td>
+              <td class="py-3 px-4 text-right font-mono font-black text-emerald-500">
+                {{ formatearMoneda(resultadoOcContrato.insumos.reduce((acc, curr) => acc + curr.importe, 0)) }}
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- TAB 2: TABLA DE DEDUCCIONES / ANTICIPOS -->
+      <div v-show="tabActivaOc === 'deducciones'" class="p-0 overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b text-[11px] uppercase tracking-wider font-bold text-slate-400"
+                :class="temaActual === 'claro' ? 'bg-slate-50/70 border-slate-200' : 'bg-slate-950/40 border-slate-800'">
+              <th class="py-3 px-4 w-12 text-center">#</th>
+              <th class="py-3 px-4">Concepto</th>
+              <th class="py-3 px-4">Descripción / Observaciones</th>
+              <th class="py-3 px-4 text-center">Fecha Movimiento</th>
+              <th class="py-3 px-4 text-center">Porcentaje</th>
+              <th class="py-3 px-4 text-right">Importe</th>
+              <th class="py-3 px-4 text-center">Estatus</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y" :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
+            <tr v-for="(ded, idx) in resultadoOcContrato.deducciones" :key="ded.id"
+                class="hover:bg-rose-500/5 transition">
+              <td class="py-3 px-4 text-center font-mono text-slate-400">{{ idx + 1 }}</td>
+              <td class="py-3 px-4 font-bold text-rose-500">
+                {{ ded.nombre }}
+              </td>
+              <td class="py-3 px-4 text-slate-400 font-medium">
+                {{ ded.observaciones || 'Sin observaciones' }}
+              </td>
+              <td class="py-3 px-4 text-center font-mono text-[11px] text-slate-400">
+                {{ formatearFecha(ded.fecha) }}
+              </td>
+              <td class="py-3 px-4 text-center font-mono text-slate-400">
+                {{ ded.porcentaje ? ded.porcentaje + '%' : '-' }}
+              </td>
+              <td class="py-3 px-4 text-right font-mono font-bold text-rose-500">
+                {{ formatearMoneda(ded.importe) }}
+              </td>
+              <td class="py-3 px-4 text-center">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  {{ ded.estatus }}
+                </span>
+              </td>
+            </tr>
+
+            <tr v-if="resultadoOcContrato.deducciones.length === 0">
+              <td colspan="7" class="py-8 text-center text-slate-400 text-xs">
+                No hay retenciones ni amortizaciones de anticipo registradas para este contrato.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 3: OTRAS COINCIDENCIAS (CON CLAVE DESTACADA) -->
+      <div v-show="tabActivaOc === 'coincidencias'" class="p-4">
+        <p class="text-xs text-slate-400 mb-3">
+          Se encontraron varias OCs que coinciden con tu criterio de búsqueda. Haz clic en una para visualizar su trazabilidad:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <div v-for="c in resultadoOcContrato.otras_coincidencias" :key="c.id"
+               @click="seleccionarCoincidencia(c)"
+               class="p-3.5 rounded-xl border transition cursor-pointer hover:border-indigo-500 hover:shadow-md"
+               :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-800/60 border-slate-700'">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-mono font-bold text-sm text-cyan-500">{{ c.folio }}</span>
+              <!-- BADGE CLAVE -->
+              <span class="font-mono font-black text-xs px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+                {{ c.contrato_clave }}
+              </span>
+            </div>
+            <div class="text-[11px] font-semibold text-slate-300 truncate">
+              {{ c.contrato_nombre || 'Sin nombre de contrato' }}
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2 pt-2 border-t border-slate-700/50">
+              <span>Obra: <b>{{ c.obra }}</b></span>
+              <span class="font-mono font-bold text-slate-200">{{ formatearMoneda(c.total) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ESTADO VACÍO INICIAL -->
+  <div v-else class="py-16 text-center border-2 border-dashed rounded-3xl transition"
+       :class="temaActual === 'claro' ? 'border-slate-200 bg-white/50' : 'border-slate-800/80 bg-slate-900/30'">
+    <div class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-indigo-500 mb-3 bg-indigo-500/10 border border-indigo-500/20">
+      <i class="fa-solid fa-tag text-2xl"></i>
+    </div>
+    <h4 class="text-base font-bold" :class="temaActual === 'claro' ? 'text-slate-800' : 'text-white'">
+      Consulta por Clave de Contrato o Folio de OC
+    </h4>
+    <p class="text-xs text-slate-400 max-w-md mx-auto mt-1 px-4 leading-relaxed">
+      Ingresa la <b>Clave del Contrato</b> (ej. <i>ELEC, MYM, PLOM, SUB SANIT</i>) o el <b>Folio de la OC</b> para ver su contrato, estimación, partidas e insumos en tiempo real.
+    </p>
+  </div>
+
+</div>

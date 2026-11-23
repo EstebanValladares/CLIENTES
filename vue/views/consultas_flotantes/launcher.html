@@ -112,6 +112,31 @@
         </div>
       </div>
 
+      <!-- BOTÓN: TRAZABILIDAD OC, CONTRATOS & INSUMOS -->
+      <div class="relative group flex items-center justify-center">
+        <button @click="abrirConsultaFlotante('OC_CONTRATOS')"
+                type="button"
+                class="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 transform hover:scale-110 active:scale-95 cursor-pointer relative"
+                :class="temaActual === 'claro' ? 'dock-glass-btn-light' : 'dock-glass-btn-dark'"
+                title="Abrir Trazabilidad de OC, Contratos & Insumos">
+          
+          <i class="fa-solid fa-file-contract text-base transition-colors"
+             :class="temaActual === 'claro' ? 'text-slate-700 group-hover:text-emerald-500' : 'text-slate-950'"></i>
+        </button>
+
+        <!-- TOOLTIP FLOTANTE A LA DERECHA -->
+        <div class="absolute left-full ml-3 px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl border pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-50 text-xs font-bold flex items-center gap-2"
+             :class="temaActual === 'claro'
+               ? 'bg-white/95 text-slate-800 border-white shadow-slate-300/40'
+               : 'bg-slate-900/95 text-white border-slate-700/80 shadow-black/60'">
+          <span>OC & Contratos</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                :class="temaActual === 'claro' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'">
+            Insumos
+          </span>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

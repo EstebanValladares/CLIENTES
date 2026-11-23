@@ -36,6 +36,17 @@
         iconoColor: 'text-amber-400',
         bgIcono: 'bg-amber-500/15 border-amber-500/30',
         descripcion: 'Búsqueda por Obra, Clave de escalatoria e insumos con sincronización en vivo de Enkontrol Cloud.'
+      },
+      {
+        id: 'OC_CONTRATOS',
+        nombre: 'OC, Contratos & Insumos',
+        subtitulo: 'Trazabilidad Integral de Estimaciones y Subcontratos',
+        icono: 'fa-solid fa-file-contract',
+        badge: 'En vivo',
+        color: 'from-emerald-500 via-teal-600 to-cyan-500',
+        iconoColor: 'text-emerald-400',
+        bgIcono: 'bg-emerald-500/15 border-emerald-500/30',
+        descripcion: 'Consulta instantánea de Contratos, Estimaciones, Deducciones de Anticipo e Insumos por Folio de OC.'
       }
     ]);
 

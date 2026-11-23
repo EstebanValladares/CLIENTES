@@ -591,6 +591,26 @@ createApp({
     } = consultasFlotantesModulo;
 
     // ==========================================
+    // MÓDULO: OC, CONTRATOS & INSUMOS (vue/static/js/modules/oc_contratos.js)
+    // ==========================================
+    const ocContratosModulo = window.createOcContratosModule ? window.createOcContratosModule(Vue) : {};
+    const {
+      filtroOcFolio,
+      filtroOcClave,
+      filtroOcObra,
+      filtroOcCompania,
+      cargandoOcContrato,
+      resultadoOcContrato,
+      errorOcContrato,
+      tabActivaOc,
+      formatearMoneda,
+      formatearFecha,
+      consultarOcContrato,
+      limpiarConsultaOc,
+      seleccionarCoincidencia
+    } = ocContratosModulo;
+
+    // ==========================================
     // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
     // ==========================================
     const catalogoVistas = computed(() => [
@@ -1776,7 +1796,21 @@ createApp({
       toggleMenuConsultas,
       abrirConsultaFlotante,
       cerrarConsultaFlotante,
-      toggleMaximizarConsulta
+      toggleMaximizarConsulta,
+      // Trazabilidad OC, Contratos & Insumos
+      filtroOcFolio,
+      filtroOcClave,
+      filtroOcObra,
+      filtroOcCompania,
+      cargandoOcContrato,
+      resultadoOcContrato,
+      errorOcContrato,
+      tabActivaOc,
+      formatearMoneda,
+      formatearFecha,
+      consultarOcContrato,
+      limpiarConsultaOc,
+      seleccionarCoincidencia
     };
   }
 }).mount('#app');
