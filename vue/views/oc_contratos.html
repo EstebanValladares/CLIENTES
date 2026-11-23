@@ -192,15 +192,18 @@
               <span>{{ resultadoOcContrato.origen_datos }}</span>
             </span>
 
-            <!-- BADGE XL DE LA CLAVE DEL CONTRATO (FUNDAMENTAL) -->
+            <!-- BADGE CLAVE DEL CONTRATO (ALTA VISIBILIDAD) -->
             <div v-if="resultadoOcContrato.contrato && resultadoOcContrato.contrato.clave" 
-                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 border border-indigo-500/40 shadow-xs">
-              <i class="fa-solid fa-tag text-indigo-400 text-xs"></i>
-              <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">CLAVE:</span>
-              <span class="font-mono font-black text-sm text-indigo-500 dark:text-indigo-300 tracking-wider">
+                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl border shadow-xs"
+                 :class="temaActual === 'claro' 
+                   ? 'bg-slate-900 text-white border-slate-900' 
+                   : 'bg-white text-slate-950 border-white'">
+              <i class="fa-solid fa-key text-xs" :class="temaActual === 'claro' ? 'text-amber-400' : 'text-amber-600'"></i>
+              <span class="text-[10px] font-black uppercase tracking-wider" :class="temaActual === 'claro' ? 'text-slate-300' : 'text-slate-500'">CLAVE:</span>
+              <span class="font-mono font-black text-sm tracking-wider" :class="temaActual === 'claro' ? 'text-amber-300' : 'text-black'">
                 {{ resultadoOcContrato.contrato.clave }}
               </span>
-              <span class="text-[11px] font-mono text-slate-400 ml-1">Ref: #{{ resultadoOcContrato.contrato.id }}</span>
+              <span class="text-[11px] font-mono ml-1" :class="temaActual === 'claro' ? 'text-slate-400' : 'text-slate-600'">Ref: #{{ resultadoOcContrato.contrato.id }}</span>
             </div>
           </div>
 
@@ -212,8 +215,11 @@
 
             <!-- Indicador Clave Contrato Grande -->
             <span v-if="resultadoOcContrato.contrato && resultadoOcContrato.contrato.clave"
-                  class="font-mono font-black text-sm px-3 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 tracking-wider">
-              CONTRATO: {{ resultadoOcContrato.contrato.clave }}
+                  class="font-mono font-black text-sm px-3 py-1 rounded-lg border tracking-wider"
+                  :class="temaActual === 'claro'
+                    ? 'bg-slate-100 text-slate-900 border-slate-400 shadow-xs'
+                    : 'bg-slate-800 text-white border-slate-700'">
+              CONTRATO: <span class="font-black" :class="temaActual === 'claro' ? 'text-blue-700' : 'text-amber-400'">{{ resultadoOcContrato.contrato.clave }}</span>
             </span>
           </div>
 
@@ -302,9 +308,9 @@
             
             <!-- RECUADRO ESPECIAL CLAVE -->
             <div class="p-2.5 rounded-xl border flex items-center justify-between"
-                 :class="temaActual === 'claro' ? 'bg-indigo-50 border-indigo-200' : 'bg-indigo-950/40 border-indigo-500/30'">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-500">Clave Oficial:</span>
-              <span class="font-mono font-black text-base text-indigo-600 dark:text-indigo-300 tracking-wider">
+                 :class="temaActual === 'claro' ? 'bg-slate-100 border-slate-300' : 'bg-slate-800 border-slate-700'">
+              <span class="text-[11px] font-bold uppercase tracking-wider" :class="temaActual === 'claro' ? 'text-slate-600' : 'text-slate-400'">Clave Oficial:</span>
+              <span class="font-mono font-black text-lg tracking-wider" :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
                 {{ resultadoOcContrato.contrato.clave }}
               </span>
             </div>
@@ -658,7 +664,8 @@
             <div class="flex items-center justify-between mb-1.5">
               <span class="font-mono font-bold text-sm text-cyan-500">{{ c.folio }}</span>
               <!-- BADGE CLAVE -->
-              <span class="font-mono font-black text-xs px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+              <span class="font-mono font-black text-xs px-2 py-0.5 rounded border"
+                    :class="temaActual === 'claro' ? 'bg-slate-900 text-amber-300 border-slate-800' : 'bg-white text-slate-950 border-white'">
                 {{ c.contrato_clave }}
               </span>
             </div>
