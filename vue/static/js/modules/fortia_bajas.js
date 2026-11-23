@@ -16,7 +16,6 @@
     const busquedaBajasFortia = ref('');
     const diasAtrasFortia = ref(30);
     const headlessFortia = ref(true);
-    const subiendoExcelFortia = ref(false);
     const errorCruceFortia = ref('');
     let timerPollingBot = null;
 
@@ -46,7 +45,6 @@
       } else if (pestanaBajasFortia.value === 'YA_INACTIVOS') {
         base = cruceFortia.value.ya_inactivos || [];
       } else {
-        // TODOS
         base = [
           ...(cruceFortia.value.en_riesgo || []),
           ...(cruceFortia.value.ya_inactivos || []),
@@ -120,62 +118,15 @@
         const res = await fetch(url, { method: 'POST' });
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.detail || 'Error al iniciar bot');
+          throw new Error(data.detail || 'Error al iniciar consulta');
         }
         ejecutandoBotFortia.value = true;
-        // Iniciar sondeo
         if (timerPollingBot) clearInterval(timerPollingBot);
         timerPollingBot = setInterval(consultarEstadoBotFortia, 2000);
         consultarEstadoBotFortia();
       } catch (err) {
         errorCruceFortia.value = err.message;
         ejecutandoBotFortia.value = false;
-      }
-    };
-
-    // Subida directa de archivo Excel de Altas y Bajas
-    const subirExcelBajas = async (event) => {
-      const archivo = event.target.files?.[0];
-      if (!archivo) return;
-
-      subiendoExcelFortia.value = true;
-      errorCruceFortia.value = '';
-      const formData = new FormData();
-      formData.append('archivo', archivo);
-
-      try {
-        const res = await fetch('/api/fortia/cargar-excel', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.detail || 'Error al procesar el archivo Excel.');
-        }
-        cruceFortia.value = data;
-        event.target.value = ''; // Reset file input
-      } catch (err) {
-        errorCruceFortia.value = err.message;
-      } finally {
-        subiendoExcelFortia.value = false;
-      }
-    };
-
-    // Reprocesar cruce con la base de usuarios actual
-    const reprocesarCruceFortia = async () => {
-      cargandoCruceFortia.value = true;
-      errorCruceFortia.value = '';
-      try {
-        const res = await fetch('/api/fortia/reprocesar', { method: 'POST' });
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.detail || 'Error al recalcular el cruce.');
-        }
-        cruceFortia.value = data;
-      } catch (err) {
-        errorCruceFortia.value = err.message;
-      } finally {
-        cargandoCruceFortia.value = false;
       }
     };
 
@@ -190,7 +141,6 @@
       modalBajasFortiaAbierto.value = false;
     };
 
-    // Inicializar comprobación de cruce en segundo plano
     onMounted(() => {
       cargarCruceFortia();
     });
@@ -205,7 +155,6 @@
       busquedaBajasFortia,
       diasAtrasFortia,
       headlessFortia,
-      subiendoExcelFortia,
       errorCruceFortia,
       totalBajasEnRiesgo,
       totalBajasFortia,
@@ -216,8 +165,6 @@
       cerrarModalBajasFortia,
       cargarCruceFortia,
       iniciarConsultaBotFortia,
-      subirExcelBajas,
-      reprocesarCruceFortia,
       consultarEstadoBotFortia
     };
   };

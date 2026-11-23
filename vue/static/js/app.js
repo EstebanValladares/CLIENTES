@@ -157,7 +157,6 @@ createApp({
       busquedaBajasFortia,
       diasAtrasFortia,
       headlessFortia,
-      subiendoExcelFortia,
       errorCruceFortia,
       totalBajasEnRiesgo,
       totalBajasFortia,
@@ -168,8 +167,6 @@ createApp({
       cerrarModalBajasFortia,
       cargarCruceFortia,
       iniciarConsultaBotFortia,
-      subirExcelBajas,
-      reprocesarCruceFortia,
       consultarEstadoBotFortia
     } = fortiaBajasModulo;
 
@@ -1602,7 +1599,6 @@ createApp({
       busquedaBajasFortia,
       diasAtrasFortia,
       headlessFortia,
-      subiendoExcelFortia,
       errorCruceFortia,
       totalBajasEnRiesgo,
       totalBajasFortia,
@@ -1613,8 +1609,6 @@ createApp({
       cerrarModalBajasFortia,
       cargarCruceFortia,
       iniciarConsultaBotFortia,
-      subirExcelBajas,
-      reprocesarCruceFortia,
       consultarEstadoBotFortia,
       // Proyectos
       permisosUsuarios,
