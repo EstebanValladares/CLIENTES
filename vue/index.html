@@ -1321,6 +1321,16 @@
           <span>{{ sincronizandoAryve ? 'Sincronizando...' : 'Sincronizar Aryve' }}</span>
         </button>
 
+        <button @click="abrirModalBajasFortia" 
+                class="bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/40 text-rose-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer" 
+                title="Detección de bajas de Recursos Humanos (FORTIA) vs usuarios activos de Enkontrol">
+          <i class="fa-solid fa-user-xmark"></i>
+          <span>Bajas RH (Fortia)</span>
+          <span v-if="totalBajasEnRiesgo > 0" class="ml-1 px-1.5 py-0.5 bg-rose-600 text-white text-[11px] font-bold rounded-full animate-pulse">
+            {{ totalBajasEnRiesgo }}
+          </span>
+        </button>
+
         <button @click="cargarUsuarios" 
                 class="p-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 hover:text-white transition cursor-pointer" 
                 title="Actualizar Datos">
@@ -1633,6 +1643,7 @@
     <!-- COMPONENTE: VENTANA FLOTANTE DE CONSULTAS (MAPEO Y FUTURAS) -->
     <!-- ======================================================== -->
     <!-- INCLUDE: views/consultas_flotantes/modal_flotante.html -->
+    <!-- INCLUDE: views/modal_bajas_fortia.html -->
     <!-- (Los modales de Usuarios se encuentran modularizados en views/usuarios.html) -->
 
 
@@ -2227,6 +2238,7 @@
 <!-- Módulos de Vistas -->
 <script src="/static/js/modules/proyectos.js?v=20261120_1527"></script>
 <script src="/static/js/modules/usuarios.js?v=20261120_1436"></script>
+<script src="/static/js/modules/fortia_bajas.js?v=20261123_1615"></script>
 <script src="/static/js/modules/obras.js?v=20261120_1436"></script>
 <script src="/static/js/modules/mapeo.js?v=20261120_1436"></script>
 <script src="/static/js/modules/escalatorias.js?v=20261120_1436"></script>

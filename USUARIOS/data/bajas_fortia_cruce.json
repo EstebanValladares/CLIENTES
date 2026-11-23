@@ -1,0 +1,25 @@
+{
+  "fecha_cruce": "2026-11-23 16:20:53",
+  "total_bajas_fortia": 1,
+  "total_en_riesgo": 0,
+  "total_ya_inactivos": 1,
+  "total_no_encontrados": 0,
+  "en_riesgo": [],
+  "ya_inactivos": [
+    {
+      "clave_trabajador": "001",
+      "nombre_fortia": "SANTOS PEREZ TOLENTINO",
+      "fecha_baja": "2026-11-20",
+      "puesto_fortia": "AUXILIAR ENKONTROL",
+      "estatus_fortia": "B",
+      "id_enkontrol": "975",
+      "nombre_enkontrol": "SANTOS PEREZ TOLENTINO",
+      "puesto_enkontrol": "AUXILIAR ENKONTROL PLAYA",
+      "clave_enkontrol": "santos.perez@grupovelas.com",
+      "correo_enkontrol": "santos.perez@grupovelas.com",
+      "estatus_enkontrol": "Inactivos",
+      "url_aryve": "https://suite.ekloud.net:1445/Aryve/#/usuarios/975"
+    }
+  ],
+  "no_encontrados": []
+}

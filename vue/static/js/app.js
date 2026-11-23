@@ -144,6 +144,36 @@ createApp({
     } = usuariosModulo;
 
     // ==========================================
+    // VISTA MODULAR: BAJAS FORTIA VS ENKONTROL (vue/static/js/modules/fortia_bajas.js)
+    // ==========================================
+    const fortiaBajasModulo = window.createFortiaBajasModule ? window.createFortiaBajasModule(Vue) : {};
+    const {
+      modalBajasFortiaAbierto,
+      cargandoCruceFortia,
+      cruceFortia,
+      ejecutandoBotFortia,
+      estadoBotFortia,
+      pestanaBajasFortia,
+      busquedaBajasFortia,
+      diasAtrasFortia,
+      headlessFortia,
+      subiendoExcelFortia,
+      errorCruceFortia,
+      totalBajasEnRiesgo,
+      totalBajasFortia,
+      totalYaInactivos,
+      totalNoEncontrados,
+      listaBajasFiltrada,
+      abrirModalBajasFortia,
+      cerrarModalBajasFortia,
+      cargarCruceFortia,
+      iniciarConsultaBotFortia,
+      subirExcelBajas,
+      reprocesarCruceFortia,
+      consultarEstadoBotFortia
+    } = fortiaBajasModulo;
+
+    // ==========================================
     // VISTA MODULAR: OBRAS & WBS (vue/static/js/modules/obras.js)
     // ==========================================
     const obrasModulo = window.createObrasModule ? window.createObrasModule(Vue) : {};
@@ -1562,6 +1592,30 @@ createApp({
       sincronizandoAryve,
       sincronizarUsuariosAryve,
       seleccionarUsuario,
+      // Bajas FORTIA vs Enkontrol
+      modalBajasFortiaAbierto,
+      cargandoCruceFortia,
+      cruceFortia,
+      ejecutandoBotFortia,
+      estadoBotFortia,
+      pestanaBajasFortia,
+      busquedaBajasFortia,
+      diasAtrasFortia,
+      headlessFortia,
+      subiendoExcelFortia,
+      errorCruceFortia,
+      totalBajasEnRiesgo,
+      totalBajasFortia,
+      totalYaInactivos,
+      totalNoEncontrados,
+      listaBajasFiltrada,
+      abrirModalBajasFortia,
+      cerrarModalBajasFortia,
+      cargarCruceFortia,
+      iniciarConsultaBotFortia,
+      subirExcelBajas,
+      reprocesarCruceFortia,
+      consultarEstadoBotFortia,
       // Proyectos
       permisosUsuarios,
       permisosObras,
