@@ -11,6 +11,7 @@ DIR_PERMISOS = os.path.join(BASE_DIR, "PROYECTOS")
 RUTA_OBRAS_JSON = os.path.join(DIR_PERMISOS, "obras_permisos.json")
 RUTA_ENKONTROL_TXT = os.path.join(DIR_PERMISOS, "ENKONTROL.TXT")
 RUTA_LOG_DEPURACION = os.path.join(DIR_PERMISOS, "log_depuracion.txt")
+RUTA_LOG_DESASIGNACION = os.path.join(DIR_PERMISOS, "log_desasignacion.txt")
 RUTA_DESASIGNACION_JSON = os.path.join(DIR_PERMISOS, "desasignacion_usuarios_obras.json")
 RUTA_CONFIG_DESASIGNACION = os.path.join(DIR_PERMISOS, "desasignacion_config.json")
 
@@ -52,10 +53,11 @@ class PermisosService:
             return False
 
     @classmethod
-    def obtener_log_historial(cls) -> str:
-        if os.path.exists(RUTA_LOG_DEPURACION):
+    def obtener_log_historial(cls, tipo: str = "depuracion") -> str:
+        ruta = RUTA_LOG_DESASIGNACION if str(tipo).lower() == "desasignacion" else RUTA_LOG_DEPURACION
+        if os.path.exists(ruta):
             try:
-                with open(RUTA_LOG_DEPURACION, "r", encoding="utf-8") as f:
+                with open(ruta, "r", encoding="utf-8") as f:
                     return f.read()
             except Exception:
                 pass

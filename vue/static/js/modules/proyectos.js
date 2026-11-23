@@ -17,6 +17,7 @@ window.createProyectosModule = function(Vue) {
   const terminalLiveContenido = ref('[Sistema preparado. Presione "Comenzar Depuración" para iniciar.]');
   const historialPermisosContenido = ref('');
   const ejecutandoDepuracion = ref(false);
+  const subTabProyectos = ref('DESASIGNACION');
 
   // ==========================================
   // ESTADO DESASIGNACIÓN DE USUARIOS POR OBRA
@@ -247,6 +248,24 @@ window.createProyectosModule = function(Vue) {
     return 'Comenzar Desasignación Real (Guardar y Quitar)';
   });
 
+  const cargarHistorial = async () => {
+    try {
+      const tipo = subTabProyectos.value === 'DESASIGNACION' ? 'desasignacion' : 'depuracion';
+      const resHist = await fetch(`/api/operaciones/permisos/historial?tipo=${tipo}`);
+      if (resHist.ok) {
+        const dataHist = await resHist.json();
+        historialPermisosContenido.value = dataHist.log || '';
+      }
+    } catch (e) {
+      console.error('Error cargando historial:', e);
+    }
+  };
+
+  const cambiarSubTabProyectos = (tab) => {
+    subTabProyectos.value = tab;
+    cargarHistorial();
+  };
+
   // Cargar permisos desde la API
   const cargarPermisos = async (intentos = 3) => {
     try {
@@ -256,11 +275,7 @@ window.createProyectosModule = function(Vue) {
       permisosUsuarios.value = data.usuarios_protegidos || [];
       permisosObras.value = data.obras || [];
 
-      const resHist = await fetch('/api/operaciones/permisos/historial');
-      if (resHist.ok) {
-        const dataHist = await resHist.json();
-        historialPermisosContenido.value = dataHist.log || '';
-      }
+      await cargarHistorial();
     } catch (e) {
       console.error('Error cargando permisos:', e);
       if (intentos > 1) setTimeout(() => cargarPermisos(intentos - 1), 1200);
@@ -445,6 +460,9 @@ window.createProyectosModule = function(Vue) {
     terminalLiveContenido,
     historialPermisosContenido,
     ejecutandoDepuracion,
+    subTabProyectos,
+    cambiarSubTabProyectos,
+    cargarHistorial,
     cargarPermisos,
     guardarPermisosServidor,
     agregarUsuarioProtegido,

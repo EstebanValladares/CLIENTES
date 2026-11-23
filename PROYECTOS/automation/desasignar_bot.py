@@ -96,6 +96,46 @@ def confirmar_modal_si_existe(driver: WebDriver, timeout: float = 1.0) -> bool:
     return False
 
 
+def esta_en_modo_edicion(driver: WebDriver) -> bool:
+    """Verifica si la pantalla de la obra ya se encuentra en modo edición."""
+    selectores_indicadores = [
+        "//button[contains(@class, 'btn-editing')]",
+        "//button[contains(@class, 'yellow-casablanca')]",
+        "//button[@aria-label='Guardar (Alt+G)' or @title='Guardar (Alt+G)' or @data-tip='Guardar (Alt+G)']",
+        "//button[.//i[contains(@class, 'icon-cloud-upload')]]",
+        "//*[@id='datagrid_SOCProyectos_Posiciones']//td[contains(@class, 'dx-command-edit')]//span[contains(@class, 'fa-trash')]",
+    ]
+    for sel in selectores_indicadores:
+        try:
+            elems = driver.find_elements(By.XPATH, sel)
+            for el in elems:
+                if el.is_displayed():
+                    return True
+        except Exception:
+            pass
+    return False
+
+
+def salir_modo_edicion(driver: WebDriver) -> None:
+    """Sale del modo edición de forma segura (presionando Regresar/Cancelar)."""
+    selectores_cancelar = [
+        "//button[contains(@class, 'btn-cancelar')]",
+        "//button[@title='Regresar' or @aria-label='Regresar']",
+        "//button[.//i[contains(@class, 'fa-arrow-left')]]",
+    ]
+    for sel in selectores_cancelar:
+        try:
+            btns = driver.find_elements(By.XPATH, sel)
+            for b in btns:
+                if b.is_displayed():
+                    driver.execute_script("arguments[0].click();", b)
+                    time.sleep(0.6)
+                    confirmar_modal_si_existe(driver)
+                    return
+        except Exception:
+            pass
+
+
 def procesar_desasignacion_obra(
     driver: WebDriver,
     clave_obra: str,
@@ -116,47 +156,86 @@ def procesar_desasignacion_obra(
     set_usuarios_remover = {normalizar_texto(u) for u in usuarios_objetivo}
     logger.info(f"   Usuarios objetivo en esta obra ({len(set_usuarios_remover)}): {', '.join(usuarios_objetivo)}")
 
-    # Navegación directa
+    # Navegación a la obra garantizada
+    cargada_ok = False
     if id_proyecto:
         url_obra = f"{URL_BASE_ARYVE.rstrip('/')}/#/scco/Proyectos/{id_proyecto}"
-    elif info_obra.get("url_directa"):
-        url_obra = info_obra["url_directa"]
-    else:
-        url_obra = f"{URL_BASE_ARYVE.rstrip('/')}/#/scco/Proyectos"
+        logger.info(f"\n[{clave_obra}] Navegando a obra ID {id_proyecto}: {url_obra}")
+        
+        driver.get(url_obra)
+        time.sleep(0.8)
+        # Si la URL anterior ya era un proyecto, refrescamos para forzar a AngularJS a inicializar el nuevo ID
+        if "/Proyectos/" in driver.current_url:
+            driver.refresh()
+            time.sleep(1.5)
+            esperar_fin_carga(driver, timeout=12.0)
+        else:
+            esperar_fin_carga(driver, timeout=12.0)
 
-    logger.info(f"\n[{clave_obra}] Navegando a obra ID {id_proyecto or 'N/A'}: {url_obra}")
-    driver.get(url_obra)
-    time.sleep(1.5)
+        try:
+            wait_driver(driver, 8.0).until(
+                EC.presence_of_element_located((By.ID, "datagrid_SOCProyectos_Posiciones"))
+            )
+            cargada_ok = True
+        except Exception:
+            logger.aviso(f"[{clave_obra}] URL directa no estabilizó la pantalla. Recurriendo a búsqueda por catálogo...")
+
+    if not cargada_ok:
+        logger.info(f"[{clave_obra}] Abriendo proyecto mediante catálogo de obras...")
+        navegar_a_proyectos(driver, logger=logger)
+        buscar_obra_en_tabla(driver, clave_obra, logger=logger)
+        abrir_primer_resultado(driver, logger=logger)
+        time.sleep(1.5)
+        esperar_fin_carga(driver)
+
+    time.sleep(1.0)
     esperar_fin_carga(driver)
 
-    # Esperar a que la página y el contenedor de Posiciones existan
-    time.sleep(1.8)
-    esperar_fin_carga(driver, timeout=12.0)
+    # Activar modo edición si no está ya activo
+    modo_edicion_ok = esta_en_modo_edicion(driver)
+    if modo_edicion_ok:
+        logger.info("   [MODO EDICIÓN]: La obra ya se encuentra en modo edición.")
+    else:
+        selectores_editar = [
+            "//button[contains(@class, 'btn-editar')]",
+            "//button[@title='Editar (Alt+E)' or @aria-label='Editar (Alt+E)' or @data-tip='Editar (Alt+E)']",
+            "//button[.//i[contains(@class, 'fa-edit') or contains(@class, 'icon-pencil')]]",
+            "//div[contains(@class, 'btn-group')]//button[2]",
+        ]
+        for int_edit in range(1, 4):
+            btn_editar = None
+            for sel in selectores_editar:
+                try:
+                    candidatos = driver.find_elements(By.XPATH, sel)
+                    for c in candidatos:
+                        if c.is_displayed() or c.is_enabled():
+                            btn_editar = c
+                            break
+                    if btn_editar:
+                        break
+                except Exception:
+                    pass
 
-    try:
-        wait_driver(driver, TIMEOUT_LARGO).until(
-            EC.presence_of_element_located((By.ID, "datagrid_SOCProyectos_Posiciones"))
-        )
-    except Exception:
-        logger.aviso(f"[{clave_obra}] Esperando estabilización de pantalla...")
-        time.sleep(2.0)
+            if btn_editar:
+                try:
+                    scroll_al_centro(driver, btn_editar)
+                    time.sleep(0.3)
+                    driver.execute_script("arguments[0].click();", btn_editar)
+                    time.sleep(1.2)
+                    esperar_fin_carga(driver)
+                except Exception:
+                    try:
+                        btn_editar.click()
+                        time.sleep(1.2)
+                        esperar_fin_carga(driver)
+                    except Exception:
+                        pass
 
-    # Activar modo edición mediante inyección JavaScript directa (evita bloqueos de overlay)
-    modo_edicion_ok = False
-    for int_edit in range(1, 4):
-        try:
-            btn_editar = wait_driver(driver, TIMEOUT_CORTO).until(
-                EC.presence_of_element_located(ProyectoDetalleSelectors.BTN_EDITAR)
-            )
-            scroll_al_centro(driver, btn_editar)
-            time.sleep(0.3)
-            driver.execute_script("arguments[0].click();", btn_editar)
-            time.sleep(1.5)
-            esperar_fin_carga(driver)
-            logger.info("   [MODO EDICIÓN]: Botón Editar activado.")
-            modo_edicion_ok = True
-            break
-        except Exception:
+            if esta_en_modo_edicion(driver):
+                logger.info("   [MODO EDICIÓN]: Botón Editar activado con éxito.")
+                modo_edicion_ok = True
+                break
+
             logger.info(f"   [Cargando]: Esperando que los controles de la obra estén listos (intento {int_edit}/3)...")
             time.sleep(1.5)
             esperar_fin_carga(driver)
@@ -200,6 +279,7 @@ def procesar_desasignacion_obra(
 
         filas_vacias = 0
         logger.info(f"   [Fila {indice_fila}] Usuario: '{nombre_en_fila}'")
+        time.sleep(0.35)  # Ritmo visual para seguimiento en vivo
 
         # Comprobar coincidencia con la lista objetivo
         coincide = False
@@ -217,19 +297,20 @@ def procesar_desasignacion_obra(
             if iconos_trash:
                 btn_trash = iconos_trash[0]
                 scroll_al_centro(driver, btn_trash)
-                time.sleep(0.3)
+                time.sleep(0.4)
                 try:
                     click_eventos_mouse(driver, btn_trash)
                 except Exception:
                     click_js(driver, btn_trash)
 
-                time.sleep(0.6)
+                time.sleep(0.8)
                 confirmar_modal_si_existe(driver)
-                time.sleep(0.6)
+                time.sleep(0.8)
                 esperar_fin_carga(driver)
 
                 logger.info(f"   [-] Eliminado con éxito de la tabla: '{nombre_en_fila}'")
                 eliminados_en_esta_obra.append(nombre_en_fila)
+                time.sleep(1.2)  # Pausa para que el usuario compruebe la eliminación
                 # Al eliminarse la fila, la siguiente fila toma su lugar (no incrementar indice_fila)
                 continue
             else:
@@ -245,6 +326,7 @@ def procesar_desasignacion_obra(
             logger.info(f"   [MODO PRUEBA]: Pausando 4 segundos para inspección visual en pantalla...")
             time.sleep(4.0)
             logger.info(f"   [MODO PRUEBA]: Se OMITE clic en Guardar (Alt+G). La obra '{clave_obra}' permanece INTACTA en Aryve.")
+            salir_modo_edicion(driver)
             return len(eliminados_en_esta_obra), f"Prueba completada: {len(eliminados_en_esta_obra)} usuarios removidos visualmente (SIN GUARDAR)."
         else:
             logger.info(f"   Guardando cambios en obra '{clave_obra}'...")
@@ -263,6 +345,7 @@ def procesar_desasignacion_obra(
             return len(eliminados_en_esta_obra), f"Se eliminaron {len(eliminados_en_esta_obra)} usuarios y se guardó."
     else:
         logger.info(f"   [INFO] Ninguno de los {len(usuarios_objetivo)} usuarios objetivo estaba asignado en esta obra.")
+        salir_modo_edicion(driver)
         return 0, "No se requirió eliminar usuarios."
 
 

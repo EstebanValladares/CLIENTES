@@ -1,4 +1,4 @@
 {
-  "modo_prueba": true,
-  "limite_obras": 3
+  "modo_prueba": false,
+  "limite_obras": 0
 }

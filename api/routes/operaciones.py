@@ -19,8 +19,8 @@ def guardar_permisos(payload: Dict[str, Any] = Body(...)):
     return {"ok": True, "mensaje": "Datos actualizados"}
 
 @router.get("/permisos/historial")
-def historial_permisos():
-    return {"log": PermisosService.obtener_log_historial()}
+def historial_permisos(tipo: str = "depuracion"):
+    return {"log": PermisosService.obtener_log_historial(tipo=tipo)}
 
 # --- DESASIGNACIÓN DE USUARIOS POR PROYECTO ---
 @router.get("/desasignacion")
