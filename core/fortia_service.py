@@ -20,7 +20,7 @@ import openpyxl
 from core.user_service import UserService
 
 BASE_DIR = Path(__file__).resolve().parents[1]
-RUTA_SALIDA_FORTIA = BASE_DIR / "FORTIA" / "FortiaReporteBajas" / "data" / "salida"
+RUTA_SALIDA_FORTIA = BASE_DIR / "FORTIA" / "data" / "salida"
 RUTA_CRUCE_CACHE = BASE_DIR / "USUARIOS" / "data" / "bajas_fortia_cruce.json"
 
 
@@ -85,7 +85,7 @@ class FortiaService:
     def _worker_ejecucion_fortia(cls, dias_atras: int, headless: bool):
         cls._agregar_log_bot("Conectando con el portal de FORTIA RH...")
         try:
-            ruta_bot_dir = BASE_DIR / "FORTIA" / "FortiaReporteBajas"
+            ruta_bot_dir = BASE_DIR / "FORTIA"
             script_path = ruta_bot_dir / "src" / "fortia_reporte_bajas" / "main.py"
 
             from core.bot_service import BotRunnerService

@@ -30,7 +30,7 @@
     },
     "FORTIA_BAJAS": {
       "descripcion": "Descarga de reporte de Bajas de Recursos Humanos (Reporte 2411 FORTIA)",
-      "carpeta": "FORTIA/FortiaReporteBajas",
+      "carpeta": "FORTIA",
       "script": "src/fortia_reporte_bajas/main.py",
       "requiere_archivos": [],
       "usa_portal": false

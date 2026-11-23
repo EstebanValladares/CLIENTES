@@ -1322,11 +1322,11 @@
         </button>
 
         <button @click="abrirModalBajasFortia" 
-                class="bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/40 text-rose-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer" 
-                title="Detección de bajas de Recursos Humanos (FORTIA) vs usuarios activos de Enkontrol">
-          <i class="fa-solid fa-user-xmark"></i>
-          <span>Bajas RH (Fortia)</span>
-          <span v-if="totalBajasEnRiesgo > 0" class="ml-1 px-1.5 py-0.5 bg-rose-600 text-white text-[11px] font-bold rounded-full animate-pulse">
+                class="bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-200 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer" 
+                title="Bajas de Recursos Humanos (FORTIA) vs usuarios de Enkontrol">
+          <i class="fa-solid fa-users-slash text-slate-400"></i>
+          <span>Bajas RH</span>
+          <span v-if="totalBajasEnRiesgo > 0" class="ml-1 px-1.5 py-0.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold rounded-full">
             {{ totalBajasEnRiesgo }}
           </span>
         </button>
