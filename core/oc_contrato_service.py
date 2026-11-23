@@ -12,19 +12,105 @@ Si la OC fue creada hoy o no se encuentra en el snapshot local (Aryve2),
 se consulta en tiempo real al servidor oficial de Enkontrol Cloud [10.11.0.5,1433].
 """
 
-import pyodbc
+import os
+import json
+import urllib.request
+import urllib.parse
 from typing import Dict, Any, List, Optional
+
+try:
+    from Shared.config import es_modo_master
+except ImportError:
+    def es_modo_master() -> bool:
+        return True
 
 SQL_SERVER_HOST = "10.30.0.2"
 SQL_SERVER_PORT = 1433
 SQL_SERVER_DB = "Aryve2"
 SQL_SERVER_USER = "sa"
-SQL_SERVER_PASS = "Aryve2025*"
+SQL_SERVER_PASS = ""
 
 
 class OcContratoService:
     @classmethod
+    def _obtener_candidatos_torre(cls) -> List[str]:
+        """Obtiene la lista de URLs para consultar a la Torre Master desde clientes."""
+        candidatos = []
+        env_url = os.getenv("TORRE_CHAT_URL") or os.getenv("TORRE_URL")
+        if env_url:
+            candidatos.append(env_url.rstrip("/"))
+
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        data_dir = os.path.join(base_dir, "data")
+        for p in [os.path.join(base_dir, "conexion_torre.json"), os.path.join(data_dir, "conexion_torre.json")]:
+            if os.path.exists(p):
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        cfg = json.load(f)
+                    puerto = cfg.get("puerto", 8000)
+                    if cfg.get("ip_torre"):
+                        candidatos.append(f"http://{cfg['ip_torre']}:{puerto}")
+                    if cfg.get("hostname_torre"):
+                        candidatos.append(f"http://{cfg['hostname_torre']}:{puerto}")
+                    for ip in cfg.get("ips_conocidas", []):
+                        candidatos.append(f"http://{ip}:{puerto}")
+                except Exception:
+                    pass
+
+        candidatos.extend([
+            "http://10.10.200.31:8000",
+            "http://Esteban:8000",
+            "http://10.10.200.147:8000",
+            "http://127.0.0.1:8000"
+        ])
+
+        vistos = set()
+        unicos = []
+        for c in candidatos:
+            c_clean = c.rstrip("/")
+            if c_clean not in vistos:
+                vistos.add(c_clean)
+                unicos.append(c_clean)
+        return unicos
+
+    @classmethod
+    def _consultar_via_master(cls, folio, clave, obra, compania) -> Dict[str, Any]:
+        """Consulta el endpoint de la Torre Master desde clientes sin pyodbc ni acceso a base de datos."""
+        params = {}
+        if folio: params["folio"] = str(folio)
+        if clave: params["clave"] = str(clave)
+        if obra: params["obra"] = str(obra)
+        if compania: params["compania"] = str(compania)
+        qs = urllib.parse.urlencode(params)
+
+        for host in cls._obtener_candidatos_torre():
+            url = f"{host}/api/oc-contratos/consultar?{qs}"
+            try:
+                req = urllib.request.Request(
+                    url,
+                    headers={"User-Agent": "DashboardClient/1.0", "Accept": "application/json"}
+                )
+                with urllib.request.urlopen(req, timeout=6) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        if isinstance(data, dict):
+                            return data
+            except Exception:
+                continue
+
+        criterio = f"'{folio}'" if folio else f"clave '{clave}'"
+        return {
+            "ok": False,
+            "mensaje": f"No se pudo consultar {criterio} desde la versión de equipo. Verifica que la Torre Master (Esteban / 10.10.200.31) esté encendida."
+        }
+
+    @classmethod
     def _get_connection(cls):
+        try:
+            import pyodbc
+        except ImportError:
+            raise RuntimeError("pyodbc no está instalado en este equipo. En modo Cliente se consulta a través de la Torre Master.")
+
         conn_str = (
             f"Driver={{SQL Server}};"
             f"Server={SQL_SERVER_HOST},{SQL_SERVER_PORT};"
@@ -48,8 +134,8 @@ class OcContratoService:
     ) -> Dict[str, Any]:
         """
         Busca una OC por folio exacto, número o clave de contrato (ej. ELEC, MYM).
-        1. Intenta en Aryve2 (snapshot ultra rápido).
-        2. Si no se encuentra, consulta en vivo a Enkontrol Cloud [10.11.0.5,1433].
+        1. Si es modo Cliente o no hay pyodbc, consulta vía HTTP a la Torre Master.
+        2. En Master: Intenta en Aryve2 (snapshot ultra rápido) y luego fallback en vivo a Enkontrol Cloud.
         """
         folio = str(folio).strip() if (folio and isinstance(folio, (str, int))) else None
         clave = str(clave).strip().upper() if (clave and isinstance(clave, str)) else None
@@ -61,6 +147,17 @@ class OcContratoService:
 
         if not folio and not clave:
             return {"ok": False, "mensaje": "Ingresa el Folio de la OC o la Clave del Contrato (ej. ELEC, MYM, PLOM)."}
+
+        # Verificar si pyodbc está instalado
+        try:
+            import pyodbc
+            tiene_pyodbc = True
+        except ImportError:
+            tiene_pyodbc = False
+
+        # Si estamos en modo CLIENTES o no hay pyodbc disponible, consultar vía Master Torre
+        if not es_modo_master() or not tiene_pyodbc:
+            return cls._consultar_via_master(folio=folio, clave=clave, obra=obra, compania=compania)
 
         # 1. Intentar primero en Aryve2
         resultado_local = cls._consultar_aryve2(folio=folio, clave=clave, obra=obra, compania=compania)
