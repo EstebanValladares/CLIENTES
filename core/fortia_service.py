@@ -16,7 +16,12 @@ import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
-import openpyxl
+try:
+    from Shared.config import es_modo_master
+except ImportError:
+    def es_modo_master() -> bool:
+        return True
+
 from core.user_service import UserService
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -63,6 +68,9 @@ class FortiaService:
     @classmethod
     def iniciar_consulta_bajas_asincrona(cls, dias_atras: int = 30, headless: bool = True) -> tuple[bool, str]:
         """Inicia el bot de Selenium FortiaReporteBajas en segundo plano."""
+        if not es_modo_master():
+            return False, "La descarga automatizada desde FORTIA se ejecuta directamente en la Torre Master."
+
         with cls._lock:
             if cls._bot_estado["ejecutando"]:
                 return False, "Ya hay una consulta de FORTIA ejecutándose en segundo plano."
@@ -179,6 +187,12 @@ class FortiaService:
     @classmethod
     def leer_excel_bajas(cls, ruta_excel: Path | str) -> List[Dict[str, Any]]:
         """Lee el Excel exportado por FORTIA y extrae la lista de empleados dados de baja."""
+        try:
+            import openpyxl
+        except ImportError:
+            print("[FortiaService] openpyxl no está instalado en este equipo. En modo Cliente se consulta la caché generada por la Torre.")
+            return []
+
         wb = openpyxl.load_workbook(ruta_excel, data_only=True, read_only=True)
         sheet = wb.active
         filas = list(sheet.iter_rows(values_only=True))
@@ -386,6 +400,70 @@ class FortiaService:
         return cruce
 
     @classmethod
+    def _obtener_candidatos_torre(cls) -> List[str]:
+        """Obtiene la lista de URLs para consultar a la Torre Master desde clientes."""
+        candidatos = []
+        env_url = os.getenv("TORRE_CHAT_URL") or os.getenv("TORRE_URL")
+        if env_url:
+            candidatos.append(env_url.rstrip("/"))
+
+        base_dir = Path(__file__).resolve().parents[1]
+        data_dir = base_dir / "data"
+        for p in [base_dir / "conexion_torre.json", data_dir / "conexion_torre.json"]:
+            if p.exists():
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        cfg = json.load(f)
+                    puerto = cfg.get("puerto", 8000)
+                    if cfg.get("ip_torre"):
+                        candidatos.append(f"http://{cfg['ip_torre']}:{puerto}")
+                    if cfg.get("hostname_torre"):
+                        candidatos.append(f"http://{cfg['hostname_torre']}:{puerto}")
+                    for ip in cfg.get("ips_conocidas", []):
+                        candidatos.append(f"http://{ip}:{puerto}")
+                except Exception:
+                    pass
+
+        candidatos.extend([
+            "http://10.10.200.31:8000",
+            "http://Esteban:8000",
+            "http://10.10.200.147:8000",
+            "http://127.0.0.1:8000"
+        ])
+
+        vistos = set()
+        unicos = []
+        for c in candidatos:
+            c_clean = c.rstrip("/")
+            if c_clean not in vistos:
+                vistos.add(c_clean)
+                unicos.append(c_clean)
+        return unicos
+
+    @classmethod
+    def _consultar_cruce_via_master(cls) -> Dict[str, Any]:
+        """Consulta el cruce de bajas desde la Torre Master para clientes."""
+        import urllib.request
+        for host in cls._obtener_candidatos_torre():
+            url = f"{host}/api/fortia/cruce"
+            try:
+                req = urllib.request.Request(
+                    url,
+                    headers={"User-Agent": "DashboardClient/1.0", "Accept": "application/json"}
+                )
+                with urllib.request.urlopen(req, timeout=5) as resp:
+                    if resp.status == 200:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        if isinstance(data, dict):
+                            return data
+            except Exception:
+                continue
+        return {
+            "ok": False,
+            "error": "No se pudo conectar con la Torre Master para consultar el cruce de FORTIA."
+        }
+
+    @classmethod
     def obtener_cruce_actual(cls) -> Dict[str, Any]:
         """Obtiene el cruce guardado en caché o procesa el último archivo si existe."""
         if RUTA_CRUCE_CACHE.exists():
@@ -396,4 +474,8 @@ class FortiaService:
                     return data
             except Exception:
                 pass
+
+        if not es_modo_master():
+            return cls._consultar_cruce_via_master()
+
         return cls.procesar_ultimo_reporte_descargado()
