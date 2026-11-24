@@ -35,6 +35,12 @@
     const filtroEscalatoriaClave = ref('');
     const filtroEscalatoriaInsumo = ref('');
     const filtroEscalatoriaEstatus = ref('TODOS');
+    const filtroVerTodo = ref(false);
+    const ocInfoDetectada = ref(null);
+
+    // Tabla principal de Insumos & Precios (CLAVE | CODIGO | NOMBRE | INSUMOS | ORIGINAL | ESCALATORIA 1 | ESCALATORIA 2)
+    const tablaInsumosRegistros = ref([]);
+    const cargandoTablaInsumos = ref(false);
 
     // Estado del Acordeón Inline (Despliegue de Insumos por Clave & Obra)
     const claveExpandidaId = ref(null);
@@ -111,6 +117,7 @@
       } catch (e) {
         console.warn('Error cargando métricas de escalatorias:', e);
       }
+      consultarTablaInsumos();
     };
 
     let debounceTimer = null;
@@ -118,12 +125,34 @@
       paginaEscalatoriasActual.value = 1;
       if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
+        consultarTablaInsumos();
         consultarEscalatorias();
-        if (claveExpandidaId.value) {
-          const esc = escalatoriasRegistros.value.find(e => e.id === claveExpandidaId.value) || { id: claveExpandidaId.value };
-          toggleExpandirClave(esc, true);
-        }
       }, 250);
+    };
+
+    // Consulta de la Tabla Unificada de Insumos: CLAVE | CODIGO | NOMBRE | INSUMOS | ORIGINAL | ESCALATORIA 1 | ESCALATORIA 2
+    const consultarTablaInsumos = async () => {
+      cargandoTablaInsumos.value = true;
+      try {
+        const params = new URLSearchParams();
+        if (filtroEscalatoriaObra.value.trim()) params.append('obra', filtroEscalatoriaObra.value.trim());
+        if (filtroEscalatoriaClave.value.trim()) params.append('folio_oc', filtroEscalatoriaClave.value.trim());
+        if (filtroEscalatoriaInsumo.value.trim()) params.append('insumo', filtroEscalatoriaInsumo.value.trim());
+        params.append('ver_todo', filtroVerTodo.value ? 'true' : 'false');
+        params.append('limite', '200');
+
+        const res = await fetch(`/api/escalatorias/tabla-insumos?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          tablaInsumosRegistros.value = data.registros || [];
+          totalEscalatoriasFiltradas.value = data.total || 0;
+          ocInfoDetectada.value = data.oc_info || null;
+        }
+      } catch (e) {
+        console.error('Error consultando tabla de insumos:', e);
+      } finally {
+        cargandoTablaInsumos.value = false;
+      }
     };
 
     // Consultar Escalatorias (Catálogo de Claves / Folios)
@@ -134,7 +163,10 @@
         const params = new URLSearchParams();
         if (filtroEscalatoriaBusqueda.value.trim()) params.append('busqueda', filtroEscalatoriaBusqueda.value.trim());
         if (filtroEscalatoriaObra.value.trim()) params.append('obra', filtroEscalatoriaObra.value.trim());
-        if (filtroEscalatoriaClave.value.trim()) params.append('clave', filtroEscalatoriaClave.value.trim());
+        if (filtroEscalatoriaClave.value.trim()) {
+          params.append('clave', filtroEscalatoriaClave.value.trim());
+          params.append('folio_oc', filtroEscalatoriaClave.value.trim());
+        }
         if (filtroEscalatoriaInsumo.value.trim()) params.append('insumo', filtroEscalatoriaInsumo.value.trim());
         if (filtroEscalatoriaEstatus.value && filtroEscalatoriaEstatus.value !== 'TODOS') {
           params.append('estatus', filtroEscalatoriaEstatus.value);
@@ -146,7 +178,12 @@
         if (res.ok) {
           const data = await res.json();
           escalatoriasRegistros.value = data.registros || [];
-          totalEscalatoriasFiltradas.value = data.total || 0;
+          if (!tablaInsumosRegistros.value.length) {
+            totalEscalatoriasFiltradas.value = data.total || 0;
+          }
+          if (!ocInfoDetectada.value) {
+            ocInfoDetectada.value = data.oc_info || null;
+          }
         }
       } catch (e) {
         console.error('Error consultando escalatorias:', e);
@@ -179,11 +216,14 @@
       try {
         const params = new URLSearchParams();
         if (!verTodosInsumosClave.value) {
-          if (filtroEscalatoriaObra.value.trim()) {
-            params.append('obra', filtroEscalatoriaObra.value.trim());
+          const obraAUsar = filtroEscalatoriaObra.value.trim() || ocInfoDetectada.value?.obra || '';
+          if (obraAUsar) {
+            params.append('obra', obraAUsar);
           }
           if (filtroEscalatoriaInsumo.value.trim()) {
             params.append('insumo', filtroEscalatoriaInsumo.value.trim());
+          } else if (/^\d{6,8}$/.test(filtroEscalatoriaClave.value.trim())) {
+            params.append('insumo', filtroEscalatoriaClave.value.trim());
           }
         }
 
@@ -206,12 +246,15 @@
       filtroEscalatoriaClave.value = '';
       filtroEscalatoriaInsumo.value = '';
       filtroEscalatoriaEstatus.value = 'TODOS';
+      filtroVerTodo.value = false;
       filtroInsumosExpandidos.value = '';
+      ocInfoDetectada.value = null;
       claveExpandidaId.value = null;
       insumosClaveSeleccionada.value = [];
       infoClaveExpandida.value = null;
       verTodosInsumosClave.value = false;
       paginaEscalatoriasActual.value = 1;
+      consultarTablaInsumos();
       consultarEscalatorias();
     };
 
@@ -289,6 +332,11 @@
       filtroEscalatoriaClave,
       filtroEscalatoriaInsumo,
       filtroEscalatoriaEstatus,
+      filtroVerTodo,
+      ocInfoDetectada,
+      tablaInsumosRegistros,
+      cargandoTablaInsumos,
+      consultarTablaInsumos,
       claveExpandidaId,
       insumosClaveSeleccionada,
       cargandoInsumosClave,

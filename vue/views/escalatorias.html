@@ -81,36 +81,36 @@
       </div>
     </div>
 
-    <!-- Los 4 Buscadores: Todos con placeholder="" vacío -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <!-- Los Buscadores: Obra, Folio OC, Insumo + Check Ver Todo -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
       
       <!-- 1. Buscar por Obra / Proyecto -->
       <div>
         <label class="block text-[11px] font-semibold text-slate-400 mb-1">
-          <i class="fa-solid fa-helmet-safety text-amber-500 mr-1"></i> Buscar por Obra / Proyecto
+          <i class="fa-solid fa-helmet-safety text-amber-500 mr-1"></i> Buscar por Obra
         </label>
         <div class="relative">
           <input type="text" 
                  v-model="filtroEscalatoriaObra" 
                  @input="alCambiarFiltroEscalatorias"
-                 placeholder="" 
-                 class="w-full border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-amber-500 font-mono"
+                 placeholder="Ej. KA8, KBP, 226..." 
+                 class="w-full border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-amber-500 font-mono uppercase"
                  :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-700/80 text-white'">
           <span v-if="filtroEscalatoriaObra" @click="filtroEscalatoriaObra = ''; alCambiarFiltroEscalatorias();"
                 class="absolute right-2.5 top-2 text-slate-400 hover:text-slate-600 cursor-pointer text-xs">✕</span>
         </div>
       </div>
 
-      <!-- 2. Clave de Escalatoria -->
+      <!-- 2. Folio OC -->
       <div>
         <label class="block text-[11px] font-semibold text-slate-400 mb-1">
-          <i class="fa-solid fa-barcode text-cyan-400 mr-1"></i> Clave de Escalatoria
+          <i class="fa-solid fa-file-invoice-dollar text-cyan-400 mr-1"></i> Folio OC
         </label>
         <div class="relative">
           <input type="text" 
                  v-model="filtroEscalatoriaClave" 
                  @input="alCambiarFiltroEscalatorias"
-                 placeholder="" 
+                 placeholder="Ej. KBP-000003, 93..." 
                  class="w-full border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-cyan-500 font-mono uppercase"
                  :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-700/80 text-white'">
           <span v-if="filtroEscalatoriaClave" @click="filtroEscalatoriaClave = ''; alCambiarFiltroEscalatorias();"
@@ -127,7 +127,7 @@
           <input type="text" 
                  v-model="filtroEscalatoriaInsumo" 
                  @input="alCambiarFiltroEscalatorias"
-                 placeholder="" 
+                 placeholder="Ej. 1050022 o Block..." 
                  class="w-full border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500"
                  :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-700/80 text-white'">
           <span v-if="filtroEscalatoriaInsumo" @click="filtroEscalatoriaInsumo = ''; alCambiarFiltroEscalatorias();"
@@ -135,28 +135,53 @@
         </div>
       </div>
 
-      <!-- 4. Búsqueda Libre -->
-      <div>
-        <label class="block text-[11px] font-semibold text-slate-400 mb-1">
-          <i class="fa-solid fa-magnifying-glass text-emerald-400 mr-1"></i> Búsqueda Libre
+      <!-- 4. Checkbox Ver todo -->
+      <div class="pb-0.5">
+        <label class="flex items-center gap-2.5 px-3 py-2 rounded-xl border cursor-pointer select-none transition"
+               :class="filtroVerTodo
+                 ? (temaActual === 'claro' ? 'bg-amber-500/10 border-amber-500/40 text-amber-700' : 'bg-amber-500/15 border-amber-500/30 text-amber-300')
+                 : (temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-950 border-slate-700/80 text-slate-400 hover:bg-slate-900')">
+          <input type="checkbox"
+                 v-model="filtroVerTodo"
+                 @change="alCambiarFiltroEscalatorias"
+                 class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 border-slate-600 cursor-pointer">
+          <div class="flex flex-col">
+            <span class="text-xs font-bold leading-tight flex items-center gap-1.5">
+              <span>Ver todo</span>
+              <span v-if="filtroVerTodo" class="px-1.5 py-0.2 rounded text-[9px] bg-amber-500/20 text-amber-400 font-mono">Histórico</span>
+            </span>
+            <span class="text-[10px] text-slate-400 leading-tight">
+              {{ filtroVerTodo ? 'Muestra todas las escalatorias' : 'Solo la más reciente / vigente' }}
+            </span>
+          </div>
         </label>
-        <div class="relative">
-          <input type="text" 
-                 v-model="filtroEscalatoriaBusqueda" 
-                 @input="alCambiarFiltroEscalatorias"
-                 placeholder="" 
-                 class="w-full border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500"
-                 :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-700/80 text-white'">
-          <span v-if="filtroEscalatoriaBusqueda" @click="filtroEscalatoriaBusqueda = ''; alCambiarFiltroEscalatorias();"
-                class="absolute right-2.5 top-2 text-slate-400 hover:text-slate-600 cursor-pointer text-xs">✕</span>
-        </div>
       </div>
 
+    </div>
+
+    <!-- Banner cuando se detecta búsqueda por Folio de Orden de Compra -->
+    <div v-if="ocInfoDetectada" class="mt-3.5 p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between gap-3 text-xs text-cyan-300 animate-fadeIn">
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+          <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
+        </span>
+        <div>
+          <span class="font-bold text-white">Orden de Compra #{{ ocInfoDetectada.folio }}</span>
+          <span class="mx-1.5 text-slate-500">&bull;</span>
+          <span>Obra vinculada: <b class="text-cyan-200">{{ ocInfoDetectada.obra }}</b></span>
+          <span class="mx-1.5 text-slate-500">&bull;</span>
+          <span>{{ ocInfoDetectada.total_insumos }} insumos asociados a la OC</span>
+          <span v-if="ocInfoDetectada.proveedor" class="hidden sm:inline"> &bull; {{ ocInfoDetectada.proveedor }}</span>
+        </div>
+      </div>
+      <button @click="ocInfoDetectada = null" class="text-cyan-400 hover:text-white text-xs px-2 py-1 rounded-lg hover:bg-cyan-500/20 transition cursor-pointer">
+        ✕ Quitar
+      </button>
     </div>
   </div>
 
   <!-- ======================================================== -->
-  <!-- TABLA UNIFICADA: CLAVES / FOLIOS CON ACORDEÓN INLINE    -->
+  <!-- TABLA PRINCIPAL: INSUMOS & ESCALATORIAS DE PRECIOS      -->
   <!-- ======================================================== -->
   <div class="border rounded-2xl shadow-xl overflow-hidden flex flex-col flex-1 backdrop-blur-md transition"
        :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
@@ -164,36 +189,48 @@
     <!-- Barra superior de resultados -->
     <div class="p-4 border-b flex items-center justify-between flex-wrap gap-2"
          :class="temaActual === 'claro' ? 'border-slate-100 bg-slate-50/50' : 'border-slate-800 bg-slate-950/40'">
-      <div class="flex items-center gap-2 flex-wrap">
+      <div class="flex items-center gap-2.5 flex-wrap">
         <span class="text-xs font-semibold"
               :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
-          Mostrando <b class="text-amber-500">{{ escalatoriasRegistros.length }}</b> de <b class="text-cyan-400">{{ totalEscalatoriasFiltradas }}</b> escalatorias encontradas
+          Mostrando <b class="text-amber-500">{{ tablaInsumosRegistros.length }}</b> insumos encontrados
         </span>
-        <span class="text-[11px] text-slate-400 hidden sm:inline">
-          • Haz clic en cualquier fila para desplegar sus insumos y precios
-        </span>
-        <span v-if="cargandoEscalatorias" class="inline-flex items-center gap-1.5 text-xs text-amber-500">
+
+        <!-- CLAVE DE LA ESCALATORIA / FOLIO (Ubicada en la barra superior en lugar del texto) -->
+        <div v-if="tablaInsumosRegistros.length > 0"
+             class="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25 shadow-xs">
+          <i class="fa-solid fa-file-signature text-amber-500 text-xs"></i>
+          <span class="text-xs font-bold font-mono text-amber-400">
+            {{ tablaInsumosRegistros[0].clave }}
+          </span>
+          <!-- Mes Cerrado vs Mes en Curso -->
+          <span v-if="tablaInsumosRegistros[0].es_mes_cerrado"
+                class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30 inline-flex items-center gap-0.5"
+                :title="tablaInsumosRegistros[0].motivo_cierre || 'Supera un mes de vigencia'">
+            <i class="fa-solid fa-lock text-[8px]"></i>
+            <span>Mes Cerrado</span>
+          </span>
+          <span v-else
+                class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 inline-flex items-center gap-0.5">
+            <i class="fa-solid fa-calendar-check text-[8px]"></i>
+            <span>Mes en Curso</span>
+          </span>
+          <span v-if="tablaInsumosRegistros[0].fecha_autorizacion" class="text-[10px] text-slate-400 font-mono">
+            {{ tablaInsumosRegistros[0].fecha_autorizacion.split('T')[0] }}
+          </span>
+        </div>
+
+        <span v-if="cargandoTablaInsumos" class="inline-flex items-center gap-1.5 text-xs text-amber-500 font-medium">
           <i class="fa-solid fa-circle-notch fa-spin"></i>
-          <span>Buscando...</span>
+          <span>Consultando insumos y precios...</span>
         </span>
       </div>
 
-      <!-- Paginador -->
-      <div v-if="totalPaginasEscalatorias > 1" class="flex items-center gap-2">
-        <button @click="cambiarPaginaEscalatorias(paginaEscalatoriasActual - 1)"
-                :disabled="paginaEscalatoriasActual <= 1"
-                class="px-2 py-1 text-xs rounded border transition cursor-pointer disabled:opacity-30"
-                :class="temaActual === 'claro' ? 'border-slate-200 bg-white text-slate-700' : 'border-slate-700 bg-slate-800 text-slate-300'">
-          <i class="fa-solid fa-chevron-left text-[10px]"></i>
-        </button>
-        <span class="text-xs font-mono text-slate-400">
-          Pág {{ paginaEscalatoriasActual }} / {{ totalPaginasEscalatorias }}
-        </span>
-        <button @click="cambiarPaginaEscalatorias(paginaEscalatoriasActual + 1)"
-                :disabled="paginaEscalatoriasActual >= totalPaginasEscalatorias"
-                class="px-2 py-1 text-xs rounded border transition cursor-pointer disabled:opacity-30"
-                :class="temaActual === 'claro' ? 'border-slate-200 bg-white text-slate-700' : 'border-slate-700 bg-slate-800 text-slate-300'">
-          <i class="fa-solid fa-chevron-right text-[10px]"></i>
+      <div class="flex items-center gap-2">
+        <button @click="consultarTablaInsumos"
+                class="px-2.5 py-1 text-xs rounded-lg border transition cursor-pointer flex items-center gap-1.5"
+                :class="temaActual === 'claro' ? 'border-slate-200 bg-white hover:bg-slate-100 text-slate-700' : 'border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300'">
+          <i class="fa-solid fa-rotate text-[10px]"></i>
+          <span>Actualizar</span>
         </button>
       </div>
     </div>
@@ -204,350 +241,125 @@
         <thead>
           <tr class="border-b text-[11px] font-bold uppercase tracking-wider select-none"
               :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-600' : 'bg-slate-950/80 border-slate-800 text-slate-400'">
-            <th class="py-3 px-3 w-10 text-center"></th>
-            <th class="py-3 px-4">Clave / Folio</th>
-            <th class="py-3 px-3">Estatus</th>
-            <th class="py-3 px-3">Plaza / CC</th>
-            <th class="py-3 px-4">Obras Afectadas (WBS)</th>
-            <th class="py-3 px-3 text-center">Insumos</th>
-            <th class="py-3 px-4">Autorizado Por</th>
-            <th class="py-3 px-4 text-right">Insumos & Precios</th>
+            <th class="py-3.5 px-3 font-bold">CODIGO</th>
+            <th class="py-3.5 px-4 font-bold">NOMBRE</th>
+            <th class="py-3.5 px-3 font-bold text-center">INSUMOS</th>
+            <th class="py-3.5 px-4 font-bold text-right">ORIGINAL</th>
+            <th class="py-3.5 px-4 font-bold text-right">ESCALATORIA 1</th>
+            <th class="py-3.5 px-4 font-bold text-right">ESCALATORIA 2</th>
+            <th class="py-3.5 px-4 font-bold text-center">DESGLOCE</th>
           </tr>
         </thead>
         <tbody class="divide-y"
                :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
           
-          <tr v-if="escalatoriasRegistros.length === 0 && !cargandoEscalatorias">
-            <td colspan="8" class="py-12 text-center text-slate-400">
-              <i class="fa-solid fa-file-circle-question text-3xl mb-2 text-slate-500 block"></i>
-              <span>No se encontraron escalatorias con los filtros aplicados.</span>
+          <!-- ESTADO DE CARGA -->
+          <tr v-if="cargandoTablaInsumos && tablaInsumosRegistros.length === 0">
+            <td colspan="7" class="py-14 text-center text-slate-400">
+              <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-amber-500 block"></i>
+              <span class="text-xs font-medium">Buscando insumos y escalatorias de precios autorizados...</span>
             </td>
           </tr>
 
-          <!-- Iteración por Clave / Escalatoria -->
-          <template v-for="esc in escalatoriasRegistros" :key="esc.id">
+          <!-- ESTADO SIN RESULTADOS -->
+          <tr v-else-if="tablaInsumosRegistros.length === 0">
+            <td colspan="7" class="py-14 text-center text-slate-400">
+              <i class="fa-solid fa-file-circle-question text-3xl mb-2 text-slate-500 block"></i>
+              <span class="block text-xs font-semibold text-slate-300">No se encontraron insumos ni escalatorias con los filtros ingresados.</span>
+              <p class="text-[11px] text-slate-500 mt-1 max-w-md mx-auto">
+                Ingresa una Obra (ej. KA8, KBP) o Folio de OC. Si requieres ver escalatorias pasadas, marca el check <b class="text-amber-400">Ver todo</b>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- FILAS DE DATOS -->
+          <tr v-for="item in tablaInsumosRegistros" :key="item.id"
+              class="transition-colors group hover:bg-slate-800/30">
             
-            <!-- FILA PRINCIPAL DE LA ESCALATORIA -->
-            <tr @click="toggleExpandirClave(esc)"
-                class="transition-colors group cursor-pointer"
-                :class="claveExpandidaId === esc.id 
-                  ? (temaActual === 'claro' ? 'bg-amber-50/80 font-medium' : 'bg-amber-500/10')
-                  : (temaActual === 'claro' ? 'hover:bg-amber-50/40' : 'hover:bg-slate-800/40')">
-              
-              <!-- Ícono de Acordeón -->
-              <td class="py-3 px-3 text-center whitespace-nowrap">
-                <i class="fa-solid text-[11px] transition-transform duration-200"
-                   :class="claveExpandidaId === esc.id ? 'fa-chevron-down text-amber-500' : 'fa-chevron-right text-slate-400'"></i>
-              </td>
+            <!-- CODIGO DE INSUMO -->
+            <td class="py-3 px-3 whitespace-nowrap">
+              <span class="px-2 py-1 rounded text-xs font-mono font-bold bg-slate-800 text-cyan-300 border border-slate-700/60 shadow-xs">
+                {{ item.codigo }}
+              </span>
+            </td>
 
-              <!-- Clave / Folio -->
-              <td class="py-3 px-4 whitespace-nowrap">
-                <div class="flex items-center gap-2">
-                  <span class="px-2.5 py-1 rounded-lg font-mono font-bold text-xs border transition flex items-center gap-1.5 shadow-xs"
-                        :class="claveExpandidaId === esc.id
-                          ? 'bg-amber-500 text-slate-950 border-amber-600'
-                          : (temaActual === 'claro'
-                              ? 'bg-amber-50 group-hover:bg-amber-100 border-amber-200 text-amber-700'
-                              : 'bg-amber-500/15 group-hover:bg-amber-500/25 border-amber-500/30 text-amber-300')">
-                    <i class="fa-solid fa-barcode text-[10px]"></i>
-                    <span>{{ esc.clave }}</span>
-                  </span>
-                </div>
-              </td>
-
-              <!-- Estatus -->
-              <td class="py-3 px-3 whitespace-nowrap">
-                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border"
-                      :class="(esc.estatus === 'AUT' || (esc.estatus_desc && esc.estatus_desc.toUpperCase().includes('AUT')))
-                        ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                        : 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30'">
-                  <span class="w-1.5 h-1.5 rounded-full"
-                        :class="(esc.estatus === 'AUT' || (esc.estatus_desc && esc.estatus_desc.toUpperCase().includes('AUT'))) ? 'bg-emerald-400' : 'bg-cyan-400'"></span>
-                  {{ esc.estatus_desc || esc.estatus || 'Activo' }}
+            <!-- NOMBRE DE MATERIAL / INSUMO -->
+            <td class="py-3 px-4">
+              <div class="font-medium text-xs leading-snug max-w-[360px]"
+                   :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                {{ item.nombre }}
+                <!-- Si está activo Ver Todo y la fila pertenece a otra escalatoria, mostrar etiqueta discreta -->
+                <span v-if="filtroVerTodo && item.clave !== tablaInsumosRegistros[0]?.clave"
+                      class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                  {{ item.clave }}
                 </span>
-              </td>
+              </div>
+            </td>
 
-              <!-- Plaza / Centro de Costos -->
-              <td class="py-3 px-3 whitespace-nowrap">
-                <div class="flex items-center gap-1.5">
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-500/10 border border-slate-500/20 text-slate-400">
-                    {{ esc.cc_codigo || '-' }}
-                  </span>
-                  <span class="text-xs truncate max-w-[170px]"
-                        :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'"
-                        :title="esc.cc_nombre">
-                    {{ esc.cc_nombre || 'General' }}
-                  </span>
-                </div>
-              </td>
+            <!-- INSUMOS (GUÍA O ASOCIADO A OC) -->
+            <td class="py-3 px-3 text-center whitespace-nowrap">
+              <span v-if="item.en_oc"
+                    class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 inline-flex items-center gap-1">
+                <i class="fa-solid fa-file-invoice text-[9px]"></i>
+                {{ item.insumos }}
+              </span>
+              <span v-else
+                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-medium text-slate-400 bg-slate-800/50 border border-slate-700/50">
+                {{ item.insumos }}
+              </span>
+            </td>
 
-              <!-- Obras Afectadas (WBS) -->
-              <td class="py-3 px-4">
-                <div class="flex items-center gap-1.5 flex-wrap max-w-[380px]">
-                  <template v-if="esc.obras_resumen && esc.obras_resumen.length > 0">
-                    <span v-for="(obr, oidx) in esc.obras_resumen.slice(0, 3)" :key="oidx"
-                          class="px-2 py-0.5 rounded text-[10px] font-mono border truncate max-w-[180px]"
-                          :class="filtroEscalatoriaObra && (obr.obra?.toUpperCase().includes(filtroEscalatoriaObra.toUpperCase()) || obr.proyecto?.toUpperCase().includes(filtroEscalatoriaObra.toUpperCase()))
-                            ? 'bg-amber-500/20 border-amber-500/40 text-amber-500 font-bold'
-                            : (temaActual === 'claro'
-                                ? 'bg-slate-100 border-slate-200 text-slate-700'
-                                : 'bg-slate-800/80 border-slate-700 text-slate-300')"
-                          :title="(obr.proyecto || '') + ' | ' + (obr.obra || '')">
-                      {{ obr.obra || obr.proyecto || '-' }}
-                    </span>
-                    <span v-if="(esc.total_obras || esc.obras_resumen.length) > 3"
-                          class="px-1.5 py-0.5 rounded text-[10px] font-bold"
-                          :class="temaActual === 'claro' ? 'bg-indigo-50 text-indigo-600' : 'bg-indigo-500/20 text-indigo-300'">
-                      +{{ (esc.total_obras || esc.obras_resumen.length) - 3 }} más
-                    </span>
-                  </template>
-                  <span v-else class="text-slate-500 text-[11px] italic">
-                    Aplica a nivel CC general
-                  </span>
-                </div>
-              </td>
+            <!-- ORIGINAL -->
+            <td class="py-3 px-4 text-right whitespace-nowrap font-mono text-xs text-slate-400">
+              <span v-if="item.original" class="font-medium">
+                {{ formatearPrecio(item.original) }}
+              </span>
+              <span v-else class="text-slate-500">—</span>
+            </td>
 
-              <!-- Total Insumos -->
-              <td class="py-3 px-3 text-center whitespace-nowrap">
-                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs font-mono font-bold border"
-                      :class="temaActual === 'claro'
-                        ? 'bg-slate-100 border-slate-200 text-slate-700'
-                        : 'bg-slate-800 border-slate-700 text-slate-300'">
-                  <i class="fa-solid fa-cubes-stacked text-[10px] text-amber-500"></i>
-                  <span>{{ esc.numero_insumos || 0 }}</span>
-                </span>
-              </td>
+            <!-- ESCALATORIA 1 -->
+            <td class="py-3 px-4 text-right whitespace-nowrap">
+              <span v-if="item.escalatoria_1"
+                    class="text-xs font-bold font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/25 shadow-xs">
+                {{ formatearPrecio(item.escalatoria_1) }}
+              </span>
+              <span v-else class="text-slate-500 font-mono text-xs">—</span>
+            </td>
 
-              <!-- Autorizado Por -->
-              <td class="py-3 px-4 whitespace-nowrap">
-                <div class="text-[11px]">
-                  <div class="font-medium truncate max-w-[180px]"
-                       :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'"
-                       :title="esc.modificado_por || esc.creado_por">
-                    {{ esc.modificado_por || esc.creado_por || 'Sistema' }}
-                  </div>
-                  <div class="text-[10px] text-slate-400 font-mono">
-                    {{ esc.fecha_autorizacion ? esc.fecha_autorizacion.split('T')[0] : (esc.creado ? esc.creado.split('T')[0] : '-') }}
-                  </div>
-                </div>
-              </td>
+            <!-- ESCALATORIA 2 -->
+            <td class="py-3 px-4 text-right whitespace-nowrap">
+              <span v-if="item.escalatoria_2"
+                    class="text-xs font-bold font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/25 shadow-xs">
+                {{ formatearPrecio(item.escalatoria_2) }}
+              </span>
+              <span v-else class="text-slate-500 font-mono text-xs">—</span>
+            </td>
 
-              <!-- Botón Ver Insumos / Precios -->
-              <td class="py-3 px-4 text-right whitespace-nowrap">
-                <button @click.stop="toggleExpandirClave(esc)"
-                        class="px-3 py-1.5 text-xs font-bold rounded-xl border transition cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
-                        :class="claveExpandidaId === esc.id
-                          ? 'bg-amber-500 text-slate-950 border-amber-600'
-                          : (temaActual === 'claro'
-                              ? 'bg-white hover:bg-slate-100 border-slate-200 text-slate-700'
-                              : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200')">
-                  <span>{{ claveExpandidaId === esc.id ? 'Ocultar Precios' : 'Ver Precios' }}</span>
-                  <i class="fa-solid text-[10px]"
-                     :class="claveExpandidaId === esc.id ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                </button>
-              </td>
+            <!-- COLUMNA DESGLOCE -->
+            <td class="py-3 px-4 text-center whitespace-nowrap">
+              <button @click="abrirDetalleEscalatoria({ id: item.id_escalatoria, clave: item.clave })"
+                      class="px-2.5 py-1 rounded-lg border border-slate-700/60 bg-slate-800/60 text-slate-300 hover:text-white hover:bg-slate-700 transition cursor-pointer inline-flex items-center gap-1.5 text-xs shadow-xs"
+                      title="Ver desglose completo de la escalatoria">
+                <span>Ver</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500"></i>
+              </button>
+            </td>
 
-            </tr>
-
-            <!-- ======================================================== -->
-            <!-- FILA EXPANDIDA INLINE: INSUMOS DE LA OBRA EN ESTA CLAVE -->
-            <!-- ======================================================== -->
-            <tr v-if="claveExpandidaId === esc.id" class="border-b-2 border-amber-500/40">
-              <td colspan="8" class="p-0">
-                <div class="p-4 sm:p-5 border-y transition"
-                     :class="temaActual === 'claro' ? 'bg-slate-50/90 border-slate-200' : 'bg-slate-950/90 border-slate-800'">
-                  
-                  <!-- Cabecera del Acordeón Inline -->
-                  <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pb-3.5 mb-3.5 border-b"
-                       :class="temaActual === 'claro' ? 'border-slate-200' : 'border-slate-800'">
-                    
-                    <div class="flex items-center gap-2.5 flex-wrap">
-                      <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold">
-                        <i class="fa-solid fa-dollar-sign text-sm"></i>
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2 flex-wrap">
-                          <h4 class="text-sm font-bold"
-                              :class="temaActual === 'claro' ? 'text-slate-900' : 'text-white'">
-                            Insumos Pactados & Precios en <span class="font-mono text-amber-500">{{ esc.clave }}</span>
-                          </h4>
-                          <!-- Badge de Obra Filtrada -->
-                          <span v-if="filtroEscalatoriaObra && !verTodosInsumosClave" 
-                                class="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30">
-                            <i class="fa-solid fa-helmet-safety mr-1"></i> Obra: {{ filtroEscalatoriaObra.toUpperCase() }}
-                          </span>
-                          <span v-else class="px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-slate-500/15 text-slate-400 border border-slate-500/20">
-                            Todas las obras
-                          </span>
-                          <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
-                            {{ insumosExpandidosFiltrados.length }} insumos encontrados
-                          </span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-0.5">
-                          Valores autorizados según tabulador Enkontrol SOC. Precios unitarios expresados en moneda pactada.
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- Herramientas del Acordeón: Buscador interno & Toggle para ver todos -->
-                    <div class="flex items-center gap-2 w-full md:w-auto">
-                      <!-- Buscador rápido en el acordeón -->
-                      <div class="relative flex-1 md:w-64">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-                        <input type="text"
-                               v-model="filtroInsumosExpandidos"
-                               placeholder="Filtrar insumo o código..."
-                               class="w-full pl-8 pr-3 py-1.5 text-xs border rounded-xl focus:outline-none focus:border-amber-500"
-                               :class="temaActual === 'claro' ? 'bg-white border-slate-200 text-slate-800' : 'bg-slate-900 border-slate-700 text-white'">
-                      </div>
-
-                      <!-- Botón Toggle: Ver todos los insumos de la clave vs solo obra filtrada -->
-                      <button v-if="filtroEscalatoriaObra"
-                              @click="toggleExpandirClave(esc, true, true)"
-                              class="px-2.5 py-1.5 text-xs font-semibold rounded-xl border transition cursor-pointer whitespace-nowrap"
-                              :class="verTodosInsumosClave
-                                ? 'bg-amber-500 text-slate-950 border-amber-600 font-bold'
-                                : (temaActual === 'claro' ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800')"
-                              :title="verTodosInsumosClave ? 'Regresar a la obra filtrada' : 'Ver todos los insumos de esta clave sin filtrar obra'">
-                        <i class="fa-solid fa-filter text-[10px] mr-1"></i>
-                        <span>{{ verTodosInsumosClave ? 'Solo Obra ' + filtroEscalatoriaObra.toUpperCase() : 'Ver Todos' }}</span>
-                      </button>
-                    </div>
-
-                  </div>
-
-                  <!-- SPINNER DE CARGA -->
-                  <div v-if="cargandoInsumosClave" class="py-10 text-center text-amber-500">
-                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i>
-                    <p class="text-xs font-semibold">Cargando insumos pactados desde Enkontrol Cloud / SQLite...</p>
-                  </div>
-
-                  <!-- TABLA DE INSUMOS PACTADOS (CLON EXACTO DE LA IMAGEN DE ENKONTROL) -->
-                  <div v-else-if="insumosExpandidosFiltrados.length > 0" class="border rounded-xl overflow-hidden shadow-xs"
-                       :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
-                    
-                    <div class="overflow-x-auto max-h-[460px] custom-scrollbar">
-                      <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                          <tr class="border-b text-[11px] font-bold uppercase tracking-wider select-none sticky top-0 z-10"
-                              :class="temaActual === 'claro' ? 'bg-slate-100 border-slate-200 text-slate-700' : 'bg-slate-950 border-slate-800 text-slate-300'">
-                            <th class="py-2.5 px-3 w-28">Código</th>
-                            <th class="py-2.5 px-4">Nombre / Insumo</th>
-                            <th class="py-2.5 px-3 text-center w-28">Moneda</th>
-                            <th class="py-2.5 px-4 text-right w-36 text-amber-600 dark:text-amber-400">
-                              <i class="fa-solid fa-tag mr-1"></i> Precio Pactado
-                            </th>
-                            <th class="py-2.5 px-3 text-right w-32 text-slate-400">Ppto Original</th>
-                            <th class="py-2.5 px-4">Obra Destino (WBS)</th>
-                          </tr>
-                        </thead>
-                        <tbody class="divide-y"
-                               :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
-                          
-                          <tr v-for="(ins, iidx) in insumosExpandidosFiltrados" :key="iidx"
-                              class="transition-colors hover:bg-amber-500/10">
-                            
-                            <!-- Código de Insumo con Badge Cyan Idéntico a Enkontrol -->
-                            <td class="py-2.5 px-3 whitespace-nowrap">
-                              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500 text-white shadow-xs">
-                                {{ ins.clave || ins.id_insumo || '-' }}
-                              </span>
-                            </td>
-
-                            <!-- Nombre del Insumo -->
-                            <td class="py-2.5 px-4 font-semibold text-xs"
-                                :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-100'">
-                              {{ ins.nombre || '-' }}
-                            </td>
-
-                            <!-- Moneda (MXN 1 MXP) -->
-                            <td class="py-2.5 px-3 text-center whitespace-nowrap">
-                              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-400/15 text-cyan-600 dark:text-cyan-300 border border-cyan-400/30">
-                                {{ ins.moneda || 'MXN' }} 1 MXP
-                              </span>
-                            </td>
-
-                            <!-- PRECIO PACTADO (RESALTADO EN NEGRITA) -->
-                            <td class="py-2.5 px-4 text-right whitespace-nowrap">
-                              <span class="text-xs sm:text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 shadow-xs">
-                                {{ formatearPrecio(ins.precio) }}
-                              </span>
-                            </td>
-
-                            <!-- Presupuesto Original -->
-                            <td class="py-2.5 px-3 text-right whitespace-nowrap font-mono text-slate-400">
-                              {{ ins.precio_ppto ? formatearPrecio(ins.precio_ppto) : '-' }}
-                            </td>
-
-                            <!-- Obra Destino (WBS) -->
-                            <td class="py-2.5 px-4">
-                              <div class="flex items-center gap-1.5 max-w-[280px]">
-                                <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500 text-white shrink-0">
-                                  {{ ins.obra_clave || filtroEscalatoriaObra || 'OBR' }}
-                                </span>
-                                <span class="text-xs truncate text-slate-400" :title="ins.obra_nombre || ins.proyecto">
-                                  {{ ins.obra_nombre || ins.proyecto || 'General' }}
-                                </span>
-                              </div>
-                            </td>
-
-                          </tr>
-
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <!-- Pie de la Tabla de Insumos -->
-                    <div class="p-2.5 border-t flex items-center justify-between text-xs text-slate-400 select-none"
-                         :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-950/80 border-slate-800'">
-                      <span class="text-[11px]">
-                        Mostrando <b>{{ insumosExpandidosFiltrados.length }}</b> insumos autorizados en esta clave.
-                      </span>
-                      <button @click="abrirDetalleEscalatoria(esc)"
-                              class="text-[11px] font-bold text-indigo-500 hover:text-indigo-400 cursor-pointer inline-flex items-center gap-1">
-                        <span>Ver desglose completo de obras</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                      </button>
-                    </div>
-
-                  </div>
-
-                  <!-- ESTADO SIN RESULTADOS EN EL ACORDEÓN -->
-                  <div v-else class="py-8 text-center text-slate-400 border rounded-xl"
-                       :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
-                    <i class="fa-solid fa-circle-exclamation text-2xl mb-2 text-amber-500/80 block"></i>
-                    <p class="text-xs font-semibold">
-                      No se encontraron insumos específicos para la obra "{{ filtroEscalatoriaObra }}" en esta clave.
-                    </p>
-                    <p class="text-[11px] text-slate-500 mt-1">
-                      Esta clave contiene otros insumos autorizados.
-                    </p>
-                    <button @click="toggleExpandirClave(esc, true, true)"
-                            class="mt-3 px-3 py-1.5 text-xs font-bold rounded-xl bg-amber-500 text-slate-950 hover:bg-amber-400 transition cursor-pointer inline-flex items-center gap-1.5 shadow-xs">
-                      <i class="fa-solid fa-list text-[10px]"></i>
-                      <span>Ver todos los insumos de esta Clave</span>
-                    </button>
-                  </div>
-
-                </div>
-              </td>
-            </tr>
-
-          </template>
+          </tr>
 
         </tbody>
       </table>
     </div>
 
-    <!-- Paginación Inferior -->
+    <!-- Barra Inferior -->
     <div class="p-3 border-t flex items-center justify-between text-xs text-slate-400 select-none"
          :class="temaActual === 'claro' ? 'border-slate-100 bg-slate-50/30' : 'border-slate-800 bg-slate-950/20'">
       <div class="flex items-center gap-2">
         <i class="fa-solid fa-database text-amber-500"></i>
         <span>Base local sincronizada con Enkontrol 10 Cloud (SOC Escalatorias)</span>
       </div>
-      <div v-if="totalPaginasEscalatorias > 1" class="flex items-center gap-2 font-mono">
-        <span>Página {{ paginaEscalatoriasActual }} de {{ totalPaginasEscalatorias }}</span>
+      <div class="flex items-center gap-3 text-[11px] text-slate-500 font-mono">
+        <span>Columnas: ORIGINAL (Ppto/Base) &bull; ESCALATORIA 1 &bull; ESCALATORIA 2</span>
       </div>
     </div>
 
@@ -591,6 +403,21 @@
                 :class="temaActual === 'claro' ? 'border-slate-200 hover:bg-slate-100 text-slate-600' : 'border-slate-700 hover:bg-slate-800 text-slate-400 hover:text-white'">
           <i class="fa-solid fa-xmark text-sm"></i>
         </button>
+      </div>
+
+      <!-- Alerta si es de Mes Cerrado / Supera un mes -->
+      <div v-if="escalatoriaSeleccionada?.es_mes_cerrado"
+           class="mx-6 mt-4 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-xs text-rose-300 animate-fadeIn">
+        <i class="fa-solid fa-triangle-exclamation text-rose-400 text-lg shrink-0 mt-0.5"></i>
+        <div class="flex-1">
+          <div class="font-bold text-rose-200 flex items-center gap-2">
+            <span>Período de Escalatoria Cerrado (Supera 1 mes)</span>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 font-mono">{{ escalatoriaSeleccionada.mes_nombre }}</span>
+          </div>
+          <p class="text-[11px] text-rose-300/90 mt-1 leading-relaxed">
+            {{ escalatoriaSeleccionada.motivo_cierre }}. Enkontrol no permite aplicar escalatorias de meses anteriores a órdenes del período actual sin renovación.
+          </p>
+        </div>
       </div>
 
       <!-- Barra de Tabs [INSUMOS PACTADOS] vs [OBRAS APLICABLES] -->

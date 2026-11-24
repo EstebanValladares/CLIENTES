@@ -21,11 +21,33 @@ def obtener_resumen():
     return EscalatoriaService.obtener_resumen()
 
 
+@router.get("/tabla-insumos")
+def consultar_tabla_insumos(
+    obra: Optional[str] = Query(None, description="Filtro por Obra / Proyecto"),
+    folio_oc: Optional[str] = Query(None, description="Folio de Orden de Compra"),
+    insumo: Optional[str] = Query(None, description="Código o nombre del Insumo"),
+    ver_todo: bool = Query(False, description="Si es True muestra todas las escalatorias; si es False solo la más reciente"),
+    limite: int = Query(150, ge=1, le=500)
+):
+    """
+    Vista tabular de Insumos & Escalatorias:
+    CLAVE | CODIGO | NOMBRE | INSUMOS | ORIGINAL | ESCALATORIA 1 | ESCALATORIA 2
+    """
+    return EscalatoriaService.consultar_tabla_insumos(
+        obra=obra,
+        folio_oc=folio_oc,
+        insumo=insumo,
+        ver_todo=ver_todo,
+        limite=limite
+    )
+
+
 @router.get("/buscar")
 def buscar_escalatorias(
     busqueda: Optional[str] = Query(None),
     obra: Optional[str] = Query(None),
     clave: Optional[str] = Query(None),
+    folio_oc: Optional[str] = Query(None, description="Folio de Orden de Compra para vincular obra e insumos"),
     insumo: Optional[str] = Query(None),
     estatus: Optional[str] = Query(None),
     limite: int = Query(50, ge=1, le=200),
@@ -36,6 +58,7 @@ def buscar_escalatorias(
         busqueda=busqueda,
         obra=obra,
         clave=clave,
+        folio_oc=folio_oc,
         insumo=insumo,
         estatus=estatus,
         limite=limite,

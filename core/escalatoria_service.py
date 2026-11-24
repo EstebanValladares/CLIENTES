@@ -11,6 +11,7 @@ Permite consultas instantáneas O(1) de:
 """
 
 import os
+import re
 import sqlite3
 import json
 import time
@@ -28,6 +29,24 @@ DB_PATH = os.path.join(DATA_DIR, "escalatorias.db")
 
 _lock_sync = threading.Lock()
 _sincronizando_ahora = False
+_ultimo_check_sql = 0
+_sql_disponible = False
+
+
+def _verificar_sql_server(host: str = "10.30.0.2", port: int = 1433, timeout: float = 0.25) -> bool:
+    global _ultimo_check_sql, _sql_disponible
+    ahora = time.time()
+    if ahora - _ultimo_check_sql < 60:
+        return _sql_disponible
+    _ultimo_check_sql = ahora
+    import socket
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            _sql_disponible = True
+            return True
+    except Exception:
+        _sql_disponible = False
+        return False
 
 
 class EscalatoriaService:
@@ -148,11 +167,67 @@ class EscalatoriaService:
         }
 
     @classmethod
+    def calcular_vigencia_mes(cls, item: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Determina si una escalatoria supera 1 mes de antigüedad o pertenece a otro mes cerrado.
+        Regla de negocio Enkontrol:
+        Las escalatorias de otro mes anterior quedan cerradas y no permiten solicitudes de nuevas OC.
+        """
+        import datetime
+        fecha_raw = item.get("fecha_autorizacion") or item.get("creado") or ""
+        hoy = datetime.date.today()
+
+        es_mes_cerrado = False
+        motivo_cierre = "Vigente (Mes en curso)"
+        mes_nombre = ""
+        dias_antiguedad = 0
+        alerta_tipo = "vigente"
+
+        if fecha_raw:
+            try:
+                f_str = str(fecha_raw).split("T")[0].split(" ")[0].strip()
+                partes = f_str.split("-")
+                if len(partes) == 3:
+                    y, m, d = int(partes[0]), int(partes[1]), int(partes[2])
+                    fecha_obj = datetime.date(y, m, d)
+                    dias_antiguedad = (hoy - fecha_obj).days
+
+                    nombres_meses = [
+                        "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                    ]
+                    mes_nombre = f"{nombres_meses[m]} {y}" if 1 <= m <= 12 else f"{m}/{y}"
+
+                    # Regla de negocio: Si es de otro mes anterior o supera 31 días: CIERRA.
+                    if y < hoy.year or (y == hoy.year and m < hoy.month) or dias_antiguedad > 31:
+                        es_mes_cerrado = True
+                        alerta_tipo = "mes_cerrado"
+                        motivo_cierre = f"Supera 1 mes ({mes_nombre}) — Periodo cerrado. Enkontrol cierra escalatorias de meses anteriores."
+                    elif y == hoy.year and m == hoy.month:
+                        es_mes_cerrado = False
+                        alerta_tipo = "vigente"
+                        motivo_cierre = f"Vigente ({mes_nombre} en curso)"
+                    else:
+                        es_mes_cerrado = False
+                        alerta_tipo = "vigente"
+                        motivo_cierre = f"Vigente ({mes_nombre})"
+            except Exception:
+                pass
+
+        item["es_mes_cerrado"] = es_mes_cerrado
+        item["motivo_cierre"] = motivo_cierre
+        item["mes_nombre"] = mes_nombre
+        item["dias_antiguedad"] = max(0, dias_antiguedad)
+        item["alerta_tipo"] = alerta_tipo
+        return item
+
+    @classmethod
     def consultar(
         cls,
         busqueda: Optional[str] = None,
         obra: Optional[str] = None,
         clave: Optional[str] = None,
+        folio_oc: Optional[str] = None,
         insumo: Optional[str] = None,
         estatus: Optional[str] = None,
         limite: int = 50,
@@ -161,7 +236,7 @@ class EscalatoriaService:
         """
         Búsqueda multi-criterio de alta velocidad:
         - Si buscas por obra (ej. AR0 o VISTA LAGUNA), busca en las escalatorias que aplican a esa obra.
-        - Si buscas por clave (ej. ESC-PRECIO-TAM-0002 o AD - ARMEX), busca por clave exacta o parcial.
+        - Si buscas por clave o Folio OC (ej. 1100006, ESC-PRECIO-TAM-0002), vincula la OC u obra e insumos.
         - Si buscas por insumo (ej. Cemento o Armex), busca en las escalatorias que modifican ese insumo.
         """
         conn = cls._get_connection()
@@ -176,15 +251,176 @@ class EscalatoriaService:
                 "limite": limite,
                 "offset": offset,
                 "registros": [],
+                "oc_info": None,
                 "requiere_sync": True
             }
 
         where_clauses = []
         params = []
+        oc_encontrada = None
 
-        if clave and clave.strip():
-            where_clauses.append("e.clave LIKE ?")
-            params.append(f"%{clave.strip()}%")
+        term_clave_oc = (folio_oc or clave or "").strip()
+        if term_clave_oc:
+            term_clean = term_clave_oc.upper()
+
+            # Regex 1: Formato de Orden de Compra tipo "KBP-000003", "ASC-000123", "AUS-000035", "KA8 93", "DOMI KBC-12", "OC-12345"
+            m_oc = re.match(r'^([A-Z0-9]+(?:[\s\-_]+[A-Z0-9]+)?)[\s\-_/#]+0*(\d+)$', term_clean)
+            # Regex 2: Clave numérica de insumo de 6 a 8 dígitos (ej. 1050022, 1430001)
+            m_ins = re.match(r'^\d{6,8}$', term_clean)
+            # Regex 3: Folio puramente numérico (ej. 3, 123)
+            m_num = re.match(r'^\d{1,5}$', term_clean)
+
+            if m_oc:
+                obra_candidata = m_oc.group(1).strip()
+                folio_num = m_oc.group(2)
+                if obra_candidata in ('OC', 'ORDEN', 'FOLIO', 'COMPRA', 'ORDENDECOMPRA'):
+                    obra_candidata = ""
+                oc_encontrada = {
+                    "folio": term_clave_oc,
+                    "obra": obra_candidata,
+                    "folio_num": folio_num,
+                    "proveedor": "",
+                    "total_insumos": 0,
+                    "insumos": []
+                }
+                # Intentar enriquecer con OcContratoService si está disponible (sin bloquear si no responde)
+                if _verificar_sql_server():
+                    try:
+                        from core.oc_contrato_service import OcContratoService
+                        oc_res = OcContratoService.consultar(folio=term_clave_oc, obra=obra_candidata)
+                        if oc_res and oc_res.get("ok"):
+                            oc_data = oc_res.get("orden_compra", {})
+                            if oc_data.get("obra"):
+                                oc_encontrada["obra"] = str(oc_data.get("obra")).strip()
+                            oc_encontrada["proveedor"] = oc_data.get("proveedor", "")
+                            oc_encontrada["fecha"] = oc_data.get("fecha", "")
+                            oc_encontrada["total"] = oc_data.get("total", 0)
+                            oc_ins = [
+                                str(x.get("clave") or x.get("insumo") or "").strip()
+                                for x in oc_data.get("insumos", [])
+                                if x and (x.get("clave") or x.get("insumo"))
+                            ]
+                            oc_encontrada["insumos"] = oc_ins[:15]
+                            oc_encontrada["total_insumos"] = len(oc_ins)
+                    except Exception:
+                        pass
+
+                o_term = f"%{oc_encontrada['obra']}%"
+                conds_oc = [
+                    "e.clave LIKE ?",
+                    "e.nombre LIKE ?",
+                    """e.id IN (
+                        SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                        WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                    )""",
+                    """e.id IN (
+                        SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                        WHERE obra_clave LIKE ? OR centro_costo LIKE ?
+                    )"""
+                ]
+                params_oc = [f"%{term_clave_oc}%", f"%{term_clave_oc}%", o_term, o_term, o_term, o_term, o_term]
+
+                if oc_encontrada.get("insumos"):
+                    ph = ",".join("?" for _ in oc_encontrada["insumos"])
+                    conds_oc.append(f"""
+                        e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                            WHERE clave IN ({ph}) OR CAST(id_insumo AS TEXT) IN ({ph})
+                        )
+                    """)
+                    params_oc.extend(oc_encontrada["insumos"])
+                    params_oc.extend(oc_encontrada["insumos"])
+
+                where_clauses.append(f"({' OR '.join(conds_oc)})")
+                params.extend(params_oc)
+
+            elif m_ins:
+                # El usuario pegó la clave de un insumo (ej. 1050022 o 1430001)
+                where_clauses.append("""
+                    e.id IN (
+                        SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                        WHERE clave = ? OR CAST(id_insumo AS TEXT) = ?
+                    )
+                """)
+                params.extend([term_clean, term_clean])
+
+            elif m_num:
+                # El usuario ingresó solo el número de folio de la OC (ej. 3, 123)
+                oc_encontrada = {
+                    "folio": term_clave_oc,
+                    "obra": "",
+                    "folio_num": term_clean,
+                    "total_insumos": 0,
+                    "insumos": []
+                }
+                if _verificar_sql_server():
+                    try:
+                        from core.oc_contrato_service import OcContratoService
+                        oc_res = OcContratoService.consultar(folio=term_clave_oc)
+                        if oc_res and oc_res.get("ok"):
+                            oc_data = oc_res.get("orden_compra", {})
+                            oc_encontrada["obra"] = str(oc_data.get("obra", "")).strip()
+                            oc_encontrada["proveedor"] = oc_data.get("proveedor", "")
+                            oc_ins = [
+                                str(x.get("clave") or x.get("insumo") or "").strip()
+                                for x in oc_data.get("insumos", [])
+                                if x and (x.get("clave") or x.get("insumo"))
+                            ]
+                            oc_encontrada["insumos"] = oc_ins[:15]
+                            oc_encontrada["total_insumos"] = len(oc_ins)
+                    except Exception:
+                        pass
+
+                if oc_encontrada.get("obra"):
+                    o_term = f"%{oc_encontrada['obra']}%"
+                    where_clauses.append("""
+                        (
+                            e.clave LIKE ?
+                            OR e.id IN (
+                                SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                                WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                            )
+                        )
+                    """)
+                    params.extend([f"%{term_clave_oc}%", o_term, o_term, o_term])
+                else:
+                    where_clauses.append("""
+                        (
+                            e.clave LIKE ? 
+                            OR e.nombre LIKE ? 
+                            OR e.raw_json LIKE ?
+                            OR e.id IN (
+                                SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                                WHERE clave LIKE ? OR CAST(id_insumo AS TEXT) LIKE ?
+                            )
+                        )
+                    """)
+                    params.extend([f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%"])
+
+            else:
+                # Es clave de escalatoria o texto (ej. "AD BLOCK 12 TAM", "ESC-PRECIO-AUS", "KBP")
+                o_term = f"%{term_clean}%"
+                where_clauses.append("""
+                    (
+                        e.clave LIKE ? 
+                        OR e.nombre LIKE ? 
+                        OR e.cc_codigo LIKE ?
+                        OR e.raw_json LIKE ?
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                            WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                        )
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                            WHERE clave LIKE ? OR CAST(id_insumo AS TEXT) LIKE ? OR obra_clave LIKE ?
+                        )
+                    )
+                """)
+                params.extend([
+                    f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%",
+                    o_term, o_term, o_term,
+                    f"%{term_clave_oc}%", f"%{term_clave_oc}%", f"%{term_clave_oc}%"
+                ])
 
         if estatus and estatus.strip() and estatus.upper() != "TODOS":
             where_clauses.append("(UPPER(e.estatus) = ? OR UPPER(e.estatus_desc) LIKE ?)")
@@ -212,26 +448,50 @@ class EscalatoriaService:
             params.extend([i_term, i_term])
 
         if busqueda and busqueda.strip():
-            b_term = f"%{busqueda.strip()}%"
-            where_clauses.append("""
-                (
-                    e.clave LIKE ? 
-                    OR e.nombre LIKE ? 
-                    OR e.cc_codigo LIKE ? 
-                    OR e.cc_nombre LIKE ?
-                    OR e.creado_por LIKE ?
-                    OR e.modificado_por LIKE ?
-                    OR e.id IN (
-                        SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
-                        WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+            b_clean = busqueda.strip().upper()
+            m_b_oc = re.match(r'^([A-Z0-9]{2,6})[\s\-_/#]+0*(\d+)$', b_clean)
+            if m_b_oc:
+                b_obra = m_b_oc.group(1)
+                b_o_term = f"%{b_obra}%"
+                b_term = f"%{busqueda.strip()}%"
+                where_clauses.append("""
+                    (
+                        e.clave LIKE ? 
+                        OR e.nombre LIKE ? 
+                        OR e.cc_codigo LIKE ? 
+                        OR e.cc_nombre LIKE ?
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                            WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                        )
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                            WHERE obra_clave LIKE ? OR centro_costo LIKE ? OR clave LIKE ?
+                        )
                     )
-                    OR e.id IN (
-                        SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
-                        WHERE nombre LIKE ? OR clave LIKE ?
+                """)
+                params.extend([b_term, b_term, b_o_term, b_o_term, b_o_term, b_o_term, b_o_term, b_o_term, b_o_term, b_term])
+            else:
+                b_term = f"%{busqueda.strip()}%"
+                where_clauses.append("""
+                    (
+                        e.clave LIKE ? 
+                        OR e.nombre LIKE ? 
+                        OR e.cc_codigo LIKE ? 
+                        OR e.cc_nombre LIKE ?
+                        OR e.creado_por LIKE ?
+                        OR e.modificado_por LIKE ?
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                            WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                        )
+                        OR e.id IN (
+                            SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                            WHERE nombre LIKE ? OR clave LIKE ?
+                        )
                     )
-                )
-            """)
-            params.extend([b_term] * 11)
+                """)
+                params.extend([b_term] * 11)
 
         where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
@@ -281,6 +541,9 @@ class EscalatoriaService:
             cur.execute("SELECT COUNT(DISTINCT obra) FROM escalatoria_obras WHERE id_escalatoria = ?", (esc_id,))
             item["total_obras"] = cur.fetchone()[0]
 
+            # Calcular estado de mes (cerrado si supera 1 mes o mes anterior)
+            cls.calcular_vigencia_mes(item)
+
             registros.append(item)
 
         conn.close()
@@ -289,7 +552,280 @@ class EscalatoriaService:
             "limite": limite,
             "offset": offset,
             "registros": registros,
+            "oc_info": oc_encontrada,
             "requiere_sync": False
+        }
+
+    @classmethod
+    def consultar_tabla_insumos(
+        cls,
+        obra: Optional[str] = None,
+        folio_oc: Optional[str] = None,
+        insumo: Optional[str] = None,
+        ver_todo: bool = False,
+        limite: int = 150
+    ) -> Dict[str, Any]:
+        """
+        Genera la vista tabular de Insumos & Precios con columnas:
+        CLAVE | CODIGO | NOMBRE | INSUMOS | ORIGINAL | ESCALATORIA 1 | ESCALATORIA 2
+        
+        - Si ver_todo == False (default): Trae únicamente la escalatoria MÁS RECIENTE de la obra.
+        - Si ver_todo == True: Trae todas las escalatorias relacionadas históricas.
+        """
+        obra_candidata = (obra or "").strip().upper()
+        folio_term = (folio_oc or "").strip().upper()
+        oc_encontrada = None
+
+        if folio_term:
+            # Detectar si viene con formato Obra-Folio (ej. KBP-000003, KA8 93)
+            m_oc = re.match(r'^([A-Z0-9]+(?:[\s\-_]+[A-Z0-9]+)?)[\s\-_/#]+0*(\d+)$', folio_term)
+            if m_oc:
+                pre_obra = m_oc.group(1).strip()
+                folio_num = m_oc.group(2)
+                if pre_obra not in ('OC', 'ORDEN', 'FOLIO', 'COMPRA', 'ORDENDECOMPRA'):
+                    if not obra_candidata:
+                        obra_candidata = pre_obra
+                oc_encontrada = {
+                    "folio": folio_term,
+                    "obra": obra_candidata,
+                    "folio_num": folio_num,
+                    "proveedor": "",
+                    "total_insumos": 0,
+                    "insumos": []
+                }
+            else:
+                oc_encontrada = {
+                    "folio": folio_term,
+                    "obra": obra_candidata,
+                    "folio_num": folio_term,
+                    "proveedor": "",
+                    "total_insumos": 0,
+                    "insumos": []
+                }
+
+            # Enriquecer con OcContratoService si está disponible
+            if _verificar_sql_server():
+                try:
+                    from core.oc_contrato_service import OcContratoService
+                    oc_res = OcContratoService.consultar(folio=folio_term, obra=obra_candidata or None)
+                    if oc_res and oc_res.get("ok"):
+                        oc_data = oc_res.get("orden_compra", {})
+                        if oc_data.get("obra") and not obra_candidata:
+                            obra_candidata = str(oc_data.get("obra")).strip().upper()
+                            oc_encontrada["obra"] = obra_candidata
+                        oc_encontrada["proveedor"] = oc_data.get("proveedor", "")
+                        oc_ins = [
+                            str(x.get("clave") or x.get("insumo") or "").strip()
+                            for x in oc_data.get("insumos", [])
+                            if x and (x.get("clave") or x.get("insumo"))
+                        ]
+                        oc_encontrada["insumos"] = oc_ins
+                        oc_encontrada["total_insumos"] = len(oc_ins)
+                except Exception:
+                    pass
+
+        conn = cls._get_connection()
+        cur = conn.cursor()
+
+        where_esc = []
+        params_esc = []
+
+        if obra_candidata:
+            o_term = f"%{obra_candidata}%"
+            where_esc.append("""
+                (
+                    e.clave LIKE ?
+                    OR e.id IN (
+                        SELECT DISTINCT id_escalatoria FROM escalatoria_obras 
+                        WHERE obra LIKE ? OR centro_costo LIKE ? OR proyecto LIKE ?
+                    )
+                    OR e.id IN (
+                        SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                        WHERE obra_clave LIKE ? OR centro_costo LIKE ?
+                    )
+                )
+            """)
+            params_esc.extend([o_term, o_term, o_term, o_term, o_term, o_term])
+
+        if insumo and insumo.strip():
+            i_term = f"%{insumo.strip()}%"
+            where_esc.append("""
+                e.id IN (
+                    SELECT DISTINCT id_escalatoria FROM escalatoria_insumos 
+                    WHERE clave LIKE ? OR nombre LIKE ?
+                )
+            """)
+            params_esc.extend([i_term, i_term])
+
+        where_esc_sql = ("WHERE " + " AND ".join(where_esc)) if where_esc else ""
+        cur.execute(f"""
+            SELECT DISTINCT e.id, e.clave, e.nombre, e.estatus, e.estatus_desc, e.fecha_autorizacion
+            FROM escalatorias e
+            {where_esc_sql}
+            ORDER BY e.fecha_autorizacion DESC, e.id DESC
+        """, params_esc)
+        escalatorias = [dict(r) for r in cur.fetchall()]
+
+        if not escalatorias:
+            conn.close()
+            return {
+                "total": 0,
+                "obra": obra_candidata,
+                "folio_oc": folio_term,
+                "insumo": insumo or "",
+                "ver_todo": ver_todo,
+                "oc_info": oc_encontrada,
+                "registros": []
+            }
+
+        if not ver_todo:
+            # ÚNICAMENTE la más reciente
+            escalatorias_a_procesar = [escalatorias[0]]
+        else:
+            escalatorias_a_procesar = escalatorias[:20]
+
+        registros_tabla = []
+        insumo_filtro_clean = (insumo or "").strip().upper()
+
+        for esc in escalatorias_a_procesar:
+            cls.calcular_vigencia_mes(esc)
+            esc_id = esc["id"]
+
+            cur.execute("""
+                SELECT id, clave as codigo, nombre, precio, precio_ppto, precio_anterior, moneda, obra_clave, centro_costo
+                FROM escalatoria_insumos
+                WHERE id_escalatoria = ?
+                ORDER BY precio DESC, clave ASC
+            """, (esc_id,))
+            insumos_esc = [dict(r) for r in cur.fetchall()]
+
+            if not insumos_esc:
+                cls._cargar_insumos_detallados_escalatoria(esc_id, conn)
+                cur.execute("""
+                    SELECT id, clave as codigo, nombre, precio, precio_ppto, precio_anterior, moneda, obra_clave, centro_costo
+                    FROM escalatoria_insumos
+                    WHERE id_escalatoria = ?
+                    ORDER BY precio DESC, clave ASC
+                """, (esc_id,))
+                insumos_esc = [dict(r) for r in cur.fetchall()]
+
+            insumos_unicos = {}
+            for item in insumos_esc:
+                c = str(item.get("codigo") or "").strip()
+                if not c:
+                    continue
+                if insumo_filtro_clean and (insumo_filtro_clean not in c and insumo_filtro_clean not in str(item.get("nombre", "")).upper()):
+                    continue
+                if c not in insumos_unicos:
+                    insumos_unicos[c] = item
+                else:
+                    if float(item.get("precio_ppto") or 0) > float(insumos_unicos[c].get("precio_ppto") or 0):
+                        insumos_unicos[c]["precio_ppto"] = item["precio_ppto"]
+
+            lista_items = list(insumos_unicos.values())
+            total_items = len(lista_items)
+
+            for idx, item in enumerate(lista_items, 1):
+                cod = str(item["codigo"])
+                nom = str(item["nombre"])
+
+                hist_params = [cod]
+                hist_where = ["i.clave = ?"]
+                if obra_candidata:
+                    hist_where.append("""
+                        (
+                            i.obra_clave LIKE ? 
+                            OR i.centro_costo LIKE ? 
+                            OR e.id IN (SELECT id_escalatoria FROM escalatoria_obras WHERE obra LIKE ? OR centro_costo LIKE ?)
+                        )
+                    """)
+                    o_term = f"%{obra_candidata}%"
+                    hist_params.extend([o_term, o_term, o_term, o_term])
+
+                cur.execute(f"""
+                    SELECT e.clave as esc_clave, e.fecha_autorizacion, i.precio, i.precio_ppto, i.precio_anterior
+                    FROM escalatoria_insumos i
+                    JOIN escalatorias e ON i.id_escalatoria = e.id
+                    WHERE {" AND ".join(hist_where)}
+                    ORDER BY e.fecha_autorizacion ASC, e.id ASC
+                """, hist_params)
+                historial = [dict(h) for h in cur.fetchall()]
+
+                precios_unicos = []
+                ppto_max = float(item.get("precio_ppto") or 0.0)
+
+                for h in historial:
+                    p = float(h.get("precio") or 0.0)
+                    if p > 0 and p not in precios_unicos:
+                        precios_unicos.append(p)
+                    p_ppto = float(h.get("precio_ppto") or 0.0)
+                    if p_ppto > ppto_max:
+                        ppto_max = p_ppto
+
+                precio_ppto_item = float(item.get("precio_ppto") or 0.0)
+                precio_ant_item = float(item.get("precio_anterior") or 0.0) if item.get("precio_anterior") else 0.0
+                precio_vigente = float(item.get("precio") or 0.0)
+
+                if len(precios_unicos) >= 2:
+                    original = ppto_max if ppto_max > 0 else (precios_unicos[0] * 0.95)
+                    esc_1 = precios_unicos[0]
+                    esc_2 = precios_unicos[-1]
+                elif len(precios_unicos) == 1:
+                    if precio_ppto_item > 0 and precio_ppto_item < precio_vigente:
+                        original = precio_ppto_item
+                        esc_1 = precio_vigente
+                        esc_2 = None
+                    elif precio_ant_item > 0 and precio_ant_item < precio_vigente:
+                        original = precio_ant_item
+                        esc_1 = precio_vigente
+                        esc_2 = None
+                    else:
+                        original = ppto_max if ppto_max > 0 else None
+                        esc_1 = precio_vigente
+                        esc_2 = None
+                else:
+                    original = precio_ppto_item if precio_ppto_item > 0 else None
+                    esc_1 = precio_vigente
+                    esc_2 = None
+
+                en_oc = False
+                if oc_encontrada and oc_encontrada.get("insumos"):
+                    en_oc = any(cod in str(x) for x in oc_encontrada["insumos"])
+
+                guia = f"{idx} de {total_items}"
+                if en_oc:
+                    guia = f"✓ En OC #{oc_encontrada['folio_num']}"
+
+                registros_tabla.append({
+                    "id": f"{esc_id}_{cod}",
+                    "clave": esc["clave"],
+                    "id_escalatoria": esc_id,
+                    "estatus": esc.get("estatus", "AUT"),
+                    "estatus_desc": esc.get("estatus_desc", "Activo"),
+                    "fecha_autorizacion": esc.get("fecha_autorizacion"),
+                    "es_mes_cerrado": esc.get("es_mes_cerrado", False),
+                    "mes_nombre": esc.get("mes_nombre", ""),
+                    "motivo_cierre": esc.get("motivo_cierre", ""),
+                    "codigo": cod,
+                    "nombre": nom,
+                    "insumos": guia,
+                    "en_oc": en_oc,
+                    "original": original,
+                    "escalatoria_1": esc_1,
+                    "escalatoria_2": esc_2,
+                    "vigente": precio_vigente,
+                    "moneda": item.get("moneda") or "MXN"
+                })
+
+        conn.close()
+        return {
+            "total": len(registros_tabla),
+            "obra": obra_candidata,
+            "folio_oc": folio_term,
+            "insumo": insumo or "",
+            "ver_todo": ver_todo,
+            "oc_info": oc_encontrada,
+            "registros": registros_tabla
         }
 
     @classmethod
@@ -632,6 +1168,7 @@ class EscalatoriaService:
             insumos = [dict(i) for i in cur.fetchall()]
 
         resultado["insumos"] = insumos
+        cls.calcular_vigencia_mes(resultado)
         conn.close()
         return resultado
 
