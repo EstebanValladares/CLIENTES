@@ -633,14 +633,19 @@ class EscalatoriaService:
         pet_params = []
 
         if folio_term:
-            m_num = re.search(r'(\d+)$', folio_term)
-            f_num = m_num.group(1).lstrip('0') if m_num else ""
-            if f_num:
-                pet_where.append("(orden_compra LIKE ? OR orden_compra LIKE ?)")
-                pet_params.extend([f"%{folio_term}%", f"%{f_num}%"])
+            # Si el término trae prefijo de obra (ej. KBP-000003, KA8 93, etc.)
+            if m_oc and obra_candidata:
+                pet_where.append("(orden_compra LIKE ? OR (orden_compra LIKE ? AND cc_obra LIKE ?))")
+                pet_params.extend([f"%{folio_term}%", f"%{folio_num}", f"%{obra_candidata}%"])
             else:
-                pet_where.append("orden_compra LIKE ?")
-                pet_params.append(f"%{folio_term}%")
+                m_num = re.search(r'(\d+)$', folio_term)
+                f_num = m_num.group(1).lstrip('0') if m_num else ""
+                if f_num and len(folio_term) <= 5:
+                    pet_where.append("(orden_compra LIKE ? OR orden_compra LIKE ?)")
+                    pet_params.extend([f"%{folio_term}%", f"%{f_num}"])
+                else:
+                    pet_where.append("orden_compra LIKE ?")
+                    pet_params.append(f"%{folio_term}%")
         elif obra_candidata:
             pet_where.append("(cc_obra LIKE ? OR orden_compra LIKE ?)")
             pet_params.extend([f"%{obra_candidata}%", f"%{obra_candidata}%"])

@@ -38,8 +38,9 @@
     const filtroVerTodo = ref(false);
     const ocInfoDetectada = ref(null);
 
-    // Tabla principal de Insumos & Precios (CLAVE | CODIGO | NOMBRE | INSUMOS | ORIGINAL | ESCALATORIA 1 | ESCALATORIA 2)
+    // Tabla principal de Insumos & Precios (Agrupada por Tarjetas de Orden de Compra)
     const tablaInsumosRegistros = ref([]);
+    const gruposOC = ref([]);
     const cargandoTablaInsumos = ref(false);
 
     // Estado del Acordeón Inline (Despliegue de Insumos por Clave & Obra)
@@ -144,6 +145,7 @@
         const res = await fetch(`/api/escalatorias/tabla-insumos?${params.toString()}`);
         if (res.ok) {
           const data = await res.json();
+          gruposOC.value = data.grupos_oc || [];
           tablaInsumosRegistros.value = data.registros || [];
           totalEscalatoriasFiltradas.value = data.total || 0;
           ocInfoDetectada.value = data.oc_info || null;
@@ -248,6 +250,8 @@
       filtroEscalatoriaEstatus.value = 'TODOS';
       filtroVerTodo.value = false;
       filtroInsumosExpandidos.value = '';
+      gruposOC.value = [];
+      tablaInsumosRegistros.value = [];
       ocInfoDetectada.value = null;
       claveExpandidaId.value = null;
       insumosClaveSeleccionada.value = [];
@@ -335,6 +339,7 @@
       filtroVerTodo,
       ocInfoDetectada,
       tablaInsumosRegistros,
+      gruposOC,
       cargandoTablaInsumos,
       consultarTablaInsumos,
       claveExpandidaId,

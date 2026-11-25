@@ -181,43 +181,18 @@
   </div>
 
   <!-- ======================================================== -->
-  <!-- TABLA PRINCIPAL: INSUMOS & ESCALATORIAS DE PRECIOS      -->
+  <!-- TARJETAS AGRUPADAS POR ORDEN DE COMPRA (OC)             -->
   <!-- ======================================================== -->
-  <div class="border rounded-2xl shadow-xl overflow-hidden flex flex-col flex-1 backdrop-blur-md transition"
-       :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
-    
-    <!-- Barra superior de resultados -->
-    <div class="p-4 border-b flex items-center justify-between flex-wrap gap-2"
-         :class="temaActual === 'claro' ? 'border-slate-100 bg-slate-50/50' : 'border-slate-800 bg-slate-950/40'">
-      <div class="flex items-center gap-2.5 flex-wrap">
+  <div class="flex flex-col flex-1 gap-6">
+
+    <!-- Barra de Estado / Contador General -->
+    <div class="border rounded-2xl p-4 shadow-md backdrop-blur-md flex items-center justify-between flex-wrap gap-2.5 transition"
+         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+      <div class="flex items-center gap-3 flex-wrap">
         <span class="text-xs font-semibold"
               :class="temaActual === 'claro' ? 'text-slate-700' : 'text-slate-300'">
-          Mostrando <b class="text-amber-500">{{ tablaInsumosRegistros.length }}</b> insumos encontrados
+          Mostrando <b class="text-amber-500">{{ tablaInsumosRegistros.length }}</b> insumos encontrados en <b class="text-cyan-400">{{ gruposOC.length }}</b> Orden{{ gruposOC.length !== 1 ? 'es' : '' }} de Compra
         </span>
-
-        <!-- CLAVE DE LA ESCALATORIA / FOLIO (Ubicada en la barra superior en lugar del texto) -->
-        <div v-if="tablaInsumosRegistros.length > 0"
-             class="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25 shadow-xs">
-          <i class="fa-solid fa-file-signature text-amber-500 text-xs"></i>
-          <span class="text-xs font-bold font-mono text-amber-400">
-            {{ tablaInsumosRegistros[0].clave }}
-          </span>
-          <!-- Mes Cerrado vs Mes en Curso -->
-          <span v-if="tablaInsumosRegistros[0].es_mes_cerrado"
-                class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30 inline-flex items-center gap-0.5"
-                :title="tablaInsumosRegistros[0].motivo_cierre || 'Supera un mes de vigencia'">
-            <i class="fa-solid fa-lock text-[8px]"></i>
-            <span>Mes Cerrado</span>
-          </span>
-          <span v-else
-                class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 inline-flex items-center gap-0.5">
-            <i class="fa-solid fa-calendar-check text-[8px]"></i>
-            <span>Mes en Curso</span>
-          </span>
-          <span v-if="tablaInsumosRegistros[0].fecha_autorizacion" class="text-[10px] text-slate-400 font-mono">
-            {{ tablaInsumosRegistros[0].fecha_autorizacion.split('T')[0] }}
-          </span>
-        </div>
 
         <span v-if="cargandoTablaInsumos" class="inline-flex items-center gap-1.5 text-xs text-amber-500 font-medium">
           <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -227,7 +202,7 @@
 
       <div class="flex items-center gap-2">
         <button @click="consultarTablaInsumos"
-                class="px-2.5 py-1 text-xs rounded-lg border transition cursor-pointer flex items-center gap-1.5"
+                class="px-2.5 py-1 text-xs rounded-lg border transition cursor-pointer flex items-center gap-1.5 font-semibold"
                 :class="temaActual === 'claro' ? 'border-slate-200 bg-white hover:bg-slate-100 text-slate-700' : 'border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300'">
           <i class="fa-solid fa-rotate text-[10px]"></i>
           <span>Actualizar</span>
@@ -235,132 +210,169 @@
       </div>
     </div>
 
-    <!-- Contenedor Scrollable de la Tabla -->
-    <div class="overflow-x-auto custom-scrollbar flex-1">
-      <table class="w-full text-left text-xs border-collapse">
-        <thead>
-          <tr class="border-b text-[11px] font-bold uppercase tracking-wider select-none"
-              :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-600' : 'bg-slate-950/80 border-slate-800 text-slate-400'">
-            <th class="py-3.5 px-3 font-bold">CODIGO</th>
-            <th class="py-3.5 px-4 font-bold">NOMBRE</th>
-            <th class="py-3.5 px-3 font-bold text-center">INSUMOS</th>
-            <th class="py-3.5 px-4 font-bold text-right">ORIGINAL</th>
-            <th class="py-3.5 px-4 font-bold text-right">ESCALATORIA 1</th>
-            <th class="py-3.5 px-4 font-bold text-right">ESCALATORIA 2</th>
-            <th class="py-3.5 px-4 font-bold text-center">DESGLOCE</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y"
-               :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
+    <!-- TARJETAS INDIVIDUALES POR CADA ORDEN DE COMPRA (OC) -->
+    <template v-if="gruposOC.length > 0">
+      <div v-for="grupo in gruposOC" :key="grupo.orden_compra"
+           class="border rounded-2xl shadow-xl overflow-hidden flex flex-col backdrop-blur-md transition"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'">
+        
+        <!-- Cabecera de la Tarjeta con la OC de Título Principal -->
+        <div class="p-4 border-b flex items-center justify-between flex-wrap gap-2.5"
+             :class="temaActual === 'claro' ? 'border-slate-100 bg-slate-50/80' : 'border-slate-800 bg-slate-950/60'">
           
-          <!-- ESTADO DE CARGA -->
-          <tr v-if="cargandoTablaInsumos && tablaInsumosRegistros.length === 0">
-            <td colspan="7" class="py-14 text-center text-slate-400">
-              <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-amber-500 block"></i>
-              <span class="text-xs font-medium">Buscando insumos y escalatorias de precios autorizados...</span>
-            </td>
-          </tr>
-
-          <!-- ESTADO SIN RESULTADOS -->
-          <tr v-else-if="tablaInsumosRegistros.length === 0">
-            <td colspan="7" class="py-14 text-center text-slate-400">
-              <i class="fa-solid fa-file-circle-question text-3xl mb-2 text-slate-500 block"></i>
-              <span class="block text-xs font-semibold text-slate-300">No se encontraron insumos ni escalatorias con los filtros ingresados.</span>
-              <p class="text-[11px] text-slate-500 mt-1 max-w-md mx-auto">
-                Ingresa una Obra (ej. KA8, KBP) o Folio de OC. Si requieres ver escalatorias pasadas, marca el check <b class="text-amber-400">Ver todo</b>.
-              </p>
-            </td>
-          </tr>
-
-          <!-- FILAS DE DATOS -->
-          <tr v-for="item in tablaInsumosRegistros" :key="item.id"
-              class="transition-colors group hover:bg-slate-800/30">
-            
-            <!-- CODIGO DE INSUMO -->
-            <td class="py-3 px-3 whitespace-nowrap">
-              <span class="px-2 py-1 rounded text-xs font-mono font-bold bg-slate-800 text-cyan-300 border border-slate-700/60 shadow-xs">
-                {{ item.codigo }}
-              </span>
-            </td>
-
-            <!-- NOMBRE DE MATERIAL / INSUMO -->
-            <td class="py-3 px-4">
-              <div class="font-medium text-xs leading-snug max-w-[360px]"
-                   :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
-                {{ item.nombre }}
-                <!-- Si está activo Ver Todo y la fila pertenece a otra escalatoria, mostrar etiqueta discreta -->
-                <span v-if="filtroVerTodo && item.clave !== tablaInsumosRegistros[0]?.clave"
-                      class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                  {{ item.clave }}
-                </span>
+          <div class="flex items-center gap-3 flex-wrap">
+            <!-- Título de la Orden de Compra -->
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center border border-cyan-500/30 shadow-xs">
+                <i class="fa-solid fa-file-invoice text-xs"></i>
               </div>
-            </td>
+              <div>
+                <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block leading-tight">Orden de Compra</span>
+                <span class="text-sm font-bold font-mono text-cyan-400 tracking-wide">{{ grupo.orden_compra }}</span>
+              </div>
+            </div>
 
-            <!-- INSUMOS (GUÍA O ASOCIADO A OC) -->
-            <td class="py-3 px-3 text-center whitespace-nowrap">
-              <span v-if="item.en_oc"
-                    class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 inline-flex items-center gap-1">
-                <i class="fa-solid fa-file-invoice text-[9px]"></i>
-                {{ item.insumos }}
+            <!-- Obra / Centro de Costo -->
+            <span v-if="grupo.obra"
+                  class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30">
+              CC / Obra: {{ grupo.obra }}
+            </span>
+
+            <!-- Clave de Escalatoria Vinculada -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25">
+              <i class="fa-solid fa-file-signature text-amber-500 text-xs"></i>
+              <span class="text-xs font-bold font-mono text-amber-400">{{ grupo.clave_escalatoria }}</span>
+              <span v-if="grupo.es_mes_cerrado"
+                    class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30 inline-flex items-center gap-0.5"
+                    :title="grupo.motivo_cierre || 'Supera un mes de vigencia'">
+                <i class="fa-solid fa-lock text-[8px]"></i> Mes Cerrado
               </span>
               <span v-else
-                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-medium text-slate-400 bg-slate-800/50 border border-slate-700/50">
-                {{ item.insumos }}
+                    class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 inline-flex items-center gap-0.5">
+                <i class="fa-solid fa-calendar-check text-[8px]"></i> Mes en Curso
               </span>
-            </td>
-
-            <!-- ORIGINAL -->
-            <td class="py-3 px-4 text-right whitespace-nowrap font-mono text-xs text-slate-400">
-              <span v-if="item.original" class="font-medium">
-                {{ formatearPrecio(item.original) }}
+              <span v-if="grupo.fecha_autorizacion" class="text-[10px] text-slate-400 font-mono">
+                {{ grupo.fecha_autorizacion.split('T')[0] }}
               </span>
-              <span v-else class="text-slate-500">—</span>
-            </td>
+            </div>
+          </div>
 
-            <!-- ESCALATORIA 1 -->
-            <td class="py-3 px-4 text-right whitespace-nowrap">
-              <span v-if="item.escalatoria_1"
-                    class="text-xs font-bold font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/25 shadow-xs">
-                {{ formatearPrecio(item.escalatoria_1) }}
-              </span>
-              <span v-else class="text-slate-500 font-mono text-xs">—</span>
-            </td>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-400">
+              <b class="text-slate-200">{{ grupo.insumos.length }}</b> insumo{{ grupo.insumos.length !== 1 ? 's' : '' }}
+            </span>
+            <button @click="abrirDetalleEscalatoria({ id: grupo.id_escalatoria, clave: grupo.clave_escalatoria })"
+                    class="px-2.5 py-1 rounded-lg border transition cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+                    :class="temaActual === 'claro' ? 'border-slate-200 bg-white hover:bg-slate-100 text-slate-700' : 'border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300'"
+                    title="Ver desglose completo de la escalatoria">
+              <span>Desglose</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500"></i>
+            </button>
+          </div>
 
-            <!-- ESCALATORIA 2 -->
-            <td class="py-3 px-4 text-right whitespace-nowrap">
-              <span v-if="item.escalatoria_2"
-                    class="text-xs font-bold font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/25 shadow-xs">
-                {{ formatearPrecio(item.escalatoria_2) }}
-              </span>
-              <span v-else class="text-slate-500 font-mono text-xs">—</span>
-            </td>
+        </div>
 
-            <!-- COLUMNA DESGLOCE -->
-            <td class="py-3 px-4 text-center whitespace-nowrap">
-              <button @click="abrirDetalleEscalatoria({ id: item.id_escalatoria, clave: item.clave })"
-                      class="px-2.5 py-1 rounded-lg border border-slate-700/60 bg-slate-800/60 text-slate-300 hover:text-white hover:bg-slate-700 transition cursor-pointer inline-flex items-center gap-1.5 text-xs shadow-xs"
-                      title="Ver desglose completo de la escalatoria">
-                <span>Ver</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500"></i>
-              </button>
-            </td>
+        <!-- Tabla de Insumos de la Orden de Compra -->
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b text-[11px] font-bold uppercase tracking-wider select-none"
+                  :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-200 text-slate-600' : 'bg-slate-950/80 border-slate-800 text-slate-400'">
+                <th class="py-3 px-3 font-bold w-28">CODIGO</th>
+                <th class="py-3 px-4 font-bold">NOMBRE</th>
+                <th class="py-3 px-3 font-bold text-center w-24">INSUMOS</th>
+                <th class="py-3 px-4 font-bold text-right w-28">ORIGINAL</th>
+                <th class="py-3 px-4 font-bold text-right w-32">ESCALATORIA 1</th>
+                <th class="py-3 px-4 font-bold text-right w-32">ESCALATORIA 2</th>
+                <th class="py-3 px-4 font-bold text-center w-24">DESGLOCE</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y"
+                   :class="temaActual === 'claro' ? 'divide-slate-100' : 'divide-slate-800/60'">
+              <tr v-for="item in grupo.insumos" :key="item.id"
+                  class="transition-colors group hover:bg-slate-800/30">
+                
+                <!-- CODIGO -->
+                <td class="py-3 px-3 whitespace-nowrap">
+                  <span class="px-2 py-1 rounded text-xs font-mono font-bold bg-slate-800 text-cyan-300 border border-slate-700/60 shadow-xs">
+                    {{ item.codigo }}
+                  </span>
+                </td>
 
-          </tr>
+                <!-- NOMBRE -->
+                <td class="py-3 px-4">
+                  <div class="font-medium text-xs leading-snug max-w-[360px]"
+                       :class="temaActual === 'claro' ? 'text-slate-800' : 'text-slate-200'">
+                    {{ item.nombre }}
+                  </div>
+                </td>
 
-        </tbody>
-      </table>
+                <!-- INSUMOS (GUIA) -->
+                <td class="py-3 px-3 text-center whitespace-nowrap">
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-medium text-slate-400 bg-slate-800/50 border border-slate-700/50">
+                    {{ item.insumos }}
+                  </span>
+                </td>
+
+                <!-- ORIGINAL -->
+                <td class="py-3 px-4 text-right whitespace-nowrap font-mono text-xs text-slate-300">
+                  <span v-if="item.original" class="font-semibold">
+                    {{ formatearPrecio(item.original) }}
+                  </span>
+                  <span v-else class="text-slate-500">—</span>
+                </td>
+
+                <!-- ESCALATORIA 1 -->
+                <td class="py-3 px-4 text-right whitespace-nowrap">
+                  <span v-if="item.escalatoria_1"
+                        class="text-xs font-bold font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/25 shadow-xs">
+                    {{ formatearPrecio(item.escalatoria_1) }}
+                  </span>
+                  <span v-else class="text-slate-500 font-mono text-xs">—</span>
+                </td>
+
+                <!-- ESCALATORIA 2 -->
+                <td class="py-3 px-4 text-right whitespace-nowrap">
+                  <span v-if="item.escalatoria_2"
+                        class="text-xs font-bold font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/25 shadow-xs">
+                    {{ formatearPrecio(item.escalatoria_2) }}
+                  </span>
+                  <span v-else class="text-slate-500 font-mono text-xs">—</span>
+                </td>
+
+                <!-- DESGLOCE -->
+                <td class="py-3 px-4 text-center whitespace-nowrap">
+                  <button @click="abrirDetalleEscalatoria({ id: item.id_escalatoria, clave: item.clave })"
+                          class="px-2.5 py-1 rounded-lg border border-slate-700/60 bg-slate-800/60 text-slate-300 hover:text-white hover:bg-slate-700 transition cursor-pointer inline-flex items-center gap-1.5 text-xs shadow-xs"
+                          title="Ver desglose completo de la escalatoria">
+                    <span>Ver</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-500"></i>
+                  </button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </template>
+
+    <!-- ESTADO DE CARGA -->
+    <div v-else-if="cargandoTablaInsumos" class="border rounded-2xl p-14 text-center text-slate-400"
+         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
+      <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-amber-500 block"></i>
+      <span class="text-xs font-medium">Buscando insumos y escalatorias de precios autorizados...</span>
     </div>
 
-    <!-- Barra Inferior -->
-    <div class="p-3 border-t flex items-center justify-between text-xs text-slate-400 select-none"
-         :class="temaActual === 'claro' ? 'border-slate-100 bg-slate-50/30' : 'border-slate-800 bg-slate-950/20'">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-database text-amber-500"></i>
-        <span>Base local sincronizada con Enkontrol 10 Cloud (SOC Escalatorias)</span>
-      </div>
-      <div class="flex items-center gap-3 text-[11px] text-slate-500 font-mono">
-        <span>Columnas: ORIGINAL (Ppto/Base) &bull; ESCALATORIA 1 &bull; ESCALATORIA 2</span>
-      </div>
+    <!-- ESTADO SIN RESULTADOS -->
+    <div v-else class="border rounded-2xl p-14 text-center text-slate-400"
+         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800'">
+      <i class="fa-solid fa-file-circle-question text-3xl mb-2 text-slate-500 block"></i>
+      <span class="block text-xs font-semibold text-slate-300">No se encontraron insumos ni escalatorias con los filtros ingresados.</span>
+      <p class="text-[11px] text-slate-500 mt-1 max-w-md mx-auto">
+        Ingresa una Obra (ej. KA8, KBP) o Folio de OC (ej. KBP-000011). Si requieres ver escalatorias pasadas, marca el check <b class="text-amber-400">Ver todo</b>.
+      </p>
     </div>
 
   </div>
