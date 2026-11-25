@@ -34,7 +34,7 @@
     "Comisionable": "False",
     "ID_1": "498",
     "hasLicense": "False",
-    "Version": "102178644"
+    "Version": "103118315"
   },
   {
     "ID": "2",
@@ -145,7 +145,7 @@
     "Comisionable": "False",
     "ID_1": "615",
     "hasLicense": "True",
-    "Version": "101849582"
+    "Version": "103327224"
   },
   {
     "ID": "5",
@@ -478,7 +478,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102231756"
+    "Version": "102587494"
   },
   {
     "ID": "14",
@@ -737,7 +737,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101885299"
+    "Version": "103297366"
   },
   {
     "ID": "21",
@@ -811,7 +811,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102163635"
+    "Version": "103305363"
   },
   {
     "ID": "23",
@@ -959,7 +959,7 @@
     "Comisionable": "False",
     "ID_1": "325",
     "hasLicense": "True",
-    "Version": "94772645"
+    "Version": "103057034"
   },
   {
     "ID": "27",
@@ -1033,7 +1033,7 @@
     "Comisionable": "True",
     "ID_1": "242",
     "hasLicense": "True",
-    "Version": "101358396"
+    "Version": "102951064"
   },
   {
     "ID": "29",
@@ -1144,7 +1144,7 @@
     "Comisionable": "False",
     "ID_1": "130",
     "hasLicense": "True",
-    "Version": "101774854"
+    "Version": "102890010"
   },
   {
     "ID": "32",
@@ -1218,7 +1218,7 @@
     "Comisionable": "True",
     "ID_1": "301",
     "hasLicense": "True",
-    "Version": "102183864"
+    "Version": "103057044"
   },
   {
     "ID": "34",
@@ -2957,7 +2957,7 @@
     "Comisionable": "True",
     "ID_1": "261",
     "hasLicense": "True",
-    "Version": "99520073"
+    "Version": "102946345"
   },
   {
     "ID": "82",
@@ -3142,7 +3142,7 @@
     "Comisionable": "True",
     "ID_1": "265",
     "hasLicense": "True",
-    "Version": "92118500"
+    "Version": "103089151"
   },
   {
     "ID": "87",
@@ -4770,7 +4770,7 @@
     "Comisionable": "True",
     "ID_1": "134",
     "hasLicense": "True",
-    "Version": "102218527"
+    "Version": "102829724"
   },
   {
     "ID": "131",
@@ -7009,7 +7009,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "10/11/2026 14:57:22",
+    "Modificado": "24/11/2026 20:28:52",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "314",
@@ -7027,7 +7027,7 @@
     "Comisionable": "False",
     "ID_1": "183",
     "hasLicense": "True",
-    "Version": "102186476"
+    "Version": "103205096"
   },
   {
     "ID": "192",
@@ -7064,7 +7064,7 @@
     "Comisionable": "False",
     "ID_1": "3",
     "hasLicense": "True",
-    "Version": "102040112"
+    "Version": "102946339"
   },
   {
     "ID": "193",
@@ -8285,7 +8285,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102184773"
+    "Version": "102995895"
   },
   {
     "ID": "226",
@@ -8433,7 +8433,7 @@
     "Comisionable": "True",
     "ID_1": "148",
     "hasLicense": "True",
-    "Version": "88900042"
+    "Version": "103040993"
   },
   {
     "ID": "230",
@@ -8840,7 +8840,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102045342"
+    "Version": "102843189"
   },
   {
     "ID": "241",
@@ -13576,7 +13576,7 @@
     "Comisionable": "True",
     "ID_1": "284",
     "hasLicense": "True",
-    "Version": "96779741"
+    "Version": "103107206"
   },
   {
     "ID": "369",
@@ -13724,7 +13724,7 @@
     "Comisionable": "True",
     "ID_1": "289",
     "hasLicense": "True",
-    "Version": "102181297"
+    "Version": "103125609"
   },
   {
     "ID": "373",
@@ -17535,7 +17535,7 @@
     "Comisionable": "True",
     "ID_1": "407",
     "hasLicense": "True",
-    "Version": "90194480"
+    "Version": "103056670"
   },
   {
     "ID": "476",
@@ -19089,7 +19089,7 @@
     "Comisionable": "True",
     "ID_1": "453",
     "hasLicense": "True",
-    "Version": "101785248"
+    "Version": "102959239"
   },
   {
     "ID": "518",
@@ -20865,7 +20865,7 @@
     "Comisionable": "True",
     "ID_1": "545",
     "hasLicense": "True",
-    "Version": "102186452"
+    "Version": "103094726"
   },
   {
     "ID": "566",
@@ -21124,7 +21124,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102216567"
+    "Version": "103096817"
   },
   {
     "ID": "573",
@@ -21346,7 +21346,7 @@
     "Comisionable": "False",
     "ID_1": "505",
     "hasLicense": "True",
-    "Version": "95394281"
+    "Version": "102542211"
   },
   {
     "ID": "579",
@@ -21383,7 +21383,7 @@
     "Comisionable": "False",
     "ID_1": "506",
     "hasLicense": "True",
-    "Version": "102161956"
+    "Version": "103142605"
   },
   {
     "ID": "580",
@@ -22382,7 +22382,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102182903"
+    "Version": "102470701"
   },
   {
     "ID": "607",
@@ -22419,7 +22419,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102178771"
+    "Version": "103327052"
   },
   {
     "ID": "608",
@@ -22456,7 +22456,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102173358"
+    "Version": "102959273"
   },
   {
     "ID": "609",
@@ -22493,7 +22493,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102244876"
+    "Version": "102806958"
   },
   {
     "ID": "610",
@@ -22567,7 +22567,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96902304"
+    "Version": "103164675"
   },
   {
     "ID": "612",
@@ -22641,7 +22641,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102199303"
+    "Version": "102438219"
   },
   {
     "ID": "614",
@@ -22678,7 +22678,7 @@
     "Comisionable": "False",
     "ID_1": "533",
     "hasLicense": "True",
-    "Version": "102201394"
+    "Version": "102945410"
   },
   {
     "ID": "615",
@@ -22752,7 +22752,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102126265"
+    "Version": "102267923"
   },
   {
     "ID": "617",
@@ -22826,7 +22826,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106979"
+    "Version": "103105508"
   },
   {
     "ID": "619",
@@ -22937,7 +22937,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101858601"
+    "Version": "102836276"
   },
   {
     "ID": "622",
@@ -23057,8 +23057,8 @@
     "Nombre": "DULCE ARACELI",
     "Apellidos": "CARAPIA CORDOVA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "02/01/2025 18:00:00",
-    "VigenciaFin": "02/01/2027 06:00:00",
+    "VigenciaInicio": "03/01/2025",
+    "VigenciaFin": "02/01/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "cefdd462-c805-417d-b329-6ba7044d9e3a",
@@ -23067,7 +23067,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "18/11/2026 17:41:12",
+    "Modificado": "24/11/2026 18:28:30",
     "IdModificadoPor": "904",
     "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
     "IdPosicion": "627",
@@ -23085,7 +23085,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102216000"
+    "Version": "102806048"
   },
   {
     "ID": "626",
@@ -23131,8 +23131,8 @@
     "Nombre": "ARELI",
     "Apellidos": "MUÑOZ SOSA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "02/01/2025",
-    "VigenciaFin": "01/01/2027 12:00:00",
+    "VigenciaInicio": "02/01/2025 06:00:00",
+    "VigenciaFin": "18/11/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "2133162e-596d-47ad-a7e6-1c0f545f5d0f",
@@ -23141,14 +23141,14 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "14/04/2026 20:54:37",
-    "IdModificadoPor": "650",
-    "ModificadoPor": "PEDRO PEREZ GUZMAN",
+    "Modificado": "24/11/2026 20:40:43",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "628",
     "ClavePosicion": "POS-0637",
     "Posicion": "CAPTURISTA ALMACÉN REYNOSA",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -23158,8 +23158,8 @@
     "Bloqueado": "0",
     "Comisionable": "",
     "ID_1": "",
-    "hasLicense": "True",
-    "Version": "52876310"
+    "hasLicense": "False",
+    "Version": "102304651"
   },
   {
     "ID": "628",
@@ -23233,7 +23233,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102131218"
+    "Version": "103215351"
   },
   {
     "ID": "630",
@@ -23270,7 +23270,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102164882"
+    "Version": "102470451"
   },
   {
     "ID": "631",
@@ -23418,7 +23418,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102129906"
+    "Version": "102830411"
   },
   {
     "ID": "635",
@@ -23455,7 +23455,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102173331"
+    "Version": "102860091"
   },
   {
     "ID": "636",
@@ -23529,7 +23529,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102186821"
+    "Version": "102807022"
   },
   {
     "ID": "638",
@@ -23640,7 +23640,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102184546"
+    "Version": "103307238"
   },
   {
     "ID": "641",
@@ -23677,7 +23677,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106939"
+    "Version": "102943075"
   },
   {
     "ID": "642",
@@ -23788,7 +23788,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101522057"
+    "Version": "102822416"
   },
   {
     "ID": "645",
@@ -23899,7 +23899,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102136053"
+    "Version": "102942543"
   },
   {
     "ID": "648",
@@ -23936,7 +23936,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102135838"
+    "Version": "102839728"
   },
   {
     "ID": "649",
@@ -23993,8 +23993,8 @@
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
     "Modificado": "24/11/2026 15:46:16",
-    "IdModificadoPor": "650",
-    "ModificadoPor": "PEDRO PEREZ GUZMAN",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "76",
     "ClavePosicion": "POS-0082",
     "Posicion": "ADMINISTRADOR ARYVE (ENK)",
@@ -24010,7 +24010,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102135683"
+    "Version": "103050959"
   },
   {
     "ID": "651",
@@ -24380,7 +24380,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102039889"
+    "Version": "103303481"
   },
   {
     "ID": "661",
@@ -24426,8 +24426,8 @@
     "Nombre": "JESUS BALTAZAR",
     "Apellidos": "POOT TEC",
     "Telefono": "0101010101",
-    "VigenciaInicio": "03/01/2025",
-    "VigenciaFin": "03/01/2027",
+    "VigenciaInicio": "03/01/2025 06:00:00",
+    "VigenciaFin": "03/01/2027 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "af3ff82e-41f9-4d9d-b2df-7eea756cef31",
@@ -24436,7 +24436,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "01/07/2026 13:35:54",
+    "Modificado": "24/11/2026 18:31:21",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "666",
@@ -24454,7 +24454,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "97004839"
+    "Version": "102805938"
   },
   {
     "ID": "663",
@@ -24574,8 +24574,8 @@
     "Nombre": "JUVENAL",
     "Apellidos": "TERAN VAZQUEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "02/01/2025 06:00:00",
-    "VigenciaFin": "02/01/2027 06:00:00",
+    "VigenciaInicio": "02/01/2025 12:00:00",
+    "VigenciaFin": "02/01/2027 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "8517fe45-1ce7-49b8-a69b-52482c3e9b77",
@@ -24584,7 +24584,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "24/01/2026 18:43:38",
+    "Modificado": "24/11/2026 18:31:49",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "670",
@@ -24602,7 +24602,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "96568704"
+    "Version": "102820222"
   },
   {
     "ID": "667",
@@ -24639,7 +24639,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101381826"
+    "Version": "102935020"
   },
   {
     "ID": "668",
@@ -24722,8 +24722,8 @@
     "Nombre": "OSCAR SAMUEL",
     "Apellidos": "RAMIREZ LOPEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "03/01/2025 06:00:00",
-    "VigenciaFin": "02/01/2027 12:00:00",
+    "VigenciaInicio": "03/01/2025 12:00:00",
+    "VigenciaFin": "13/11/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "4278b5ae-c60d-410d-b489-4557568f7082",
@@ -24732,14 +24732,14 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "17/08/2026 23:03:41",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "24/11/2026 20:41:48",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "674",
     "ClavePosicion": "POS-0683",
     "Posicion": "RESIDENTE DE OBRA TAMPICO",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -24749,8 +24749,8 @@
     "Bloqueado": "0",
     "Comisionable": "",
     "ID_1": "",
-    "hasLicense": "True",
-    "Version": "84015086"
+    "hasLicense": "False",
+    "Version": "102314193"
   },
   {
     "ID": "671",
@@ -24806,9 +24806,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "23/11/2026 18:38:15",
-    "IdModificadoPor": "904",
-    "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
+    "Modificado": "24/11/2026 19:57:19",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "676",
     "ClavePosicion": "POS-0685",
     "Posicion": "RESIDENTE DE OBRA TAMPICO",
@@ -24824,7 +24824,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101770321"
+    "Version": "102270015"
   },
   {
     "ID": "673",
@@ -24935,7 +24935,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102134993"
+    "Version": "102830471"
   },
   {
     "ID": "676",
@@ -24972,7 +24972,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102201809"
+    "Version": "102943863"
   },
   {
     "ID": "677",
@@ -25120,7 +25120,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102121287"
+    "Version": "102943081"
   },
   {
     "ID": "681",
@@ -25157,7 +25157,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102129319"
+    "Version": "102936186"
   },
   {
     "ID": "682",
@@ -25166,8 +25166,8 @@
     "Nombre": "HILARIO",
     "Apellidos": "SANTIAGO FELIX",
     "Telefono": "0101010101",
-    "VigenciaInicio": "13/01/2025 08:00:00",
-    "VigenciaFin": "09/03/2027 18:00:00",
+    "VigenciaInicio": "13/01/2025 20:00:00",
+    "VigenciaFin": "05/11/2026 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "b48d9bb1-6231-4e0f-a16c-9005b803531b",
@@ -25176,9 +25176,9 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "19/11/2026 15:44:17",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "25/11/2026 18:10:48",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "1050",
     "ClavePosicion": "POS-1061",
     "Posicion": "CONTROL DE MATERIALES",
@@ -25194,7 +25194,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101890255"
+    "Version": "103043416"
   },
   {
     "ID": "683",
@@ -25231,7 +25231,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102136236"
+    "Version": "102831417"
   },
   {
     "ID": "684",
@@ -25268,7 +25268,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102185918"
+    "Version": "103142025"
   },
   {
     "ID": "685",
@@ -25305,7 +25305,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102173936"
+    "Version": "103057341"
   },
   {
     "ID": "686",
@@ -25379,7 +25379,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101796002"
+    "Version": "103307982"
   },
   {
     "ID": "688",
@@ -25453,7 +25453,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102215355"
+    "Version": "102943875"
   },
   {
     "ID": "690",
@@ -25527,7 +25527,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101628566"
+    "Version": "102805801"
   },
   {
     "ID": "692",
@@ -25564,7 +25564,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101767412"
+    "Version": "102942443"
   },
   {
     "ID": "693",
@@ -25675,7 +25675,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101971724"
+    "Version": "102828070"
   },
   {
     "ID": "696",
@@ -25786,7 +25786,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101629183"
+    "Version": "102816924"
   },
   {
     "ID": "699",
@@ -25823,7 +25823,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102167777"
+    "Version": "103088886"
   },
   {
     "ID": "700",
@@ -25934,7 +25934,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102245013"
+    "Version": "103235484"
   },
   {
     "ID": "703",
@@ -27895,7 +27895,7 @@
     "Comisionable": "True",
     "ID_1": "586",
     "hasLicense": "True",
-    "Version": "90896075"
+    "Version": "102831325"
   },
   {
     "ID": "758",
@@ -28302,7 +28302,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102220767"
+    "Version": "102995511"
   },
   {
     "ID": "769",
@@ -28561,7 +28561,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "100990093"
+    "Version": "103157809"
   },
   {
     "ID": "776",
@@ -28598,7 +28598,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106971"
+    "Version": "102809455"
   },
   {
     "ID": "777",
@@ -28635,7 +28635,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102131441"
+    "Version": "103324499"
   },
   {
     "ID": "778",
@@ -28681,8 +28681,8 @@
     "Nombre": "KATHERINE",
     "Apellidos": "GARCIA FUENTES",
     "Telefono": "0101010101",
-    "VigenciaInicio": "25/12/2025 13:00:00",
-    "VigenciaFin": "25/12/2026 13:00:00",
+    "VigenciaInicio": "25/12/2025 19:00:00",
+    "VigenciaFin": "25/12/2026 19:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "571061c7-9fdf-4a93-a914-9921cb58a10a",
@@ -28691,7 +28691,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
-    "Modificado": "07/11/2026 17:57:27",
+    "Modificado": "24/11/2026 18:36:14",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "764",
@@ -28709,7 +28709,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102197987"
+    "Version": "102912752"
   },
   {
     "ID": "780",
@@ -28968,7 +28968,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "95815993"
+    "Version": "102963747"
   },
   {
     "ID": "787",
@@ -29116,7 +29116,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102170469"
+    "Version": "102345870"
   },
   {
     "ID": "791",
@@ -29190,7 +29190,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102070588"
+    "Version": "103112106"
   },
   {
     "ID": "793",
@@ -29338,7 +29338,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102162100"
+    "Version": "103049749"
   },
   {
     "ID": "797",
@@ -29375,7 +29375,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102135164"
+    "Version": "103133193"
   },
   {
     "ID": "798",
@@ -30115,7 +30115,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102187192"
+    "Version": "102806161"
   },
   {
     "ID": "819",
@@ -30505,8 +30505,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "24/11/2026 15:46:46",
-    "IdModificadoPor": "650",
-    "ModificadoPor": "PEDRO PEREZ GUZMAN",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "814",
     "ClavePosicion": "POS-0823",
     "Posicion": "AUXILIAR PRESUPUESTO",
@@ -30522,7 +30522,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102225098"
+    "Version": "103264348"
   },
   {
     "ID": "831",
@@ -30568,8 +30568,8 @@
     "Nombre": "LIZETH VERENICE",
     "Apellidos": "FLORES VALENZUELA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "05/02/2026 15:00:00",
-    "VigenciaFin": "05/02/2027 15:00:00",
+    "VigenciaInicio": "05/02/2026 21:00:00",
+    "VigenciaFin": "05/02/2027 21:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "167d6ff2-ad43-4594-8c7c-61a846748418",
@@ -30578,7 +30578,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
-    "Modificado": "20/11/2026 18:47:04",
+    "Modificado": "24/11/2026 18:35:36",
     "IdModificadoPor": "1060",
     "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
     "IdPosicion": "780",
@@ -30596,7 +30596,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102245117"
+    "Version": "102259882"
   },
   {
     "ID": "833",
@@ -30875,8 +30875,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "23/11/2026 15:43:04",
-    "IdModificadoPor": "1060",
-    "ModificadoPor": "CLAUDIA SARAÍ PADILLA RAMÍREZ",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "822",
     "ClavePosicion": "POS-0831",
     "Posicion": "AUXILIAR DE OBRA TAMPICO",
@@ -30892,7 +30892,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101455196"
+    "Version": "102959191"
   },
   {
     "ID": "841",
@@ -31225,7 +31225,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102129835"
+    "Version": "103211324"
   },
   {
     "ID": "850",
@@ -31299,7 +31299,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "92319644"
+    "Version": "103119153"
   },
   {
     "ID": "852",
@@ -31706,7 +31706,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106679"
+    "Version": "103153536"
   },
   {
     "ID": "864",
@@ -32392,8 +32392,8 @@
     "IdCreadoPor": "570",
     "CreadoPor": "KARLA",
     "Modificado": "19/11/2026 18:03:40",
-    "IdModificadoPor": "904",
-    "ModificadoPor": "CHRISTIAN HERNANDEZ CANDELAS",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "863",
     "ClavePosicion": "POS-0871",
     "Posicion": "CAPTURISTA ALMACÉN TAMPICO",
@@ -32409,7 +32409,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102129894"
+    "Version": "102943179"
   },
   {
     "ID": "883",
@@ -32446,7 +32446,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "99596436"
+    "Version": "102594559"
   },
   {
     "ID": "884",
@@ -32483,7 +32483,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102219314"
+    "Version": "102470638"
   },
   {
     "ID": "885",
@@ -32816,7 +32816,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "101463492"
+    "Version": "103326911"
   },
   {
     "ID": "895",
@@ -33186,7 +33186,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102216329"
+    "Version": "103212151"
   },
   {
     "ID": "905",
@@ -33334,7 +33334,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102200129"
+    "Version": "102835629"
   },
   {
     "ID": "909",
@@ -35147,7 +35147,7 @@
     "Comisionable": "True",
     "ID_1": "686",
     "hasLicense": "True",
-    "Version": "102198009"
+    "Version": "102835902"
   },
   {
     "ID": "958",
@@ -36109,7 +36109,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102162330"
+    "Version": "103235182"
   },
   {
     "ID": "998",
@@ -36257,7 +36257,7 @@
     "Comisionable": "True",
     "ID_1": "711",
     "hasLicense": "True",
-    "Version": "101748073"
+    "Version": "102910500"
   },
   {
     "ID": "1002",
@@ -36405,7 +36405,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106467"
+    "Version": "102453759"
   },
   {
     "ID": "1008",
@@ -37737,7 +37737,7 @@
     "Comisionable": "True",
     "ID_1": "733",
     "hasLicense": "True",
-    "Version": "102216235"
+    "Version": "103128630"
   },
   {
     "ID": "1044",
@@ -37959,7 +37959,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102178923"
+    "Version": "103209482"
   },
   {
     "ID": "1051",
@@ -38005,8 +38005,8 @@
     "Nombre": "YEUDIEL ESTEBAN",
     "Apellidos": "RICHARD PEREZ",
     "Telefono": "9999999999",
-    "VigenciaInicio": "21/10/2026 12:00:00",
-    "VigenciaFin": "21/12/2026 06:00:00",
+    "VigenciaInicio": "22/10/2026",
+    "VigenciaFin": "21/12/2026 18:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "f52ca2b4-2dc0-410b-8ddf-90b3b9392809",
@@ -38015,7 +38015,7 @@
     "IdDashBoard": "",
     "IdCreadoPor": "975",
     "CreadoPor": "SANTOS",
-    "Modificado": "23/11/2026 17:52:47",
+    "Modificado": "25/11/2026 21:26:05",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1000",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102245366"
+    "Version": "103328257"
   },
   {
     "ID": "1053",
@@ -38301,8 +38301,8 @@
     "Nombre": "CLAUDIA SARAÍ",
     "Apellidos": "PADILLA RAMÍREZ",
     "Telefono": "9999999999",
-    "VigenciaInicio": "24/09/2026 18:00:00",
-    "VigenciaFin": "24/11/2026 18:00:00",
+    "VigenciaInicio": "25/09/2026",
+    "VigenciaFin": "25/02/2027 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "7bea14bd-dd4d-473d-b271-3d7c2ecdb8d9",
@@ -38311,9 +38311,9 @@
     "IdDashBoard": "",
     "IdCreadoPor": "975",
     "CreadoPor": "SANTOS",
-    "Modificado": "23/11/2026 17:28:41",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "25/11/2026 14:49:38",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "1010",
     "ClavePosicion": "POS-1017",
     "Posicion": "AUXILIAR ENKONTROL TAMPICO",
@@ -38329,7 +38329,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102223370"
+    "Version": "103104324"
   },
   {
     "ID": "1061",
@@ -38634,8 +38634,8 @@
     "Nombre": "ROBERTO",
     "Apellidos": "DOMINGUEZ ORDOÑEZ",
     "Telefono": "9999999999",
-    "VigenciaInicio": "23/09/2026 18:00:00",
-    "VigenciaFin": "23/12/2026 18:00:00",
+    "VigenciaInicio": "24/09/2026",
+    "VigenciaFin": "12/11/2026 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "b1b2b0bb-5046-4feb-9cd4-c17037363f7f",
@@ -38644,14 +38644,14 @@
     "IdDashBoard": "",
     "IdCreadoPor": "975",
     "CreadoPor": "SANTOS",
-    "Modificado": "21/09/2026 16:57:58",
-    "IdModificadoPor": "1",
-    "ModificadoPor": "ADMINISTRADOR EK10",
+    "Modificado": "24/11/2026 20:43:57",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
     "IdPosicion": "1019",
     "ClavePosicion": "POS-1026",
     "Posicion": "RESIDENTE DE OBRA TAMPICO",
-    "IdEstatus": "13",
-    "Estatus": "Activo",
+    "IdEstatus": "14",
+    "Estatus": "Inactivos",
     "IdTimeZone": "172",
     "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
     "IdIdioma": "384",
@@ -38661,8 +38661,8 @@
     "Bloqueado": "0",
     "Comisionable": "",
     "ID_1": "",
-    "hasLicense": "True",
-    "Version": "84424298"
+    "hasLicense": "False",
+    "Version": "102333885"
   },
   {
     "ID": "1070",
@@ -38819,8 +38819,8 @@
     "Nombre": "ARNOL",
     "Apellidos": "CHAVEZ GUZMAN",
     "Telefono": "0101010101",
-    "VigenciaInicio": "22/09/2026 12:00:00",
-    "VigenciaFin": "24/11/2026 12:00:00",
+    "VigenciaInicio": "22/09/2026 18:00:00",
+    "VigenciaFin": "01/03/2027 06:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "6d40b25f-38a8-42d7-be50-ff2795dcfc9d",
@@ -38829,7 +38829,7 @@
     "IdDashBoard": "",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "17/11/2026 15:27:06",
+    "Modificado": "25/11/2026 17:00:19",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1024",
@@ -38847,7 +38847,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102107277"
+    "Version": "103130887"
   },
   {
     "ID": "1075",
@@ -39048,7 +39048,7 @@
     "UUID": "e7b4fdc0-d466-4cc5-80e6-80e50c783f11",
     "IdAgente": "",
     "Creado": "29/09/2026 15:20:24",
-    "IdDashBoard": "",
+    "IdDashBoard": "1042",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
     "Modificado": "13/11/2026 21:29:41",
@@ -39069,7 +39069,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102073390"
+    "Version": "102844187"
   },
   {
     "ID": "1081",
@@ -39587,7 +39587,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "100387850"
+    "Version": "102260225"
   },
   {
     "ID": "1095",
@@ -39707,8 +39707,8 @@
     "Nombre": "CRISTHIAN ISMAEL",
     "Apellidos": "JUAREZ VAZQUEZ",
     "Telefono": "0101010101",
-    "VigenciaInicio": "13/10/2026 18:00:00",
-    "VigenciaFin": "11/01/2027 18:00:00",
+    "VigenciaInicio": "14/10/2026",
+    "VigenciaFin": "12/01/2027",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "82e26967-ea56-4ba6-877f-e227ac481e1a",
@@ -39717,7 +39717,7 @@
     "IdDashBoard": "",
     "IdCreadoPor": "1052",
     "CreadoPor": "YEUDIEL ESTEBAN",
-    "Modificado": "03/11/2026 15:23:16",
+    "Modificado": "25/11/2026 15:34:02",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1045",
@@ -39735,7 +39735,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102106380"
+    "Version": "103090053"
   },
   {
     "ID": "1099",
@@ -39818,8 +39818,8 @@
     "Nombre": "KATERIN",
     "Apellidos": "ROJAS AVILA",
     "Telefono": "0101010101",
-    "VigenciaInicio": "21/10/2026 06:00:00",
-    "VigenciaFin": "16/12/2026 06:00:00",
+    "VigenciaInicio": "21/10/2026 12:00:00",
+    "VigenciaFin": "16/12/2026 12:00:00",
     "InicioOperaciones": "",
     "IdCliente": "",
     "UUID": "6d2d4978-73e4-4651-b0d6-7a9514f06568",
@@ -39828,7 +39828,7 @@
     "IdDashBoard": "341",
     "IdCreadoPor": "904",
     "CreadoPor": "CHRISTIAN",
-    "Modificado": "11/11/2026 18:38:57",
+    "Modificado": "25/11/2026 14:56:31",
     "IdModificadoPor": "1",
     "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "685",
@@ -39846,7 +39846,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102199519"
+    "Version": "102816394"
   },
   {
     "ID": "1102",
@@ -40882,7 +40882,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "102186456"
+    "Version": "102861706"
   },
   {
     "ID": "1130",
@@ -41087,8 +41087,8 @@
     "IdCreadoPor": "4",
     "CreadoPor": "LUIS SOTERO",
     "Modificado": "23/11/2026 20:21:57",
-    "IdModificadoPor": "1052",
-    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "IdModificadoPor": "1",
+    "ModificadoPor": "ADMINISTRADOR EK10",
     "IdPosicion": "1080",
     "ClavePosicion": "POS-1091",
     "Posicion": "LIDER DE VENTAS REYNOSA",
@@ -41104,6 +41104,6 @@
     "Comisionable": "True",
     "ID_1": "760",
     "hasLicense": "True",
-    "Version": "101788595"
+    "Version": "103057229"
   }
 ]

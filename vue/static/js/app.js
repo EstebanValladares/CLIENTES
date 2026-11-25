@@ -143,32 +143,6 @@ createApp({
       toggleDropdownPuestoClasificador
     } = usuariosModulo;
 
-    // ==========================================
-    // VISTA MODULAR: BAJAS FORTIA VS ENKONTROL (vue/static/js/modules/fortia_bajas.js)
-    // ==========================================
-    const fortiaBajasModulo = window.createFortiaBajasModule ? window.createFortiaBajasModule(Vue) : {};
-    const {
-      modalBajasFortiaAbierto,
-      cargandoCruceFortia,
-      cruceFortia,
-      ejecutandoBotFortia,
-      estadoBotFortia,
-      pestanaBajasFortia,
-      busquedaBajasFortia,
-      diasAtrasFortia,
-      headlessFortia,
-      errorCruceFortia,
-      totalBajasEnRiesgo,
-      totalBajasFortia,
-      totalYaInactivos,
-      totalNoEncontrados,
-      listaBajasFiltrada,
-      abrirModalBajasFortia,
-      cerrarModalBajasFortia,
-      cargarCruceFortia,
-      iniciarConsultaBotFortia,
-      consultarEstadoBotFortia
-    } = fortiaBajasModulo;
 
     // ==========================================
     // VISTA MODULAR: OBRAS & WBS (vue/static/js/modules/obras.js)
@@ -1595,27 +1569,6 @@ createApp({
       sincronizandoAryve,
       sincronizarUsuariosAryve,
       seleccionarUsuario,
-      // Bajas FORTIA vs Enkontrol
-      modalBajasFortiaAbierto,
-      cargandoCruceFortia,
-      cruceFortia,
-      ejecutandoBotFortia,
-      estadoBotFortia,
-      pestanaBajasFortia,
-      busquedaBajasFortia,
-      diasAtrasFortia,
-      headlessFortia,
-      errorCruceFortia,
-      totalBajasEnRiesgo,
-      totalBajasFortia,
-      totalYaInactivos,
-      totalNoEncontrados,
-      listaBajasFiltrada,
-      abrirModalBajasFortia,
-      cerrarModalBajasFortia,
-      cargarCruceFortia,
-      iniciarConsultaBotFortia,
-      consultarEstadoBotFortia,
       // Proyectos
       permisosUsuarios,
       permisosObras,
