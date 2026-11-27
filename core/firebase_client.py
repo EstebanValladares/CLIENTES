@@ -35,6 +35,9 @@ class FirebaseClient:
     _init_attempted = False
     _cache_puestos: Dict[str, Any] = {}
     _ultimo_fetch_puestos: float = 0
+    _ultimo_check_cloud_ts: float = 0
+    _sync_en_curso: bool = False
+    _ultimo_puestos_actualizado_en: str = ""
 
     @classmethod
     def get_db(cls):
@@ -101,12 +104,14 @@ class FirebaseClient:
         """Obtiene el catálogo de puestos desde RAM / puestos.json (y Firestore si local está vacío)."""
         with cls._lock:
             if not forzar and cls._cache_puestos:
+                cls._disparar_sync_puestos_background()
                 return dict(cls._cache_puestos)
 
             puestos = cls._leer_puestos_locales()
             if puestos:
                 cls._cache_puestos = puestos
                 cls._ultimo_fetch_puestos = time.time()
+                cls._disparar_sync_puestos_background()
                 return dict(puestos)
 
         # Fallback a Firestore si no hay puestos locales
@@ -188,7 +193,11 @@ class FirebaseClient:
             if db is not None:
                 try:
                     doc_id = _sanitizar_doc_id(nombre_limpio)
-                    db.collection("POSICIONES").document(doc_id).set(nuevo_puesto_data, merge=True)
+                    col = db.collection("POSICIONES")
+                    col.document(doc_id).set(nuevo_puesto_data, merge=True)
+                    col.document("META_CONSECUTIVO").set({
+                        "puestos_actualizado_en": nuevo_puesto_data["actualizado_en"]
+                    }, merge=True)
                     en_nube = True
                 except Exception as e_fb:
                     print(f"[FirebaseClient] Aviso guardando '{nombre_limpio}' en Firestore: {e_fb}")
@@ -302,22 +311,55 @@ class FirebaseClient:
             col.document(_sanitizar_doc_id(doc_data["nombre"])).set(doc_data, merge=True)
 
             m = re.search(r"POS-(\d+)", str(clave or ""), re.IGNORECASE)
+            meta_ref = col.document("META_CONSECUTIVO")
+            meta_update: Dict[str, Any] = {
+                "puestos_actualizado_en": time.strftime("%Y-%m-%d %H:%M:%S"),
+            }
             if m:
                 num = int(m.group(1))
-                meta_ref = col.document("META_CONSECUTIVO")
                 snap = meta_ref.get(timeout=3)
                 actual = int((snap.to_dict() or {}).get("max_numero") or 0) if snap.exists else 0
                 if num >= actual:
-                    meta_ref.set({
+                    meta_update.update({
                         "max_numero": num,
                         "ultima_clave": f"POS-{num:04d}" if num < 10000 else f"POS-{num}",
                         "ultima_posicion_nombre": doc_data["nombre"],
                         "actualizado_en": time.strftime("%Y-%m-%d %H:%M:%S"),
-                    }, merge=True)
+                    })
+            meta_ref.set(meta_update, merge=True)
             return True
         except Exception as e:
             print(f"[FirebaseClient] Aviso registrando posición '{nombre}' en Firestore: {e}")
             return False
+
+    @classmethod
+    def _disparar_sync_puestos_background(cls) -> None:
+        """Verifica en segundo plano (máx. 1 vez cada 60s) si hay puestos nuevos en Firestore."""
+        ahora = time.time()
+        if cls._sync_en_curso or (ahora - cls._ultimo_check_cloud_ts) < 60:
+            return
+        cls._ultimo_check_cloud_ts = ahora
+
+        def _worker():
+            cls._sync_en_curso = True
+            try:
+                db = cls.get_db()
+                if db is None:
+                    return
+                snap = db.collection("POSICIONES").document("META_CONSECUTIVO").get(timeout=3)
+                if not snap.exists:
+                    return
+                ts_remoto = str((snap.to_dict() or {}).get("puestos_actualizado_en") or "")
+                if ts_remoto and ts_remoto != cls._ultimo_puestos_actualizado_en:
+                    res = cls.sincronizar_puestos()
+                    if res.get("ok"):
+                        cls._ultimo_puestos_actualizado_en = ts_remoto
+            except Exception:
+                pass
+            finally:
+                cls._sync_en_curso = False
+
+        threading.Thread(target=_worker, daemon=True).start()
 
     @classmethod
     def obtener_estado_sincronizacion_puestos(cls) -> Dict[str, Any]:
