@@ -102,7 +102,7 @@ def extraer_todas_las_ubicaciones():
         'Referer': 'https://suite.ekloud.net:1445/Aryve/'
     }
 
-    url_api = "https://suite.ekloud.net:1445/Aryve/base/Kontrol/InterfaceConversionCatalogos/api/GetConversionCatalogos"
+    url_api = "https://suite.ekloud.net:1445/Aryve/base/Kontrol/InterfaceConversionCatalogos/GetBP/GetConversionCatalogos"
 
     registros_totales = []
     resumen_companias = {}

@@ -1268,7 +1268,7 @@ class EscalatoriaService:
         session = requests.Session()
         session.verify = False
 
-        login_url = ""
+        login_url = "https://suite.ekloud.net:1445/Aryve/kontrol/login/validate"
         data = {"username": user, "password": pwd, "returnUrl": "", "msj": ""}
         headers = {"User-Agent": "Mozilla/5.0", "Referer": "https://suite.ekloud.net:1445/Aryve/"}
 
@@ -1300,7 +1300,7 @@ class EscalatoriaService:
                     "mensaje": "No se pudo iniciar sesión en Enkontrol 10 Cloud. Verifica las credenciales en .env."
                 }
 
-            url_all = "https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/api/GetAll/"
+            url_all = "https://suite.ekloud.net:1445/Aryve/base/soc/SOCEscalatoriaPrecios/GetBP/GetAll/"
             headers = {"User-Agent": "Mozilla/5.0", "Referer": "https://suite.ekloud.net:1445/Aryve/"}
 
             res = session.post(url_all, json={"parametros": {}}, headers=headers, timeout=20)

@@ -26,7 +26,7 @@ API_BASE = "http://34.51.46.13/API/suministro_nivel"
 API_REPORTE_URL = f"{API_BASE}/reporte_insumo.php"
 API_MOVIMIENTOS_URL = f"{API_BASE}/movimientos_insumo.php"
 API_ACTUALIZAR_URL = f"{API_BASE}/actualizar_suministro.php"
-API_TOKEN = ""
+API_TOKEN = "b86fa23c3531a976c3d4cdb6c6feef66"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",

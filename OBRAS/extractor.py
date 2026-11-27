@@ -28,7 +28,7 @@ class ObrasService:
         session = requests.Session()
         session.verify = False
 
-        login_url = ""
+        login_url = "https://suite.ekloud.net:1445/Aryve/kontrol/login/validate"
         data = {"username": user, "password": pwd, "returnUrl": "", "msj": ""}
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -109,7 +109,7 @@ class ObrasService:
             clave_obra = obra_info["clave"]
 
         session = cls._obtener_sesion()
-        url = "PresupuestosBase/api/GetArbol/"
+        url = "https://suite.ekloud.net:1445/Aryve/base/scco/PresupuestosBase/GetBP/GetArbol/"
         payload = {"parametros": {"IdObra": id_obra}}
 
         r = session.post(url, json=payload, headers=cls._headers, timeout=30)
@@ -234,7 +234,7 @@ class ObrasService:
         from datetime import datetime
 
         session = cls._obtener_sesion()
-        url_obras = "PresupuestosBase/api/GetObras/"
+        url_obras = "https://suite.ekloud.net:1445/Aryve/base/scco/PresupuestosBase/GetBP/GetObras/"
         r = session.post(url_obras, json={"parametros": {}}, headers=cls._headers, timeout=25)
         if r.status_code != 200:
             raise RuntimeError(f"Error consultando obras: {r.status_code}")

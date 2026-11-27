@@ -134,9 +134,9 @@ def sincronizar_obras_aryve():
     Conecta en vivo a la API de Aryve con la Llave Maestra, extrae los árboles
     de todas las obras y actualiza obras.json local.
     """
-    # Versión cliente - lectura directa de Firebase
+    from OBRAS.extractor import ObrasService
     try:
-        resultado = {"obras": ObrasCoreService.obtener_catalogo()}
+        resultado = ObrasService.extraer_todas_las_obras()
         ObrasCoreService.recargar()
         return {
             "ok": True,

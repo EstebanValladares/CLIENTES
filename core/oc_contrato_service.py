@@ -28,7 +28,7 @@ SQL_SERVER_HOST = "10.30.0.2"
 SQL_SERVER_PORT = 1433
 SQL_SERVER_DB = "Aryve2"
 SQL_SERVER_USER = "sa"
-SQL_SERVER_PASS = ""
+SQL_SERVER_PASS = "Aryve2025*"
 
 
 class OcContratoService:
@@ -155,19 +155,24 @@ class OcContratoService:
         except ImportError:
             tiene_pyodbc = False
 
-        # Si estamos en modo CLIENTES o no hay pyodbc disponible, consultar vía Master Torre
-        if not es_modo_master() or not tiene_pyodbc:
+        # Si no hay pyodbc disponible, consultar vía Master Torre como respaldo
+        if not tiene_pyodbc:
             return cls._consultar_via_master(folio=folio, clave=clave, obra=obra, compania=compania)
 
-        # 1. Intentar primero en Aryve2
-        resultado_local = cls._consultar_aryve2(folio=folio, clave=clave, obra=obra, compania=compania)
-        if resultado_local.get("ok"):
-            return resultado_local
+        try:
+            # 1. Intentar primero directo en Aryve2
+            resultado_local = cls._consultar_aryve2(folio=folio, clave=clave, obra=obra, compania=compania)
+            if resultado_local.get("ok"):
+                return resultado_local
 
-        # 2. Si no se encontró en Aryve2, consultar en vivo a Enkontrol Cloud [10.11.0.5]
-        resultado_live = cls._consultar_live_cloud(folio=folio, clave=clave, obra=obra, compania=compania)
-        if resultado_live.get("ok"):
-            return resultado_live
+            # 2. Si no se encontró en Aryve2, consultar en vivo a Enkontrol Cloud [10.11.0.5]
+            resultado_live = cls._consultar_live_cloud(folio=folio, clave=clave, obra=obra, compania=compania)
+            if resultado_live.get("ok"):
+                return resultado_live
+        except Exception:
+            if not es_modo_master():
+                return cls._consultar_via_master(folio=folio, clave=clave, obra=obra, compania=compania)
+            raise
 
         # Si ninguno lo encontró, retornar el mensaje amigable
         criterio = f"'{folio}'" if folio else f"clave '{clave}'"

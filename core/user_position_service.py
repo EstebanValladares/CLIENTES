@@ -116,6 +116,16 @@ class UserPositionService:
                 return
 
             if res.get("ok"):
+                try:
+                    from core.user_service import UserService
+                    UserService.crear_posicion_simple(
+                        clave=clave,
+                        nombre=nombre,
+                        categoria=categoria,
+                        padre=padre
+                    )
+                except Exception as e_sync:
+                    log_callback(f"[Aviso] Posición creada en Aryve, pero falló sync local/Firestore: {e_sync}")
                 cls._estado_actual["ok"] = True
                 cls._estado_actual["mensaje"] = res.get("mensaje", "Posición creada exitosamente.")
             else:

@@ -89,7 +89,7 @@ class UserService:
                             "fecha_creacion": str(u.get("Creado", "")).strip(),
                             "telefono": str(u.get("Telefono", "")).strip(),
                             "time_zone": str(u.get("TimeZone", "")).strip(),
-                            "url_aryve": ""
+                            "url_aryve": f"https://suite.ekloud.net:1445/Aryve/#/usuarios/{uid}" if uid else ""
                         }
                         usuarios.append(user_dict)
                         if uid:
@@ -161,7 +161,7 @@ class UserService:
                                 "fecha_creacion": str(reg.get("fecha", "")).strip(),
                                 "telefono": "",
                                 "time_zone": "",
-                                "url_aryve": ""
+                                "url_aryve": f"https://suite.ekloud.net:1445/Aryve/#/usuarios/{uid}" if uid else ""
                             })
                             if uid:
                                 ids_vistos.add(uid)
@@ -305,9 +305,228 @@ class UserService:
 
     @classmethod
     def sincronizar_desde_aryve(cls) -> Dict[str, Any]:
-        """En versión del equipo, recarga los datos del catálogo local de Usuarios.json"""
-        cls.recargar()
-        return {"ok": True, "mensaje": "Catálogo de usuarios recargado localmente con éxito."}
+        """
+        Conecta a la API interna de Aryve (Enkontrol 10) usando credenciales de .env,
+        descarga todos los usuarios en vivo y actualiza atómicamente Usuarios.json y Usuarios.csv.
+        """
+        import csv
+        import urllib3
+        import requests
+        from dotenv import load_dotenv
+
+        urllib3.disable_warnings()
+
+        load_dotenv(os.path.join(BASE_DIR, ".env"))
+        user = os.getenv("EK10_USER", "").strip()
+        pwd = os.getenv("EK10_PASS", "").strip()
+
+        if not user or not pwd:
+            try:
+                from NUCLEO.config import obtener_credenciales_aryve
+                user, pwd = obtener_credenciales_aryve()
+            except Exception:
+                pass
+
+        if not user or not pwd:
+            return {"ok": False, "error": "No se encontraron credenciales de EK10 en .env"}
+
+        session = requests.Session()
+        session.verify = False
+
+        login_url = "https://suite.ekloud.net:1445/Aryve/kontrol/login/validate"
+        data = {"username": user, "password": pwd, "returnUrl": "", "msj": ""}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Referer": "https://suite.ekloud.net:1445/Aryve/",
+        }
+
+        try:
+            r = session.post(login_url, data=data, headers=headers, allow_redirects=True, timeout=12)
+            if r.status_code != 200 or ".AspNet.ApplicationCookie" not in session.cookies:
+                return {"ok": False, "error": f"Fallo al autenticar en Aryve (Código {r.status_code})"}
+
+            api_url = "https://suite.ekloud.net:1445/Aryve/base/kontrol/usuarios/GetBP/GetUsuario"
+            r_api = session.post(api_url, json={"parametros": {"IdGrupo": -2}}, headers=headers, timeout=25)
+            if r_api.status_code != 200:
+                return {"ok": False, "error": f"Error al consultar usuarios en Aryve (Código {r_api.status_code})"}
+
+            raw_users = r_api.json()
+            if not isinstance(raw_users, list):
+                return {"ok": False, "error": "Respuesta inválida de la API de Aryve"}
+        except Exception as e:
+            return {"ok": False, "error": f"Error de conexión con Aryve: {e}"}
+
+        def _fmt_fecha(val: Any) -> str:
+            if not val:
+                return ""
+            val_str = str(val).strip()
+            if "T" in val_str:
+                try:
+                    partes = val_str.split("T")
+                    d_part = partes[0]
+                    t_part = partes[1].split(".")[0]
+                    y, m, d = d_part.split("-")
+                    if t_part and t_part != "00:00:00":
+                        return f"{d}/{m}/{y} {t_part}"
+                    return f"{d}/{m}/{y}"
+                except Exception:
+                    return val_str
+            return val_str
+
+        def _obj_str(val: Any) -> str:
+            if val is None:
+                return ""
+            if isinstance(val, dict):
+                return str(val.get("Nombre", "") or val.get("nombre", "") or "").strip()
+            return str(val).strip()
+
+        def _obj_id(val: Any) -> str:
+            if val is None:
+                return ""
+            if isinstance(val, dict):
+                return str(val.get("ID", "") or val.get("id", "") or "").strip()
+            return str(val).strip()
+
+        usuarios_json: List[Dict[str, Any]] = []
+        filas_csv: List[List[str]] = []
+
+        headers_csv = [
+            "ID", "Clave", "Email", "Nombre", "Apellidos", "Telefono",
+            "VigenciaInicio", "VigenciaFin", "InicioOperaciones", "IdCliente", "UUID",
+            "IdAgente", "Creado", "IdDashBoard", "IdCreadoPor", "CreadoPor", "Modificado",
+            "IdModificadoPor", "ModificadoPor", "IdPosicion", "Posicion", "IdEstatus",
+            "Estatus", "IdTimeZone", "TimeZone", "IdIdioma", "Idioma", "IdAreaOrganizacion",
+            "AreaOrganizacion", "Bloqueado", "Comisionable", "ID", "hasLicense", "Version",
+        ]
+
+        for u in raw_users:
+            creador_nom = _obj_str(u.get("CreadoPor"))
+            modificador_nom = _obj_str(u.get("ModificadoPor"))
+            if isinstance(u.get("ModificadoPor"), dict) and u.get("ModificadoPor").get("Apellidos"):
+                modificador_nom = f"{modificador_nom} {u['ModificadoPor']['Apellidos']}".strip()
+
+            agente = u.get("Agente") or {}
+            comisionable = (
+                str(agente.get("Comisionable", ""))
+                if isinstance(agente, dict) and agente.get("Comisionable") is not None
+                else ""
+            )
+            id_agente_sec = (
+                str(agente.get("ID", "") or "")
+                if isinstance(agente, dict) and agente.get("ID") is not None
+                else ""
+            )
+
+            uid = str(u.get("ID", "") or "")
+            clave = str(u.get("Clave", "") or "")
+            email = str(u.get("Email", "") or "")
+            nom = str(u.get("Nombre", "") or "")
+            ape = str(u.get("Apellidos", "") or "")
+            tel = str(u.get("Telefono", "") or "")
+            vig_ini = _fmt_fecha(u.get("VigenciaInicio"))
+            vig_fin = _fmt_fecha(u.get("VigenciaFin"))
+            ini_op = _fmt_fecha(u.get("InicioOperaciones"))
+            id_cli = str(u.get("IdCliente", "") or "")
+            uuid_val = str(u.get("UUID", "") or "")
+            id_agente = str(u.get("IdAgente", "") or "")
+            creado = _fmt_fecha(u.get("Creado"))
+            id_db = str(u.get("IdDashBoard", "") or "")
+            id_creador = str(u.get("IdCreadoPor", "") or "")
+            modificado = _fmt_fecha(u.get("Modificado"))
+            id_modif = str(u.get("IdModificadoPor", "") or "")
+            pos_obj = u.get("Posicion")
+            if isinstance(pos_obj, dict):
+                pos_nom = str(pos_obj.get("Nombre", "") or "").strip()
+                pos_clave = str(pos_obj.get("Clave", "") or "").strip()
+                id_pos = str(pos_obj.get("ID", "") or u.get("IdPosicion", "") or "").strip()
+            else:
+                pos_nom = _obj_str(pos_obj)
+                pos_clave = ""
+                id_pos = _obj_id(u.get("IdPosicion")) or str(u.get("IdPosicion", "") or "").strip()
+
+            id_est = _obj_id(u.get("IdEstatus")) or str(u.get("IdEstatus", "") or "")
+            est_nom = _obj_str(u.get("Estatus"))
+            id_tz = _obj_id(u.get("IdTimeZone")) or str(u.get("IdTimeZone", "") or "")
+            tz_nom = _obj_str(u.get("TimeZone"))
+            id_lang = _obj_id(u.get("IdIdioma")) or str(u.get("IdIdioma", "") or "")
+            lang_nom = _obj_str(u.get("Idioma"))
+            id_area = _obj_id(u.get("IdAreaOrganizacion")) or str(u.get("IdAreaOrganizacion", "") or "")
+            area_nom = _obj_str(u.get("AreaOrganizacion"))
+            bloqueado = str(u.get("Bloqueado", "0") if u.get("Bloqueado") is not None else "0")
+            has_lic = str(u.get("hasLicense", False))
+            version = str(u.get("Version", "") or "")
+
+            item_json = {
+                "ID": uid,
+                "Clave": clave,
+                "Email": email,
+                "Nombre": nom,
+                "Apellidos": ape,
+                "Telefono": tel,
+                "VigenciaInicio": vig_ini,
+                "VigenciaFin": vig_fin,
+                "InicioOperaciones": ini_op,
+                "IdCliente": id_cli,
+                "UUID": uuid_val,
+                "IdAgente": id_agente,
+                "Creado": creado,
+                "IdDashBoard": id_db,
+                "IdCreadoPor": id_creador,
+                "CreadoPor": creador_nom,
+                "Modificado": modificado,
+                "IdModificadoPor": id_modif,
+                "ModificadoPor": modificador_nom,
+                "IdPosicion": id_pos,
+                "ClavePosicion": pos_clave,
+                "Posicion": pos_nom,
+                "IdEstatus": id_est,
+                "Estatus": est_nom,
+                "IdTimeZone": id_tz,
+                "TimeZone": tz_nom,
+                "IdIdioma": id_lang,
+                "Idioma": lang_nom,
+                "IdAreaOrganizacion": id_area,
+                "AreaOrganizacion": area_nom,
+                "Bloqueado": bloqueado,
+                "Comisionable": comisionable,
+                "ID_1": id_agente_sec,
+                "hasLicense": has_lic,
+                "Version": version,
+            }
+            usuarios_json.append(item_json)
+
+            filas_csv.append([
+                uid, clave, email, nom, ape, tel,
+                vig_ini, vig_fin, ini_op, id_cli, uuid_val,
+                id_agente, creado, id_db, id_creador, creador_nom, modificado,
+                id_modif, modificador_nom, id_pos, pos_nom, id_est,
+                est_nom, id_tz, tz_nom, id_lang, lang_nom, id_area,
+                area_nom, bloqueado, comisionable, id_agente_sec, has_lic, version,
+            ])
+
+        os.makedirs(DIR_USUARIOS_DATA, exist_ok=True)
+        ruta_salida_json = os.path.join(DIR_USUARIOS_DATA, "Usuarios.json")
+        with open(ruta_salida_json, "w", encoding="utf-8") as f_json:
+            json.dump(usuarios_json, f_json, ensure_ascii=False, indent=2)
+
+# Sincronización 100% local a Usuarios.json
+
+        csv_path = os.path.join(DIR_USUARIOS_DATA, "Usuarios.csv")
+        with open(csv_path, "w", encoding="utf-8-sig", newline="") as f_csv:
+            writer = csv.writer(f_csv, delimiter=";")
+            writer.writerow(headers_csv)
+            writer.writerows(filas_csv)
+
+        cls._cache_usuarios = None
+        cls._last_load_time = None
+        cls.obtener_usuarios(force_reload=True)
+
+        return {
+            "ok": True,
+            "total": len(raw_users),
+            "mensaje": f"Se sincronizaron exitosamente {len(raw_users)} usuarios directamente desde Aryve.",
+        }
+
     @classmethod
     def obtener_meta_posiciones(cls, sincronizar_en_vivo: bool = False) -> Dict[str, Any]:
         """
@@ -396,6 +615,15 @@ class UserService:
             except Exception as e:
                 logger.error(f"Error analizando Usuarios.json para meta posiciones: {e}")
 
+        # Consultar consecutivo compartido en Firestore (POSICIONES/__meta__)
+        try:
+            from core.firebase_client import FirebaseClient
+            max_cloud = FirebaseClient.obtener_max_consecutivo_posicion()
+            if max_cloud > max_num:
+                max_num = max_cloud
+        except Exception:
+            pass
+
         # Baseline oficial
         if max_num < 1079:
             max_num = 1079
@@ -475,6 +703,13 @@ class UserService:
             logger.error(f"Error guardando nueva posición en puestos.json: {e}")
             return {"ok": False, "error": str(e)}
 
+        # Replicar inmediatamente a Firestore (POSICIONES + __meta__)
+        try:
+            from core.firebase_client import FirebaseClient
+            FirebaseClient.registrar_posicion_en_firestore(clave, nombre, puestos_dict[nombre])
+        except Exception as e_fb:
+            logger.warning(f"No se pudo replicar posición a Firestore: {e_fb}")
+
         meta_actualizada = cls.obtener_meta_posiciones()
 
         return {
@@ -541,7 +776,7 @@ class UserService:
         }
 
         r_log = s.post(
-            "",
+            "https://suite.ekloud.net:1445/Aryve/kontrol/login/validate",
             data={"username": user, "password": pwd, "returnUrl": "", "msj": ""},
             headers=headers,
             timeout=12,
@@ -554,7 +789,7 @@ class UserService:
 
         # 1. Datos generales del usuario
         r_u = s.post(
-            "https://suite.ekloud.net:1445/Aryve/base/kontrol/usuarios/usuarios/consultar",
+            "https://suite.ekloud.net:1445/Aryve/base/kontrol/usuarios/GetBP/GetUsuario",
             json={"parametros": {"ID": uid}},
             headers=headers,
             timeout=15,
