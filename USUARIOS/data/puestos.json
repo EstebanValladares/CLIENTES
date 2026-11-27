@@ -1,6 +1,6 @@
 {
   "_comentario": "Catálogo integral de 230 puestos y posiciones sincronizado desde Aryve Cloud",
-  "ultima_actualizacion": "2026-11-19 16:50:24",
+  "ultima_actualizacion": "2026-11-27 08:39:42",
   "total_posiciones": 230,
   "puestos": {
     "ASESOR CALL CENTER CABOS": {
@@ -6731,74 +6731,14 @@
     },
     "ASESOR DE VENTAS REYNOSA": {
       "categoria": "ASESOR DE VENTA REYNOSA",
-      "clasificadores": {
-        "Boletas de Prospección": {
-          "Clasificador de Prospectos": [
-            "P-ASOCIACION-ESPECIAL-BOLETA",
-            "P-ASOCIAR-BOLETA",
-            "P-DESCARTAR-BOLETA",
-            "P-REGISTRO-BOLETA"
-          ]
-        },
-        "Prospectos Clientes": {
-          "PROSPECTOS CLIENTES": [
-            "P-PROSPECTO-EDICION"
-          ]
-        },
-        "Comercial": {
-          "PLAZAS": [
-            "REY"
-          ],
-          "DESARROLLOS": [
-            "REY-001",
-            "REY-002",
-            "REY-003",
-            "REY-004",
-            "REY-005"
-          ]
-        },
-        "Cotización-Venta": {
-          "PROCESOS DE VENTA": [
-            "CI",
-            "GI",
-            "V-EDICIONCONPP"
-          ]
-        },
-        "Seguimiento del Expediente": {
-          "ETAPAS DE SEGUIMIENTO": [
-            "ET-0001",
-            "ET-0002",
-            "ET-0003",
-            "ET-0004",
-            "ET-0005",
-            "ET-0006"
-          ],
-          "ETIQUETA DE EXPEDIENTE": [
-            "EXPEDIENTE INCOMPLETO",
-            "AUTORIZACIÓN ESPECIAL",
-            "CON PROMOCIÓN EN ESPECIE",
-            "CON PROMOCIÓN ESPECIAL"
-          ]
-        },
-        "Clasificador de Autorizaciones": [
-          "BTN-REENVIO-AUTORIZACION"
-        ],
-        "Vistas GIS": [
-          "Estatus.ID",
-          "PorcentajeAvance.ID",
-          "TipoVivienda.ID",
-          "Etapa.ID",
-          "Frente.ID",
-          "Manzana.ID",
-          "Lote.ID"
-        ]
-      },
-      "puesto_origen": "ASESOR",
+      "clasificadores": {},
+      "puesto_origen": "POS-0899",
       "time_zone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
-      "id_posicion_cloud": 424,
-      "total_clasificadores": 32,
-      "area_organizacion": "VENTAS",
-      "clave_posicion_cloud": "POS-0388"
+      "id_posicion_cloud": null,
+      "total_clasificadores": 0,
+      "area_organizacion": "ASESOR DE VENTA REYNOSA",
+      "clave_posicion_cloud": "POS-1095",
+      "padre": "POS-0899"
     },
     "JEFE DE PRESUPUESTOS": {
       "categoria": "JEFE DE PRESUPUESTOS",
@@ -14660,6 +14600,20 @@
       "categoria": "COORDINADOR DE POST VENTA",
       "padre": "POS-0895",
       "fecha_registro": "2026-11-19 16:50:24"
+    },
+    {
+      "clave": "POS-1094",
+      "nombre": "ASESOR DE VENTAS REYNOSA",
+      "categoria": "ASESOR DE VENTA REYNOSA",
+      "padre": "POS-0899",
+      "fecha_registro": "2026-11-27 08:21:57"
+    },
+    {
+      "clave": "POS-1095",
+      "nombre": "ASESOR DE VENTAS REYNOSA",
+      "categoria": "ASESOR DE VENTA REYNOSA",
+      "padre": "POS-0899",
+      "fecha_registro": "2026-11-27 08:39:42"
     }
   ]
 }

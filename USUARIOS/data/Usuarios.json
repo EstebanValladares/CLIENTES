@@ -22419,7 +22419,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104045826"
+    "Version": "104279004"
   },
   {
     "ID": "608",
@@ -23270,7 +23270,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "103822096"
+    "Version": "104279009"
   },
   {
     "ID": "631",
@@ -23677,7 +23677,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104096662"
+    "Version": "104279286"
   },
   {
     "ID": "642",
@@ -23825,7 +23825,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104059410"
+    "Version": "104279120"
   },
   {
     "ID": "646",
@@ -28635,7 +28635,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "103692629"
+    "Version": "104279162"
   },
   {
     "ID": "778",
@@ -29190,7 +29190,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104095927"
+    "Version": "104279284"
   },
   {
     "ID": "793",
@@ -33334,7 +33334,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104069314"
+    "Version": "104279241"
   },
   {
     "ID": "909",
@@ -36257,7 +36257,7 @@
     "Comisionable": "True",
     "ID_1": "711",
     "hasLicense": "True",
-    "Version": "104132948"
+    "Version": "104279185"
   },
   {
     "ID": "1002",
@@ -36405,7 +36405,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104071731"
+    "Version": "104279136"
   },
   {
     "ID": "1008",
@@ -38033,7 +38033,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104278994"
+    "Version": "104279290"
   },
   {
     "ID": "1053",
@@ -38329,7 +38329,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "104073539"
+    "Version": "104279288"
   },
   {
     "ID": "1061",
@@ -39735,7 +39735,7 @@
     "Comisionable": "",
     "ID_1": "",
     "hasLicense": "True",
-    "Version": "103693217"
+    "Version": "104279189"
   },
   {
     "ID": "1099",
@@ -41179,5 +41179,79 @@
     "ID_1": "762",
     "hasLicense": "False",
     "Version": "104261144"
+  },
+  {
+    "ID": "1138",
+    "Clave": "dulcearyve.24@gmail.com",
+    "Email": "dulcearyve.24@gmail.com",
+    "Nombre": "DULCE MARIA",
+    "Apellidos": "ROMERO GUERRA",
+    "Telefono": "0101010101",
+    "VigenciaInicio": "27/11/2026 18:00:00",
+    "VigenciaFin": "25/02/2027 18:00:00",
+    "InicioOperaciones": "",
+    "IdCliente": "",
+    "UUID": "63840ba2-a65e-42a5-8691-6316719757f1",
+    "IdAgente": "763",
+    "Creado": "27/11/2026 14:20:50",
+    "IdDashBoard": "",
+    "IdCreadoPor": "1052",
+    "CreadoPor": "YEUDIEL ESTEBAN",
+    "Modificado": "27/11/2026 14:26:57",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "IdPosicion": "1083",
+    "ClavePosicion": "POS-1094",
+    "Posicion": "ASESOR DE VENTAS REYNOSA",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
+    "IdTimeZone": "172",
+    "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+    "IdIdioma": "384",
+    "Idioma": "Español (México)",
+    "IdAreaOrganizacion": "797",
+    "AreaOrganizacion": "VENTAS",
+    "Bloqueado": "0",
+    "Comisionable": "True",
+    "ID_1": "763",
+    "hasLicense": "True",
+    "Version": "104279091"
+  },
+  {
+    "ID": "1139",
+    "Clave": "BlancaAVG2208@gmail.com",
+    "Email": "BlancaAVG2208@gmail.com",
+    "Nombre": "BLANCA ALICIA",
+    "Apellidos": "VARGAS GONZALEZ",
+    "Telefono": "0101010101",
+    "VigenciaInicio": "28/11/2026 12:00:00",
+    "VigenciaFin": "26/02/2027 12:00:00",
+    "InicioOperaciones": "",
+    "IdCliente": "",
+    "UUID": "729c0321-5915-4f31-82ab-19f8b9551058",
+    "IdAgente": "764",
+    "Creado": "27/11/2026 14:39:19",
+    "IdDashBoard": "",
+    "IdCreadoPor": "1052",
+    "CreadoPor": "YEUDIEL ESTEBAN",
+    "Modificado": "27/11/2026 14:41:00",
+    "IdModificadoPor": "1052",
+    "ModificadoPor": "YEUDIEL ESTEBAN RICHARD PEREZ",
+    "IdPosicion": "1084",
+    "ClavePosicion": "POS-1095",
+    "Posicion": "ASESOR DE VENTAS REYNOSA",
+    "IdEstatus": "13",
+    "Estatus": "Activo",
+    "IdTimeZone": "172",
+    "TimeZone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
+    "IdIdioma": "384",
+    "Idioma": "Español (México)",
+    "IdAreaOrganizacion": "797",
+    "AreaOrganizacion": "VENTAS",
+    "Bloqueado": "0",
+    "Comisionable": "True",
+    "ID_1": "764",
+    "hasLicense": "True",
+    "Version": "104279271"
   }
 ]
