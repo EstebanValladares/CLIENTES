@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "AT1",
+    "nombre": "AT1 - 12 PACK 3R CALLE LAGUNA CHAIREL CONDOMINIO 13, LOTE 9, MZA 2, (MOD. 124-A)"
+  },
+  "metricas": {
+    "total_partidas": 0,
+    "total_frentes": 0,
+    "total_insumos_resumen": 0,
+    "presupuesto_real_total": 0,
+    "requisitado_total": 0,
+    "comprado_total": 0,
+    "por_comprar_total": 0
+  },
+  "frentes": [],
+  "partidas": [],
+  "resumen": [],
+  "filtros_aplicados": {
+    "obra": "AT1",
+    "insumo": "1025696",
+    "nombre": ""
+  }
+}

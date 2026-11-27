@@ -584,6 +584,9 @@ createApp({
       consultarEscalatorias: () => {
         if (typeof consultarEscalatorias === 'function') consultarEscalatorias();
         if (typeof consultarInsumosPorObra === 'function') consultarInsumosPorObra();
+      },
+      cargarEk9Ordenes: () => {
+        if (typeof cargarEk9Ordenes === 'function') cargarEk9Ordenes();
       }
     }) : {};
     const {
@@ -616,6 +619,47 @@ createApp({
       limpiarConsultaOc,
       seleccionarCoincidencia
     } = ocContratosModulo;
+
+    // ==========================================
+    // MÓDULO: EK9 · ÓRDENES EY0 & DETALLE (vue/static/js/modules/ek9.js)
+    // ==========================================
+    const ek9Modulo = window.createEk9Module ? window.createEk9Module(Vue) : {};
+    const {
+      ek9Ordenes,
+      ek9Detalle,
+      cargandoEk9,
+      guardandoEk9,
+      errorEk9,
+      mensajeEk9,
+      ek9TabActiva,
+      ek9MostrarGuia,
+      ek9OrdenSeleccionadaNum,
+      ek9FiltroTexto,
+      ek9FiltroEstado,
+      ek9OcultarCeros,
+      ek9SoloAditivas,
+      ek9DetalleFiltroTexto,
+      ek9DetalleFiltroTipo,
+      metricasEk9,
+      ordenesFiltradasEk9,
+      ordenSeleccionadaEk9,
+      detalleOrdenSeleccionada,
+      resumenMarcadoOrden,
+      detalleFiltradoEk9,
+      detallePorNumero,
+      cargarEk9Ordenes,
+      guardarOrdenEk9,
+      toggleOrdenListaEk9,
+      guardarDetalleEk9,
+      toggleDetalleListoEk9,
+      accionSimpleOrden,
+      accionSimplePartida,
+      ordenTieneAditiva,
+      irAOrdenDesdeDetalle,
+      fmtMonedaEk9,
+      fmtNumEk9,
+      exportarCsvEk9
+    } = ek9Modulo;
 
     // ==========================================
     // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
@@ -1823,7 +1867,42 @@ createApp({
       formatearFecha,
       consultarOcContrato,
       limpiarConsultaOc,
-      seleccionarCoincidencia
+      seleccionarCoincidencia,
+      // EK9 Órdenes EY0 & Detalle
+      ek9Ordenes,
+      ek9Detalle,
+      cargandoEk9,
+      guardandoEk9,
+      errorEk9,
+      mensajeEk9,
+      ek9TabActiva,
+      ek9MostrarGuia,
+      ek9OrdenSeleccionadaNum,
+      ek9FiltroTexto,
+      ek9FiltroEstado,
+      ek9OcultarCeros,
+      ek9SoloAditivas,
+      ek9DetalleFiltroTexto,
+      ek9DetalleFiltroTipo,
+      metricasEk9,
+      ordenesFiltradasEk9,
+      ordenSeleccionadaEk9,
+      detalleOrdenSeleccionada,
+      resumenMarcadoOrden,
+      detalleFiltradoEk9,
+      detallePorNumero,
+      cargarEk9Ordenes,
+      guardarOrdenEk9,
+      toggleOrdenListaEk9,
+      guardarDetalleEk9,
+      toggleDetalleListoEk9,
+      accionSimpleOrden,
+      accionSimplePartida,
+      ordenTieneAditiva,
+      irAOrdenDesdeDetalle,
+      fmtMonedaEk9,
+      fmtNumEk9,
+      exportarCsvEk9
     };
   }
 }).mount('#app');

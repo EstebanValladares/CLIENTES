@@ -137,6 +137,32 @@
         </div>
       </div>
 
+      <!-- BOTÓN: EK9 · ÓRDENES EY0 & DETALLE -->
+      <div class="relative group flex items-center justify-center">
+        <button @click="abrirConsultaFlotante('EK9')"
+                type="button"
+                class="w-12 h-12 rounded-full flex flex-col items-center justify-center transition-all duration-200 transform hover:scale-110 active:scale-95 cursor-pointer relative"
+                :class="temaActual === 'claro' ? 'dock-glass-btn-light' : 'dock-glass-btn-dark'"
+                title="Abrir EK9 · Órdenes EY0 & Detalle">
+          <i class="fa-solid fa-table-list text-sm transition-colors"
+             :class="temaActual === 'claro' ? 'text-slate-700 group-hover:text-violet-600' : 'text-slate-950'"></i>
+          <span class="text-[9px] font-black tracking-tight leading-none mt-0.5"
+                :class="temaActual === 'claro' ? 'text-violet-700' : 'text-slate-900'">EK9</span>
+        </button>
+
+        <!-- TOOLTIP FLOTANTE A LA DERECHA -->
+        <div class="absolute left-full ml-3 px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl border pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-50 text-xs font-bold flex items-center gap-2"
+             :class="temaActual === 'claro'
+               ? 'bg-white/95 text-slate-800 border-white shadow-slate-300/40'
+               : 'bg-slate-900/95 text-white border-slate-700/80 shadow-black/60'">
+          <span>EK9 · Órdenes EY0</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                :class="temaActual === 'claro' ? 'bg-violet-50 text-violet-600 border border-violet-200' : 'bg-violet-500/20 text-violet-300 border border-violet-500/30'">
+            82 órd.
+          </span>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

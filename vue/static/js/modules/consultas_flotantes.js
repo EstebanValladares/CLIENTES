@@ -47,6 +47,17 @@
         iconoColor: 'text-emerald-400',
         bgIcono: 'bg-emerald-500/15 border-emerald-500/30',
         descripcion: 'Consulta instantánea de Contratos, Estimaciones, Deducciones de Anticipo e Insumos por Folio de OC.'
+      },
+      {
+        id: 'EK9',
+        nombre: 'EK9 · Órdenes EY0 & Detalle',
+        subtitulo: 'Migración EY0 (EK9 → EK10 / Aryve)',
+        icono: 'fa-solid fa-table-list',
+        badge: '82 órdenes',
+        color: 'from-violet-600 via-purple-600 to-fuchsia-500',
+        iconoColor: 'text-violet-400',
+        bgIcono: 'bg-violet-500/15 border-violet-500/30',
+        descripcion: 'Visualiza y edita las órdenes EY0 y su detalle conectado por NUMERO antes de tocar el Excel.'
       }
     ]);
 
@@ -74,6 +85,10 @@
         if (context && typeof context.cargarResumenEscalatorias === 'function') {
           context.cargarResumenEscalatorias();
           context.consultarEscalatorias();
+        }
+      } else if (id === 'EK9') {
+        if (context && typeof context.cargarEk9Ordenes === 'function') {
+          context.cargarEk9Ordenes();
         }
       }
     };
