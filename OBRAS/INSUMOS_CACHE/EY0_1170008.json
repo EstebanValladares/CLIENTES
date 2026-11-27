@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 284.34,
+    "requisitado_total": 168.0,
+    "comprado_total": 168.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "PREPARACION DE TERRENO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1170008",
+              "nombre": "MATERIAL DE BANCO TEPETATE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 116.34,
+              "importe_ppto": 17451,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 116.34,
+              "vigente_tarjetas": 116.34,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 116.34,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1170008",
+              "nombre": "MATERIAL DE BANCO TEPETATE",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 168,
+              "importe_ppto": 25200,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 168,
+              "vigente_tarjetas": 168,
+              "diferencia": 0,
+              "requisitado": 168,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 168,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "PREPARACION DE TERRENO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1170008",
+          "nombre": "MATERIAL DE BANCO TEPETATE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 116.34,
+          "importe_ppto": 17451,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 116.34,
+          "vigente_tarjetas": 116.34,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 116.34,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1170008",
+          "nombre": "MATERIAL DE BANCO TEPETATE",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 168,
+          "importe_ppto": 25200,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 168,
+          "vigente_tarjetas": 168,
+          "diferencia": 0,
+          "requisitado": 168,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 168,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1170008",
+      "nombre": "MATERIAL DE BANCO TEPETATE",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 284.34,
+      "importe_ppto": 42651,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 284.34,
+      "vigente_tarjetas": 284.34,
+      "diferencia": 0,
+      "requisitado": 168,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 168,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 116.34,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1170008",
+    "nombre": ""
+  }
+}

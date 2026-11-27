@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 1,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 3.0,
+    "requisitado_total": 0.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "FIJOS DE OBRA",
+      "partidas": [
+        {
+          "id": "1.2.3",
+          "codigo": "1.2.3",
+          "nombre": "HERRAMIENTA MENOR",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "FIJOS DE OBRA"
+          },
+          "insumos": [
+            {
+              "clave": "1331643",
+              "nombre": "CIZALLA #18",
+              "unidad": "PZA",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3,
+              "importe_ppto": 1604.04,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3,
+              "vigente_tarjetas": 3,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 3,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.2.3",
+      "codigo": "1.2.3",
+      "nombre": "HERRAMIENTA MENOR",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "FIJOS DE OBRA"
+      },
+      "insumos": [
+        {
+          "clave": "1331643",
+          "nombre": "CIZALLA #18",
+          "unidad": "PZA",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3,
+          "importe_ppto": 1604.04,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3,
+          "vigente_tarjetas": 3,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 3,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1331643",
+      "nombre": "CIZALLA #18",
+      "unidad": "PZA",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 3,
+      "importe_ppto": 1604.04,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 3,
+      "vigente_tarjetas": 3,
+      "diferencia": 0,
+      "requisitado": 0,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 3,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1331643",
+    "nombre": ""
+  }
+}

@@ -1077,6 +1077,11 @@
       color: #10b981 !important;
       border: 1px solid transparent !important;
     }
+    .theme-light .dock-tab-ek9_ek10 {
+      background-color: #fdf2f8 !important;
+      color: #db2777 !important;
+      border: 1px solid transparent !important;
+    }
 
     /* MODO CLARO - HOVER O ACTIVO (PASTEL VIBRANTE) */
     .theme-light .dock-tab-usuarios:hover,
@@ -1107,6 +1112,13 @@
       border-color: #a7f3d0 !important;
       box-shadow: 0 2px 10px rgba(16, 185, 129, 0.12) !important;
     }
+    .theme-light .dock-tab-ek9_ek10:hover,
+    .theme-light .dock-tab-ek9_ek10.is-active {
+      background-color: #fce7f3 !important;
+      color: #be185d !important;
+      border-color: #fbcfe8 !important;
+      box-shadow: 0 2px 10px rgba(219, 39, 119, 0.12) !important;
+    }
 
     /* MODO OSCURO - INACTIVO */
     .dock-tab-usuarios {
@@ -1127,6 +1139,11 @@
     .dock-tab-obras {
       background-color: rgba(30, 41, 59, 0.85) !important;
       color: #34d399 !important;
+      border: 1px solid rgba(51, 65, 85, 0.7) !important;
+    }
+    .dock-tab-ek9_ek10 {
+      background-color: rgba(30, 41, 59, 0.85) !important;
+      color: #f472b6 !important;
       border: 1px solid rgba(51, 65, 85, 0.7) !important;
     }
 
@@ -1158,6 +1175,13 @@
       color: #6ee7b7 !important;
       border-color: rgba(52, 211, 153, 0.5) !important;
       box-shadow: 0 0 16px rgba(16, 185, 129, 0.25) !important;
+    }
+    .dock-tab-ek9_ek10:hover,
+    .dock-tab-ek9_ek10.is-active {
+      background-color: rgba(131, 24, 67, 0.5) !important;
+      color: #f9a8d4 !important;
+      border-color: rgba(244, 114, 182, 0.5) !important;
+      box-shadow: 0 0 16px rgba(236, 72, 153, 0.25) !important;
     }
 
     /* ======================================================== */
@@ -1406,6 +1430,45 @@
         </button>
       </div>
 
+      <!-- BOTONES DE ACCIÓN PARA LA VISTA EK9 - EK10 -->
+      <div v-else-if="vistaActiva === 'EK9_EK10'" class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
+        <input id="ek9Ek10FileInput"
+               type="file"
+               accept=".xlsx,.xlsm"
+               class="hidden"
+               @change="subirXlsxEk9Ek10">
+
+        <button @click="abrirSelectorXlsxEk9Ek10"
+                :disabled="subiendoXlsxEk9Ek10"
+                type="button"
+                class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition cursor-pointer disabled:opacity-50"
+                title="Cargar archivo Excel (.xlsx) para adaptarlo a la vista">
+          <i class="fa-solid" :class="subiendoXlsxEk9Ek10 ? 'fa-circle-notch fa-spin' : 'fa-file-excel'"></i>
+          <span>{{ subiendoXlsxEk9Ek10 ? 'Cargando XLSX...' : 'Cargar XLSX' }}</span>
+        </button>
+
+        <button @click="sincronizarProveedoresEk9Ek10"
+                :disabled="sincronizandoProveedoresEk9Ek10"
+                type="button"
+                class="bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-50"
+                :title="proveedoresCatalogoEstado.actualizado ? 'Última sync: ' + proveedoresCatalogoEstado.actualizado : 'Descargar y guardar localmente catálogo de claves EK-PROV desde EK10'">
+          <i class="fa-solid fa-cloud-arrow-down" :class="{'fa-bounce': sincronizandoProveedoresEk9Ek10}"></i>
+          <span>
+            {{ sincronizandoProveedoresEk9Ek10 ? 'Sincronizando...' : 'Sincronizar Proveedores' }}
+            <template v-if="proveedoresCatalogoEstado.total > 0"> ({{ proveedoresCatalogoEstado.total }})</template>
+          </span>
+        </button>
+
+        <button @click="limpiarEk9Ek10"
+                :disabled="!ek9Ek10Cargado || cargandoEk9Ek10"
+                type="button"
+                class="bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-rose-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title="Limpiar el archivo cargado y dejar listo para otro XLSX">
+          <i class="fa-solid fa-broom"></i>
+          <span>Limpiar</span>
+        </button>
+      </div>
+
     </header>
 
     <!-- BARRA NAVEGADORA DE VISTAS (DOCK EXPANDIBLE ESTILO VISION / BUBBLE) -->
@@ -1625,6 +1688,9 @@
 
 
     <!-- INCLUDE: views/obras.html -->
+
+
+    <!-- INCLUDE: views/ek9_ek10.html -->
 
 
     <!-- ======================================================== -->
@@ -2231,7 +2297,7 @@
 <script src="/static/js/modules/escalatorias.js?v=20261120_1436"></script>
 <script src="/static/js/modules/consultas_flotantes.js?v=20261120_1436"></script>
 <script src="/static/js/modules/oc_contratos.js?v=20261123_1430"></script>
-<script src="/static/js/modules/ek9.js?v=20261126_1422"></script>
+<script src="/static/js/modules/ek9_ek10.js?v=20261127_1315"></script>
 <script src="/static/js/modules/proveedores_contratistas.js?v=20261120_1436"></script>
 <!-- KHIARA: COMPAÑERA FELINA INTERACTIVA (RIVE ANIMATION) -->
 <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>

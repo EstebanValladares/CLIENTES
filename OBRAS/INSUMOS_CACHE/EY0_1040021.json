@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 5062.0627,
+    "requisitado_total": 4538.4427,
+    "comprado_total": 0.0,
+    "por_comprar_total": 4538.4427
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040021",
+              "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3400.81,
+              "importe_ppto": 52712.555,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3400.81,
+              "vigente_tarjetas": 3400.81,
+              "diferencia": 0,
+              "requisitado": 3400.81,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 3400.81,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 3400.81,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040021",
+              "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1137.6327,
+              "importe_ppto": 17633.3069,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1137.6327,
+              "vigente_tarjetas": 1137.6327,
+              "diferencia": 0,
+              "requisitado": 1137.6327,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 523.19,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 1137.6327,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040021",
+              "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 523.62,
+              "importe_ppto": 8116.11,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 523.62,
+              "vigente_tarjetas": 523.62,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 523.62,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040021",
+          "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3400.81,
+          "importe_ppto": 52712.555,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3400.81,
+          "vigente_tarjetas": 3400.81,
+          "diferencia": 0,
+          "requisitado": 3400.81,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 3400.81,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 3400.81,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040021",
+          "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1137.6327,
+          "importe_ppto": 17633.3069,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1137.6327,
+          "vigente_tarjetas": 1137.6327,
+          "diferencia": 0,
+          "requisitado": 1137.6327,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 523.19,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 1137.6327,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040021",
+          "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 523.62,
+          "importe_ppto": 8116.11,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 523.62,
+          "vigente_tarjetas": 523.62,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 523.62,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040021",
+      "nombre": "VARILLA 1\"  CORRUGADA (NO.8)",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 5062.0627,
+      "importe_ppto": 78461.9719,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 5062.0627,
+      "vigente_tarjetas": 5062.0627,
+      "diferencia": 0,
+      "requisitado": 4538.4427,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 3924,
+      "recibido": 0,
+      "por_requisitar": 523.62,
+      "por_comprar": 4538.4427,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040021",
+    "nombre": ""
+  }
+}

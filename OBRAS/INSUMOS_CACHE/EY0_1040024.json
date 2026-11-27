@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 6863.2054,
+    "requisitado_total": 5038.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 5038.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040024",
+              "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 2432.8451,
+              "importe_ppto": 37709.0991,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 2432.8451,
+              "vigente_tarjetas": 2432.8451,
+              "diferencia": 0,
+              "requisitado": 2432.8451,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 2432.8451,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 2432.8451,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040024",
+              "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 4405.2603,
+              "importe_ppto": 68281.5347,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 4405.2603,
+              "vigente_tarjetas": 4405.2603,
+              "diferencia": 0,
+              "requisitado": 2605.1549,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 1675.1549,
+              "recibido": 0,
+              "por_requisitar": 1800.1054,
+              "por_comprar": 2605.1549,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.24",
+          "codigo": "1.1.24",
+          "nombre": "CARCAMO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040024",
+              "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 25.1,
+              "importe_ppto": 389.05,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 25.1,
+              "vigente_tarjetas": 25.1,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 25.1,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040024",
+          "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 2432.8451,
+          "importe_ppto": 37709.0991,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 2432.8451,
+          "vigente_tarjetas": 2432.8451,
+          "diferencia": 0,
+          "requisitado": 2432.8451,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 2432.8451,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 2432.8451,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040024",
+          "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 4405.2603,
+          "importe_ppto": 68281.5347,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 4405.2603,
+          "vigente_tarjetas": 4405.2603,
+          "diferencia": 0,
+          "requisitado": 2605.1549,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 1675.1549,
+          "recibido": 0,
+          "por_requisitar": 1800.1054,
+          "por_comprar": 2605.1549,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.24",
+      "codigo": "1.1.24",
+      "nombre": "CARCAMO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040024",
+          "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 25.1,
+          "importe_ppto": 389.05,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 25.1,
+          "vigente_tarjetas": 25.1,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 25.1,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040024",
+      "nombre": "VARILLA  1/2\" CORRUGADA (NO.4) NMX-C-407-ONNCEE-2005",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 6863.2054,
+      "importe_ppto": 106379.6838,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 6863.2054,
+      "vigente_tarjetas": 6863.2054,
+      "diferencia": 0,
+      "requisitado": 5038,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 4108,
+      "recibido": 0,
+      "por_requisitar": 1825.2054,
+      "por_comprar": 5038,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040024",
+    "nombre": ""
+  }
+}

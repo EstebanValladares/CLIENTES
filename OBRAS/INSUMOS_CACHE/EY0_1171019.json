@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 119.002,
+    "requisitado_total": 0.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "PREPARACION DE TERRENO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1171019",
+              "nombre": "GRAVA DE 2 A 4\"",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 83.772,
+              "importe_ppto": 25609.9381,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 83.772,
+              "vigente_tarjetas": 83.772,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 83.772,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1171019",
+              "nombre": "GRAVA DE 2 A 4\"",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 35.23,
+              "importe_ppto": 10770.1633,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 35.23,
+              "vigente_tarjetas": 35.23,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 35.23,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "PREPARACION DE TERRENO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1171019",
+          "nombre": "GRAVA DE 2 A 4\"",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 83.772,
+          "importe_ppto": 25609.9381,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 83.772,
+          "vigente_tarjetas": 83.772,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 83.772,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1171019",
+          "nombre": "GRAVA DE 2 A 4\"",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 35.23,
+          "importe_ppto": 10770.1633,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 35.23,
+          "vigente_tarjetas": 35.23,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 35.23,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1171019",
+      "nombre": "GRAVA DE 2 A 4\"",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 119.002,
+      "importe_ppto": 36380.1014,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 119.002,
+      "vigente_tarjetas": 119.002,
+      "diferencia": 0,
+      "requisitado": 0,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 119.002,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1171019",
+    "nombre": ""
+  }
+}

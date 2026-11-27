@@ -1,6 +1,6 @@
 {
   "_comentario": "Catálogo integral de 230 puestos y posiciones sincronizado desde Aryve Cloud",
-  "ultima_actualizacion": "2026-11-27 09:29:12",
+  "ultima_actualizacion": "2026-11-27 16:47:33",
   "total_posiciones": 230,
   "puestos": {
     "ASESOR CALL CENTER CABOS": {
@@ -7596,15 +7596,13 @@
     "ASESOR DE VENTA TAMPICO": {
       "categoria": "ASESOR DE VENTA TAMPICO",
       "clasificadores": {},
-      "puesto_origen": "POS-0069",
+      "puesto_origen": "POS-0283",
       "time_zone": "(UTC-06:00) Guadalajara, Ciudad de México, Monterrey",
       "id_posicion_cloud": null,
       "total_clasificadores": 0,
       "area_organizacion": "ASESOR DE VENTA TAMPICO",
-      "clave_posicion_cloud": "POS-1081",
-      "padre": "POS-0069",
-      "nombre": "ASESOR DE VENTA TAMPICO",
-      "fecha_sincronizacion": "2026-11-27T09:29:10"
+      "clave_posicion_cloud": "POS-1097",
+      "padre": "POS-0283"
     },
     "CONTRALOR DE OBRA TAMPICO": {
       "categoria": "CONTRALOR DE OBRA",
@@ -15074,6 +15072,13 @@
       "categoria": "ASESOR DE VENTA REYNOSA",
       "padre": "POS-0899",
       "fecha_registro": "2026-11-27 08:39:42"
+    },
+    {
+      "clave": "POS-1097",
+      "nombre": "ASESOR DE VENTA TAMPICO",
+      "categoria": "ASESOR DE VENTA TAMPICO",
+      "padre": "POS-0283",
+      "fecha_registro": "2026-11-27 16:47:33"
     }
   ]
 }

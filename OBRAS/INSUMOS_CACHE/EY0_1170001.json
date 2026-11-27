@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 166.5206,
+    "requisitado_total": 166.0,
+    "comprado_total": 124.0,
+    "por_comprar_total": 42.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1170001",
+              "nombre": "ARENA",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 42.5206,
+              "importe_ppto": 11541.3545,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 42.5206,
+              "vigente_tarjetas": 42.5206,
+              "diferencia": 0,
+              "requisitado": 42,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 14,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.5206,
+              "por_comprar": 28,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.20",
+          "codigo": "1.1.20",
+          "nombre": "LANDSCAPE",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1170001",
+              "nombre": "ARENA",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 14,
+              "importe_ppto": 3800.02,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 14,
+              "vigente_tarjetas": 14,
+              "diferencia": 0,
+              "requisitado": 14,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 14,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1170001",
+              "nombre": "ARENA",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 110,
+              "importe_ppto": 29857.3,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 110,
+              "vigente_tarjetas": 110,
+              "diferencia": 0,
+              "requisitado": 110,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 96,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 14,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1170001",
+          "nombre": "ARENA",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 42.5206,
+          "importe_ppto": 11541.3545,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 42.5206,
+          "vigente_tarjetas": 42.5206,
+          "diferencia": 0,
+          "requisitado": 42,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 14,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.5206,
+          "por_comprar": 28,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.20",
+      "codigo": "1.1.20",
+      "nombre": "LANDSCAPE",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1170001",
+          "nombre": "ARENA",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 14,
+          "importe_ppto": 3800.02,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 14,
+          "vigente_tarjetas": 14,
+          "diferencia": 0,
+          "requisitado": 14,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 14,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1170001",
+          "nombre": "ARENA",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 110,
+          "importe_ppto": 29857.3,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 110,
+          "vigente_tarjetas": 110,
+          "diferencia": 0,
+          "requisitado": 110,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 96,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 14,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1170001",
+      "nombre": "ARENA",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 166.5206,
+      "importe_ppto": 45198.6745,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 166.5206,
+      "vigente_tarjetas": 166.5206,
+      "diferencia": 0,
+      "requisitado": 166,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 124,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 0.5206,
+      "por_comprar": 42,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1170001",
+    "nombre": ""
+  }
+}

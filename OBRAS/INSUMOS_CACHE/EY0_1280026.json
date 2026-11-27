@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 191.7027,
+    "requisitado_total": 157.4827,
+    "comprado_total": 90.7827,
+    "por_comprar_total": 66.7
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1280026",
+              "nombre": "POLIETILENO NEGRO CALIBRE 600",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 32.4788,
+              "importe_ppto": 2403.4275,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 32.4788,
+              "vigente_tarjetas": 32.4788,
+              "diferencia": 0,
+              "requisitado": 32.4788,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 32.4788,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 32.4788,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1280026",
+              "nombre": "POLIETILENO NEGRO CALIBRE 600",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 125.0039,
+              "importe_ppto": 9250.2886,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 125.0039,
+              "vigente_tarjetas": 125.0039,
+              "diferencia": 0,
+              "requisitado": 125.0039,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 90.7827,
+              "en_proceso_compra": 34.2213,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 34.2213,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1280026",
+              "nombre": "POLIETILENO NEGRO CALIBRE 600",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 34.22,
+              "importe_ppto": 2532.28,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 34.22,
+              "vigente_tarjetas": 34.22,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 34.22,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1280026",
+          "nombre": "POLIETILENO NEGRO CALIBRE 600",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 32.4788,
+          "importe_ppto": 2403.4275,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 32.4788,
+          "vigente_tarjetas": 32.4788,
+          "diferencia": 0,
+          "requisitado": 32.4788,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 32.4788,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 32.4788,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1280026",
+          "nombre": "POLIETILENO NEGRO CALIBRE 600",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 125.0039,
+          "importe_ppto": 9250.2886,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 125.0039,
+          "vigente_tarjetas": 125.0039,
+          "diferencia": 0,
+          "requisitado": 125.0039,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 90.7827,
+          "en_proceso_compra": 34.2213,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 34.2213,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1280026",
+          "nombre": "POLIETILENO NEGRO CALIBRE 600",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 34.22,
+          "importe_ppto": 2532.28,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 34.22,
+          "vigente_tarjetas": 34.22,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 34.22,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1280026",
+      "nombre": "POLIETILENO NEGRO CALIBRE 600",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 191.7027,
+      "importe_ppto": 14185.9961,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 191.7027,
+      "vigente_tarjetas": 191.7027,
+      "diferencia": 0,
+      "requisitado": 157.4827,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 90.7827,
+      "en_proceso_compra": 66.7,
+      "recibido": 0,
+      "por_requisitar": 34.22,
+      "por_comprar": 66.7,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1280026",
+    "nombre": ""
+  }
+}

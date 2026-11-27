@@ -1,0 +1,370 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 4,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 1739.4674,
+    "requisitado_total": 1281.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 1281.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 543.299,
+              "importe_ppto": 11979.742,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 543.299,
+              "vigente_tarjetas": 543.299,
+              "diferencia": 0,
+              "requisitado": 543.2989,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 543.2989,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 543.2989,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1058.8575,
+              "importe_ppto": 23347.8082,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1058.8575,
+              "vigente_tarjetas": 1058.8575,
+              "diferencia": 0,
+              "requisitado": 737.7011,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 352.7011,
+              "recibido": 0,
+              "por_requisitar": 321.1564,
+              "por_comprar": 737.7011,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 59.441,
+              "importe_ppto": 1310.6741,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 59.441,
+              "vigente_tarjetas": 59.441,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 59.441,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.24",
+          "codigo": "1.1.24",
+          "nombre": "CARCAMO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040001",
+              "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 77.87,
+              "importe_ppto": 1717.0335,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 77.87,
+              "vigente_tarjetas": 77.87,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 77.87,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 543.299,
+          "importe_ppto": 11979.742,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 543.299,
+          "vigente_tarjetas": 543.299,
+          "diferencia": 0,
+          "requisitado": 543.2989,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 543.2989,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 543.2989,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1058.8575,
+          "importe_ppto": 23347.8082,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1058.8575,
+          "vigente_tarjetas": 1058.8575,
+          "diferencia": 0,
+          "requisitado": 737.7011,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 352.7011,
+          "recibido": 0,
+          "por_requisitar": 321.1564,
+          "por_comprar": 737.7011,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 59.441,
+          "importe_ppto": 1310.6741,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 59.441,
+          "vigente_tarjetas": 59.441,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 59.441,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.24",
+      "codigo": "1.1.24",
+      "nombre": "CARCAMO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040001",
+          "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 77.87,
+          "importe_ppto": 1717.0335,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 77.87,
+          "vigente_tarjetas": 77.87,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 77.87,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040001",
+      "nombre": "ALAMBRE DE AMARRE RECOCIDO NMX-B-253-CANACERO-2006",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 1739.4674,
+      "importe_ppto": 38355.2578,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 1739.4674,
+      "vigente_tarjetas": 1739.4674,
+      "diferencia": 0,
+      "requisitado": 1281,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 896,
+      "recibido": 0,
+      "por_requisitar": 458.4674,
+      "por_comprar": 1281,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040001",
+    "nombre": ""
+  }
+}

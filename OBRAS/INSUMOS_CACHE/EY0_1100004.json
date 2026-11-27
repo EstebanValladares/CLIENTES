@@ -1,0 +1,370 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 4,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 311.993,
+    "requisitado_total": 38.5,
+    "comprado_total": 0.0,
+    "por_comprar_total": 38.5
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1100004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 64.1556,
+              "importe_ppto": 137160.2673,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 64.1556,
+              "vigente_tarjetas": 64.1556,
+              "diferencia": 0,
+              "requisitado": 38.5,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 38.5,
+              "recibido": 0,
+              "por_requisitar": 25.6556,
+              "por_comprar": 38.5,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1100004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 222.2005,
+              "importe_ppto": 475049.0509,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 222.2005,
+              "vigente_tarjetas": 222.2005,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 222.2005,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1100004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 10.1369,
+              "importe_ppto": 21671.9398,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 10.1369,
+              "vigente_tarjetas": 10.1369,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 10.1369,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1100004",
+              "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+              "unidad": "M3",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 15.5,
+              "importe_ppto": 33137.915,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 15.5,
+              "vigente_tarjetas": 15.5,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 15.5,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1100004",
+          "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 64.1556,
+          "importe_ppto": 137160.2673,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 64.1556,
+          "vigente_tarjetas": 64.1556,
+          "diferencia": 0,
+          "requisitado": 38.5,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 38.5,
+          "recibido": 0,
+          "por_requisitar": 25.6556,
+          "por_comprar": 38.5,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1100004",
+          "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 222.2005,
+          "importe_ppto": 475049.0509,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 222.2005,
+          "vigente_tarjetas": 222.2005,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 222.2005,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1100004",
+          "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 10.1369,
+          "importe_ppto": 21671.9398,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 10.1369,
+          "vigente_tarjetas": 10.1369,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 10.1369,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1100004",
+          "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+          "unidad": "M3",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 15.5,
+          "importe_ppto": 33137.915,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 15.5,
+          "vigente_tarjetas": 15.5,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 15.5,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1100004",
+      "nombre": "CONCRETO F'C= 250 KG/CM2, PREMEZCLADO, TIRO DIRECTO",
+      "unidad": "M3",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 311.993,
+      "importe_ppto": 667019.173,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 311.993,
+      "vigente_tarjetas": 311.993,
+      "diferencia": 0,
+      "requisitado": 38.5,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 38.5,
+      "recibido": 0,
+      "por_requisitar": 273.493,
+      "por_comprar": 38.5,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1100004",
+    "nombre": ""
+  }
+}

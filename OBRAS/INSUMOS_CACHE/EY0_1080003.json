@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 44.1572,
+    "requisitado_total": 26.0,
+    "comprado_total": 20.0,
+    "por_comprar_total": 6.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.2",
+          "codigo": "1.1.2",
+          "nombre": "PREPARACION DE TERRENO",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 1.7451,
+              "importe_ppto": 11253.1028,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 1.7451,
+              "vigente_tarjetas": 1.7451,
+              "diferencia": 0,
+              "requisitado": 1.7451,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 1,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 1.7451,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 12.1621,
+              "importe_ppto": 78426.1939,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 12.1621,
+              "vigente_tarjetas": 12.1621,
+              "diferencia": 0,
+              "requisitado": 4.2549,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 7.9072,
+              "por_comprar": 4.2549,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1080003",
+              "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+              "unidad": "TON",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 30.25,
+              "importe_ppto": 195064.1,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 30.25,
+              "vigente_tarjetas": 30.25,
+              "diferencia": 0,
+              "requisitado": 20,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 20,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 10.25,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.2",
+      "codigo": "1.1.2",
+      "nombre": "PREPARACION DE TERRENO",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 1.7451,
+          "importe_ppto": 11253.1028,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 1.7451,
+          "vigente_tarjetas": 1.7451,
+          "diferencia": 0,
+          "requisitado": 1.7451,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 1,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 1.7451,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 12.1621,
+          "importe_ppto": 78426.1939,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 12.1621,
+          "vigente_tarjetas": 12.1621,
+          "diferencia": 0,
+          "requisitado": 4.2549,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 7.9072,
+          "por_comprar": 4.2549,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1080003",
+          "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+          "unidad": "TON",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 30.25,
+          "importe_ppto": 195064.1,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 30.25,
+          "vigente_tarjetas": 30.25,
+          "diferencia": 0,
+          "requisitado": 20,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 20,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 10.25,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1080003",
+      "nombre": "CEMENTO GRIS NMX-C-414-ONNCCE",
+      "unidad": "TON",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 44.1572,
+      "importe_ppto": 284743.3967,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 44.1572,
+      "vigente_tarjetas": 44.1572,
+      "diferencia": 0,
+      "requisitado": 26,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 20,
+      "en_proceso_compra": 1,
+      "recibido": 0,
+      "por_requisitar": 18.1572,
+      "por_comprar": 6,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1080003",
+    "nombre": ""
+  }
+}

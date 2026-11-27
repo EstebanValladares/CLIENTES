@@ -1,0 +1,856 @@
+<!-- ======================================================== -->
+<!-- VISTA MODULAR: EK9 - EK10 (CARGA XLSX & CONTROL UNIFICADO) -->
+<!-- Archivo: vue/views/ek9_ek10.html                         -->
+<!-- ======================================================== -->
+<div v-show="vistaActiva === 'EK9_EK10'" class="flex flex-col flex-1 space-y-4">
+
+  <!-- MENSAJES DE ESTADO / ERRORES -->
+  <div v-if="mensajeEk9Ek10 || errorEk9Ek10" class="flex flex-wrap items-center gap-2">
+    <span v-if="mensajeEk9Ek10"
+          class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
+      <i class="fa-solid fa-check mr-1.5"></i>{{ mensajeEk9Ek10 }}
+    </span>
+    <span v-if="errorEk9Ek10"
+          class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+      <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>{{ errorEk9Ek10 }}
+    </span>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- VISTA ADAPTADA CUANDO EL XLSX YA ESTÁ CARGADO            -->
+  <!-- ======================================================== -->
+  <div v-if="ek9Ek10Cargado" class="space-y-4">
+
+    <!-- BARRA SUPERIOR DE INFO DEL ARCHIVO, TABS Y EXPORTACIÓN -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-2"
+              :class="temaActual === 'claro' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'">
+          <i class="fa-solid fa-file-excel"></i>
+          <span class="truncate max-w-[220px]" :title="ek9Ek10ArchivoNombre">{{ ek9Ek10ArchivoNombre }}</span>
+        </span>
+
+        <button @click="ek9Ek10TabActiva = 'ORDENES'"
+                type="button"
+                class="px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-2 border"
+                :class="ek9Ek10TabActiva === 'ORDENES'
+                  ? 'bg-violet-600 text-white border-violet-500 shadow-md shadow-violet-500/20'
+                  : (temaActual === 'claro' ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100' : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-800')">
+          <i class="fa-solid fa-layer-group"></i>
+          <span>Órdenes + Detalle</span>
+          <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-black/20">{{ ordenesFiltradasEk9Ek10.length }}</span>
+        </button>
+
+        <button @click="ek9Ek10TabActiva = 'DETALLE'"
+                type="button"
+                class="px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-2 border"
+                :class="ek9Ek10TabActiva === 'DETALLE'
+                  ? 'bg-violet-600 text-white border-violet-500 shadow-md shadow-violet-500/20'
+                  : (temaActual === 'claro' ? 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100' : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-800')">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Todas las Partidas (Detalle)</span>
+          <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-black/20">{{ detalleFiltradoEk9Ek10.length }}</span>
+        </button>
+
+        <button @click="ek9Ek10MostrarGuia = !ek9Ek10MostrarGuia"
+                type="button"
+                class="px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 border"
+                :class="ek9Ek10MostrarGuia
+                  ? 'bg-amber-500/15 text-amber-500 border-amber-500/40'
+                  : (temaActual === 'claro' ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100' : 'bg-slate-800 text-amber-300 border-slate-700 hover:bg-slate-700')">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>{{ ek9Ek10MostrarGuia ? 'Ocultar guía' : '¿Cómo funciona NUMERO?' }}</span>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <button @click="exportarXlsxEk9Ek10"
+                type="button"
+                class="px-3.5 py-1.5 rounded-xl text-[11px] font-bold border transition cursor-pointer flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 border-emerald-500 shadow-sm"
+                style="color: #ffffff !important;"
+                title="Descargar libro XLSX completo con Estados en verde y folios actualizados">
+          <i class="fa-solid fa-file-excel"></i>
+          <span>Descargar XLSX</span>
+        </button>
+        <button @click="exportarCsvEk9Ek10('ORDENES')"
+                type="button"
+                class="px-3 py-1.5 rounded-xl text-[11px] font-bold border transition cursor-pointer flex items-center gap-1.5"
+                :class="temaActual === 'claro' ? 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700'"
+                title="Descargar Órdenes con tus marcas y ediciones">
+          <i class="fa-solid fa-download text-emerald-500"></i>
+          <span>CSV Órdenes</span>
+        </button>
+        <button @click="exportarCsvEk9Ek10('DETALLE')"
+                type="button"
+                class="px-3 py-1.5 rounded-xl text-[11px] font-bold border transition cursor-pointer flex items-center gap-1.5"
+                :class="temaActual === 'claro' ? 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700'"
+                title="Descargar Detalle con tus marcas y ediciones">
+          <i class="fa-solid fa-download text-cyan-500"></i>
+          <span>CSV Detalle</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- GUÍA RÁPIDA COLAPSABLE -->
+    <div v-if="ek9Ek10MostrarGuia"
+         class="rounded-2xl border p-4 text-xs space-y-2"
+         :class="temaActual === 'claro' ? 'bg-amber-50/80 border-amber-200 text-slate-800' : 'bg-slate-900/90 border-amber-500/30 text-slate-200'">
+      <div class="font-bold text-sm flex items-center gap-2 text-amber-500">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>¿Por qué no coincide NUMERO con el folio de EK10?</span>
+      </div>
+      <p>
+        <strong>NUMERO</strong> es el número de la orden en el sistema anterior (<strong>EK9</strong>).
+        No coincide con <code>REQUISICION_EK10</code> ni <code>ORDEN_COMPRA_EK10</code> porque EK10 asigna sus propios folios consecutivos cuando capturas la orden allá.
+        <strong>Al hacer clic en cualquier orden ves automáticamente sus partidas de Detalle conectadas por ese NUMERO.</strong>
+      </p>
+    </div>
+
+    <!-- TARJETAS KPI / FILTROS RÁPIDOS -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+      <button @click="ek9Ek10FiltroEstado = 'TODOS'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'TODOS' ? 'ring-2 ring-violet-500 border-violet-500 bg-violet-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase opacity-70">Todas</div>
+        <div class="text-lg font-black font-mono">{{ metricasEk9Ek10.total }}</div>
+        <div class="text-[10px] opacity-60 truncate">{{ fmtMonedaEk9Ek10(metricasEk9Ek10.montoTotal) }}</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'POR_HACER'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'POR_HACER' ? 'ring-2 ring-indigo-500 border-indigo-500 bg-indigo-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-indigo-400">Por Hacer</div>
+        <div class="text-lg font-black font-mono text-indigo-400">{{ metricasEk9Ek10.porHacer }}</div>
+        <div class="text-[10px] opacity-60 truncate">{{ fmtMonedaEk9Ek10(metricasEk9Ek10.montoPendiente) }}</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'OC INCOMPLETA'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'OC INCOMPLETA' ? 'ring-2 ring-rose-500 border-rose-500 bg-rose-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-rose-500">OC Incompleta</div>
+        <div class="text-lg font-black font-mono text-rose-500">{{ metricasEk9Ek10.ocInc }}</div>
+        <div class="text-[10px] opacity-60">Quitar OC + 2a req</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'REQUISICION INCOMPLETA'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'REQUISICION INCOMPLETA' ? 'ring-2 ring-orange-500 border-orange-500 bg-orange-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-orange-400">Req. Incomp.</div>
+        <div class="text-lg font-black font-mono text-orange-400">{{ metricasEk9Ek10.reqInc }}</div>
+        <div class="text-[10px] opacity-60">Falta 2a requi</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'SIN ORDEN DE COMPRA'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'SIN ORDEN DE COMPRA' ? 'ring-2 ring-amber-500 border-amber-500 bg-amber-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-amber-500">Sin OC</div>
+        <div class="text-lg font-black font-mono text-amber-500">{{ metricasEk9Ek10.sinOc }}</div>
+        <div class="text-[10px] opacity-60">Solo hacer OC</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'SIN REQUISICION'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'SIN REQUISICION' ? 'ring-2 ring-pink-500 border-pink-500 bg-pink-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-pink-500">Sin Requi</div>
+        <div class="text-lg font-black font-mono text-pink-500">{{ metricasEk9Ek10.sinReq }}</div>
+        <div class="text-[10px] opacity-60">{{ metricasEk9Ek10.sinReqCero }} en $0</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'COMPLETA'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'COMPLETA' ? 'ring-2 ring-emerald-500 border-emerald-500 bg-emerald-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-emerald-500">Completas</div>
+        <div class="text-lg font-black font-mono text-emerald-500">{{ metricasEk9Ek10.completas }}</div>
+        <div class="text-[10px] opacity-60">Ya compradas</div>
+      </button>
+
+      <button @click="ek9Ek10FiltroEstado = 'MARCADAS'; ek9Ek10TabActiva = 'ORDENES'" type="button"
+              class="p-2.5 rounded-xl border text-left transition cursor-pointer"
+              :class="ek9Ek10FiltroEstado === 'MARCADAS' ? 'ring-2 ring-cyan-500 border-cyan-500 bg-cyan-500/10' : (temaActual === 'claro' ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-slate-900/70 border-slate-800 hover:bg-slate-800')">
+        <div class="text-[10px] font-bold uppercase text-cyan-400">Marcadas "Ya"</div>
+        <div class="text-lg font-black font-mono text-cyan-400">{{ metricasEk9Ek10.marcadas }}</div>
+        <div class="text-[10px] opacity-60">Tu avance</div>
+      </button>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PESTAÑA 1: ÓRDENES + PANEL DE DETALLE CONECTADO          -->
+    <!-- ======================================================== -->
+    <div v-show="ek9Ek10TabActiva === 'ORDENES'" class="space-y-4">
+
+      <div class="flex flex-wrap items-center gap-3 p-3 rounded-2xl border"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+        <div class="relative flex-1 min-w-[220px]">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input v-model="ek9Ek10FiltroTexto"
+                 type="text"
+                 placeholder="Buscar por NUMERO, proveedor, insumo o folio EK10..."
+                 class="w-full pl-8 pr-3 py-2 rounded-xl text-xs border focus:outline-none focus:ring-2 focus:ring-violet-500"
+                 :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+        </div>
+
+        <label class="flex items-center gap-1.5 text-xs font-semibold cursor-pointer select-none">
+          <input type="checkbox" v-model="ek9Ek10OcultarCeros" class="rounded accent-violet-600">
+          <span>Ocultar órdenes en $0</span>
+        </label>
+
+        <label class="flex items-center gap-1.5 text-xs font-semibold cursor-pointer select-none">
+          <input type="checkbox" v-model="ek9Ek10SoloAditivas" class="rounded accent-fuchsia-600">
+          <span>Solo con Aditiva</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 items-start">
+
+        <!-- LISTA DE ÓRDENES -->
+        <div class="xl:col-span-6 rounded-2xl border overflow-hidden"
+             :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+          <div class="max-h-[58vh] overflow-y-auto custom-scrollbar divide-y"
+               :class="temaActual === 'claro' ? 'divide-slate-200' : 'divide-slate-800'">
+
+            <div v-for="o in ordenesFiltradasEk9Ek10"
+                 :key="o.NUMERO"
+                 @click="ek9Ek10OrdenSeleccionadaNum = o.NUMERO"
+                 class="p-3 transition cursor-pointer flex items-start gap-3"
+                 :class="[
+                   ek9Ek10OrdenSeleccionadaNum === o.NUMERO
+                     ? (temaActual === 'claro' ? 'bg-violet-50/90 border-l-4 border-l-violet-600' : 'bg-violet-500/15 border-l-4 border-l-violet-400')
+                     : (temaActual === 'claro' ? 'hover:bg-slate-50' : 'hover:bg-slate-800/50'),
+                   o.marcado_listo ? 'opacity-65' : ''
+                 ]">
+
+              <div @click.stop="toggleOrdenListaEk9Ek10(o)"
+                   class="pt-0.5 shrink-0 flex flex-col items-center"
+                   title="Marcar esta orden como revisada / ya hecha">
+                <button type="button"
+                        class="w-6 h-6 rounded-lg border flex items-center justify-center transition cursor-pointer"
+                        :class="o.marcado_listo
+                          ? 'bg-emerald-500 border-emerald-500 text-white'
+                          : (temaActual === 'claro' ? 'bg-white border-slate-300 text-transparent hover:border-emerald-500' : 'bg-slate-950 border-slate-700 text-transparent hover:border-emerald-400')">
+                  <i class="fa-solid fa-check text-xs"></i>
+                </button>
+                <span class="text-[9px] font-bold mt-0.5 opacity-60">YA</span>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="px-2 py-0.5 rounded-lg text-xs font-black font-mono shrink-0"
+                          :class="temaActual === 'claro' ? 'bg-slate-900 text-white' : 'bg-slate-800 text-violet-300 border border-slate-700'">
+                      #{{ o.NUMERO }}
+                    </span>
+                    <span class="text-xs font-bold truncate" :class="o.marcado_listo ? 'line-through' : ''">
+                      {{ o.NOMBRE }}
+                    </span>
+                  </div>
+                  <span class="text-xs font-black font-mono shrink-0">
+                    {{ fmtMonedaEk9Ek10(o.TOTAL) }}
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-wrap mt-1.5">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold border"
+                        :class="{
+                          'bg-emerald-500/15 text-emerald-500 border-emerald-500/30': o.ESTADO === 'COMPLETA',
+                          'bg-rose-500/15 text-rose-500 border-rose-500/30': o.ESTADO === 'OC INCOMPLETA',
+                          'bg-orange-500/15 text-orange-400 border-orange-500/30': o.ESTADO === 'REQUISICION INCOMPLETA',
+                          'bg-amber-500/15 text-amber-500 border-amber-500/30': o.ESTADO === 'SIN ORDEN DE COMPRA',
+                          'bg-pink-500/15 text-pink-500 border-pink-500/30': o.ESTADO === 'SIN REQUISICION'
+                        }">
+                    {{ o.ESTADO }}
+                  </span>
+
+                  <span v-if="o.REQUISICION_EK10" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-500/10 border border-slate-500/20">
+                    Req: {{ o.REQUISICION_EK10 }}
+                  </span>
+                  <span v-if="o.ORDEN_COMPRA_EK10" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-500/10 border border-slate-500/20">
+                    OC: {{ o.ORDEN_COMPRA_EK10 }}
+                  </span>
+                  <span class="text-[10px] font-mono opacity-65">
+                    ({{ (detallePorNumeroEk9Ek10[o.NUMERO] || []).length }} part.)
+                  </span>
+                </div>
+
+                <div class="text-[11px] mt-1.5 leading-snug opacity-85">
+                  <i class="fa-solid fa-arrow-right text-[9px] mr-1 text-violet-400"></i>
+                  {{ accionSimpleOrdenEk9Ek10(o) }}
+                </div>
+              </div>
+            </div>
+
+            <div v-if="ordenesFiltradasEk9Ek10.length === 0" class="p-8 text-center text-xs opacity-60">
+              No se encontraron órdenes con ese filtro.
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DERECHO: DETALLE DE LA ORDEN SELECCIONADA -->
+        <div class="xl:col-span-6 rounded-2xl border p-4 space-y-4"
+             :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+
+          <template v-if="ordenSeleccionadaEk9Ek10">
+            <div class="flex items-start justify-between gap-3 pb-3 border-b"
+                 :class="temaActual === 'claro' ? 'border-slate-200' : 'border-slate-800'">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="px-2.5 py-1 rounded-xl text-sm font-black font-mono bg-indigo-600 shadow-sm"
+                        style="color: #ffffff !important;">
+                    EK9 #{{ ordenSeleccionadaEk9Ek10.NUMERO }}
+                  </span>
+                  <h4 class="text-sm font-extrabold">{{ ordenSeleccionadaEk9Ek10.NOMBRE }}</h4>
+                </div>
+                <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <div class="px-2.5 py-1.5 rounded-xl border flex items-center gap-2.5 flex-wrap"
+                       :class="resumenMarcadoOrdenEk9Ek10.cuadrado
+                         ? 'bg-emerald-500/10 border-emerald-500/40'
+                         : (temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-950/70 border-slate-800')">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wide"
+                          :class="resumenMarcadoOrdenEk9Ek10.cuadrado ? 'text-emerald-600 dark:text-emerald-400' : 'text-indigo-500'">
+                      Marcado ({{ resumenMarcadoOrdenEk9Ek10.countMarcadas }}/{{ resumenMarcadoOrdenEk9Ek10.countTotal }}):
+                    </span>
+                    <span>Subtotal: <strong class="font-mono">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.sub) }}</strong></span>
+                    <span>IVA: <strong class="font-mono">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.iva) }}</strong></span>
+                    <span>Total: <strong class="font-mono text-emerald-500">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.tot) }}</strong></span>
+                    <span v-if="resumenMarcadoOrdenEk9Ek10.cuadrado"
+                          class="px-1.5 py-0.5 rounded bg-emerald-500 text-white text-[10px] font-black">
+                      ¡CUADRADO!
+                    </span>
+                  </div>
+
+                  <div class="px-2.5 py-1.5 rounded-xl border border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center gap-2.5 flex-wrap">
+                    <span class="text-[10px] font-black uppercase tracking-wide">Final:</span>
+                    <span>Subtotal: <strong class="font-mono">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.finalSub) }}</strong></span>
+                    <span>IVA: <strong class="font-mono">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.finalIva) }}</strong></span>
+                    <span>Total: <strong class="font-mono font-black">{{ fmtMonedaEk9Ek10(resumenMarcadoOrdenEk9Ek10.finalTot) }}</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <button @click="toggleOrdenListaEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                      type="button"
+                      class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 flex items-center gap-1.5 border"
+                      :class="ordenSeleccionadaEk9Ek10.marcado_listo
+                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        : (temaActual === 'claro' ? 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-emerald-50' : 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-emerald-500/20')">
+                <i class="fa-solid fa-check"></i>
+                <span>{{ ordenSeleccionadaEk9Ek10.marcado_listo ? 'Marcada YA' : 'Marcar YA' }}</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+              <div>
+                <label class="block text-[10px] font-bold uppercase opacity-70 mb-1">Clave - Proveedor</label>
+                <input :value="ordenSeleccionadaEk9Ek10.CLAVE_PROVEEDOR || 'Sin coincidencia en EK10'"
+                       readonly
+                       class="w-full px-2.5 py-1.5 rounded-xl border text-xs font-mono font-bold select-all"
+                       :class="[
+                         ordenSeleccionadaEk9Ek10.CLAVE_PROVEEDOR
+                           ? (temaActual === 'claro' ? 'bg-indigo-50/70 border-indigo-200 text-indigo-700' : 'bg-indigo-500/10 border-indigo-500/30 text-indigo-300')
+                           : (temaActual === 'claro' ? 'bg-slate-100 border-slate-200 text-slate-400 italic font-normal' : 'bg-slate-900 border-slate-800 text-slate-500 italic font-normal')
+                       ]">
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-[10px] font-bold uppercase opacity-70">Requisición EK10</label>
+                  <span v-if="ordenSeleccionadaEk9Ek10.requi_fija_puffy"
+                        class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                    <i class="fa-solid fa-lock text-[8px]"></i>Fijo
+                  </span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <input v-model="ordenSeleccionadaEk9Ek10.REQUISICION_EK10"
+                         :readonly="ordenSeleccionadaEk9Ek10.requi_fija_puffy"
+                         @blur="!ordenSeleccionadaEk9Ek10.requi_fija_puffy && guardarOrdenEk9Ek10(ordenSeleccionadaEk9Ek10, { REQUISICION_EK10: ordenSeleccionadaEk9Ek10.REQUISICION_EK10 })"
+                         placeholder="EY0-000000..."
+                         class="w-full px-2.5 py-1.5 rounded-xl border text-xs font-mono"
+                         :class="[
+                           ordenSeleccionadaEk9Ek10.requi_fija_puffy
+                             ? (temaActual === 'claro' ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold' : 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 font-bold')
+                             : (temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white')
+                         ]">
+
+                  <button @click="prepararRequiConPuffyEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          :disabled="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.preparando"
+                          type="button"
+                          class="px-2.5 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0 flex items-center gap-1"
+                          :class="temaActual === 'claro' ? 'bg-violet-50 border-violet-200 text-violet-700 hover:bg-violet-100' : 'bg-violet-500/15 border-violet-500/30 text-violet-300 hover:bg-violet-500/25'"
+                          title="Enviar insumos checkeados a Puffy para preparar Requisición EK10">
+                    <i class="fa-solid" :class="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.preparando ? 'fa-circle-notch fa-spin' : 'fa-robot'"></i>
+                  </button>
+
+                  <button v-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.accion_id"
+                          @click="confirmarRequiPuffyEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          :disabled="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.confirmando"
+                          type="button"
+                          class="px-2.5 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0 bg-emerald-600 hover:bg-emerald-500 border-emerald-500 shadow-sm"
+                          style="color: #ffffff !important;"
+                          title="Like / Confirmar en Puffy y fijar el folio de Requisición EK10">
+                    <i class="fa-solid" :class="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.confirmando ? 'fa-circle-notch fa-spin' : 'fa-thumbs-up'"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label class="block text-[10px] font-bold uppercase opacity-70">Orden Compra EK10</label>
+                  <span v-if="ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10 && !editandoOcManual[ordenSeleccionadaEk9Ek10.NUMERO]"
+                        class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                    <i class="fa-solid fa-lock text-[8px]"></i>Fijo
+                  </span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <input v-model="ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10"
+                         :readonly="Boolean(ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10) && !editandoOcManual[ordenSeleccionadaEk9Ek10.NUMERO]"
+                         @blur="guardarOcManualEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                         @keydown.enter="$event.target.blur()"
+                         placeholder="EY0-000001..."
+                         class="w-full px-2.5 py-1.5 rounded-xl border text-xs font-mono"
+                         :class="[
+                           ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10 && !editandoOcManual[ordenSeleccionadaEk9Ek10.NUMERO]
+                             ? (temaActual === 'claro' ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold' : 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300 font-bold')
+                             : (temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white')
+                         ]">
+                  <button v-if="ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10 && !editandoOcManual[ordenSeleccionadaEk9Ek10.NUMERO]"
+                          @click="activarEdicionOcEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          type="button"
+                          class="px-2.5 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0"
+                          :class="temaActual === 'claro' ? 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'"
+                          title="Editar folio de Orden de Compra EK10">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button v-else-if="editandoOcManual[ordenSeleccionadaEk9Ek10.NUMERO]"
+                          @click="guardarOcManualEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          type="button"
+                          class="px-2.5 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0 bg-emerald-600 hover:bg-emerald-500 border-emerald-500"
+                          style="color: #ffffff !important;"
+                          title="Guardar folio de Orden de Compra EK10">
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+                  <button v-if="ordenSeleccionadaEk9Ek10.ORDEN_COMPRA_EK10"
+                          @click="validarOcEnkontrolEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          :disabled="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.cargando"
+                          type="button"
+                          class="px-2.5 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0"
+                          :class="temaActual === 'claro' ? 'bg-cyan-50 border-cyan-200 text-cyan-700 hover:bg-cyan-100' : 'bg-cyan-500/15 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/25'"
+                          title="Validar Orden Compra EK10 en Enkontrol">
+                    <i class="fa-solid" :class="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.cargando ? 'fa-circle-notch fa-spin' : 'fa-shield-halved'"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL VALIDACIÓN DE OC EN ENKONTROL -->
+            <div v-if="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.abierto"
+                 class="p-3 rounded-xl border text-xs space-y-2"
+                 :class="temaActual === 'claro' ? 'bg-cyan-50/70 border-cyan-200 text-slate-800' : 'bg-slate-950/80 border-cyan-500/30 text-slate-200'">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="font-extrabold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-halved"></i>
+                  <span>Validación OC en Enkontrol</span>
+                </span>
+                <button @click="cerrarValidacionOcEk9Ek10(ordenSeleccionadaEk9Ek10)" type="button" class="opacity-60 hover:opacity-100 cursor-pointer">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <div v-if="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.cargando" class="flex items-center gap-2 text-cyan-500 font-semibold py-1">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <span>Consultando OC e insumos en Enkontrol...</span>
+              </div>
+
+              <div v-else-if="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.error" class="text-rose-500 font-semibold">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i>{{ validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].error }}
+              </div>
+
+              <template v-else-if="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.data">
+                <div v-if="!validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.encontrada" class="text-rose-500 font-semibold">
+                  <i class="fa-solid fa-circle-xmark mr-1"></i>{{ validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.mensaje }}
+                </div>
+
+                <template v-else>
+                  <div class="flex items-center gap-2 flex-wrap text-[11px]">
+                    <span class="px-2 py-0.5 rounded-full font-extrabold border"
+                          :class="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.vigente
+                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                            : 'bg-rose-500/15 text-rose-500 border-rose-500/30'">
+                      {{ validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.estatus_autorizacion }}
+                    </span>
+                    <span v-if="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.estatus_surtido" class="px-2 py-0.5 rounded-full border border-slate-400/30 font-semibold">
+                      {{ validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.estatus_surtido }}
+                    </span>
+                    <span class="font-mono font-bold">Total OC: {{ fmtMonedaEk9Ek10(validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.total_oc) }}</span>
+                    <span class="px-2 py-0.5 rounded-full font-extrabold"
+                          :class="validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.todos_correctos
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30'">
+                      {{ validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.todos_correctos ? 'Insumos 100% correctos' : 'Revisar diferencias en insumos' }}
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 max-h-40 overflow-y-auto custom-scrollbar">
+                    <div v-for="c in validacionOcPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].data.comparativa"
+                         :key="c.insumo"
+                         class="px-2 py-1 rounded-lg border flex items-center justify-between gap-2 text-[11px]"
+                         :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+                      <div class="min-w-0 truncate">
+                        <span class="font-mono font-bold text-indigo-500 mr-1.5">{{ c.insumo }}</span>
+                        <span class="opacity-85">{{ c.descripcion }}</span>
+                      </div>
+                      <div class="shrink-0 flex items-center gap-2 font-mono text-[10px]">
+                        <span>Esp: <strong>{{ fmtNumEk9Ek10(c.cantidad_esperada) }}</strong> | OC: <strong>{{ fmtNumEk9Ek10(c.cantidad_oc) }}</strong></span>
+                        <span class="px-1.5 py-0.5 rounded font-bold"
+                              :class="c.estatus === 'OK'
+                                ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                                : (c.estatus === 'DIFERENCIA_CANTIDAD' ? 'bg-amber-500/20 text-amber-600' : 'bg-rose-500/15 text-rose-500')">
+                          {{ c.estatus === 'OK' ? 'OK' : (c.estatus === 'DIFERENCIA_CANTIDAD' ? 'Dif. cant.' : 'Falta en OC') }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </template>
+            </div>
+
+            <!-- PANEL RESPUESTA DE PUFFY -->
+            <div v-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.abierto"
+                 class="p-3 rounded-xl border text-xs space-y-2"
+                 :class="temaActual === 'claro' ? 'bg-violet-50/70 border-violet-200 text-slate-800' : 'bg-slate-950/80 border-violet-500/30 text-slate-200'">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-extrabold text-violet-600 dark:text-violet-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-robot"></i>
+                  <span>Puffy · Preparación de Requisición</span>
+                  <span v-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.folio_tentativo"
+                        class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-600"
+                        style="color: #ffffff !important;">
+                    Tentativo: {{ puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].folio_tentativo }}
+                  </span>
+                </span>
+                <button @click="cerrarPuffyOrdenEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                        type="button"
+                        class="opacity-60 hover:opacity-100 cursor-pointer">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <div v-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.preparando" class="flex items-center gap-2 text-violet-500 font-semibold py-1">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <span>Enviando insumos checkeados a Puffy...</span>
+              </div>
+
+              <div v-else-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.error" class="text-rose-500 font-semibold">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i>{{ puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].error }}
+              </div>
+
+              <template v-else>
+                <div class="whitespace-pre-line text-[11px] leading-relaxed opacity-90">
+                  {{ puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO].respuesta }}
+                </div>
+                <div v-if="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.accion_id" class="flex items-center justify-end gap-2 pt-1">
+                  <button @click="confirmarRequiPuffyEk9Ek10(ordenSeleccionadaEk9Ek10)"
+                          :disabled="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.confirmando"
+                          type="button"
+                          class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 transition cursor-pointer flex items-center gap-1.5 shadow-sm"
+                          style="color: #ffffff !important;">
+                    <i class="fa-solid" :class="puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.confirmando ? 'fa-circle-notch fa-spin' : 'fa-thumbs-up'"></i>
+                    <span>{{ puffyEstadoPorOrden[ordenSeleccionadaEk9Ek10.NUMERO]?.confirmando ? 'Confirmando...' : 'Confirmar y Fijar Folio' }}</span>
+                  </button>
+                </div>
+              </template>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold uppercase opacity-70 mb-1">Notas</label>
+              <input v-model="ordenSeleccionadaEk9Ek10.notas_usuario"
+                     @blur="guardarOrdenEk9Ek10(ordenSeleccionadaEk9Ek10, { notas_usuario: ordenSeleccionadaEk9Ek10.notas_usuario })"
+                     placeholder="Escribe tus notas o comentarios de esta orden..."
+                     class="w-full px-3 py-1.5 rounded-xl border text-xs"
+                     :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+            </div>
+
+            <div>
+              <div class="text-xs font-bold mb-2 flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span>Materiales en Detalle ({{ detalleOrdenSeleccionadaEk9Ek10.length }} partidas)</span>
+                  <template v-if="resumenPartidasOrdenEk9Ek10.length > 0">
+                    <span v-for="rp in resumenPartidasOrdenEk9Ek10"
+                          :key="rp.codigo"
+                          class="px-2 py-0.5 rounded-full text-[10px] font-bold font-mono bg-indigo-600 shadow-xs"
+                          style="color: #ffffff !important;">
+                      Partida {{ rp.codigo }} ({{ rp.cantidad }})
+                    </span>
+                  </template>
+                </div>
+                <span class="text-[11px] font-normal opacity-70">Conectado por NUMERO = {{ ordenSeleccionadaEk9Ek10.NUMERO }}</span>
+              </div>
+
+              <div class="max-h-[34vh] overflow-y-auto custom-scrollbar space-y-2 pr-1">
+                <div v-for="d in detalleOrdenSeleccionadaEk9Ek10"
+                     :key="d.id"
+                     class="p-2.5 rounded-xl border text-xs space-y-1.5"
+                     :class="[
+                       temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-950/70 border-slate-800',
+                       d.marcado_listo ? 'opacity-60' : ''
+                     ]">
+
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-start gap-2 min-w-0">
+                      <button @click="toggleDetalleListoEk9Ek10(d)"
+                              type="button"
+                              class="w-5 h-5 mt-0.5 rounded border flex items-center justify-center shrink-0 cursor-pointer transition"
+                              :class="d.marcado_listo ? 'bg-emerald-500 border-emerald-500 text-white' : (temaActual === 'claro' ? 'bg-white border-slate-300 text-transparent' : 'bg-slate-900 border-slate-700 text-transparent')">
+                        <i class="fa-solid fa-check text-[10px]"></i>
+                      </button>
+                      <div class="min-w-0">
+                        <div class="flex items-center gap-1.5 flex-wrap font-bold">
+                          <span class="font-mono text-violet-400">{{ String(d.INSUMO || '').replace(/\.0+$/, '') }}</span>
+                          <span>{{ d.DESCRIPCION }}</span>
+                          <span v-if="d.partida_seleccionada"
+                                class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-black font-mono bg-indigo-600 shrink-0 shadow-xs"
+                                style="color: #ffffff !important;"
+                                :title="d.partida_seleccionada_nombre || ''">
+                            <span>Partida {{ d.partida_seleccionada }}<template v-if="d.partida_seleccionada_nombre"> · {{ d.partida_seleccionada_nombre }}</template></span>
+                            <button @click.stop="quitarPartidaInsumoEk9Ek10(d)"
+                                    type="button"
+                                    class="ml-0.5 w-3.5 h-3.5 rounded-full bg-white/20 hover:bg-white/35 flex items-center justify-center transition cursor-pointer"
+                                    style="color: #ffffff !important;"
+                                    title="Quitar partida seleccionada">
+                              <i class="fa-solid fa-xmark text-[9px]"></i>
+                            </button>
+                          </span>
+                        </div>
+                        <div class="text-[11px] opacity-80 mt-0.5 flex items-center gap-3 flex-wrap">
+                          <span>Pide: <strong>{{ fmtNumEk9Ek10(d.CANTIDAD) }}</strong></span>
+                          <span v-if="d.FALTA_EN_ARYVE > 0" class="text-rose-500 font-bold">Falta: {{ fmtNumEk9Ek10(d.FALTA_EN_ARYVE) }}</span>
+                          <span v-if="d.ADITIVA > 0" class="text-fuchsia-500 font-bold">Aditiva: {{ fmtNumEk9Ek10(d.ADITIVA) }}</span>
+                          <span>Importe: <strong>{{ fmtMonedaEk9Ek10(d.IMPORTE) }}</strong></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="text-right shrink-0 text-[10px] font-mono">
+                      <div>EK9: {{ fmtMonedaEk9Ek10(d.PRECIO_EK9) }}</div>
+                      <div v-if="d.PRECIO_EK10 === null || d.PRECIO_EK10 === ''" class="text-amber-500 font-bold">Sin precio EK10</div>
+                      <div v-else-if="Math.abs(d.PRECIO_EK10 - d.PRECIO_EK9) > 0.01"
+                           :class="d.PRECIO_EK10 > d.PRECIO_EK9 ? 'text-rose-500 font-bold' : 'text-emerald-500 font-bold'">
+                        EK10: {{ fmtMonedaEk9Ek10(d.PRECIO_EK10) }}
+                      </div>
+                      <div v-else class="opacity-60">EK10 igual</div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between gap-2 pt-1 border-t text-[11px] flex-wrap"
+                       :class="temaActual === 'claro' ? 'border-slate-200/80' : 'border-slate-800/80'">
+                    <span class="font-semibold"
+                          :class="(d.ESTATUS_FALTANTE || '') === 'ADITIVA' ? 'text-fuchsia-500' : (d.ESTATUS_FALTANTE ? 'text-cyan-400' : 'text-emerald-500')">
+                      {{ accionSimplePartidaEk9Ek10(d) }}
+                    </span>
+
+                    <button @click="consultarPresupuestoInsumoEk9Ek10(d)"
+                            type="button"
+                            class="px-2.5 py-1 rounded-lg text-[10px] font-bold border transition cursor-pointer flex items-center gap-1.5 shrink-0"
+                            :class="consultasPresupuestoEk9Ek10[d.id]?.abierto
+                              ? 'bg-indigo-600 text-white border-indigo-500'
+                              : (temaActual === 'claro' ? 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100' : 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/25')"
+                            title="Consultar en Centro de Presupuestos, Insumos & OCs cuál partida alcanza o sobrepasa la cantidad">
+                      <i class="fa-solid" :class="consultasPresupuestoEk9Ek10[d.id]?.cargando ? 'fa-circle-notch fa-spin' : 'fa-magnifying-glass-chart'"></i>
+                      <span>{{ consultasPresupuestoEk9Ek10[d.id]?.abierto ? 'Ocultar consulta' : 'Consultar' }}</span>
+                    </button>
+                  </div>
+
+                  <!-- PANEL INLINE: RESULTADO DE CONSULTA EN PRESUPUESTOS / PARTIDAS -->
+                  <div v-if="consultasPresupuestoEk9Ek10[d.id]?.abierto"
+                       class="mt-2 p-2.5 rounded-xl border text-[11px] space-y-2"
+                       :class="temaActual === 'claro' ? 'bg-white border-indigo-200 shadow-xs' : 'bg-slate-900/90 border-indigo-500/30'">
+                    <div v-if="consultasPresupuestoEk9Ek10[d.id]?.cargando" class="flex items-center gap-2 py-1 text-indigo-500 font-semibold">
+                      <i class="fa-solid fa-circle-notch fa-spin"></i>
+                      <span>Consultando partidas en Centro de Presupuestos ({{ d.CC || 'EY0' }})...</span>
+                    </div>
+
+                    <div v-else-if="consultasPresupuestoEk9Ek10[d.id]?.error" class="text-rose-500 font-semibold">
+                      <i class="fa-solid fa-triangle-exclamation mr-1"></i>{{ consultasPresupuestoEk9Ek10[d.id].error }}
+                    </div>
+
+                    <template v-else-if="consultasPresupuestoEk9Ek10[d.id]?.data">
+                      <div class="flex items-center justify-between gap-2 flex-wrap">
+                        <span class="font-extrabold text-indigo-500 flex items-center gap-1.5">
+                          <i class="fa-solid fa-sitemap"></i>
+                          <span>Partidas en {{ consultasPresupuestoEk9Ek10[d.id].data.obra }} ({{ consultasPresupuestoEk9Ek10[d.id].data.total_encontrados }})</span>
+                        </span>
+                        <div class="flex items-center gap-1.5">
+                          <button @click="consultarPresupuestoInsumoEk9Ek10(d, true)"
+                                  type="button"
+                                  class="px-2 py-0.5 rounded border text-[10px] font-bold cursor-pointer transition"
+                                  :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'"
+                                  title="Actualizar en vivo desde Aryve">
+                            <i class="fa-solid fa-rotate mr-1"></i>En vivo
+                          </button>
+                          <button @click="cerrarConsultaPresupuestoEk9Ek10(d)"
+                                  type="button"
+                                  class="px-1.5 py-0.5 rounded text-[10px] opacity-60 hover:opacity-100 cursor-pointer">
+                            <i class="fa-solid fa-xmark"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div v-if="consultasPresupuestoEk9Ek10[d.id].data.total_encontrados === 0" class="opacity-70 py-1">
+                        No se encontró el insumo <strong>{{ d.INSUMO }}</strong> en el presupuesto de {{ consultasPresupuestoEk9Ek10[d.id].data.obra }}.
+                      </div>
+
+                      <div v-else class="space-y-1.5 max-h-44 overflow-y-auto custom-scrollbar pr-0.5">
+                        <div v-for="(p, idx) in consultasPresupuestoEk9Ek10[d.id].data.partidas"
+                             :key="p.partida_codigo + '_' + idx"
+                             @click="seleccionarPartidaInsumoEk9Ek10(d, p)"
+                             class="p-2 rounded-lg border flex flex-col gap-1 cursor-pointer transition hover:ring-2 hover:ring-indigo-400"
+                             :class="[
+                               d.partida_seleccionada === p.partida_codigo
+                                 ? (temaActual === 'claro' ? 'bg-indigo-50 border-indigo-400 ring-2 ring-indigo-500' : 'bg-indigo-500/20 border-indigo-400 ring-2 ring-indigo-500')
+                                 : (p.es_recomendado && p.cubre
+                                   ? (temaActual === 'claro' ? 'bg-emerald-50 border-emerald-300' : 'bg-emerald-500/10 border-emerald-500/40')
+                                   : p.es_recomendado
+                                     ? (temaActual === 'claro' ? 'bg-amber-50 border-amber-300' : 'bg-amber-500/10 border-amber-500/40')
+                                     : (temaActual === 'claro' ? 'bg-slate-50 border-slate-200' : 'bg-slate-950/60 border-slate-800'))
+                             ]"
+                             title="Clic para seleccionar esta partida para el insumo">
+                          <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="font-bold flex items-center gap-1.5 flex-wrap">
+                              <span class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-indigo-600" style="color: #ffffff !important;">
+                                Partida {{ p.partida_codigo }}
+                              </span>
+                              <span class="truncate max-w-[200px]" :title="p.partida_nombre">{{ p.partida_nombre }}</span>
+                              <span v-if="p.frente_codigo" class="text-[10px] opacity-70 font-normal">
+                                (Frente {{ p.frente_codigo }})
+                              </span>
+                            </div>
+
+                            <span v-if="p.cubre"
+                                  class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                              {{ p.es_recomendado ? '★ Más cercano · Alcanza' : 'Alcanza' }} (+{{ fmtNumEk9Ek10(p.diferencia) }})
+                            </span>
+                            <span v-else
+                                  class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500/15 text-rose-500 border border-rose-500/30">
+                              {{ p.por_requisitar > 0 ? 'Insuficiente' : 'Sin saldo' }} ({{ fmtNumEk9Ek10(p.diferencia) }})
+                            </span>
+                          </div>
+
+                          <div class="flex items-center gap-3 flex-wrap text-[10px] font-mono opacity-85">
+                            <span>Por Req: <strong class="text-indigo-500">{{ fmtNumEk9Ek10(p.por_requisitar) }}</strong></span>
+                            <span>Ppto Real: <strong>{{ fmtNumEk9Ek10(p.presupuesto_real) }}</strong></span>
+                            <span>Req: <strong>{{ fmtNumEk9Ek10(p.requisitado) }}</strong></span>
+                            <span>OC: <strong>{{ fmtNumEk9Ek10(p.comprado) }}</strong></span>
+                            <span>Por Comprar: <strong>{{ fmtNumEk9Ek10(p.por_comprar) }}</strong></span>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <div v-else class="p-10 text-center text-xs opacity-60">
+            Selecciona una orden de la izquierda para ver su detalle completo.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PESTAÑA 2: TABLA COMPLETA DE DETALLE                     -->
+    <!-- ======================================================== -->
+    <div v-show="ek9Ek10TabActiva === 'DETALLE'" class="space-y-3">
+      <div class="flex flex-wrap items-center gap-2 p-3 rounded-2xl border"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+        <div class="relative flex-1 min-w-[220px]">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input v-model="ek9Ek10DetalleFiltroTexto"
+                 type="text"
+                 placeholder="Buscar por INSUMO, descripción, partida o #NUMERO..."
+                 class="w-full pl-8 pr-3 py-2 rounded-xl text-xs border focus:outline-none focus:ring-2 focus:ring-violet-500"
+                 :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+        </div>
+
+        <select v-model="ek9Ek10DetalleFiltroTipo"
+                class="px-3 py-2 rounded-xl border text-xs font-bold"
+                :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+          <option value="TODOS">Todas las partidas ({{ ek9Ek10Detalle.length }})</option>
+          <option value="PENDIENTES">Solo pendientes (sin marcar y &gt; 0)</option>
+          <option value="ADITIVA">Solo ADITIVA</option>
+          <option value="MEDIR">Solo MEDIR DISPONIBLE EN NIVELES</option>
+          <option value="DIFF_PRECIO">Con diferencia de precio EK9 vs EK10</option>
+          <option value="SIN_EK10">Sin precio en EK10 (insumos nuevos)</option>
+        </select>
+      </div>
+
+      <div class="rounded-2xl border overflow-hidden"
+           :class="temaActual === 'claro' ? 'bg-white border-slate-200' : 'bg-slate-900/80 border-slate-800'">
+        <div class="max-h-[58vh] overflow-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="sticky top-0 z-10 text-[10px] uppercase font-extrabold"
+                   :class="temaActual === 'claro' ? 'bg-slate-100 text-slate-700 border-b border-slate-200' : 'bg-slate-950 text-slate-300 border-b border-slate-800'">
+              <tr>
+                <th class="p-2.5">Ya</th>
+                <th class="p-2.5">Orden</th>
+                <th class="p-2.5">Insumo</th>
+                <th class="p-2.5">Descripción</th>
+                <th class="p-2.5 text-right">Cant.</th>
+                <th class="p-2.5 text-right">Falta</th>
+                <th class="p-2.5 text-right">Aditiva</th>
+                <th class="p-2.5 text-right">P. EK9 / EK10</th>
+                <th class="p-2.5">Estatus Faltante (Editable)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y" :class="temaActual === 'claro' ? 'divide-slate-200' : 'divide-slate-800'">
+              <tr v-for="d in detalleFiltradoEk9Ek10" :key="d.id"
+                  :class="d.marcado_listo ? 'opacity-55' : (temaActual === 'claro' ? 'hover:bg-slate-50' : 'hover:bg-slate-800/40')">
+                <td class="p-2.5">
+                  <button @click="toggleDetalleListoEk9Ek10(d)" type="button"
+                          class="w-5 h-5 rounded border flex items-center justify-center cursor-pointer"
+                          :class="d.marcado_listo ? 'bg-emerald-500 border-emerald-500 text-white' : (temaActual === 'claro' ? 'bg-white border-slate-300 text-transparent' : 'bg-slate-950 border-slate-700 text-transparent')">
+                    <i class="fa-solid fa-check text-[10px]"></i>
+                  </button>
+                </td>
+                <td class="p-2.5">
+                  <button @click="irAOrdenDesdeDetalleEk9Ek10(d.NUMERO)" type="button"
+                          class="px-2 py-0.5 rounded-lg font-mono font-bold bg-violet-500/15 text-violet-400 hover:bg-violet-500/30 cursor-pointer">
+                    #{{ d.NUMERO }}
+                  </button>
+                </td>
+                <td class="p-2.5 font-mono font-bold">{{ d.INSUMO }}</td>
+                <td class="p-2.5 max-w-[260px]">
+                  <div class="font-semibold truncate" :title="d.DESCRIPCION">{{ d.DESCRIPCION }}</div>
+                  <div class="text-[10px] opacity-60">{{ d.ESTADO }}</div>
+                </td>
+                <td class="p-2.5 text-right font-mono">{{ fmtNumEk9Ek10(d.CANTIDAD) }}</td>
+                <td class="p-2.5 text-right font-mono font-bold text-rose-400">{{ fmtNumEk9Ek10(d.FALTA_EN_ARYVE) }}</td>
+                <td class="p-2.5 text-right font-mono">
+                  <input v-model.number="d.ADITIVA"
+                         @blur="guardarDetalleEk9Ek10(d, { ADITIVA: d.ADITIVA === '' ? null : Number(d.ADITIVA) })"
+                         type="number" step="0.01"
+                         class="w-20 text-right px-1.5 py-0.5 rounded border text-xs font-mono"
+                         :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+                </td>
+                <td class="p-2.5 text-right font-mono text-[11px]">
+                  <div>{{ fmtMonedaEk9Ek10(d.PRECIO_EK9) }}</div>
+                  <div v-if="d.PRECIO_EK10 == null || d.PRECIO_EK10 === ''" class="text-amber-500">Sin EK10</div>
+                  <div v-else-if="Math.abs(d.PRECIO_EK10 - d.PRECIO_EK9) > 0.01"
+                       :class="d.PRECIO_EK10 > d.PRECIO_EK9 ? 'text-rose-500' : 'text-emerald-500'">
+                    {{ fmtMonedaEk9Ek10(d.PRECIO_EK10) }}
+                  </div>
+                </td>
+                <td class="p-2.5 min-w-[220px]">
+                  <input v-model="d.ESTATUS_FALTANTE"
+                         @blur="guardarDetalleEk9Ek10(d, { ESTATUS_FALTANTE: d.ESTATUS_FALTANTE })"
+                         class="w-full px-2 py-1 rounded border text-[11px]"
+                         :class="temaActual === 'claro' ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-slate-950 border-slate-700 text-white'">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

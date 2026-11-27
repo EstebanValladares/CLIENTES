@@ -1,0 +1,292 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 3,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 48.007,
+    "requisitado_total": 40.337,
+    "comprado_total": 0.0,
+    "por_comprar_total": 40.337
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040003",
+              "nombre": "CADENA ARMEX 15X30X4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.088,
+              "importe_ppto": 14.1029,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.088,
+              "vigente_tarjetas": 0.088,
+              "diferencia": 0,
+              "requisitado": 0.088,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0.088,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 0.088,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040003",
+              "nombre": "CADENA ARMEX 15X30X4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 40.249,
+              "importe_ppto": 6450.3047,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 40.249,
+              "vigente_tarjetas": 40.249,
+              "diferencia": 0,
+              "requisitado": 40.249,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 40.249,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 40.249,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040003",
+              "nombre": "CADENA ARMEX 15X30X4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 7.67,
+              "importe_ppto": 1229.1942,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 7.67,
+              "vigente_tarjetas": 7.67,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 7.67,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040003",
+          "nombre": "CADENA ARMEX 15X30X4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.088,
+          "importe_ppto": 14.1029,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.088,
+          "vigente_tarjetas": 0.088,
+          "diferencia": 0,
+          "requisitado": 0.088,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0.088,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 0.088,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040003",
+          "nombre": "CADENA ARMEX 15X30X4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 40.249,
+          "importe_ppto": 6450.3047,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 40.249,
+          "vigente_tarjetas": 40.249,
+          "diferencia": 0,
+          "requisitado": 40.249,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 40.249,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 40.249,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040003",
+          "nombre": "CADENA ARMEX 15X30X4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 7.67,
+          "importe_ppto": 1229.1942,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 7.67,
+          "vigente_tarjetas": 7.67,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 7.67,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040003",
+      "nombre": "CADENA ARMEX 15X30X4",
+      "unidad": "TMO",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 48.007,
+      "importe_ppto": 7693.6018,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 48.007,
+      "vigente_tarjetas": 48.007,
+      "diferencia": 0,
+      "requisitado": 40.337,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 40.337,
+      "recibido": 0,
+      "por_requisitar": 7.67,
+      "por_comprar": 40.337,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040003",
+    "nombre": ""
+  }
+}

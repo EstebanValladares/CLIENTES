@@ -1,0 +1,370 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 4,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 115.0042,
+    "requisitado_total": 38.0,
+    "comprado_total": 0.0,
+    "por_comprar_total": 38.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.1",
+          "codigo": "1.1.1",
+          "nombre": "CIMENTACION",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040007",
+              "nombre": "CASTILLO ARMEX 15 X 15 -4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 3.432,
+              "importe_ppto": 510.7502,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 3.432,
+              "vigente_tarjetas": 3.432,
+              "diferencia": 0,
+              "requisitado": 3.432,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 3.432,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 3.432,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.5",
+          "codigo": "1.1.5",
+          "nombre": "ESTRUCTURA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040007",
+              "nombre": "CASTILLO ARMEX 15 X 15 -4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 48.3208,
+              "importe_ppto": 7191.1015,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 48.3208,
+              "vigente_tarjetas": 48.3208,
+              "diferencia": 0,
+              "requisitado": 34.568,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 34.568,
+              "recibido": 0,
+              "por_requisitar": 13.7528,
+              "por_comprar": 34.568,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040007",
+              "nombre": "CASTILLO ARMEX 15 X 15 -4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 63.0014,
+              "importe_ppto": 9375.8684,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 63.0014,
+              "vigente_tarjetas": 63.0014,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 63.0014,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040007",
+              "nombre": "CASTILLO ARMEX 15 X 15 -4",
+              "unidad": "TMO",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 0.25,
+              "importe_ppto": 37.205,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 0.25,
+              "vigente_tarjetas": 0.25,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.25,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.1",
+      "codigo": "1.1.1",
+      "nombre": "CIMENTACION",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040007",
+          "nombre": "CASTILLO ARMEX 15 X 15 -4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 3.432,
+          "importe_ppto": 510.7502,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 3.432,
+          "vigente_tarjetas": 3.432,
+          "diferencia": 0,
+          "requisitado": 3.432,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 3.432,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 3.432,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.5",
+      "codigo": "1.1.5",
+      "nombre": "ESTRUCTURA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040007",
+          "nombre": "CASTILLO ARMEX 15 X 15 -4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 48.3208,
+          "importe_ppto": 7191.1015,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 48.3208,
+          "vigente_tarjetas": 48.3208,
+          "diferencia": 0,
+          "requisitado": 34.568,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 34.568,
+          "recibido": 0,
+          "por_requisitar": 13.7528,
+          "por_comprar": 34.568,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040007",
+          "nombre": "CASTILLO ARMEX 15 X 15 -4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 63.0014,
+          "importe_ppto": 9375.8684,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 63.0014,
+          "vigente_tarjetas": 63.0014,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 63.0014,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040007",
+          "nombre": "CASTILLO ARMEX 15 X 15 -4",
+          "unidad": "TMO",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 0.25,
+          "importe_ppto": 37.205,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 0.25,
+          "vigente_tarjetas": 0.25,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.25,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040007",
+      "nombre": "CASTILLO ARMEX 15 X 15 -4",
+      "unidad": "TMO",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 115.0042,
+      "importe_ppto": 17114.9251,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 115.0042,
+      "vigente_tarjetas": 115.0042,
+      "diferencia": 0,
+      "requisitado": 38,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 38,
+      "recibido": 0,
+      "por_requisitar": 77.0042,
+      "por_comprar": 38,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040007",
+    "nombre": ""
+  }
+}

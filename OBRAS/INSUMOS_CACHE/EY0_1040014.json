@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 1,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 913.0,
+    "requisitado_total": 200.0,
+    "comprado_total": 200.0,
+    "por_comprar_total": 0.0
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040014",
+              "nombre": "MALLA ELECTROSOLDADA 6-6/10-10 NMX-B-290-CANACERO-2006",
+              "unidad": "M2",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 712.95,
+              "importe_ppto": 7129.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 712.95,
+              "vigente_tarjetas": 712.95,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 712.95,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        },
+        {
+          "id": "1.1.29",
+          "codigo": "1.1.29",
+          "nombre": "COMPLEMENTOS DE OBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040014",
+              "nombre": "MALLA ELECTROSOLDADA 6-6/10-10 NMX-B-290-CANACERO-2006",
+              "unidad": "M2",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 200.05,
+              "importe_ppto": 2000.5,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 200.05,
+              "vigente_tarjetas": 200.05,
+              "diferencia": 0,
+              "requisitado": 200,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 200,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0.05,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040014",
+          "nombre": "MALLA ELECTROSOLDADA 6-6/10-10 NMX-B-290-CANACERO-2006",
+          "unidad": "M2",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 712.95,
+          "importe_ppto": 7129.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 712.95,
+          "vigente_tarjetas": 712.95,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 712.95,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.1.29",
+      "codigo": "1.1.29",
+      "nombre": "COMPLEMENTOS DE OBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040014",
+          "nombre": "MALLA ELECTROSOLDADA 6-6/10-10 NMX-B-290-CANACERO-2006",
+          "unidad": "M2",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 200.05,
+          "importe_ppto": 2000.5,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 200.05,
+          "vigente_tarjetas": 200.05,
+          "diferencia": 0,
+          "requisitado": 200,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 200,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0.05,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040014",
+      "nombre": "MALLA ELECTROSOLDADA 6-6/10-10 NMX-B-290-CANACERO-2006",
+      "unidad": "M2",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 913,
+      "importe_ppto": 9130,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 913,
+      "vigente_tarjetas": 913,
+      "diferencia": 0,
+      "requisitado": 200,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 200,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 713,
+      "por_comprar": 0,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040014",
+    "nombre": ""
+  }
+}

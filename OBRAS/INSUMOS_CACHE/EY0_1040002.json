@@ -1,0 +1,221 @@
+{
+  "ok": true,
+  "obra": {
+    "clave": "EY0",
+    "nombre": "EY0 -  REMODELACION RESTAURT HOTEL VALLARTA"
+  },
+  "metricas": {
+    "total_partidas": 2,
+    "total_frentes": 2,
+    "total_insumos_resumen": 1,
+    "presupuesto_real_total": 686.66,
+    "requisitado_total": 186.66,
+    "comprado_total": 0.0,
+    "por_comprar_total": 186.66
+  },
+  "frentes": [
+    {
+      "id": "1.1",
+      "codigo": "1.1",
+      "nombre": "REMODELACIÓN REST. VALLARTA",
+      "partidas": [
+        {
+          "id": "1.1.11",
+          "codigo": "1.1.11",
+          "nombre": "ALBAÑILERIA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.1",
+            "codigo": "1.1",
+            "nombre": "REMODELACIÓN REST. VALLARTA"
+          },
+          "insumos": [
+            {
+              "clave": "1040002",
+              "nombre": "ALAMBRON DE 1/4\" (ACERO # 2) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 186.66,
+              "importe_ppto": 3546.54,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 186.66,
+              "vigente_tarjetas": 186.66,
+              "diferencia": 0,
+              "requisitado": 186.66,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 0,
+              "por_comprar": 186.66,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "codigo": "1.2",
+      "nombre": "FIJOS DE OBRA",
+      "partidas": [
+        {
+          "id": "1.2.4",
+          "codigo": "1.2.4",
+          "nombre": "MADERA Y CLAVO PARA CIMBRA",
+          "nivel": 2,
+          "frente": {
+            "id": "1.2",
+            "codigo": "1.2",
+            "nombre": "FIJOS DE OBRA"
+          },
+          "insumos": [
+            {
+              "clave": "1040002",
+              "nombre": "ALAMBRON DE 1/4\" (ACERO # 2) NMX-C-407-ONNCEE-2005",
+              "unidad": "KG",
+              "tipo_insumo": "MATERIALES",
+              "ppto": 500,
+              "importe_ppto": 9500,
+              "aditiva": 0,
+              "deductiva": 0,
+              "presupuesto_real": 500,
+              "vigente_tarjetas": 500,
+              "diferencia": 0,
+              "requisitado": 0,
+              "cancelado": 0,
+              "req_sin_autorizar": 0,
+              "comprado": 0,
+              "en_proceso_compra": 0,
+              "recibido": 0,
+              "por_requisitar": 500,
+              "por_comprar": 0,
+              "situacion": "OK",
+              "pendiente_suministro": false,
+              "movimientos_superiores": []
+            }
+          ],
+          "faltan_por_suministrar": false,
+          "leyenda": null
+        }
+      ]
+    }
+  ],
+  "partidas": [
+    {
+      "id": "1.1.11",
+      "codigo": "1.1.11",
+      "nombre": "ALBAÑILERIA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.1",
+        "codigo": "1.1",
+        "nombre": "REMODELACIÓN REST. VALLARTA"
+      },
+      "insumos": [
+        {
+          "clave": "1040002",
+          "nombre": "ALAMBRON DE 1/4\" (ACERO # 2) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 186.66,
+          "importe_ppto": 3546.54,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 186.66,
+          "vigente_tarjetas": 186.66,
+          "diferencia": 0,
+          "requisitado": 186.66,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 0,
+          "por_comprar": 186.66,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    },
+    {
+      "id": "1.2.4",
+      "codigo": "1.2.4",
+      "nombre": "MADERA Y CLAVO PARA CIMBRA",
+      "nivel": 2,
+      "frente": {
+        "id": "1.2",
+        "codigo": "1.2",
+        "nombre": "FIJOS DE OBRA"
+      },
+      "insumos": [
+        {
+          "clave": "1040002",
+          "nombre": "ALAMBRON DE 1/4\" (ACERO # 2) NMX-C-407-ONNCEE-2005",
+          "unidad": "KG",
+          "tipo_insumo": "MATERIALES",
+          "ppto": 500,
+          "importe_ppto": 9500,
+          "aditiva": 0,
+          "deductiva": 0,
+          "presupuesto_real": 500,
+          "vigente_tarjetas": 500,
+          "diferencia": 0,
+          "requisitado": 0,
+          "cancelado": 0,
+          "req_sin_autorizar": 0,
+          "comprado": 0,
+          "en_proceso_compra": 0,
+          "recibido": 0,
+          "por_requisitar": 500,
+          "por_comprar": 0,
+          "situacion": "OK",
+          "pendiente_suministro": false,
+          "movimientos_superiores": []
+        }
+      ],
+      "faltan_por_suministrar": false,
+      "leyenda": null
+    }
+  ],
+  "resumen": [
+    {
+      "clave": "1040002",
+      "nombre": "ALAMBRON DE 1/4\" (ACERO # 2) NMX-C-407-ONNCEE-2005",
+      "unidad": "KG",
+      "tipo_insumo": "MATERIALES",
+      "ppto": 686.66,
+      "importe_ppto": 13046.54,
+      "aditiva": 0,
+      "deductiva": 0,
+      "presupuesto_real": 686.66,
+      "vigente_tarjetas": 686.66,
+      "diferencia": 0,
+      "requisitado": 186.66,
+      "cancelado": 0,
+      "req_sin_autorizar": 0,
+      "comprado": 0,
+      "en_proceso_compra": 0,
+      "recibido": 0,
+      "por_requisitar": 500,
+      "por_comprar": 186.66,
+      "situacion": "OK",
+      "pendiente_suministro": false,
+      "movimientos_superiores": []
+    }
+  ],
+  "filtros_aplicados": {
+    "obra": "EY0",
+    "insumo": "1040002",
+    "nombre": ""
+  }
+}

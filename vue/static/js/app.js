@@ -584,9 +584,6 @@ createApp({
       consultarEscalatorias: () => {
         if (typeof consultarEscalatorias === 'function') consultarEscalatorias();
         if (typeof consultarInsumosPorObra === 'function') consultarInsumosPorObra();
-      },
-      cargarEk9Ordenes: () => {
-        if (typeof cargarEk9Ordenes === 'function') cargarEk9Ordenes();
       }
     }) : {};
     const {
@@ -621,45 +618,9 @@ createApp({
     } = ocContratosModulo;
 
     // ==========================================
-    // MÓDULO: EK9 · ÓRDENES EY0 & DETALLE (vue/static/js/modules/ek9.js)
+    // MÓDULO: EK9 - EK10 (VISTA UNIFICADA CON CARGA XLSX)
     // ==========================================
-    const ek9Modulo = window.createEk9Module ? window.createEk9Module(Vue) : {};
-    const {
-      ek9Ordenes,
-      ek9Detalle,
-      cargandoEk9,
-      guardandoEk9,
-      errorEk9,
-      mensajeEk9,
-      ek9TabActiva,
-      ek9MostrarGuia,
-      ek9OrdenSeleccionadaNum,
-      ek9FiltroTexto,
-      ek9FiltroEstado,
-      ek9OcultarCeros,
-      ek9SoloAditivas,
-      ek9DetalleFiltroTexto,
-      ek9DetalleFiltroTipo,
-      metricasEk9,
-      ordenesFiltradasEk9,
-      ordenSeleccionadaEk9,
-      detalleOrdenSeleccionada,
-      resumenMarcadoOrden,
-      detalleFiltradoEk9,
-      detallePorNumero,
-      cargarEk9Ordenes,
-      guardarOrdenEk9,
-      toggleOrdenListaEk9,
-      guardarDetalleEk9,
-      toggleDetalleListoEk9,
-      accionSimpleOrden,
-      accionSimplePartida,
-      ordenTieneAditiva,
-      irAOrdenDesdeDetalle,
-      fmtMonedaEk9,
-      fmtNumEk9,
-      exportarCsvEk9
-    } = ek9Modulo;
+    const ek9Ek10Modulo = window.createEk9Ek10Module ? window.createEk9Ek10Module(Vue) : {};
 
     // ==========================================
     // SISTEMA DE NAVEGACIÓN EN CÁPSULA EXPANDIBLE (BUBBLE DOCK NAV)
@@ -690,6 +651,14 @@ createApp({
         nombre: 'Obras & Orden de Compra',
         icono: 'fa-solid fa-helmet-safety',
         badge: metricasObras?.value?.total_obras || obrasCatalogo?.value?.length || 0
+      },
+      {
+        id: 'EK9_EK10',
+        nombre: 'EK9 - EK10',
+        icono: 'fa-solid fa-arrows-left-right',
+        badge: ek9Ek10Modulo?.ek9Ek10Cargado?.value
+          ? (ek9Ek10Modulo?.ek9Ek10Ordenes?.value?.length || 0)
+          : 'XLSX'
       }
     ]);
 
@@ -727,6 +696,9 @@ createApp({
       setTimeout(cargarGruposInsumosTipo, 750);
       setTimeout(cargarResumenMapeo, 850);
       setTimeout(cargarResumenEscalatorias, 950);
+      if (typeof ek9Ek10Modulo.cargarEstadoEk9Ek10 === 'function') {
+        setTimeout(ek9Ek10Modulo.cargarEstadoEk9Ek10, 1050);
+      }
 
       // 2. Polling inteligente de Torre de Control: solo si la ventana está visible
       setInterval(() => {
@@ -1868,41 +1840,8 @@ createApp({
       consultarOcContrato,
       limpiarConsultaOc,
       seleccionarCoincidencia,
-      // EK9 Órdenes EY0 & Detalle
-      ek9Ordenes,
-      ek9Detalle,
-      cargandoEk9,
-      guardandoEk9,
-      errorEk9,
-      mensajeEk9,
-      ek9TabActiva,
-      ek9MostrarGuia,
-      ek9OrdenSeleccionadaNum,
-      ek9FiltroTexto,
-      ek9FiltroEstado,
-      ek9OcultarCeros,
-      ek9SoloAditivas,
-      ek9DetalleFiltroTexto,
-      ek9DetalleFiltroTipo,
-      metricasEk9,
-      ordenesFiltradasEk9,
-      ordenSeleccionadaEk9,
-      detalleOrdenSeleccionada,
-      resumenMarcadoOrden,
-      detalleFiltradoEk9,
-      detallePorNumero,
-      cargarEk9Ordenes,
-      guardarOrdenEk9,
-      toggleOrdenListaEk9,
-      guardarDetalleEk9,
-      toggleDetalleListoEk9,
-      accionSimpleOrden,
-      accionSimplePartida,
-      ordenTieneAditiva,
-      irAOrdenDesdeDetalle,
-      fmtMonedaEk9,
-      fmtNumEk9,
-      exportarCsvEk9
+      // EK9 - EK10 (Vista Unificada)
+      ...ek9Ek10Modulo
     };
   }
 }).mount('#app');
